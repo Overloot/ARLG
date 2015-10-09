@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/src/com/rommax/BaseItem.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/BaseMonster.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/BaseTile.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/ColorSet.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/DescKeyHandler.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/DescPanel.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/DescWindow.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/EqKeyHandler.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/EqPanel.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/EqWindow.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/Game.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/GameWindow.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/Item.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/ItemSelectKeyHandler.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/ItemSelectMessage.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/ItemSelectPanel.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/ItemSelectWindow.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/Itemset.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/KeyHandler.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/LevelUpKeyHandler.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/LevelUpPanel.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/MainPanel.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/Map.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/MapGenerator.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/Monster.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/MonsterSet.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/RLG.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/ScriptObject.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/ScriptParser.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/Stat.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/Tile.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/Tileset.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/rommax/levelUpWindow.java" charset="UTF-8" />
+  </component>
+</project>
