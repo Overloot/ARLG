@@ -1,2 +1,2 @@
-java -classpath ./out/production/ARLG/com/rommax;./lib RLG
+java -classpath ./out/production/Arlg;./lib com.rommax.RLG
 pause
