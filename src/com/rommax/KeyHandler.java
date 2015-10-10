@@ -64,8 +64,8 @@ public class KeyHandler implements KeyListener{
 	public synchronized void keyPressed(KeyEvent event){
 		int keycode = 0;
 
-
-
+		// Действия игрока
+		PlayerAction playerAction = new PlayerAction(map); 
 
 
 		if (Timer == 0) System.exit(0);
@@ -75,8 +75,8 @@ public class KeyHandler implements KeyListener{
 			mp.repaint();
 			return;
 		}
+		
 		boolean flag = true;
-
 
 		if (event != null) keycode = event.getKeyCode();
 
@@ -229,7 +229,7 @@ public class KeyHandler implements KeyListener{
 				frame2.setVisible(true);
 				flag = false;
 				}
-				}
+			}
 		else
 			if (keycode == KeyEvent.VK_Q && event.isShiftDown()){
 			if (map.getGame().player.getInventory().size() == 0) {
@@ -401,11 +401,6 @@ public class KeyHandler implements KeyListener{
 		}
 
 		else
-		if (keycode==KeyEvent.VK_RIGHT) {
-		if (map.getGame().player.move(0, +1))
-			map.setCurrentX(map.getCurrentX()+1);
-		}
-		else
 		if (keycode == KeyEvent.VK_L){
 			ly = map.getGame().player.getY();
 			lx = map.getGame().player.getX();
@@ -414,106 +409,39 @@ public class KeyHandler implements KeyListener{
 			LookTo(0, 0);
 			flag = false;
 			}
-		else
-		if (keycode ==KeyEvent.VK_C && event.isShiftDown()) {
-			CLOSE_MODE = true;
-			map.getGame().logMessage("В каком направлении вы хотите #8#закрыть#^# что-то?#/#");
-			flag = false;
-		}
-		else
-		if (keycode==KeyEvent.VK_LEFT) {
-			if (map.getGame().player.move(0, -1))
-			map.setCurrentX(map.getCurrentX()-1);
-		}
-		else
-		if (keycode==KeyEvent.VK_UP) {
-		if (map.getGame().player.move(-1, 0))
-			map.setCurrentY(map.getCurrentY()-1);
-		}
-		else
-		if (keycode==KeyEvent.VK_DOWN) {
-			if (map.getGame().player.move(+1, 0))
-			map.setCurrentY(map.getCurrentY()+1);
-		}
-		else
-		if (keycode==KeyEvent.VK_S) {
-						map.getGame().player.move(0, 0);
-			}
-		else
-		if (keycode==KeyEvent.VK_O){
-			OPEN_MODE = true;
-			map.getGame().logMessage("В каком направлении вы хотите #8#открыть#^# что-то?#/#");
-			flag = false;
-		}
-		else
-		if (keycode==KeyEvent.VK_B && event.isShiftDown()){
-			if (map.field[map.getGame().player.getY()][map.getGame().player.getX()].getID()!=Tileset.TILE_STAIR_DOWN )
-			   map.getGame().logMessage("Вы #2#не можете#^# спуститься #8#вниз#^# здесь!#/#");
-			   else
-			map.getGame().switchMap(+1);
-		}
-		else
-		if (keycode==KeyEvent.VK_G && event.isShiftDown()){
-			if (map.field[map.getGame().player.getY()][map.getGame().player.getX()].getID()!=Tileset.TILE_STAIR_UP )
-						   map.getGame().logMessage("Вы #2#не можете#^# подняться #8#вверх#^# здесь!#/#");
-						else
-
-				map.getGame().switchMap(-1);
-		}
-		else
-		if (keycode==KeyEvent.VK_Q && !event.isShiftDown()) {
-					if (map.getGame().player.move(-1, -1)){
-						map.setCurrentY(map.getCurrentY()-1);
-						map.setCurrentX(map.getCurrentX()-1);}
-						}
-		else
-		if (keycode==KeyEvent.VK_E && !event.isShiftDown()) {
-					if (map.getGame().player.move(-1, +1)){
-						map.setCurrentY(map.getCurrentY()-1);
-						map.setCurrentX(map.getCurrentX()+1);}
-						}
-		else
-		if (keycode==KeyEvent.VK_Z) {
-			if (map.getGame().player.move(+1, -1)){
-				map.setCurrentY(map.getCurrentY()+1);
-				map.setCurrentX(map.getCurrentX()-1);}
-				}
-		else
-		if (keycode==KeyEvent.VK_C && !event.isShiftDown()) {
-			if (map.getGame().player.move(+1, +1)){
-				map.setCurrentY(map.getCurrentY()+1);
-				map.setCurrentX(map.getCurrentX()+1);}
-				}
-		else
-		flag = false;
+		// Игрок движется по прямых
+		else if (keycode==KeyEvent.VK_LEFT) playerAction.left();
+		else if (keycode==KeyEvent.VK_RIGHT) playerAction.right();
+		else if (keycode==KeyEvent.VK_UP) playerAction.up();
+		else if (keycode==KeyEvent.VK_DOWN) playerAction.down();
+		// Игрок движется по диагоналях
+		else if (keycode==KeyEvent.VK_Q && !event.isShiftDown()) playerAction.moveLeftUp();
+		else if (keycode==KeyEvent.VK_E && !event.isShiftDown()) playerAction.moveRightUp();
+		else if (keycode==KeyEvent.VK_Z && !event.isShiftDown()) playerAction.moveLeftDown();
+		else if (keycode==KeyEvent.VK_C && !event.isShiftDown()) playerAction.moveRightDown();
+		// Игрок пропускает ход и отдыхает
+		else if (keycode==KeyEvent.VK_S) playerAction.rest();
+		// Игрок пытается что-то открыть
+		else if (keycode==KeyEvent.VK_O && event.isShiftDown()) flag = playerAction.openIt();
+		// Игрок пытается что-то закрыть
+		else if (keycode ==KeyEvent.VK_C && event.isShiftDown()) flag = playerAction.closeIt();
+		// Вниз по лестнице
+		else if (keycode==KeyEvent.VK_B && event.isShiftDown()) playerAction.downStair();
+		// Вверх по лестнице
+		else if (keycode==KeyEvent.VK_G && event.isShiftDown()) playerAction.upStair();
+		//
+		else flag = false;
 
 
 		mp.repaint();
-
-		if (ID_MODE){
-									if (map.getGame().player.getInventory().size()<1)
-									{
-										map.getGame().logMessage("У вас пусто в инвентаре, нечего идентифицировать!");
-										ID_MODE = false;
-									}
-									else
-									{
-									map.getGame().frame1.setFocusable(false);
-									map.getGame().frame1.setFocusableWindowState(false);
-									message = new ItemSelectMessage();
-									message.command = 'b';
-								    ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), Itemset.TYPE_ANY, map.getGame().player.getInventory(), message);
-									frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-									frame2.setTitle("Что вы хотите идентифицировать?");
-									frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
-									frame2.toFront();
-									frame2.setVisible(true);
-									ID_MODE = false;
-									flag = false;
-									}
-								}
-
-
+		
+		// Игрок идентифицирует что-то
+		if (ID_MODE) {
+			ID_MODE = false;
+			if (map.getGame().player.getInventory().size() <= 0)
+				map.getGame().logMessage("У вас пусто в инвентаре, нечего идентифицировать!");
+					else flag = playerAction.identifyIt();
+		}
 
 		if (flag) {
 			map.getGame().monstersAI();
