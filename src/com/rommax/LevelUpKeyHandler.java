@@ -11,7 +11,7 @@ public class LevelUpKeyHandler implements KeyListener{
 	public LevelUpKeyHandler(LevelUpPanel lp){
 		super();
 		this.lp = lp;
-	};
+	}
 
 
 
@@ -39,7 +39,7 @@ public class LevelUpKeyHandler implements KeyListener{
 					lp.x1++;
 					lp.lwindow.game.player.getHP().setMax(lp.lwindow.game.player.getHP().getMax() + lp.lwindow.game.HIT_POINTS_PER_STRENGTH);
 					lp.lwindow.game.player.getHP().setCurrent(lp.lwindow.game.player.getHP().getCurrent() + lp.lwindow.game.HIT_POINTS_PER_STRENGTH);
-					lp.lwindow.game.player.getCW().setMax(lp.lwindow.game.player.getCW().getMax() + lp.lwindow.game.CARRYING_PER_STRENGTH);
+					lp.lwindow.game.player.getCurrentWeight().setMax(lp.lwindow.game.player.getCurrentWeight().getMax() + lp.lwindow.game.CARRYING_PER_STRENGTH);
 				}
 				break;
 				case 2: {
@@ -72,8 +72,8 @@ public class LevelUpKeyHandler implements KeyListener{
 
 	}
 
-	public void keyReleased(KeyEvent event){};
+	public void keyReleased(KeyEvent event){}
 
-	public void keyTyped(KeyEvent event){};
+	public void keyTyped(KeyEvent event){}
 
 }

@@ -109,8 +109,7 @@ public class Game {
 
     // позволяет проверить расстояние
     public int checkDistance(int y1, int x1, int y2, int x2) {
-        int d = (int) Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
-        return d;
+        return (int) Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
     }
 
 
@@ -179,7 +178,7 @@ public class Game {
         if (m.getSTR().getTimer() == 1) {
             m.getHP().setMax(m.getHP().getMax() + HIT_POINTS_PER_STRENGTH * (m.getSTR().getMax() - m.getSTR().getCurrent()));
             m.getHP().setCurrent(m.getHP().getCurrent() + HIT_POINTS_PER_STRENGTH * (m.getSTR().getMax() - m.getSTR().getCurrent()));
-            m.getCW().setMax(m.getCW().getMax() + CARRYING_PER_STRENGTH * (m.getSTR().getMax() - m.getSTR().getCurrent()));
+            m.getCurrentWeight().setMax(m.getCurrentWeight().getMax() + CARRYING_PER_STRENGTH * (m.getSTR().getMax() - m.getSTR().getCurrent()));
         }
 
         checkStatChanges(m.getAGI(), "Вы снова стали более #3#ловким!#^#", "Вы снова стали менее #2#ловким!#^#");
@@ -341,7 +340,7 @@ public class Game {
 
     public void addRandomMonster() {
         Random random = new Random();
-        int newID = 0;
+        int newID;
 
         //определяет можно ли данному монстру появится на свет
         while (true) {
@@ -373,29 +372,35 @@ public class Game {
             y = random.nextInt(map.getHeight());
             x = random.nextInt(map.getWidth());
         }
+        // высадка
         monsterList[monstersQuantity] = new Monster(baseMonster, y, x, map, this);
         monstersQuantity++;
     }
 
 
-    public void TryToPickupItem(LinkedList<Item> list, int number) {
-        if (number == -1) return;
-        player.getInventory().addLast(list.get(number));
+    // int number это message.number класса ItemSelectMessage
+    // данный метод вызывается из KeyHandler
+    public void tryToPickupItem(LinkedList<Item> list, int number) {
+        if (number == -1) return;                                                                                               // как я понял, данная команда никогда не будет исполнена
+        player.getInventory().addLast(list.get(number));                                                                        // обычно number равен нулю
         logMessage("#8#Взято!#^# (" + list.get(number).getName().toLowerCase() + "#1#)");
-        player.getCW().setCurrent(player.getCW().getCurrent() + list.get(number).getMass());
-        player.getSW().setCurrent(player.getSW().getCurrent() + list.get(number).getSize());
+        player.getCurrentWeight().setCurrent(player.getCurrentWeight().getCurrent() + list.get(number).getMass());
+        player.getCurrentSize().setCurrent(player.getCurrentSize().getCurrent() + list.get(number).getSize());
         list.remove(number);
     }
 
-    public void TryToDropItem(LinkedList<Item> list, int number) {
+    // int number это message.number класса ItemSelectMessage
+    // данный метод вызывается из KeyHandler
+    public void tryToDropItem(LinkedList<Item> list, int number) {
         if (number == -1) return;
         list.addLast(player.getInventory().get(number));
         logMessage("#8#Выброшено!#^# (" + player.getInventory().get(number).getName().toLowerCase() + "#1#)");
-        player.getCW().setCurrent(player.getCW().getCurrent() - player.getInventory().get(number).getMass());
-        player.getSW().setCurrent(player.getSW().getCurrent() - player.getInventory().get(number).getSize());
+        player.getCurrentWeight().setCurrent(player.getCurrentWeight().getCurrent() - player.getInventory().get(number).getMass());
+        player.getCurrentSize().setCurrent(player.getCurrentSize().getCurrent() - player.getInventory().get(number).getSize());
         player.getInventory().remove(number);
     }
 
+    // данный метод вызывается из KeyHandler, когда активен LOOK_MODE
     public void TryToLookAtMonster(int y, int x) {
         if (map.field[y][x].getMonster() == null && map.field[y][x].getItemList().size() == 0) {
             logMessage("Здесь ничего нет!");
@@ -411,14 +416,14 @@ public class Game {
             frame2.setTitle("Информация о монстре");
             frame2.setVisible(true);
         } else if (map.field[y][x].getItemList().size() != 0) {
-            TryToExamineItem(map.field[y][x].getItemList(), 0);
+            tryToExamineItem(map.field[y][x].getItemList(), 0);                                                             // если на клетке есть итемы, то будет показана инфа о них
 
         }
-
-
     }
 
-    public void TryToQuaffItem(LinkedList<Item> list, int number) {
+    // метод описывает как надо пить =) quaff - пить залпом
+    // вызывается из KeyHandler
+    public void tryToQuaffItem(LinkedList<Item> list, int number) {
         if (number == -1) return;
 
         if (player.getInventory().get(number).getType() != Itemset.TYPE_POTION) {
@@ -426,14 +431,15 @@ public class Game {
             return;
         }
         logMessage("#8#Выпито!#^# (" + player.getInventory().get(number).getName().toLowerCase() + "#^#)");
-        TryToIdentifyItem(player.getInventory().get(number));
-        player.getCW().setCurrent(player.getCW().getCurrent() - player.getInventory().get(number).getMass());
-        player.getSW().setCurrent(player.getSW().getCurrent() - player.getInventory().get(number).getSize());
+        tryToIdentifyItem(player.getInventory().get(number));                                                                   // еще не разу не питое пойло - не идентифицировано. Идентифицируем.
+        player.getCurrentWeight().setCurrent(player.getCurrentWeight().getCurrent() - player.getInventory().get(number).getMass());
+        player.getCurrentSize().setCurrent(player.getCurrentSize().getCurrent() - player.getInventory().get(number).getSize());
         player.setEffectFrom(ScriptParser.parseString(player.getInventory().get(number).getScript()), player.getInventory().get(number).isIdentify());
         player.getInventory().remove(number);
     }
 
-    public void TryToReadItem(LinkedList<Item> list, int number) {
+    // вызывается из KeyHandler
+    public void tryToReadItem(LinkedList<Item> list, int number) {
         if (number == -1) return;
 
         if (player.getInventory().get(number).getType() != Itemset.TYPE_SCROLL) {
@@ -442,14 +448,16 @@ public class Game {
         }
 
         logMessage("#8#Прочитано!#^# (" + player.getInventory().get(number).getName().toLowerCase() + "#^#)");
-        TryToIdentifyItem(player.getInventory().get(number));
+        tryToIdentifyItem(player.getInventory().get(number));
         player.setEffectFrom(ScriptParser.parseString(player.getInventory().get(number).getScript()), player.getInventory().get(number).isIdentify());
-        player.getCW().setCurrent(player.getCW().getCurrent() - player.getInventory().get(number).getMass());
-        player.getSW().setCurrent(player.getSW().getCurrent() - player.getInventory().get(number).getSize());
+        player.getCurrentWeight().setCurrent(player.getCurrentWeight().getCurrent() - player.getInventory().get(number).getMass());
+        player.getCurrentSize().setCurrent(player.getCurrentSize().getCurrent() - player.getInventory().get(number).getSize());
         player.getInventory().remove(number);
     }
 
-    public void TryToIdentifyItem(int number) {
+    // идентифицирует неопознанные предметы: зелья, свитки и т.д.
+    // по номеру, ниже по классу есть еще метод идентификации по Item item
+    public void tryToIdentifyItem(int number) {
         if (number == -1) return;
 
         if (player.getInventory().get(number).isIdentify()) {
@@ -457,50 +465,51 @@ public class Game {
             return;
         }
         logMessage("#8#Идентифицировано!#^# (" + player.getInventory().get(number).getName().toLowerCase() + "#^#)");
-        for (int i = 0; i < itemsQuantity; i++)
+        // пробегаем по всему инвентарю в поисках аналогичных вещей и все их идентифицируем
+        for (int i = 0; i < itemsQuantity; i++) {
             if (itemList[i] != null && itemList[i] != player.getInventory().get(number)) {
                 if (itemList[i].getID() == player.getInventory().get(number).getID() && !itemList[i].isIdentify()) {
                     itemList[i].swap_names();
                     itemList[i].setIdentify(true);
                 }
-
             }
-
+        }
 
         Itemset.ID_ITEMS[player.getInventory().get(number).getID()] = 1;
-        String str;
-        str = "Вы поняли, что " + player.getInventory().get(number).getName().toLowerCase();
+        String textLine;
+        textLine = "Вы поняли, что " + player.getInventory().get(number).getName().toLowerCase();
         player.getInventory().get(number).swap_names();
-        str += " - на самом деле: " + player.getInventory().get(number).getName().toLowerCase();
-        logMessage(str);
+        textLine += " - на самом деле: " + player.getInventory().get(number).getName().toLowerCase();
+        logMessage(textLine);
         player.getInventory().get(number).setIdentify(true);
     }
 
-    public void TryToIdentifyItem(Item item) {
-
+    // идентифицирует неопознанные предметы: зелья, свитки и т.д.
+    // выше по классу есть еще один метод идентификации, но по номеру вещи
+    public void tryToIdentifyItem(Item item) {
         if (item.isIdentify()) {
             return;
         }
 
         Itemset.ID_ITEMS[item.getID()] = 1;
-        for (int i = 0; i < itemsQuantity; i++)
+        for (int i = 0; i < itemsQuantity; i++) {
             if (itemList[i] != null) {
                 if (itemList[i].getID() == item.getID() && !itemList[i].isIdentify()) {
                     itemList[i].swap_names();
                     itemList[i].setIdentify(true);
                 }
-
             }
+        }
 
-        String str;
+        String textLine;
         item.swap_names();
-        str = "Вы поняли, что это на самом деле " + new String(item.getName().toLowerCase()) + "!";
-        logMessage(str);
+        textLine = "Вы поняли, что это на самом деле " + new String(item.getName().toLowerCase()) + "!";
+        logMessage(textLine);
         item.setIdentify(true);
     }
 
 
-    public void TryToExamineItem(LinkedList<Item> list, int number) {
+    public void tryToExamineItem(LinkedList<Item> list, int number) {
         if (number == -1) return;
         logMessage("Вы осмотрели предмет (" + list.get(number).getName().toLowerCase() + "#^#)");
         frame1.setFocusable(false);
@@ -513,7 +522,7 @@ public class Game {
         frame2.setVisible(true);
     }
 
-    public void TryToExamineItem(Item item) {
+    public void tryToExamineItem(Item item) {
         logMessage("Вы осмотрели предмет (" + item.getName().toLowerCase() + "#^#)");
         frame1.setFocusable(false);
         frame1.setFocusableWindowState(false);
@@ -540,14 +549,14 @@ public class Game {
         if (li != null) {
             logMessage("Вы #8#сняли#^# это (" + li.getName().toLowerCase() + "#^#)");
             player.deleteEffectFrom(ScriptParser.parseString(li.getScript()), li.isIdentify());
-            player.getCW().setCurrent(player.getCW().getCurrent() + li.getMass());
-            player.getSW().setCurrent(player.getSW().getCurrent() + li.getSize());
+            player.getCurrentWeight().setCurrent(player.getCurrentWeight().getCurrent() + li.getMass());
+            player.getCurrentSize().setCurrent(player.getCurrentSize().getCurrent() + li.getSize());
         }
         logMessage("Вы #8#надели#^# это (" + player.getInventory().get(number).getName().toLowerCase() + "#^#)");
         player.setEffectFrom(ScriptParser.parseString(player.getInventory().get(number).getScript()), player.getInventory().get(number).isIdentify());
-        TryToIdentifyItem(player.getInventory().get(number));
-        player.getCW().setCurrent(player.getCW().getCurrent() - player.getInventory().get(number).getMass());
-        player.getSW().setCurrent(player.getSW().getCurrent() - player.getInventory().get(number).getSize());
+        tryToIdentifyItem(player.getInventory().get(number));
+        player.getCurrentWeight().setCurrent(player.getCurrentWeight().getCurrent() - player.getInventory().get(number).getMass());
+        player.getCurrentSize().setCurrent(player.getCurrentSize().getCurrent() - player.getInventory().get(number).getSize());
         if (li != null)
             player.getInventory().add(li);
         player.Equipment[player.getInventory().get(number).getSlot()] = player.getInventory().get(number);
@@ -558,8 +567,8 @@ public class Game {
     public void TryToTakeOffItem(int num) {
         logMessage("Вы #8#сняли#^# это (" + player.Equipment[num].getName().toLowerCase() + "#^#)");
         player.deleteEffectFrom(ScriptParser.parseString(player.Equipment[num].getScript()), player.Equipment[num].isIdentify());
-        player.getCW().setCurrent(player.getCW().getCurrent() + player.Equipment[num].getMass());
-        player.getSW().setCurrent(player.getSW().getCurrent() + player.Equipment[num].getSize());
+        player.getCurrentWeight().setCurrent(player.getCurrentWeight().getCurrent() + player.Equipment[num].getMass());
+        player.getCurrentSize().setCurrent(player.getCurrentSize().getCurrent() + player.Equipment[num].getSize());
         player.getInventory().add(player.Equipment[num]);
         player.Equipment[num] = null;
     }
@@ -581,9 +590,7 @@ public class Game {
 
         BaseItem bm = Itemset.getItem(newID);
         int y = random.nextInt(map.getHeight());
-        ;
         int x = random.nextInt(map.getWidth());
-        ;
         while (map.field[y][x].getPassable() == false || map.field[y][x].getMonster() != null) {
             y = random.nextInt(map.getHeight());
             x = random.nextInt(map.getWidth());

@@ -11,7 +11,7 @@ public class EqKeyHandler implements KeyListener{
 	public EqKeyHandler(EqPanel ep){
 		super();
 		this.ep = ep;
-	};
+	}
 
 
 
@@ -45,7 +45,7 @@ public class EqKeyHandler implements KeyListener{
 
 		else
 		if (keycode == KeyEvent.VK_ENTER && ep.current!=-1){
-			ep.ewindow.game.TryToExamineItem(ep.ewindow.game.player.Equipment[ep.current]);
+			ep.ewindow.game.tryToExamineItem(ep.ewindow.game.player.Equipment[ep.current]);
 		}
 		else
 		if (keycode == KeyEvent.VK_T && ep.current!=-1){
@@ -66,8 +66,8 @@ public class EqKeyHandler implements KeyListener{
 
 	}
 
-	public void keyReleased(KeyEvent event){};
+	public void keyReleased(KeyEvent event){}
 
-	public void keyTyped(KeyEvent event){};
+	public void keyTyped(KeyEvent event){}
 
 }

@@ -12,7 +12,7 @@ public class ItemSelectKeyHandler implements KeyListener{
 	public ItemSelectKeyHandler(ItemSelectPanel ip){
 		super();
 		this.ip = ip;
-	};
+	}
 
 	public synchronized void keyPressed(KeyEvent event){
 		int keycode = event.getKeyCode();
@@ -87,7 +87,7 @@ public class ItemSelectKeyHandler implements KeyListener{
 			ip.iwindow.message.number = ip.current;
 
 			if (ip.iwindow.message.command == 'd'){
-				ip.iwindow.game.TryToDropItem(ip.iwindow.game.player.getMap().field[ip.iwindow.game.player.getY()][ip.iwindow.game.player.getX()].getItemList(), ip.iwindow.message.number);
+				ip.iwindow.game.tryToDropItem(ip.iwindow.game.player.getMap().field[ip.iwindow.game.player.getY()][ip.iwindow.game.player.getX()].getItemList(), ip.iwindow.message.number);
 				if (ip.iwindow.list.size() == 0){
 					ip.iwindow.message.command = '/';
 					ip.iwindow.stop();
@@ -98,7 +98,7 @@ public class ItemSelectKeyHandler implements KeyListener{
 			}
 			else
 		if (ip.iwindow.message.command == 'g'){
-				ip.iwindow.game.TryToPickupItem(ip.iwindow.game.player.getMap().field[ip.iwindow.game.player.getY()][ip.iwindow.game.player.getX()].getItemList(), ip.iwindow.message.number);
+				ip.iwindow.game.tryToPickupItem(ip.iwindow.game.player.getMap().field[ip.iwindow.game.player.getY()][ip.iwindow.game.player.getX()].getItemList(), ip.iwindow.message.number);
 				if (ip.iwindow.list.size() == 0){
 					ip.iwindow.message.command = '/';
 					ip.iwindow.stop();
@@ -152,7 +152,7 @@ public class ItemSelectKeyHandler implements KeyListener{
 		ListIterator<Item> iter = x.listIterator();
 		int cx = -1;
 		int ix = -1;
-		Item item = null;
+		Item item;
 		while(ix<number){
 			item = iter.next();
 			if (Itemset.getItem(item.getID()).getType() == type)
@@ -162,8 +162,8 @@ public class ItemSelectKeyHandler implements KeyListener{
 		return cx;
 	}
 
-	public void keyReleased(KeyEvent event){};
+	public void keyReleased(KeyEvent event){}
 
-	public void keyTyped(KeyEvent event){};
+	public void keyTyped(KeyEvent event){}
 
 }

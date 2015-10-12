@@ -79,7 +79,7 @@ class MainPanel extends JPanel
 			}
 			else
 			if (str.length() < 3){
-				int col = 0;
+				int col;
 				boolean skip = false;
 				try{
 				col = Integer.parseInt(str);
@@ -155,14 +155,14 @@ class MainPanel extends JPanel
 		drawColorString(g,str,leftX, 435);
 		str = "ХОД № " + Integer.toString(DrawingMap.getGame().turn);
 		drawColorString(g,str,leftX, 450);
-		str = "ВЕС ИНВЕНТАРЯ: " + Integer.toString(DrawingMap.getGame().player.getCW().getCurrent()) + "/" + Integer.toString(DrawingMap.getGame().player.getCW().getMax());
+		str = "ВЕС ИНВЕНТАРЯ: " + Integer.toString(DrawingMap.getGame().player.getCurrentWeight().getCurrent()) + "/" + Integer.toString(DrawingMap.getGame().player.getCurrentWeight().getMax());
 		drawColorString(g,str,leftX, 465);
-		str = "РАЗМЕР ИНВЕНТАРЯ: " + Integer.toString(DrawingMap.getGame().player.getSW().getCurrent()) + "/" + Integer.toString(DrawingMap.getGame().player.getSW().getMax());
+		str = "РАЗМЕР ИНВЕНТАРЯ: " + Integer.toString(DrawingMap.getGame().player.getCurrentSize().getCurrent()) + "/" + Integer.toString(DrawingMap.getGame().player.getCurrentSize().getMax());
 		drawColorString(g,str,leftX, 480);
 		str = Integer.toString(DrawingMap.getGame().player.getY()) + "/" + Integer.toString(DrawingMap.getGame().player.getX());
 		drawColorString(g,str,leftX, 495);
 
-		if (descStr!=""){
+		if (!descStr.equals("")){
 			drawColorString(g,descStr,15, GameWindow.WINDOW_HEIGHT - (2 * Tileset.TILE_SIZE));
 		}
 

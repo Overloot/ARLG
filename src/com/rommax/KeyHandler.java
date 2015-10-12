@@ -25,7 +25,7 @@ public class KeyHandler implements KeyListener{
 		this.mp = mp;
 		map.getGame().keyHandler = this;
 		re = false;
-	};
+	}
 
 
 	public void LookTo(int dy, int dx){
@@ -36,21 +36,21 @@ public class KeyHandler implements KeyListener{
 		map.field[ly][lx].setCursor(false);
 		ly += dy;
 		lx += dx;
-		String str = null;
+		String textLine;
 		map.field[ly][lx].setCursor(true);
 		if (map.field[ly][lx].getVisible())
 		{
-		str = "Здесь находится " + Tileset.getTileName(map.field[ly][lx].getID()).toLowerCase() + ". ";
+		textLine = "Здесь находится " + Tileset.getTileName(map.field[ly][lx].getID()).toLowerCase() + ". ";
 		if (map.field[ly][lx].getMonster() != null)
-		str += "#^#Здесь стоит " + map.field[ly][lx].getMonster().getName().toLowerCase() + ".";
+		textLine += "#^#Здесь стоит " + map.field[ly][lx].getMonster().getName().toLowerCase() + ".";
 		LinkedList<Item> ilist = map.field[ly][lx].getItemList();
 		if (ilist.size() != 0){
 			if (ilist.size() > 1 )
-			str += "#^# Здесь лежит много вещей. ";
+			textLine += "#^# Здесь лежит много вещей. ";
 			else
-			str += "#^#" + ilist.getFirst().getName() + " лежит здесь. ";
+			textLine += "#^#" + ilist.getFirst().getName() + " лежит здесь. ";
 	  	}
-		mp.descStr = str;
+		mp.descStr = textLine;
 		}
 		else
 		mp.descStr = "#^#Вы #2#не видите#^# этого! ";
@@ -91,28 +91,28 @@ public class KeyHandler implements KeyListener{
 			flag = true;
 
 			if (message.command == 'g'){
-					map.getGame().TryToPickupItem(map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message.number);
+					map.getGame().tryToPickupItem(map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message.number);
 					flag = true;
 				}
 			else
 			if (message.command == 'd'){
-								map.getGame().TryToDropItem(map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message.number);
+								map.getGame().tryToDropItem(map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message.number);
 								flag = true;
 							}
 			else
 			if (message.command == 'q'){
-											map.getGame().TryToQuaffItem(map.getGame().player.getInventory(), message.number);
+											map.getGame().tryToQuaffItem(map.getGame().player.getInventory(), message.number);
 											flag = true;
 										}
 			else
 			if (message.command == 'r'){
-					map.getGame().TryToReadItem(map.getGame().player.getInventory(), message.number);
+					map.getGame().tryToReadItem(map.getGame().player.getInventory(), message.number);
 					flag = true;
 				}
 			else
 			if (message.command == 'i')
 			                                {
-												map.getGame().TryToExamineItem(map.getGame().player.getInventory(), message.number);
+												map.getGame().tryToExamineItem(map.getGame().player.getInventory(), message.number);
 												flag = false;
 											}
 			else
@@ -123,7 +123,7 @@ public class KeyHandler implements KeyListener{
 			else
 			if (message.command == 'b')
 			{
-											map.getGame().TryToIdentifyItem(message.number);
+											map.getGame().tryToIdentifyItem(message.number);
 											flag = false;
 		    }
 
@@ -525,8 +525,8 @@ public class KeyHandler implements KeyListener{
 
 	}
 
-	public void keyReleased(KeyEvent event){};
+	public void keyReleased(KeyEvent event){}
 
-	public void keyTyped(KeyEvent event){};
+	public void keyTyped(KeyEvent event){}
 
 }

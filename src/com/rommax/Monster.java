@@ -31,8 +31,8 @@ public class Monster{
 	private Stat DElec;
 	private Stat DPoison;
 	private Stat DNormal;
-	private Stat CW;
-	private Stat SW;
+	private Stat currentWeight;
+	private Stat currentSize;
 	private int level;
 	private int exp;
 	private int paralyzecount;
@@ -51,21 +51,21 @@ public class Monster{
 	public Stat getHP(){return hp;}
 	public Game getGame(){return game;}
 	public Stat getFOVRAD(){return fovrad;}
-	public Stat getCW(){return CW;}
-	public Stat getSW(){return SW;}
+	public Stat getCurrentWeight(){return currentWeight;}
+	public Stat getCurrentSize(){return currentSize;}
 	public int getLevel(){return level;}
-	public void setLevel(int x){level = x;};
+	public void setLevel(int x){level = x;}
 	public void setY(int Y){
 		this.Y = Y;
 	}
 
-	public void setCW(Stat CW)
+	public void setCurrentWeight(Stat currentWeight)
 	{
-		this.CW = CW;
+		this.currentWeight = currentWeight;
 	}
 
-	public void setSW(Stat SW){
-		this.SW = SW;
+	public void setCurrentSize(Stat currentSize){
+		this.currentSize = currentSize;
 	}
 
 	public void setX(int X){
@@ -81,26 +81,26 @@ public class Monster{
 	public void setPoisonCount(int pc){poisoncount = pc;}
 	public String getName(){return name;}
 	public void setName(String name){this.name = name;}
-	public Stat getRFire(){return RFire;};
-	public Stat getRCold(){return RCold;};
-	public Stat getRPoison(){return RPoison;};
-	public Stat getRElec(){return RElec;};
-	public Stat getRNormal(){return RNormal;};
+	public Stat getRFire(){return RFire;}
+	public Stat getRCold(){return RCold;}
+	public Stat getRPoison(){return RPoison;}
+	public Stat getRElec(){return RElec;}
+	public Stat getRNormal(){return RNormal;}
 
-	public Stat getDFire(){return DFire;};
-	public Stat getDCold(){return DCold;};
-	public Stat getDPoison(){return DPoison;};
-	public Stat getDElec(){return DElec;};
-	public Stat getDNormal(){return DNormal;};
+	public Stat getDFire(){return DFire;}
+	public Stat getDCold(){return DCold;}
+	public Stat getDPoison(){return DPoison;}
+	public Stat getDElec(){return DElec;}
+	public Stat getDNormal(){return DNormal;}
 
-	public Stat getSTR(){return STR;};
-	public Stat getAGI(){return AGI;};
-	public Stat getEND(){return END;};
-	public Stat getLUCK(){return LUCK;};
+	public Stat getSTR(){return STR;}
+	public Stat getAGI(){return AGI;}
+	public Stat getEND(){return END;}
+	public Stat getLUCK(){return LUCK;}
 
-	public Stat getAP(){return AP;};
-	public void setXP(int amount){exp = amount;};
-	public int getXP(){return exp;};
+	public Stat getAP(){return AP;}
+	public void setXP(int amount){exp = amount;}
+	public int getXP(){return exp;}
 
 
 	public Monster(BaseMonster bm, int y, int x, Map map, Game game){
@@ -132,19 +132,19 @@ public class Monster{
 		this.DNormal = new Stat(bm.getDNormal().getCurrent(), bm.getDNormal().getMax());
 		this.AP = new Stat(bm.getAP().getCurrent(), bm.getAP().getMax());
 		this.game = game;
-		this.CW = new Stat(0, game.CARRYING_PER_STRENGTH * STR.getCurrent());
-		this.SW = new Stat(0, game.MIN_SIZE);
+		this.currentWeight = new Stat(0, game.CARRYING_PER_STRENGTH * STR.getCurrent());
+		this.currentSize = new Stat(0, game.MIN_SIZE);
 
 		Equipment = new Item[Itemset.MAX_SLOTS];
 		Inventory = new LinkedList<Item>();
 	}
 
 	public boolean move(int y, int x){
-		if (CW.getCurrent() > CW.getMax()){
+		if (currentWeight.getCurrent() > currentWeight.getMax()){
 			game.logMessage("Вы #2#перегружены!#^#");
 			return false;
 		}
-		if (SW.getCurrent() > SW.getMax()){
+		if (currentSize.getCurrent() > currentSize.getMax()){
 			game.logMessage("Вы несете #2#слишком много вещей!#^#");
 			return false;
 		}
@@ -193,7 +193,7 @@ public class Monster{
 		getHP().setCurrent(getHP().getCurrent() + game.HIT_POINTS_PER_ENDURANCE * so.END_UP.getCurrent());
 		getHP().setMax(getHP().getMax() + game.HIT_POINTS_PER_STRENGTH * so.STR_UP.getCurrent());
 		getHP().setCurrent(getHP().getCurrent() + game.HIT_POINTS_PER_STRENGTH * so.STR_UP.getCurrent());
-		getCW().setMax(getCW().getMax() + game.CARRYING_PER_STRENGTH * so.STR_UP.getCurrent());
+		getCurrentWeight().setMax(getCurrentWeight().getMax() + game.CARRYING_PER_STRENGTH * so.STR_UP.getCurrent());
 
 		if (b)
 		if (so.STR_UP.getCurrent()>0) game.logMessage("Вы почувствовали себя #3#сильнее!#^#");
@@ -298,7 +298,7 @@ public class Monster{
 		if (so.SW_UP.getCurrent()>0) game.logMessage("Теперь мы можете нести #3#больше#^# вещей!");
 		else
 		if (so.SW_UP.getCurrent()<0) game.logMessage("Теперь вы можете нести #2#меньше#^# вещей!");
-		SW.setMax(SW.getMax() + so.SW_UP.getCurrent());
+		currentSize.setMax(currentSize.getMax() + so.SW_UP.getCurrent());
 		if (b)
 		if (so.HEALPOISON.getCurrent()>0) game.logMessage("Вы исцеляетесь от #3#яда!#^#");
 
@@ -341,7 +341,7 @@ public class Monster{
 		getHP().setCurrent(getHP().getCurrent() - game.HIT_POINTS_PER_ENDURANCE * so.END_UP.getCurrent());
 		getHP().setMax(getHP().getMax() - game.HIT_POINTS_PER_STRENGTH * so.STR_UP.getCurrent());
 		getHP().setCurrent(getHP().getCurrent() - game.HIT_POINTS_PER_STRENGTH * so.STR_UP.getCurrent());
-		getCW().setMax(getCW().getMax() - game.CARRYING_PER_STRENGTH * so.STR_UP.getCurrent());
+		getCurrentWeight().setMax(getCurrentWeight().getMax() - game.CARRYING_PER_STRENGTH * so.STR_UP.getCurrent());
 
 
 		AGI.sub(so.AGI_UP);
@@ -438,7 +438,7 @@ public class Monster{
 		if (so.SW_UP.getCurrent()<0) game.logMessage("Теперь мы можете нести #3#больше#^# вещей!");
 		else
 		if (so.SW_UP.getCurrent()>0) game.logMessage("Теперь вы можете нести #2#меньше#^# вещей!");
-		SW.setMax(SW.getMax() - so.SW_UP.getCurrent());
+		currentSize.setMax(currentSize.getMax() - so.SW_UP.getCurrent());
 
 		if (getPoisonCount()<0) setPoisonCount(0);
 		}
@@ -460,7 +460,7 @@ public class Monster{
 				int pd = enemy.hp.getCurrent();
 				//String dlog = "ловкость атакующего " + AGI.getCurrent() + "| ловкость жертвы" + enemy.AGI.getCurrent();
 				int min = rand.nextInt(AGI.getCurrent());
-				int max = rand.nextInt(enemy.AGI.getCurrent());;
+				int max = rand.nextInt(enemy.AGI.getCurrent());
 				//dlog+=" выпало" + min + " против " + max;
 				//game.logMessage(dlog);
 
