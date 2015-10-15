@@ -204,7 +204,7 @@ public class Game {
         if (x) {
             frame1.setFocusable(false);
             frame1.setFocusableWindowState(false);
-            levelUpWindow frame1 = new levelUpWindow(map.getGame());
+            LevelUpWindow frame1 = new LevelUpWindow(map.getGame());
             frame1.setUndecorated(true);
             frame1.setLocation(map.getGame().frame1.WINDOW_WIDTH / 2 - frame1.WINDOW_WIDTH / 2, map.getGame().frame1.WINDOW_HEIGHT / 2 - frame1.WINDOW_HEIGHT / 2);
             frame1.toFront();
