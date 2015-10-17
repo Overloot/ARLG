@@ -99,8 +99,8 @@ public class PlayerAction {
 		return false;
 	}
 	
-	private boolean move(int x, int y) {
-		return map.getGame().player.move(x, y);
+	private boolean move(int y, int x) {
+		return map.getGame().player.move(y, x);
 	}
 	
 	private void setX(int x) {
