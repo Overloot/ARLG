@@ -18,7 +18,7 @@ class EqPanel extends JPanel
 		listener = new EqKeyHandler(this);
 		addKeyListener(listener);
 		setFocusable(true);
-		for (int i=0; i<Itemset.MAX_SLOTS; i++)
+		for (int i=0; i< ItemSet.MAX_SLOTS; i++)
 		   if (ewindow.monster.Equipment[i] != null){
 			   current = i;
 			   break;
@@ -59,12 +59,12 @@ class EqPanel extends JPanel
 		Graphics2D g2 = (Graphics2D)g;
 		Image im = Toolkit.getDefaultToolkit().getImage("res/icons/texture_menu.png");
 		g.drawImage(im,0,0,this);
-		for (int i=0; i<Itemset.MAX_SLOTS; i++){
+		for (int i=0; i< ItemSet.MAX_SLOTS; i++){
 			im =  Toolkit.getDefaultToolkit().getImage("res/icons/item_place.png");
 			g.drawImage(im, 0 , i*Tileset.TILE_SIZE + 10, this);
 
 			if (ewindow.monster.Equipment[i] != null){
-					im =  Toolkit.getDefaultToolkit().getImage(Itemset.getItem(ewindow.monster.Equipment[i].getID()).getPath());
+					im =  Toolkit.getDefaultToolkit().getImage(ItemSet.getItem(ewindow.monster.Equipment[i].getID()).getPath());
 				    g.drawImage(im, 0 , i*Tileset.TILE_SIZE + 10, this);
 				    g2.setPaint(Color.WHITE);
 					drawColorString(g,ewindow.monster.Equipment[i].getName().toLowerCase(),Tileset.TILE_SIZE + 5, (int)(Tileset.TILE_SIZE * (0.5 + (i))) + 10);

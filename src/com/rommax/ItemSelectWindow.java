@@ -31,7 +31,7 @@ public class ItemSelectWindow extends JFrame{
 
 
 	public ItemSelectWindow(Game game, int type, LinkedList<Item> list, ItemSelectMessage message){
-		if (type == Itemset.TYPE_ANY) isChangedFilter = true;
+		if (type == ItemSet.TYPE_ANY) isChangedFilter = true;
 		else
 		isChangedFilter = false;
 		this.game = game;

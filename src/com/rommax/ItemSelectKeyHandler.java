@@ -21,7 +21,7 @@ public class ItemSelectKeyHandler implements KeyListener{
 		{
 		if (ip.iwindow.isChangedFilter)
 		{
-			ip.iwindow.type = Itemset.TYPE_MELEE_WEAPON;
+			ip.iwindow.type = ItemSet.TYPE_MELEE_WEAPON;
 			ip.resetState();
 		}
 		}
@@ -30,7 +30,7 @@ public class ItemSelectKeyHandler implements KeyListener{
 		{
 		if (ip.iwindow.isChangedFilter)
 				{
-					ip.iwindow.type = Itemset.TYPE_ARMOR;
+					ip.iwindow.type = ItemSet.TYPE_ARMOR;
 					ip.resetState();
 				}
 		}
@@ -39,7 +39,7 @@ public class ItemSelectKeyHandler implements KeyListener{
 				{
 				if (ip.iwindow.isChangedFilter)
 						{
-							ip.iwindow.type = Itemset.TYPE_POTION;
+							ip.iwindow.type = ItemSet.TYPE_POTION;
 							ip.resetState();
 						}
 				}
@@ -48,7 +48,7 @@ public class ItemSelectKeyHandler implements KeyListener{
 				{
 				if (ip.iwindow.isChangedFilter)
 						{
-							ip.iwindow.type = Itemset.TYPE_SCROLL;
+							ip.iwindow.type = ItemSet.TYPE_SCROLL;
 							ip.resetState();
 						}
 				}
@@ -57,7 +57,7 @@ public class ItemSelectKeyHandler implements KeyListener{
 				{
 				if (ip.iwindow.isChangedFilter)
 						{
-							ip.iwindow.type = Itemset.TYPE_MISC;
+							ip.iwindow.type = ItemSet.TYPE_MISC;
 							ip.resetState();
 						}
 				}
@@ -66,7 +66,7 @@ public class ItemSelectKeyHandler implements KeyListener{
 						{
 						if (ip.iwindow.isChangedFilter)
 								{
-									ip.iwindow.type = Itemset.TYPE_CONTAINER;
+									ip.iwindow.type = ItemSet.TYPE_CONTAINER;
 									ip.resetState();
 								}
 						}
@@ -75,13 +75,13 @@ public class ItemSelectKeyHandler implements KeyListener{
 				{
 				if (ip.iwindow.isChangedFilter)
 						{
-							ip.iwindow.type = Itemset.TYPE_ANY;
+							ip.iwindow.type = ItemSet.TYPE_ANY;
 							ip.resetState();
 						}
 				}
 		else
 		if (keycode == KeyEvent.VK_ENTER){
-			if (ip.iwindow.type != Itemset.TYPE_ANY)
+			if (ip.iwindow.type != ItemSet.TYPE_ANY)
 			ip.iwindow.message.number = (getItemNumber(ip.current, ip.iwindow.type));
 			else
 			ip.iwindow.message.number = ip.current;
@@ -155,7 +155,7 @@ public class ItemSelectKeyHandler implements KeyListener{
 		Item item;
 		while(ix<number){
 			item = iter.next();
-			if (Itemset.getItem(item.getID()).getType() == type)
+			if (ItemSet.getItem(item.getID()).getType() == type)
 				ix++;
 			cx++;
 		}

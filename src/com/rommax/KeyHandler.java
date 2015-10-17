@@ -117,7 +117,7 @@ public class KeyHandler implements KeyListener{
 											}
 			else
 			if (message.command == 'w'){
-			  								map.getGame().TryToEquipItem(map.getGame().player.getInventory(), message.number);
+			  								map.getGame().tryToEquipItem(map.getGame().player.getInventory(), message.number);
 			  								flag = true;
 										}
 			else
@@ -190,7 +190,7 @@ public class KeyHandler implements KeyListener{
 		map.getGame().frame1.setFocusableWindowState(false);
 		message = new ItemSelectMessage();
 		message.command = 'g';
-		ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), Itemset.TYPE_ANY, map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message);
+		ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message);
 		frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     	frame2.setTitle("Что вы хотите поднять?");
 		frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
@@ -221,7 +221,7 @@ public class KeyHandler implements KeyListener{
 				map.getGame().frame1.setFocusableWindowState(false);
 				message = new ItemSelectMessage();
 				message.command = 'd';
-				ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), Itemset.TYPE_ANY, map.getGame().player.getInventory(), message);
+				ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.getGame().player.getInventory(), message);
 				frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				frame2.setTitle("Что вы хотите бросить?");
 				frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
@@ -244,7 +244,7 @@ public class KeyHandler implements KeyListener{
 				map.getGame().frame1.setFocusableWindowState(false);
 				message = new ItemSelectMessage();
 				message.command = 'q';
-				ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), Itemset.TYPE_POTION, map.getGame().player.getInventory(), message);
+				ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_POTION, map.getGame().player.getInventory(), message);
 				frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				frame2.setTitle("Что вы хотите выпить?");
 				frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
@@ -267,7 +267,7 @@ public class KeyHandler implements KeyListener{
 				map.getGame().frame1.setFocusableWindowState(false);
 				message = new ItemSelectMessage();
 				message.command = 'w';
-				ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), Itemset.TYPE_ANY, map.getGame().player.getInventory(), message);
+				ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.getGame().player.getInventory(), message);
 				frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				frame2.setTitle("Что вы хотите надеть?");
 				frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
@@ -303,7 +303,7 @@ public class KeyHandler implements KeyListener{
 						map.getGame().frame1.setFocusableWindowState(false);
 						message = new ItemSelectMessage();
 						message.command = 'i';
-						ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), Itemset.TYPE_ANY, map.getGame().player.getInventory(), message);
+						ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.getGame().player.getInventory(), message);
 						frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 						frame2.setTitle("Что вы хотите осмотреть?");
 						frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
@@ -326,7 +326,7 @@ public class KeyHandler implements KeyListener{
 				map.getGame().frame1.setFocusableWindowState(false);
 				message = new ItemSelectMessage();
 				message.command = 'r';
-				ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), Itemset.TYPE_SCROLL, map.getGame().player.getInventory(), message);
+				ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_SCROLL, map.getGame().player.getInventory(), message);
 				frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				frame2.setTitle("Что вы хотите прочитать?");
 				frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
@@ -409,7 +409,7 @@ public class KeyHandler implements KeyListener{
 			LookTo(0, 0);
 			flag = false;
 			}
-		// Игрок движется по прямых
+		// Игрок движется по прямым
 		else if (keycode==KeyEvent.VK_LEFT) playerAction.left();
 		else if (keycode==KeyEvent.VK_RIGHT) playerAction.right();
 		else if (keycode==KeyEvent.VK_UP) playerAction.up();

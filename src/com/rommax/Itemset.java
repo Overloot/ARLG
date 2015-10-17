@@ -1,6 +1,6 @@
 package com.rommax;
 
-public class Itemset{
+public class ItemSet {
 
 
 	/*>>>*/public static final int MAX_ITEMS =47;

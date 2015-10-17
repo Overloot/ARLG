@@ -218,7 +218,7 @@ class MainPanel extends JPanel
 								else
 								{
 									LinkedList<Item> itemlist = DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getItemList();
-								    image = Toolkit.getDefaultToolkit().getImage(Itemset.getItem(itemlist.getFirst().getID()).getPath());
+								    image = Toolkit.getDefaultToolkit().getImage(ItemSet.getItem(itemlist.getFirst().getID()).getPath());
 								}
 													    g.drawImage(image,y,x,this);
 

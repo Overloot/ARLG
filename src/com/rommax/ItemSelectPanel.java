@@ -28,7 +28,7 @@ class ItemSelectPanel extends JPanel
 		Item it = null;
 		while (iter.hasNext()){
 			it = iter.next();
-			if (it.getType()==iwindow.type || iwindow.type == Itemset.TYPE_ANY)
+			if (it.getType()==iwindow.type || iwindow.type == ItemSet.TYPE_ANY)
 			   MAX_ITEMS++;
 		}
 		min = 0;
@@ -44,7 +44,7 @@ public void resetState(){
 			Item it = null;
 			while (iter.hasNext()){
 				it = iter.next();
-				if (it.getType()==iwindow.type || iwindow.type == Itemset.TYPE_ANY)
+				if (it.getType()==iwindow.type || iwindow.type == ItemSet.TYPE_ANY)
 				   MAX_ITEMS++;
 			}
 			min = 0;
@@ -93,7 +93,7 @@ void drawColorString(Graphics g, String str, int lastX, int lastY){
 		iter.next();
 
 		while(ix<min){
-			if (item.getType()==iwindow.type || iwindow.type == Itemset.TYPE_ANY)
+			if (item.getType()==iwindow.type || iwindow.type == ItemSet.TYPE_ANY)
 			ix++;
 		    item = iter.next();
 		}
@@ -105,13 +105,13 @@ void drawColorString(Graphics g, String str, int lastX, int lastY){
 		{
 			if (item!=null)
 			{
-				if (item.getType()!=iwindow.type && iwindow.type != Itemset.TYPE_ANY)
+				if (item.getType()!=iwindow.type && iwindow.type != ItemSet.TYPE_ANY)
 			    {
 				i--;
 				}
 	    		else
 				{
-					im =  Toolkit.getDefaultToolkit().getImage(Itemset.getItem(item.getID()).getPath());
+					im =  Toolkit.getDefaultToolkit().getImage(ItemSet.getItem(item.getID()).getPath());
 				    g.drawImage(im, 0 , (i-min)*Tileset.TILE_SIZE + 10, this);
 				    g2.setPaint(Color.WHITE);
 					drawColorString(g, item.getName().toLowerCase(),Tileset.TILE_SIZE + 5, (int)(Tileset.TILE_SIZE * (0.5 + (i - min))) + 10);
@@ -135,7 +135,7 @@ void drawColorString(Graphics g, String str, int lastX, int lastY){
 		if (min>0)
 		    g.drawString("<...>",5,10);
 		g2.setPaint(Color.WHITE);
-		g.drawString("Текущий режим: " + Itemset.getNameOfType(iwindow.type).toLowerCase(), 5, Tileset.TILE_SIZE * 10 + 25);
+		g.drawString("Текущий режим: " + ItemSet.getNameOfType(iwindow.type).toLowerCase(), 5, Tileset.TILE_SIZE * 10 + 25);
 
 		if (max == -1) min = -1;
 		g.drawString("Всего предметов: " + Integer.toString(MAX_ITEMS) + ", показаны предметы с " + (min + 1) + " по " + (max + 1) + ".", 5, Tileset.TILE_SIZE * 10 + 35);

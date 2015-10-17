@@ -21,10 +21,10 @@ public class EqKeyHandler implements KeyListener{
 		if (keycode == KeyEvent.VK_DOWN){
 			if (ep.current != -1){
 				int nc = ep.current + 1;
-				if (nc >=( Itemset.MAX_SLOTS - 1)) nc = 0;
+				if (nc >=( ItemSet.MAX_SLOTS - 1)) nc = 0;
 				while (ep.ewindow.monster.Equipment[nc] == null){
 				    nc++;
-					if (nc >=( Itemset.MAX_SLOTS - 1)) nc = 0;
+					if (nc >=( ItemSet.MAX_SLOTS - 1)) nc = 0;
 				}
 				ep.current = nc;
 			}
@@ -33,10 +33,10 @@ public class EqKeyHandler implements KeyListener{
 		if (keycode == KeyEvent.VK_UP){
 			if (ep.current != -1){
 				int nc = ep.current - 1 ;
-				if (nc < 0 ) nc = Itemset.MAX_SLOTS - 1;
+				if (nc < 0 ) nc = ItemSet.MAX_SLOTS - 1;
 				while (ep.ewindow.monster.Equipment[nc] == null){
 					   nc--;
-						if (nc < 0 ) nc = Itemset.MAX_SLOTS - 1;
+						if (nc < 0 ) nc = ItemSet.MAX_SLOTS - 1;
 					}
 
 				ep.current = nc;
@@ -51,7 +51,7 @@ public class EqKeyHandler implements KeyListener{
 		if (keycode == KeyEvent.VK_T && ep.current!=-1){
 			ep.ewindow.game.TryToTakeOffItem(ep.current);
 		 	boolean b = false;
-		 	for (int i=0; i<Itemset.MAX_SLOTS; i++)
+		 	for (int i=0; i< ItemSet.MAX_SLOTS; i++)
 		 		if (ep.ewindow.monster.Equipment[i] != null) b = true;
 		 		if (!b) ep.ewindow.stop();
 		}

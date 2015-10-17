@@ -204,7 +204,7 @@ public class Game {
         if (x) {
             frame1.setFocusable(false);
             frame1.setFocusableWindowState(false);
-            levelUpWindow frame1 = new levelUpWindow(map.getGame());
+            LevelUpWindow frame1 = new LevelUpWindow(map.getGame());
             frame1.setUndecorated(true);
             frame1.setLocation(map.getGame().frame1.WINDOW_WIDTH / 2 - frame1.WINDOW_WIDTH / 2, map.getGame().frame1.WINDOW_HEIGHT / 2 - frame1.WINDOW_HEIGHT / 2);
             frame1.toFront();
@@ -326,7 +326,7 @@ public class Game {
 
     public void fillLevelByItems() {
         for (int i = 0; i < MAX_ITEM_PER_LEVEL; i++)
-            AddRandomItem();
+            addRandomItem();
     }
 
 
@@ -426,7 +426,7 @@ public class Game {
     public void tryToQuaffItem(LinkedList<Item> list, int number) {
         if (number == -1) return;
 
-        if (player.getInventory().get(number).getType() != Itemset.TYPE_POTION) {
+        if (player.getInventory().get(number).getType() != ItemSet.TYPE_POTION) {
             logMessage("#8#" + player.getInventory().get(number).getName() + "#^# - это нельзя выпить!");
             return;
         }
@@ -442,7 +442,7 @@ public class Game {
     public void tryToReadItem(LinkedList<Item> list, int number) {
         if (number == -1) return;
 
-        if (player.getInventory().get(number).getType() != Itemset.TYPE_SCROLL) {
+        if (player.getInventory().get(number).getType() != ItemSet.TYPE_SCROLL) {
             logMessage(player.getInventory().get(number).getName() + "#^# - это нельзя прочитать!");
             return;
         }
@@ -475,7 +475,7 @@ public class Game {
             }
         }
 
-        Itemset.ID_ITEMS[player.getInventory().get(number).getID()] = 1;
+        ItemSet.ID_ITEMS[player.getInventory().get(number).getID()] = 1;
         String textLine;
         textLine = "Вы поняли, что " + player.getInventory().get(number).getName().toLowerCase();
         player.getInventory().get(number).swap_names();
@@ -491,7 +491,7 @@ public class Game {
             return;
         }
 
-        Itemset.ID_ITEMS[item.getID()] = 1;
+        ItemSet.ID_ITEMS[item.getID()] = 1;
         for (int i = 0; i < itemsQuantity; i++) {
             if (itemList[i] != null) {
                 if (itemList[i].getID() == item.getID() && !itemList[i].isIdentify()) {
@@ -509,6 +509,8 @@ public class Game {
     }
 
 
+    // метод осмотра вещи, например из инвентаря по нажатию Enter
+    // этот метод вызывается из KeyHandler
     public void tryToExamineItem(LinkedList<Item> list, int number) {
         if (number == -1) return;
         logMessage("Вы осмотрели предмет (" + list.get(number).getName().toLowerCase() + "#^#)");
@@ -522,6 +524,7 @@ public class Game {
         frame2.setVisible(true);
     }
 
+    // метод осмотра вещи, например из инвентаря по нажатию Enter
     public void tryToExamineItem(Item item) {
         logMessage("Вы осмотрели предмет (" + item.getName().toLowerCase() + "#^#)");
         frame1.setFocusable(false);
@@ -534,36 +537,40 @@ public class Game {
         frame2.setVisible(true);
     }
 
-
-    public void TryToEquipItem(LinkedList<Item> list, int number) {
+    // метод реализует возможность одеть выбранную вещь
+    public void tryToEquipItem(LinkedList<Item> list, int number) {
         if (number == -1) return;
 
-        if (player.getInventory().get(number).getSlot() == Itemset.SLOT_ANY) {
+        if (player.getInventory().get(number).getSlot() == ItemSet.SLOT_ANY) {
             logMessage("#8#" + player.getInventory().get(number).getName() + "#^# - это нельзя надеть!");
             return;
         }
-        Item li = null;
 
+        // если игрок пытается одеть вещь в тот слот, в котором уже что-то есть, то снимаем эту вещь
+        // перед тем как одеть новую
+        Item li = null;
         if (player.Equipment[player.getInventory().get(number).getSlot()] != null)
             li = player.Equipment[player.getInventory().get(number).getSlot()];
         if (li != null) {
             logMessage("Вы #8#сняли#^# это (" + li.getName().toLowerCase() + "#^#)");
+            // снимаем эффекты старой вещи
             player.deleteEffectFrom(ScriptParser.parseString(li.getScript()), li.isIdentify());
             player.getCurrentWeight().setCurrent(player.getCurrentWeight().getCurrent() + li.getMass());
             player.getCurrentSize().setCurrent(player.getCurrentSize().getCurrent() + li.getSize());
         }
         logMessage("Вы #8#надели#^# это (" + player.getInventory().get(number).getName().toLowerCase() + "#^#)");
+        // даем эффекты новой вещи
         player.setEffectFrom(ScriptParser.parseString(player.getInventory().get(number).getScript()), player.getInventory().get(number).isIdentify());
         tryToIdentifyItem(player.getInventory().get(number));
         player.getCurrentWeight().setCurrent(player.getCurrentWeight().getCurrent() - player.getInventory().get(number).getMass());
         player.getCurrentSize().setCurrent(player.getCurrentSize().getCurrent() - player.getInventory().get(number).getSize());
-        if (li != null)
-            player.getInventory().add(li);
+        if (li != null) player.getInventory().add(li); // если предварительно была снята вещь, то добавляем ее в инвентарь
         player.Equipment[player.getInventory().get(number).getSlot()] = player.getInventory().get(number);
-        player.getInventory().remove(number);
+        player.getInventory().remove(number); // удаляем надетую вещь из инвентаря
 
     }
 
+    // просто снимаем надетую вещь
     public void TryToTakeOffItem(int num) {
         logMessage("Вы #8#сняли#^# это (" + player.Equipment[num].getName().toLowerCase() + "#^#)");
         player.deleteEffectFrom(ScriptParser.parseString(player.Equipment[num].getScript()), player.Equipment[num].isIdentify());
@@ -574,28 +581,33 @@ public class Game {
     }
 
 
-    public void AddRandomItem() {
+    // устал
+    public void addRandomItem() {
         Random random = new Random();
         int newID = 0;
 
         while (true) {
-            newID = random.nextInt(Itemset.MAX_ITEMS);
-            if (Itemset.getItem(newID).getLevel() > currentMapNumber + 4) continue;
-            int chanse = 90 - Math.abs(Itemset.getItem(newID).getLevel() - currentMapNumber) * 20;
-            if (chanse > 100) chanse = 80;
-            if (!dice(chanse, 100)) continue;
-            if (!dice(Itemset.getItem(newID).getChanse(), 100)) continue;
+            newID = random.nextInt(ItemSet.MAX_ITEMS);
+            // выпавший итем не должен быть уровнем выше чем
+            if (ItemSet.getItem(newID).getLevel() > currentMapNumber + 4) continue;
+            // шанс выпадения выбранного итема на текущем уровне карты
+            int chance = 90 - Math.abs(ItemSet.getItem(newID).getLevel() - currentMapNumber) * 20;
+            if (chance > 100) chance = 80;
+            if (!dice(chance, 100)) continue;                                                                               // метод dice описан в самом начале класса Game
+            if (!dice(ItemSet.getItem(newID).getChanse(), 100)) continue;
             break;
         }
 
-        BaseItem bm = Itemset.getItem(newID);
+        BaseItem baseItem = ItemSet.getItem(newID);
+        // выбираем место сброса итема, если оно непроходимо или на нем есть монстр, то ищем другое место
         int y = random.nextInt(map.getHeight());
         int x = random.nextInt(map.getWidth());
         while (map.field[y][x].getPassable() == false || map.field[y][x].getMonster() != null) {
             y = random.nextInt(map.getHeight());
             x = random.nextInt(map.getWidth());
         }
-        itemList[itemsQuantity] = new Item(bm, y, x, map, this);
+        // сброс итема по случайным координатам
+        itemList[itemsQuantity] = new Item(baseItem, y, x, map, this);
         itemsQuantity++;
     }
 
@@ -606,20 +618,24 @@ public class Game {
                 monsterList[i].getHP().setCurrent(monsterList[i].getHP().getMax());
 
         }
+
         for (int i = 1; i < monstersQuantity; i++) {
             if (monsterList[i] != null)
                 if (monsterList[i].getHP().getCurrent() <= 0)
-                    KillMonster(i);
+                    killMonster(i);
         }
 
 
     }
 
+    // подъем уровня игрока
     public void levelUp() {
+        // если игрок достиг максимального уровня, то уровень не поднимаем
         if (player.getLevel() == Game.MAX_PLAYER_LEVEL) {
             player.setXP(0);
             return;
         }
+        // иначе поднимаем уровень
         player.setLevel(player.getLevel() + 1);
         player.setXP(player.getXP() - Game.maxExperience);
         Game.maxExperience *= 2;
@@ -629,25 +645,33 @@ public class Game {
 
     }
 
+    // метод описывает убийство монстра
+    public void killMonster(int index) {
+        logMessage(monsterList[index].getName() + " #2#УМИРАЕТ В МУКАХ#^#!!!#/#");
+        // присваиваем map параметры той карты, на которой расположен монстр
+        Map map = monsterList[index].getMap();
+        // ставим кровь на месте смерти монстра
+        map.field[monsterList[index].getY()][monsterList[index].getX()].setBlood(true);
+        // убираем монстра с карты
+        map.deleteMonsterAt(monsterList[index].getY(), monsterList[index].getX());
 
-    public void KillMonster(int i) {
-        logMessage(monsterList[i].getName() + " #2#УМИРАЕТ В МУКАХ#^#!!!#/#");
-        Map m = monsterList[i].getMap();
-        m.field[monsterList[i].getY()][monsterList[i].getX()].setBlood(true);
-        m.deleteMonsterAt(monsterList[i].getY(), monsterList[i].getX());
-        int mod = 0;
+        // модификатор получаемого количества опыта за убитого монстра
+        int mod;
+        // если игрок убивает равного себе монстра или монстра сильнее себя, то получает модификатор соответствующий уровню убитого монстра
+        if (player.getLevel() <= monsterList[index].getLevel()) mod = monsterList[index].getLevel();
+        // иначе модификатор равен единице
+        else mod = 1;
 
-        if (player.getLevel() <= monsterList[i].getLevel()) mod = monsterList[i].getLevel();
-        else
-            mod = 1;
-
-        int nexp = getValueFrom((int) (0.75 * (mod * mod) * 10), (int) (1.5 * (mod * mod) * 10));
-        player.setXP(player.getXP() + nexp);
-        logMessage("Вы получаете " + Integer.toString(nexp) + " опыта! ");
-        monsterList[i] = null;
+        // высчитывает сколько же игрок получит опыта
+        int Exp = getValueFrom((int) (0.75 * (mod * mod) * 10), (int) (1.5 * (mod * mod) * 10));
+        player.setXP(player.getXP() + Exp);
+        logMessage("Вы получаете " + Integer.toString(Exp) + " опыта! ");
+        // удаляем монстра
+        monsterList[index] = null;
     }
 
 
+    // для удобства =)
     public void done() {
     }
 

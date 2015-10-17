@@ -62,11 +62,11 @@ class DescPanel extends JPanel
 		strY = 15;
 		String str = dwindow.item.getName() + "(предмет " + dwindow.item.getLevel() + " уровня)";
 		drawColorString(g, str, leftX, strY);
-		if (dwindow.item.getSlot()!=Itemset.SLOT_ANY){
-			str = Itemset.getSlotName(dwindow.item.getSlot());
+		if (dwindow.item.getSlot()!= ItemSet.SLOT_ANY){
+			str = ItemSet.getSlotName(dwindow.item.getSlot());
 			drawColorString(g, str, leftX, strY);
 		}
-		str = "Этот предмет принадлежит категории:#8# " + Itemset.getNameOfType(dwindow.item.getType()).toLowerCase() + "#^#";
+		str = "Этот предмет принадлежит категории:#8# " + ItemSet.getNameOfType(dwindow.item.getType()).toLowerCase() + "#^#";
 		drawColorString(g, str, leftX, strY);
 		str = "Вес:" + dwindow.item.getMass() + ", размер:" + dwindow.item.getSize();
 		drawColorString(g, str, leftX, strY);

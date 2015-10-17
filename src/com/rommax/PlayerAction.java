@@ -1,7 +1,5 @@
 package com.rommax;
 
-import java.awt.event.*;
-import java.util.*;
 import javax.swing.*;
 
 public class PlayerAction {
@@ -93,7 +91,7 @@ public class PlayerAction {
 		map.getGame().frame1.setFocusableWindowState(false);
 		message = new ItemSelectMessage();
 		message.command = 'b';
-		ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), Itemset.TYPE_ANY, map.getGame().player.getInventory(), message);
+		ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.getGame().player.getInventory(), message);
 		frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame2.setTitle("Что вы хотите идентифицировать?");
 		frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);

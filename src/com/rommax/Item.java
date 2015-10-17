@@ -295,18 +295,18 @@ if (item.game.dice(chanse_to_have_stats_for_weapon,100)){
 		this.script = bm.getScript();
 		this.identify = true;
 		this.real_name = name;
-		if (type == Itemset.TYPE_ARMOR)
+		if (type == ItemSet.TYPE_ARMOR)
 		   generateArmor(this);
-		if (type == Itemset.TYPE_MELEE_WEAPON)
+		if (type == ItemSet.TYPE_MELEE_WEAPON)
 		   generateWeapon(this);
 		else
-		if (type == Itemset.TYPE_POTION && Itemset.ID_ITEMS[id] == 0){
+		if (type == ItemSet.TYPE_POTION && ItemSet.ID_ITEMS[id] == 0){
 			real_name = name;
 			name = "Непонятное зелье";
 			identify = false;
 		}
 		else
-		if (type == Itemset.TYPE_SCROLL && Itemset.ID_ITEMS[id] == 0){
+		if (type == ItemSet.TYPE_SCROLL && ItemSet.ID_ITEMS[id] == 0){
 			real_name = name;
 			name = "Непонятный свиток";
 			identify = false;

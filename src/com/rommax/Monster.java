@@ -135,7 +135,7 @@ public class Monster{
 		this.currentWeight = new Stat(0, game.CARRYING_PER_STRENGTH * STR.getCurrent());
 		this.currentSize = new Stat(0, game.MIN_SIZE);
 
-		Equipment = new Item[Itemset.MAX_SLOTS];
+		Equipment = new Item[ItemSet.MAX_SLOTS];
 		Inventory = new LinkedList<Item>();
 	}
 

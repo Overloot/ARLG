@@ -5,7 +5,7 @@ import java.awt.*;
 
 class LevelUpPanel extends JPanel
 {
-	public levelUpWindow lwindow;
+	public LevelUpWindow lwindow;
 	public LevelUpKeyHandler listener;
 	public int select =  1;
 	public int x1 = 0;
@@ -14,7 +14,7 @@ class LevelUpPanel extends JPanel
 
 
 
-	LevelUpPanel(levelUpWindow lwindow){
+	LevelUpPanel(LevelUpWindow lwindow){
 		super();
 		this.lwindow = lwindow;
 		listener = new LevelUpKeyHandler(this);

@@ -3,7 +3,7 @@ package com.rommax;
 import javax.swing.*;
 import java.awt.*;
 
-public class levelUpWindow extends JFrame{
+public class LevelUpWindow extends JFrame{
 
 	public static int WINDOW_HEIGHT;
 	public static int WINDOW_WIDTH;
@@ -24,7 +24,7 @@ public class levelUpWindow extends JFrame{
 
 
 	}
-	public levelUpWindow(Game game){
+	public LevelUpWindow(Game game){
 		setTitle("Повышение уровня");
 		this.game = game;
 		WINDOW_WIDTH = 500;
