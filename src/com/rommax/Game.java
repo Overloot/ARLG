@@ -237,7 +237,7 @@ public class Game {
 
         }
 
-        //TODO: нахера так?
+        //TODO: зачем так?
         hitPointsRegeneration += 10;
         if (hitPointsRegeneration > 100) hitPointsRegeneration = 0;
     }
