@@ -18,8 +18,7 @@ public class PlayerAction {
 	}
 	
 	// Движение влево
-	public void left() {
-		if (move(0, -1)) setX(-1);		
+	public void left() { if (move(0, -1)) setX(-1);
 	}
 	
 	// Движение вправо
@@ -37,24 +36,24 @@ public class PlayerAction {
 		if (move(+1, 0)) setY(+1);
 	}
 	
-	// Движение влево и вверх
+	// Q Движение влево и вверх
 	public void moveLeftUp() {
-		if (move(-1, -1)) setXY(-1, -1);
+		if (move(-1, -1)) setYX(-1, -1);
 	}
 
-	// Движение влево и вниз
+	// Z Движение влево и вниз
 	public void moveLeftDown() {
-		if (move(-1, +1)) setXY(-1, +1);		
+		if (move(+1, -1)) setYX(+1, -1);
 	}
 
-	// Движение вправо и вверх
+	// E Движение вправо и вверх
 	public void moveRightUp() {
-		if (move(+1, -1)) setXY(+1, -1);	
+		if (move(-1, +1)) setYX(-1, +1);
 	}
 
-	// Движение вправо и вниз
+	// C Движение вправо и вниз
 	public void moveRightDown() {
-		if (move(+1, +1)) setXY(+1, +1);
+		if (move(+1, +1)) setYX(+1, +1);
 	}
 	
 	// Вверх по лестнице
@@ -112,9 +111,10 @@ public class PlayerAction {
 		map.setCurrentY(map.getCurrentY() + y);
 	}
 
-	private void setXY(int x, int y) {
-		map.setCurrentX(map.getCurrentX() + x);
+	private void setYX(int y, int x) {
 		map.setCurrentY(map.getCurrentY() + y);
+		map.setCurrentX(map.getCurrentX() + x);
+
 	}
 
 }
