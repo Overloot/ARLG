@@ -123,6 +123,14 @@ class MainPanel extends JPanel
 	}
 
 
+	private void drawBar(int y, double c, double m, String path, Graphics g) {
+		Graphics2D g2 = (Graphics2D)g;
+		Image back = Toolkit.getDefaultToolkit().getImage("res/icons/backbar.png");
+		g.drawImage(back, GameWindow.WINDOW_WIDTH - 202 - 10, y, this);
+		Image bar = Toolkit.getDefaultToolkit().getImage(path);
+		g.drawImage(bar, GameWindow.WINDOW_WIDTH - 201 - 10, y + 1, (int)(c / m * 200), 8, this);	
+	}
+	
 	public void paintGUI(Graphics g){
 		int leftX = Tileset.TILE_SIZE*SCREEN_TILE_SIZE_X+10;
 		Graphics2D g2 = (Graphics2D)g;
@@ -132,8 +140,12 @@ class MainPanel extends JPanel
 		g2.setPaint(Color.WHITE);
 		str = "#2#ЖИЗНЬ#^# : " + Integer.toString(DrawingMap.getGame().player.getHP().getCurrent()) + "/" + Integer.toString(DrawingMap.getGame().player.getHP().getMax());
 		drawColorString(g,str,leftX, 100);
+		drawBar(90, DrawingMap.getGame().player.getHP().getCurrent(),
+			DrawingMap.getGame().player.getHP().getMax(), "res/icons/lifebar.png", g);		
 		str = "#3#ОПЫТ : #^#" + DrawingMap.getGame().player.getXP() + "/" + DrawingMap.getGame().maxExperience;
 		drawColorString(g,str,leftX, 115);
+		drawBar(105, DrawingMap.getGame().player.getXP(),
+			DrawingMap.getGame().maxExperience, "res/icons/expbar.png", g);				
 		str = "#8#СИЛА#^# : " + Integer.toString(DrawingMap.getGame().player.getSTR().getCurrent());
 		drawColorString(g,str,leftX, 130);
 		str = "#8#ЛОВКОСТЬ#^# : " + Integer.toString(DrawingMap.getGame().player.getAGI().getCurrent());
@@ -226,7 +238,7 @@ class MainPanel extends JPanel
 
 
 
-
+							// Рисуем монстров
 							if (DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getMonster()!=null){
 								image = Toolkit.getDefaultToolkit().getImage(MonsterSet.getMonster(DrawingMap.field[i + DrawingMap.getCurrentY()][j + DrawingMap.getCurrentX()].getMonster().getID()).getPath());
 								int px = DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getMonster().getX();
