@@ -13,8 +13,6 @@ public class KeyHandler implements KeyListener{
 	boolean CLOSE_MODE = false;
 	boolean LOOK_MODE = false;
 	public boolean ID_MODE = false;
-	private int ly;
-	private int lx;
 	boolean re;
 	int Timer = -1;
 	public ItemSelectMessage message = null;
@@ -27,49 +25,14 @@ public class KeyHandler implements KeyListener{
 		re = false;
 	}
 
-
-	public void LookTo(int dy, int dx){
-
-		if (!map.hasTileAt(ly + dy, lx + dx)) return;
-		if (!mp.HasTileAtScreen(ly+dy, lx+dx)) return;
-
-		map.field[ly][lx].setCursor(false);
-		ly += dy;
-		lx += dx;
-		String textLine;
-		map.field[ly][lx].setCursor(true);
-		if (map.field[ly][lx].getVisible())
-		{
-		textLine = "Здесь находится " + Tileset.getTileName(map.field[ly][lx].getID()).toLowerCase() + ". ";
-		if (map.field[ly][lx].getMonster() != null)
-		textLine += "#^#Здесь стоит " + map.field[ly][lx].getMonster().getName().toLowerCase() + ".";
-		LinkedList<Item> ilist = map.field[ly][lx].getItemList();
-		if (ilist.size() != 0){
-			if (ilist.size() > 1 )
-			textLine += "#^# Здесь лежит много вещей. ";
-			else
-			textLine += "#^#" + ilist.getFirst().getName() + " лежит здесь. ";
-	  	}
-		mp.descStr = textLine;
-		}
-		else
-		mp.descStr = "#^#Вы #2#не видите#^# этого! ";
-
-
-	}
-
-
-
-
 	public synchronized void keyPressed(KeyEvent event){
 		int keycode = 0;
 
 		// Действия игрока
-		PlayerAction playerAction = new PlayerAction(map); 
-
+		PlayerAction playerAction = new PlayerAction(map, mp); 
 
 		if (Timer == 0) System.exit(0);
-		if (map.getGame().player.getHP().getCurrent() <=0){
+		if (map.getGame().player.getHP().getCurrent() <=0) {
 			Timer = 0;
 			map.getGame().logMessage("Вы умерли!... Нажмите любую клавишу");
 			mp.repaint();
@@ -81,142 +44,107 @@ public class KeyHandler implements KeyListener{
 		if (event != null) keycode = event.getKeyCode();
 
 		if (keycode==KeyEvent.VK_ESCAPE && !LOOK_MODE) System.exit(0);
-				else
-		if (map.getGame().player.getparalyzecount()>0 && !LOOK_MODE){
+		else if (map.getGame().player.getparalyzecount()>0 && !LOOK_MODE){
 			map.getGame().logMessage("ВЫ #5#ПАРАЛИЗОВАНЫ!!!#^#/#");
 			flag = true;
 		}
-		else
-		if (message != null){
+		else if (message != null){
 			flag = true;
-
+			// 
 			if (message.command == 'g'){
-					map.getGame().tryToPickupItem(map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message.number);
-					flag = true;
-				}
-			else
-			if (message.command == 'd'){
-								map.getGame().tryToDropItem(map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message.number);
-								flag = true;
-							}
-			else
-			if (message.command == 'q'){
-											map.getGame().tryToQuaffItem(map.getGame().player.getInventory(), message.number);
-											flag = true;
-										}
-			else
-			if (message.command == 'r'){
-					map.getGame().tryToReadItem(map.getGame().player.getInventory(), message.number);
-					flag = true;
-				}
-			else
-			if (message.command == 'i')
-			                                {
-												map.getGame().tryToExamineItem(map.getGame().player.getInventory(), message.number);
-												flag = false;
-											}
-			else
-			if (message.command == 'w'){
-			  								map.getGame().tryToEquipItem(map.getGame().player.getInventory(), message.number);
-			  								flag = true;
-										}
-			else
-			if (message.command == 'b')
-			{
-											map.getGame().tryToIdentifyItem(message.number);
-											flag = false;
-		    }
-
-			else
-			{
-			flag = false;
+				map.getGame().tryToPickupItem(map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message.number);
+				flag = true;
 			}
-
-
+			else if (message.command == 'd'){
+				map.getGame().tryToDropItem(map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message.number);
+				flag = true;
+			}
+			else if (message.command == 'q'){
+				map.getGame().tryToQuaffItem(map.getGame().player.getInventory(), message.number);
+				flag = true;
+			}
+			else if (message.command == 'r'){
+				map.getGame().tryToReadItem(map.getGame().player.getInventory(), message.number);
+				flag = true;
+			}
+			else if (message.command == 'i'){
+				map.getGame().tryToExamineItem(map.getGame().player.getInventory(), message.number);
+				flag = false;
+			}
+			else if (message.command == 'w'){
+			  	map.getGame().tryToEquipItem(map.getGame().player.getInventory(), message.number);
+			  	flag = true;
+			}
+			else if (message.command == 'b'){
+				map.getGame().tryToIdentifyItem(message.number);
+				flag = false;
+		    }
+			else flag = false;
 			message = null;
 			mp.repaint();
 		}
-		else
-		if (LOOK_MODE){
-				if (keycode == KeyEvent.VK_RIGHT) LookTo(0, +1);
-				else
-				if (keycode == KeyEvent.VK_LEFT) LookTo(0, -1);
-				else
-				if (keycode == KeyEvent.VK_UP) LookTo(-1, 0);
-				else
-				if (keycode == KeyEvent.VK_DOWN) LookTo(+1, 0);
-				else
-				if (keycode == KeyEvent.VK_Q) LookTo(-1, -1);
-				else
-				if (keycode == KeyEvent.VK_Z) LookTo(+1, -1);
-				else
-				if (keycode == KeyEvent.VK_E) LookTo(-1, +1);
-				else
-				if (keycode == KeyEvent.VK_C) LookTo(+1, +1);
-				else
-				if (keycode == KeyEvent.VK_ENTER){
-					map.getGame().TryToLookAtMonster(ly,lx);
-					flag = false;
-				}
-				else
-				if (keycode == KeyEvent.VK_ESCAPE)
-				{
+		// Look mode
+		else if (LOOK_MODE) {
+			if (isRightKey(event, keycode)) playerAction.lookTo(+1, 0);
+			else if (isLeftKey(event, keycode)) playerAction.lookTo(-1, 0);
+			else if (isUpKey(event, keycode)) playerAction.lookTo(0, -1);
+			else if (isDownKey(event, keycode)) playerAction.lookTo(0, +1);
+			else if (isLeftUpKey(event, keycode)) playerAction.lookTo(-1, -1);
+			else if (isLeftDownKey(event, keycode)) playerAction.lookTo(-1, +1);
+			else if (isRightUpKey(event, keycode)) playerAction.lookTo(+1, -1);
+			else if (isRightDownKey(event, keycode)) playerAction.lookTo(+1, +1);
+			else if (keycode == KeyEvent.VK_ENTER) {
+				map.getGame().TryToLookAtMonster(ly, lx);
+				flag = false;
+			}
+			else if (keycode == KeyEvent.VK_ESCAPE) {
 				map.field[ly][lx].setCursor(false);
 				LOOK_MODE = false;
 				mp.descStr = "";
-				}
-				flag = false;
+			}
+			flag = false;
 		}
-		else
-		if (keycode == KeyEvent.VK_G && !event.isShiftDown()){
+		else if (keycode == KeyEvent.VK_G && !event.isShiftDown()) {
 			if (map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList().size() == 0) {
-					  map.getGame().logMessage("На земле пусто, нечего взять!");
-					  flag = false;
-					  mp.repaint();
-					  return;
-				  }
-	 if (map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList().size() == 1){
-		 			message = new ItemSelectMessage();
-					message.command = 'g';
-					message.number = 0;
-					keyPressed(null);
-					return;
-
-				  }
-				  else
-				  {
-
-		map.getGame().frame1.setFocusable(false);
-		map.getGame().frame1.setFocusableWindowState(false);
-		message = new ItemSelectMessage();
-		message.command = 'g';
-		ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message);
-		frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-    	frame2.setTitle("Что вы хотите поднять?");
-		frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
-		frame2.toFront();
-		frame2.setVisible(true);
-		flag = false;
-	}
+				map.getGame().logMessage("На земле пусто, нечего взять!");
+				flag = false;
+				mp.repaint();
+				return;
+			}
+			if (map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList().size() == 1){
+				message = new ItemSelectMessage();
+				message.command = 'g';
+				message.number = 0;
+				keyPressed(null);
+				return;
+			} else {
+				map.getGame().frame1.setFocusable(false);
+				map.getGame().frame1.setFocusableWindowState(false);
+				message = new ItemSelectMessage();
+				message.command = 'g';
+				ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message);
+				frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+				frame2.setTitle("Что вы хотите поднять?");
+				frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
+				frame2.toFront();
+				frame2.setVisible(true);
+				flag = false;
+			}
 		}
-		else
-		if (keycode == KeyEvent.VK_D){
+		else if (keycode == KeyEvent.VK_D && event.isShiftDown()){
 			if (map.getGame().player.getInventory().size() == 0) {
 				  map.getGame().logMessage("У вас пусто в инвентаре, нечего бросить!");
 				  flag = false;
 				  mp.repaint();
 				  return;
-			  }
-			  if (map.getGame().player.getInventory().size() == 1){
+			}
+			if (map.getGame().player.getInventory().size() == 1){
 				message = new ItemSelectMessage();
 				message.command = 'd';
 				message.number = 0;
 				keyPressed(null);
 				return;
-
-			  }
-			  else
-			  {
+			} else {
 				map.getGame().frame1.setFocusable(false);
 				map.getGame().frame1.setFocusableWindowState(false);
 				message = new ItemSelectMessage();
@@ -230,16 +158,13 @@ public class KeyHandler implements KeyListener{
 				flag = false;
 				}
 			}
-		else
-			if (keycode == KeyEvent.VK_Q && event.isShiftDown()){
+		else if (keycode == KeyEvent.VK_Q && event.isShiftDown()){
 			if (map.getGame().player.getInventory().size() == 0) {
-				  map.getGame().logMessage("У вас пусто в инвентаре, нечего выпить!");
-				  flag = false;
-				  mp.repaint();
-				  return;
-			  }
-			  else
-			  {
+				map.getGame().logMessage("У вас пусто в инвентаре, нечего выпить!");
+				flag = false;
+				mp.repaint();
+				return;
+			} else {
 				map.getGame().frame1.setFocusable(false);
 				map.getGame().frame1.setFocusableWindowState(false);
 				message = new ItemSelectMessage();
@@ -251,18 +176,15 @@ public class KeyHandler implements KeyListener{
 				frame2.toFront();
 				frame2.setVisible(true);
 				flag = false;
-				}
-				}
-				else
-			if (keycode == KeyEvent.VK_W && event.isShiftDown()){
+			}
+		}
+		else if (keycode == KeyEvent.VK_W && event.isShiftDown()){
 			if (map.getGame().player.getInventory().size() == 0) {
 				  map.getGame().logMessage("У вас пусто в инвентаре, нечего надеть!");
 				  flag = false;
 				  mp.repaint();
 				  return;
-			  }
-			  else
-			  {
+			} else {
 				map.getGame().frame1.setFocusable(false);
 				map.getGame().frame1.setFocusableWindowState(false);
 				message = new ItemSelectMessage();
@@ -274,11 +196,9 @@ public class KeyHandler implements KeyListener{
 				frame2.toFront();
 				frame2.setVisible(true);
 				flag = false;
-				}
-				}
-
-				else
-		if (keycode == KeyEvent.VK_E && event.isShiftDown()){
+			}
+		}
+		else if (keycode == KeyEvent.VK_E && event.isShiftDown()){
 			map.getGame().frame1.setFocusable(false);
 			map.getGame().frame1.setFocusableWindowState(false);
 	 		EqWindow frame2 = new EqWindow(map.getGame(), map.getGame().player);
@@ -289,39 +209,33 @@ public class KeyHandler implements KeyListener{
 			frame2.setVisible(true);
 			flag = false;
 		}
-		else
-		if (keycode == KeyEvent.VK_I){
-					if (map.getGame().player.getInventory().size() == 0) {
-						  map.getGame().logMessage("У вас пусто в инвентаре, нечего осмотреть!");
-						  flag = false;
-						  mp.repaint();
-						  return;
-					  }
-					  else
-					  {
-						map.getGame().frame1.setFocusable(false);
-						map.getGame().frame1.setFocusableWindowState(false);
-						message = new ItemSelectMessage();
-						message.command = 'i';
-						ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.getGame().player.getInventory(), message);
-						frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-						frame2.setTitle("Что вы хотите осмотреть?");
-						frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
-						frame2.toFront();
-						frame2.setVisible(true);
-						flag = false;
-						}
-						}
-						else
-			if (keycode == KeyEvent.VK_R){
+		else if (keycode == KeyEvent.VK_I){
+			if (map.getGame().player.getInventory().size() == 0) {
+				map.getGame().logMessage("У вас пусто в инвентаре, нечего осмотреть!");
+				flag = false;
+				mp.repaint();
+				return;
+			} else {
+				map.getGame().frame1.setFocusable(false);
+				map.getGame().frame1.setFocusableWindowState(false);
+				message = new ItemSelectMessage();
+				message.command = 'i';
+				ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.getGame().player.getInventory(), message);
+				frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+				frame2.setTitle("Что вы хотите осмотреть?");
+				frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
+				frame2.toFront();
+				frame2.setVisible(true);
+				flag = false;
+			}
+		}
+		else if (keycode == KeyEvent.VK_R){
 			if (map.getGame().player.getInventory().size() == 0) {
 				  map.getGame().logMessage("У вас пусто в инвентаре, нечего прочитать!");
 				  flag = false;
 				  mp.repaint();
 				  return;
-			  }
-			  else
-			  {
+			} else {
 				map.getGame().frame1.setFocusable(false);
 				map.getGame().frame1.setFocusableWindowState(false);
 				message = new ItemSelectMessage();
@@ -333,94 +247,74 @@ public class KeyHandler implements KeyListener{
 				frame2.toFront();
 				frame2.setVisible(true);
 				flag = false;
-				}
-				}
-			else
-				if (keycode == KeyEvent.VK_C && event.isShiftDown()){
-						map.getGame().frame1.setFocusable(false);
-						map.getGame().frame1.setFocusableWindowState(false);
-						DescWindow frame2 = new DescWindow(map.getGame(), map.getGame().player);
-						frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-						frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
-						frame2.toFront();
-						frame2.setTitle("Информация об игроке");
-						frame2.setVisible(true);
-						flag = false;
-						}
-
-		else
-		if (OPEN_MODE){
-			if (keycode == KeyEvent.VK_RIGHT) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 0, map.getGame().player.getX() + 1, true);
-			else
-			if (keycode == KeyEvent.VK_LEFT) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 0, map.getGame().player.getX() - 1, true);
-			else
-			if (keycode == KeyEvent.VK_UP) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() - 1, map.getGame().player.getX() + 0, true);
-			else
-			if (keycode == KeyEvent.VK_DOWN) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 1, map.getGame().player.getX() + 0, true);
-			else
-			if (keycode == KeyEvent.VK_Q) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() - 1, map.getGame().player.getX() - 1, true);
-			else
-			if (keycode == KeyEvent.VK_Z) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 1, map.getGame().player.getX() - 1, true);
-			else
-			if (keycode == KeyEvent.VK_E) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() - 1, map.getGame().player.getX() + 1, true);
-			else
-			if (keycode == KeyEvent.VK_C) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 1, map.getGame().player.getX() + 1, true);
-			else
-			{
-			map.getGame().logMessage("#2#НЕВЕРНОЕ#^# НАПРАВЛЕНИЕ! #/#");
-			flag = false;
 			}
-
+		}
+		else if (keycode == KeyEvent.VK_C && event.isShiftDown()){
+			map.getGame().frame1.setFocusable(false);
+			map.getGame().frame1.setFocusableWindowState(false);
+			DescWindow frame2 = new DescWindow(map.getGame(), map.getGame().player);
+			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
+			frame2.toFront();
+			frame2.setTitle("Информация об игроке");
+			frame2.setVisible(true);
+			flag = false;
+		}
+		// Open mode
+		else if (OPEN_MODE){
+			if (isRightKey(event, keycode)) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 0, map.getGame().player.getX() + 1, true);
+			else if (isLeftKey(event, keycode)) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 0, map.getGame().player.getX() - 1, true);
+			else if (isUpKey(event, keycode)) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() - 1, map.getGame().player.getX() + 0, true);
+			else if (isDownKey(event, keycode)) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 1, map.getGame().player.getX() + 0, true);
+			else if (isLeftUpKey(event, keycode)) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() - 1, map.getGame().player.getX() - 1, true);
+			else if (isLeftDownKey(event, keycode)) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 1, map.getGame().player.getX() - 1, true);
+			else if (isRightUpKey(event, keycode)) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() - 1, map.getGame().player.getX() + 1, true);
+			else if (isRightDownKey(event, keycode)) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 1, map.getGame().player.getX() + 1, true);
+			else {
+				map.getGame().logMessage("#2#НЕВЕРНОЕ#^# НАПРАВЛЕНИЕ! #/#");
+				flag = false;
+			}
 			OPEN_MODE = false;
 		}
-
-	else
-	if (CLOSE_MODE){
-			if (keycode == KeyEvent.VK_RIGHT) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 0, map.getGame().player.getX() + 1, false);
-			else
-			if (keycode == KeyEvent.VK_LEFT) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 0, map.getGame().player.getX() - 1, false);
-			else
-			if (keycode == KeyEvent.VK_UP) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() - 1, map.getGame().player.getX() + 0, false);
-			else
-			if (keycode == KeyEvent.VK_DOWN) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 1, map.getGame().player.getX() + 0, false);
-			else
-			if (keycode == KeyEvent.VK_Q) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() - 1, map.getGame().player.getX() - 1, false);
-			else
-			if (keycode == KeyEvent.VK_Z) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 1, map.getGame().player.getX() - 1, false);
-			else
-			if (keycode == KeyEvent.VK_E) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() - 1, map.getGame().player.getX() + 1, false);
-			else
-			if (keycode == KeyEvent.VK_C) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 1, map.getGame().player.getX() + 1, false);
-			else
-			{
-			map.getGame().logMessage("#2#НЕВЕРНОЕ#^# НАПРАВЛЕНИЕ! #/#");
-			flag = false;
+		
+		// Close mode
+		else if (CLOSE_MODE){
+			if (isRightKey(event, keycode)) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 0, map.getGame().player.getX() + 1, false);
+			else if (isLeftKey(event, keycode)) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 0, map.getGame().player.getX() - 1, false);
+			else if (isUpKey(event, keycode)) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() - 1, map.getGame().player.getX() + 0, false);
+			else if (isDownKey(event, keycode)) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 1, map.getGame().player.getX() + 0, false);
+			else if (isLeftUpKey(event, keycode)) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() - 1, map.getGame().player.getX() - 1, false);
+			else if (isLeftDownKey(event, keycode)) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 1, map.getGame().player.getX() - 1, false);
+			else if (isRightUpKey(event, keycode)) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() - 1, map.getGame().player.getX() + 1, false);
+			else if (isRightDownKey(event, keycode)) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 1, map.getGame().player.getX() + 1, false);
+			else {
+				map.getGame().logMessage("#2#НЕВЕРНОЕ#^# НАПРАВЛЕНИЕ! #/#");
+				flag = false;
 			}
-
 			CLOSE_MODE = false;
 		}
 
-		else
-		if (keycode == KeyEvent.VK_L){
+		// Look mode
+		else if (keycode == KeyEvent.VK_L){
 			ly = map.getGame().player.getY();
 			lx = map.getGame().player.getX();
 			map.field[ly][lx].setCursor(true);
 			LOOK_MODE = true;
-			LookTo(0, 0);
+			playerAction.lookTo(0, 0);
 			flag = false;
-			}
+		}
 		// Игрок движется по прямым
-		else if (keycode==KeyEvent.VK_LEFT) playerAction.left();
-		else if (keycode==KeyEvent.VK_RIGHT) playerAction.right();
-		else if (keycode==KeyEvent.VK_UP) playerAction.up();
-		else if (keycode==KeyEvent.VK_DOWN) playerAction.down();
+		else if (isUpKey(event, keycode)) playerAction.up();
+		else if (isDownKey(event, keycode)) playerAction.down();
+		else if (isLeftKey(event, keycode)) playerAction.left();
+		else if (isRightKey(event, keycode)) playerAction.right();
 		// Игрок движется по диагоналях
-		else if (keycode==KeyEvent.VK_Q && !event.isShiftDown()) playerAction.moveLeftUp();
-		else if (keycode==KeyEvent.VK_E && !event.isShiftDown()) playerAction.moveRightUp();
-		else if (keycode==KeyEvent.VK_Z && !event.isShiftDown()) playerAction.moveLeftDown();
-		else if (keycode==KeyEvent.VK_C && !event.isShiftDown()) playerAction.moveRightDown();
+		else if (isLeftUpKey(event, keycode)) playerAction.moveLeftUp();
+		else if (isRightUpKey(event, keycode)) playerAction.moveRightUp();
+		else if (isLeftDownKey(event, keycode)) playerAction.moveLeftDown();
+		else if (isRightDownKey(event, keycode)) playerAction.moveRightDown();
 		// Игрок пропускает ход и отдыхает
-		else if (keycode==KeyEvent.VK_S) playerAction.rest();
+		else if (isRestKey(event, keycode)) playerAction.rest();
 		// Игрок пытается что-то открыть
 		else if (keycode==KeyEvent.VK_O && event.isShiftDown()) flag = playerAction.openIt();
 		// Игрок пытается что-то закрыть
@@ -431,7 +325,6 @@ public class KeyHandler implements KeyListener{
 		else if (keycode==KeyEvent.VK_G && event.isShiftDown()) playerAction.upStair();
 		//
 		else flag = false;
-
 
 		mp.repaint();
 		
@@ -448,13 +341,49 @@ public class KeyHandler implements KeyListener{
 			map.FOV(map.getGame().player.getY(),map.getGame().player.getX(),map.getGame().player.getFOVRAD().getCurrent());
 			mp.repaint();
 		}
-
-
-
 	}
 
+	private boolean isUpKey(KeyEvent event, int keycode) {
+		return ((keycode==KeyEvent.VK_UP) || (keycode==KeyEvent.VK_W && !event.isShiftDown()) || (keycode==KeyEvent.VK_NUMPAD8));
+	}
+	
+	private boolean isDownKey(KeyEvent event, int keycode) {
+		return ((keycode==KeyEvent.VK_DOWN) || (keycode==KeyEvent.VK_X && !event.isShiftDown()) || (keycode==KeyEvent.VK_NUMPAD2));
+	}
+
+	private boolean isLeftKey(KeyEvent event, int keycode) {
+		return ((keycode==KeyEvent.VK_LEFT) || (keycode==KeyEvent.VK_A && !event.isShiftDown()) || (keycode==KeyEvent.VK_NUMPAD4));
+	}
+
+	private boolean isRightKey(KeyEvent event, int keycode) {
+		return ((keycode==KeyEvent.VK_RIGHT) || (keycode==KeyEvent.VK_D && !event.isShiftDown()) || (keycode==KeyEvent.VK_NUMPAD6));
+	}
+
+	private boolean isLeftUpKey(KeyEvent event, int keycode) {
+		return ((keycode==KeyEvent.VK_Q && !event.isShiftDown()) || (keycode==KeyEvent.VK_NUMPAD7));
+	}
+	
+	private boolean isRightUpKey(KeyEvent event, int keycode) {
+		return ((keycode==KeyEvent.VK_E && !event.isShiftDown()) || (keycode==KeyEvent.VK_NUMPAD9));
+	}
+	
+	private boolean isLeftDownKey(KeyEvent event, int keycode) {
+		return ((keycode==KeyEvent.VK_Z && !event.isShiftDown()) || (keycode==KeyEvent.VK_NUMPAD1));
+	}
+	
+	private boolean isRightDownKey(KeyEvent event, int keycode) {
+		return ((keycode==KeyEvent.VK_C && !event.isShiftDown()) || (keycode==KeyEvent.VK_NUMPAD3));
+	}
+	
+	private boolean isRestKey(KeyEvent event, int keycode) {
+		return ((keycode==KeyEvent.VK_S && !event.isShiftDown()) || (keycode==KeyEvent.VK_NUMPAD5));
+	}
+	
 	public void keyReleased(KeyEvent event){}
 
 	public void keyTyped(KeyEvent event){}
+	
+	public static int lx;
+	public static int ly;
 
 }

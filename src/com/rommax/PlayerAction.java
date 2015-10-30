@@ -1,14 +1,47 @@
 package com.rommax;
 
+import java.awt.event.*;
+import java.util.*;
 import javax.swing.*;
 
 public class PlayerAction {
 	
 	private Map map;
+	private MainPanel mp;
 	private ItemSelectMessage message;
 	
-	public PlayerAction(Map map) {
+	public PlayerAction(Map map, MainPanel mp) {
 		this.map = map;
+		this.mp = mp;
+	}
+	
+	// Осмотр тайла
+	public void lookTo(int dx, int dy) {
+		if (!map.hasTileAt(KeyHandler.ly + dy, KeyHandler.lx + dx)) return;
+		if (!mp.HasTileAtScreen(KeyHandler.ly + dy, KeyHandler.lx + dx)) return;
+
+		map.field[KeyHandler.ly][KeyHandler.lx].setCursor(false);
+		KeyHandler.ly += dy;
+		KeyHandler.lx += dx;
+		String textLine;
+		map.field[KeyHandler.ly][KeyHandler.lx].setCursor(true);
+		if (map.field[KeyHandler.ly][KeyHandler.lx].getVisible())
+		{
+		textLine = "Здесь находится " + Tileset.getTileName(map.field[KeyHandler.ly][KeyHandler.lx].getID()).toLowerCase() + ". ";
+		if (map.field[KeyHandler.ly][KeyHandler.lx].getMonster() != null)
+		textLine += "#^#Здесь стоит " + map.field[KeyHandler.ly][KeyHandler.lx].getMonster().getName().toLowerCase() + ".";
+		LinkedList<Item> ilist = map.field[KeyHandler.ly][KeyHandler.lx].getItemList();
+		if (ilist.size() != 0){
+			if (ilist.size() > 1 )
+			textLine += "#^# Здесь лежит много вещей. ";
+			else
+			textLine += "#^#" + ilist.getFirst().getName() + " лежит здесь. ";
+	  	}
+		mp.descStr = textLine;
+		}
+		else
+		mp.descStr = "#^#Вы #2#не видите#^# этого! ";
+		
 	}
 	
 	// Пропуск хода и отдых
