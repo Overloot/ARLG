@@ -123,7 +123,10 @@ class MainPanel extends JPanel
 	}
 
 
-	private void drawBar(int y, double c, double m, String path, Graphics g) {
+	private void drawBar(double c, double m, String path, Graphics g) {
+		if (c > m) c = m;
+		if (c < 0) c = 0;
+		int y = top - 25;
 		Graphics2D g2 = (Graphics2D)g;
 		Image back = Toolkit.getDefaultToolkit().getImage("res/icons/backbar.png");
 		g.drawImage(back, GameWindow.WINDOW_WIDTH - 202 - 10, y, this);
@@ -131,60 +134,68 @@ class MainPanel extends JPanel
 		g.drawImage(bar, GameWindow.WINDOW_WIDTH - 201 - 10, y + 1, (int)(c / m * 200), 8, this);	
 	}
 	
+	private void addLine(Graphics g, String s, int cur, int max) {
+		String str = s + " : " + Integer.toString(cur);
+		if (max > 0) str += "/" + Integer.toString(max);
+		drawColorString(g, str, left, top);
+		top += 15;
+	}
+	
+	private void addLine(Graphics g, String s) {
+		drawColorString(g, s, left, top);
+		top += 15;		
+	}
+	
 	public void paintGUI(Graphics g){
-		int leftX = Tileset.TILE_SIZE*SCREEN_TILE_SIZE_X+10;
 		Graphics2D g2 = (Graphics2D)g;
+		left = Tileset.TILE_SIZE * SCREEN_TILE_SIZE_X + 10;
 		g2.setPaint(Color.WHITE);
-		String str =  DrawingMap.getGame().player.getName() + "#8#  " + Integer.toString(DrawingMap.getGame().player.getLevel()) + "  #^#уровня";
-	    drawColorString(g, str ,leftX, 50);
-		g2.setPaint(Color.WHITE);
-		str = "#2#ЖИЗНЬ#^# : " + Integer.toString(DrawingMap.getGame().player.getHP().getCurrent()) + "/" + Integer.toString(DrawingMap.getGame().player.getHP().getMax());
-		drawColorString(g,str,leftX, 100);
-		drawBar(90, DrawingMap.getGame().player.getHP().getCurrent(),
-			DrawingMap.getGame().player.getHP().getMax(), "res/icons/lifebar.png", g);		
-		str = "#3#ОПЫТ : #^#" + DrawingMap.getGame().player.getXP() + "/" + DrawingMap.getGame().maxExperience;
-		drawColorString(g,str,leftX, 115);
-		drawBar(105, DrawingMap.getGame().player.getXP(),
-			DrawingMap.getGame().maxExperience, "res/icons/expbar.png", g);				
-		str = "#8#СИЛА#^# : " + Integer.toString(DrawingMap.getGame().player.getSTR().getCurrent());
-		drawColorString(g,str,leftX, 130);
-		str = "#8#ЛОВКОСТЬ#^# : " + Integer.toString(DrawingMap.getGame().player.getAGI().getCurrent());
-		drawColorString(g,str,leftX, 145);
-		str = "#8#ВЫНОСЛИВОСТЬ#^# : " + Integer.toString(DrawingMap.getGame().player.getEND().getCurrent());
-		drawColorString(g,str,leftX, 160);
-		str = "#8#УДАЧА#^# :" + Integer.toString(DrawingMap.getGame().player.getLUCK().getCurrent());
-		drawColorString(g,str,leftX, 175);
+		top = 50;
+		addLine(g, "#7#" + DrawingMap.getGame().player.getName() + "#^#");
+		top = 85;
+		// Level
+		addLine(g, "#8#УРОВЕНЬ#^#", DrawingMap.getGame().player.getLevel(), 0);
+		// Life
+		addLine(g, "#2#ЖИЗНЬ#^#", DrawingMap.getGame().player.getHP().getCurrent(), DrawingMap.getGame().player.getHP().getMax());
+		drawBar(DrawingMap.getGame().player.getHP().getCurrent(),
+			DrawingMap.getGame().player.getHP().getMax(), "res/icons/lifebar.png", g);	
+		// Experience
+		addLine(g, "#3#ОПЫТ#^#", DrawingMap.getGame().player.getXP(), DrawingMap.getGame().maxExperience);
+		drawBar(DrawingMap.getGame().player.getXP(),
+			DrawingMap.getGame().maxExperience, "res/icons/expbar.png", g);	
+		// Attributes	
+		addLine(g, "#8#СИЛА#^#", DrawingMap.getGame().player.getSTR().getCurrent(), 0);
+		addLine(g, "#8#ЛОВКОСТЬ#^#", DrawingMap.getGame().player.getAGI().getCurrent(), 0);
+		addLine(g, "#8#ВЫНОСЛИВОСТЬ#^#", DrawingMap.getGame().player.getEND().getCurrent(), 0);
+		addLine(g, "#8#УДАЧА#^#", DrawingMap.getGame().player.getLUCK().getCurrent(), 0);
+		// Effects
 		if (DrawingMap.getGame().player.getparalyzecount() > 0){
-			str = "#8#ВЫ ПАРАЛИЗОВАНЫ!!!#^# : #5#  " + DrawingMap.getGame().player.getparalyzecount();
-			drawColorString(g,str,leftX, 400);
+			top = 405;
+			addLine(g, "#8#ВЫ ПАРАЛИЗОВАНЫ!!!#^# : #5#  " + DrawingMap.getGame().player.getparalyzecount());
 		}
 		if (DrawingMap.getGame().player.getPoisonCount() > 0){
-			str = "#8#ВЫ ОТРАВЛЕНЫ!!!#^# : #3#  " + DrawingMap.getGame().player.getPoisonCount();
-			drawColorString(g,str,leftX, 420);
+			top = 420;
+			addLine(g, "#8#ВЫ ОТРАВЛЕНЫ!!!#^# : #3#  " + DrawingMap.getGame().player.getPoisonCount());
 		}
-
-		str = "#8#ГЛУБИНА#^# : " + Integer.toString(DrawingMap.getGame().currentMapNumber + 1);
-		drawColorString(g,str,leftX, 435);
-		str = "ХОД № " + Integer.toString(DrawingMap.getGame().turn);
-		drawColorString(g,str,leftX, 450);
-		str = "ВЕС ИНВЕНТАРЯ: " + Integer.toString(DrawingMap.getGame().player.getCurrentWeight().getCurrent()) + "/" + Integer.toString(DrawingMap.getGame().player.getCurrentWeight().getMax());
-		drawColorString(g,str,leftX, 465);
-		str = "РАЗМЕР ИНВЕНТАРЯ: " + Integer.toString(DrawingMap.getGame().player.getCurrentSize().getCurrent()) + "/" + Integer.toString(DrawingMap.getGame().player.getCurrentSize().getMax());
-		drawColorString(g,str,leftX, 480);
-		str = Integer.toString(DrawingMap.getGame().player.getY()) + "/" + Integer.toString(DrawingMap.getGame().player.getX());
-		drawColorString(g,str,leftX, 495);
+		top = 435;
+		addLine(g, "#8#ГЛУБИНА#^#", DrawingMap.getGame().currentMapNumber + 1,0);
+		addLine(g, "#8#ХОД#^#", DrawingMap.getGame().turn, 0);
+		addLine(g, "#8#НАГРУЗКА#^#", DrawingMap.getGame().player.getCurrentWeight().getCurrent(), DrawingMap.getGame().player.getCurrentWeight().getMax());
+		drawBar(DrawingMap.getGame().player.getCurrentWeight().getCurrent(),
+			DrawingMap.getGame().player.getCurrentWeight().getMax(), "res/icons/invbar.png", g);		
+		addLine(g, "#8#ОБЪЕМ#^#", DrawingMap.getGame().player.getCurrentSize().getCurrent(), DrawingMap.getGame().player.getCurrentSize().getMax());
+		drawBar(DrawingMap.getGame().player.getCurrentSize().getCurrent(),
+			DrawingMap.getGame().player.getCurrentSize().getMax(), "res/icons/invbar.png", g);		
+		addLine(g, "#8#КООРДИНАТЫ#^#", DrawingMap.getGame().player.getY(), DrawingMap.getGame().player.getX());
 
 		if (!descStr.equals("")){
 			drawColorString(g,descStr,15, GameWindow.WINDOW_HEIGHT - (2 * Tileset.TILE_SIZE));
 		}
 
-
-
-		str = DrawingMap.getName();
-				drawColorString(g,str,leftX, 520);
-
-
-}
+		// Map
+		top = 520;
+		addLine(g, DrawingMap.getName());
+	}
 
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -288,4 +299,7 @@ class MainPanel extends JPanel
 	paintGUI(g);
 	drawLog(g);
 	}
+	
+	private int left = 0;
+	private int top = 0;
 }

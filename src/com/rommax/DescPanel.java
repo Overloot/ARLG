@@ -60,20 +60,20 @@ class DescPanel extends JPanel
 		ScriptObject so = ScriptParser.parseString(dwindow.item.getScript());
 		int leftX = 10;
 		strY = 15;
-		String str = dwindow.item.getName() + "(предмет " + dwindow.item.getLevel() + " уровня)";
+		String str = dwindow.item.getName() + " (предмет " + dwindow.item.getLevel() + " уровня)";
 		drawColorString(g, str, leftX, strY);
 		if (dwindow.item.getSlot()!= ItemSet.SLOT_ANY){
 			str = ItemSet.getSlotName(dwindow.item.getSlot());
 			drawColorString(g, str, leftX, strY);
 		}
-		str = "Этот предмет принадлежит категории:#8# " + ItemSet.getNameOfType(dwindow.item.getType()).toLowerCase() + "#^#";
+		str = "Этот предмет принадлежит категории: #8#" + ItemSet.getNameOfType(dwindow.item.getType()).toLowerCase() + "#^#";
 		drawColorString(g, str, leftX, strY);
 		str = "Вес:" + dwindow.item.getMass() + ", размер:" + dwindow.item.getSize();
 		drawColorString(g, str, leftX, strY);
 
 		if (!dwindow.item.isIdentify())
 		{
-			drawColorString(g, "Вам пока ничего неизвестно о этом предмете.", leftX, strY);
+			drawColorString(g, "Вам пока ничего неизвестно об этом предмете.", leftX, strY);
 			return;
 		}
 

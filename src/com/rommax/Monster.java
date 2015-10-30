@@ -169,9 +169,9 @@ public class Monster{
 				if (this == game.player){
 				if (map.field[ny][nx].getItemList().size()>0)
 					if (map.field[ny][nx].getItemList().size()>=2)
-					game.logMessage("Здесь лежит много вещей.");
+					game.logMessage("Здесь лежит #7#много вещей!#^#");
 					else
-					game.logMessage("Здесь есть " + map.field[ny][nx].getItemList().get(0).getName().toLowerCase() + ".");
+					game.logMessage("Здесь лежит #7#" + map.field[ny][nx].getItemList().get(0).getName().toLowerCase() + ".#^#");
 				}
 				game.frame1.mainpanel.repaint();
 				return true;
@@ -295,7 +295,7 @@ public class Monster{
 		fovrad.add(so.FOVRAD);
 
 		if (b)
-		if (so.SW_UP.getCurrent()>0) game.logMessage("Теперь мы можете нести #3#больше#^# вещей!");
+		if (so.SW_UP.getCurrent()>0) game.logMessage("Теперь вы можете нести #3#больше#^# вещей!");
 		else
 		if (so.SW_UP.getCurrent()<0) game.logMessage("Теперь вы можете нести #2#меньше#^# вещей!");
 		currentSize.setMax(currentSize.getMax() + so.SW_UP.getCurrent());
@@ -435,13 +435,13 @@ public class Monster{
 
 		fovrad.sub(so.FOVRAD);
 		if (b)
-		if (so.SW_UP.getCurrent()<0) game.logMessage("Теперь мы можете нести #3#больше#^# вещей!");
+		if (so.SW_UP.getCurrent()<0) game.logMessage("Теперь вы можете нести #3#больше#^# вещей!");
 		else
 		if (so.SW_UP.getCurrent()>0) game.logMessage("Теперь вы можете нести #2#меньше#^# вещей!");
 		currentSize.setMax(currentSize.getMax() - so.SW_UP.getCurrent());
 
 		if (getPoisonCount()<0) setPoisonCount(0);
-		}
+	}
 
 
 
