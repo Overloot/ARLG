@@ -182,11 +182,8 @@ public class Monster{
 
 
 	public void setEffectFrom(ScriptObject so, boolean b){
-		STR.add(so.STR_UP);
-
 		if (so.IDENTIFY){
 			game.frame1.mainpanel.listener.ID_MODE = true;
-
 		}
 
 		getHP().setMax(getHP().getMax() + game.HIT_POINTS_PER_ENDURANCE * so.END_UP.getCurrent());
@@ -194,6 +191,8 @@ public class Monster{
 		getHP().setMax(getHP().getMax() + game.HIT_POINTS_PER_STRENGTH * so.STR_UP.getCurrent());
 		getHP().setCurrent(getHP().getCurrent() + game.HIT_POINTS_PER_STRENGTH * so.STR_UP.getCurrent());
 		getCurrentWeight().setMax(getCurrentWeight().getMax() + game.CARRYING_PER_STRENGTH * so.STR_UP.getCurrent());
+
+		STR.add(so.STR_UP);
 
 		if (b)
 		if (so.STR_UP.getCurrent()>0) game.logMessage("Вы почувствовали себя #3#сильнее!#^#");
@@ -216,6 +215,7 @@ public class Monster{
 		if (so.END_UP.getCurrent()<0) game.logMessage("Вы почувствовали, что стали #2#менее выносливым!#^#");
 
 		LUCK.add(so.LUCK_UP);
+		
 		if (b)
 		if (so.LUCK_UP.getCurrent()>0) game.logMessage("Вы почувствовали себя #3#удачливее!#^#");
 		else

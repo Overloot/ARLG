@@ -75,10 +75,6 @@ public class KeyHandler implements KeyListener{
 			  	map.getGame().tryToEquipItem(map.getGame().player.getInventory(), message.number);
 			  	flag = true;
 			}
-			else if (message.command == 'b'){
-				map.getGame().tryToIdentifyItem(message.number);
-				flag = false;
-		    }
 			else flag = false;
 			message = null;
 			mp.repaint();
@@ -328,7 +324,7 @@ public class KeyHandler implements KeyListener{
 
 		mp.repaint();
 		
-		// Игрок идентифицирует что-то
+		// Игрок идентифицирует что-то (прочитав свиток)
 		if (ID_MODE) {
 			ID_MODE = false;
 			if (map.getGame().player.getInventory().size() <= 0)
