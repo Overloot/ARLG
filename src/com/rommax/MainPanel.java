@@ -213,18 +213,14 @@ class MainPanel extends JPanel
 				g.drawImage(image,y,x,this);
 
 			}
-			else
-			if (DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getSeen() &&  !DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getVisible())
-			{
+			else if (DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getSeen() &&  !DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getVisible()){
 				Image image = Toolkit.getDefaultToolkit().getImage(Tileset.getTile(DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].lastseenID).getPath());
 				int y = (j*Tileset.TILE_SIZE);
 				int x = (i*Tileset.TILE_SIZE) ;
 				g.drawImage(image,y,x,this);
 				image = Toolkit.getDefaultToolkit().getImage("res/icons/transparent.png");
 				g.drawImage(image,y,x,this);
-			}
-			else
-			{
+			}else{
 				Image image = Toolkit.getDefaultToolkit().getImage(Tileset.getTile(DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getID()).getPath());
 				int y = (j*Tileset.TILE_SIZE);
 				int x = (i*Tileset.TILE_SIZE) ;
@@ -234,18 +230,15 @@ class MainPanel extends JPanel
 					g.drawImage(image,y,x,this);
 
 				if (DrawingMap.hasTileAt(i + DrawingMap.getCurrentY(), j + DrawingMap.getCurrentX())){
-								if (DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getItemsQty()!=0)
-								{
-								if (DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getItemsQty() > 1)
-								   image = Toolkit.getDefaultToolkit().getImage("res/icons/manyitems.png");
-								else
-								{
+					if (DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getItemsQty()!=0){
+						if (DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getItemsQty() > 1)
+							image = Toolkit.getDefaultToolkit().getImage("res/icons/manyitems.png");
+								else{
 									LinkedList<Item> itemlist = DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getItemList();
 								    image = Toolkit.getDefaultToolkit().getImage(ItemSet.getItem(itemlist.getFirst().getID()).getPath());
 								}
-													    g.drawImage(image,y,x,this);
-
-								}
+							g.drawImage(image,y,x,this);
+					}
 
 
 
@@ -286,20 +279,18 @@ class MainPanel extends JPanel
 									g.drawImage(image,y,x,this);
 								}
 							}
-						}
 				}
-	if (DrawingMap.hasTileAt(i + DrawingMap.getCurrentY(), j + DrawingMap.getCurrentX()) && DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].isSelected())
-	{
-		Image image = Toolkit.getDefaultToolkit().getImage("res/icons/selected.png");
-		int y = (j*Tileset.TILE_SIZE);
-		int x = (i*Tileset.TILE_SIZE) ;
-		g.drawImage(image,y,x,this);
+			}
+			if (DrawingMap.hasTileAt(i + DrawingMap.getCurrentY(), j + DrawingMap.getCurrentX()) && DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].isSelected()){
+				Image image = Toolkit.getDefaultToolkit().getImage("res/icons/selected.png");
+				int y = (j*Tileset.TILE_SIZE);
+				int x = (i*Tileset.TILE_SIZE) ;
+				g.drawImage(image,y,x,this);
+			}
+		}
+		paintGUI(g);
+		drawLog(g);
 	}
-	}
-	paintGUI(g);
-	drawLog(g);
-	}
-	
 	private int left = 0;
 	private int top = 0;
 }

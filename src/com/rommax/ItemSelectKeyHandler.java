@@ -110,8 +110,7 @@ public class ItemSelectKeyHandler implements KeyListener{
 			// Идентификация предмета свитком
 			else if (ip.iwindow.message.command == 'b'){
 				ip.iwindow.game.tryToIdentifyItem(ip.iwindow.message.number);
-				ip.resetState();
-				ip.repaint();
+				ip.iwindow.stop();
 			} else ip.iwindow.stop();
 			return;
 		}
