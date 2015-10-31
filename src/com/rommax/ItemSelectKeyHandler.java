@@ -85,7 +85,7 @@ public class ItemSelectKeyHandler implements KeyListener{
 			ip.iwindow.message.number = (getItemNumber(ip.current, ip.iwindow.type));
 			else
 			ip.iwindow.message.number = ip.current;
-
+			//
 			if (ip.iwindow.message.command == 'd'){
 				ip.iwindow.game.tryToDropItem(ip.iwindow.game.player.getMap().field[ip.iwindow.game.player.getY()][ip.iwindow.game.player.getX()].getItemList(), ip.iwindow.message.number);
 				if (ip.iwindow.list.size() == 0){
@@ -96,8 +96,8 @@ public class ItemSelectKeyHandler implements KeyListener{
 				ip.resetState();
 				ip.repaint();
 			}
-			else
-		if (ip.iwindow.message.command == 'g'){
+			//
+			else if (ip.iwindow.message.command == 'g'){
 				ip.iwindow.game.tryToPickupItem(ip.iwindow.game.player.getMap().field[ip.iwindow.game.player.getY()][ip.iwindow.game.player.getX()].getItemList(), ip.iwindow.message.number);
 				if (ip.iwindow.list.size() == 0){
 					ip.iwindow.message.command = '/';
@@ -107,9 +107,12 @@ public class ItemSelectKeyHandler implements KeyListener{
 				ip.resetState();
 				ip.repaint();
 			}
-
-			else
-			ip.iwindow.stop();
+			// Идентификация предмета свитком
+			else if (ip.iwindow.message.command == 'b'){
+				ip.iwindow.game.tryToIdentifyItem(ip.iwindow.message.number);
+				ip.resetState();
+				ip.repaint();
+			} else ip.iwindow.stop();
 			return;
 		}
 		else

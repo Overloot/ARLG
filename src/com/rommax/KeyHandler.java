@@ -205,6 +205,9 @@ public class KeyHandler implements KeyListener{
 			frame2.setVisible(true);
 			flag = false;
 		}
+		else if (keycode == KeyEvent.VK_U){// В тестовых целях
+			flag = playerAction.identifyIt();
+		}	
 		else if (keycode == KeyEvent.VK_I){
 			if (map.getGame().player.getInventory().size() == 0) {
 				map.getGame().logMessage("У вас пусто в инвентаре, нечего осмотреть!");
@@ -324,7 +327,7 @@ public class KeyHandler implements KeyListener{
 
 		mp.repaint();
 		
-		// Игрок идентифицирует что-то (прочитав свиток)
+		// Игрок идентифицирует что-то (прочитав свиток идентификации)
 		if (ID_MODE) {
 			ID_MODE = false;
 			if (map.getGame().player.getInventory().size() <= 0)
