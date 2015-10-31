@@ -13,8 +13,6 @@ class DescPanel extends JPanel
 	public DescKeyHandler listener;
 	public int strY = 0;
 
-
-
 	DescPanel(DescWindow dwindow){
 		super();
 		this.dwindow = dwindow;
@@ -216,7 +214,7 @@ class DescPanel extends JPanel
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		if (dwindow.monster != null)
-		   DrawMonsterDesc(g);
+			DrawMonsterDesc(g);
 		else
 		    DrawItemDesc(g);
 

@@ -43,19 +43,19 @@ public class KeyHandler implements KeyListener{
 
 		if (event != null) keycode = event.getKeyCode();
 
-		if (keycode==KeyEvent.VK_ESCAPE && !LOOK_MODE) System.exit(0);
+		if (keycode==KeyEvent.VK_ESCAPE && !LOOK_MODE) {
+			map.getGame().checkQuit();			
+			flag = false;
+		}
+		else if (keycode==KeyEvent.VK_F10) {
+		}
 		else if (map.getGame().player.getparalyzecount()>0 && !LOOK_MODE){
 			map.getGame().logMessage("ВЫ #5#ПАРАЛИЗОВАНЫ!!!#^#/#");
 			flag = true;
 		}
 		else if (message != null){
 			flag = true;
-			// 
-			if (message.command == 'g'){
-				map.getGame().tryToPickupItem(map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message.number);
-				flag = true;
-			}
-			else if (message.command == 'd'){
+			if (message.command == 'd'){
 				map.getGame().tryToDropItem(map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message.number);
 				flag = true;
 			}
@@ -100,33 +100,8 @@ public class KeyHandler implements KeyListener{
 			}
 			flag = false;
 		}
-		else if (keycode == KeyEvent.VK_G && !event.isShiftDown()) {
-			if (map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList().size() == 0) {
-				map.getGame().logMessage("На земле пусто, нечего взять!");
-				flag = false;
-				mp.repaint();
-				return;
-			}
-			if (map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList().size() == 1){
-				message = new ItemSelectMessage();
-				message.command = 'g';
-				message.number = 0;
-				keyPressed(null);
-				return;
-			} else {
-				map.getGame().frame1.setFocusable(false);
-				map.getGame().frame1.setFocusableWindowState(false);
-				message = new ItemSelectMessage();
-				message.command = 'g';
-				ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message);
-				frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-				frame2.setTitle("Что вы хотите поднять?");
-				frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
-				frame2.toFront();
-				frame2.setVisible(true);
-				flag = false;
-			}
-		}
+		// Поднимаем предмет(ы)
+		else if (keycode == KeyEvent.VK_G && !event.isShiftDown()) flag = playerAction.pickupIt();
 		else if (keycode == KeyEvent.VK_D && event.isShiftDown()){
 			if (map.getGame().player.getInventory().size() == 0) {
 				  map.getGame().logMessage("У вас пусто в инвентаре, нечего бросить!");
@@ -205,9 +180,6 @@ public class KeyHandler implements KeyListener{
 			frame2.setVisible(true);
 			flag = false;
 		}
-		else if (keycode == KeyEvent.VK_U){// В тестовых целях
-			flag = playerAction.identifyIt();
-		}	
 		else if (keycode == KeyEvent.VK_I){
 			if (map.getGame().player.getInventory().size() == 0) {
 				map.getGame().logMessage("У вас пусто в инвентаре, нечего осмотреть!");

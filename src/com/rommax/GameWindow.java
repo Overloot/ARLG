@@ -37,5 +37,4 @@ public class GameWindow extends JFrame{
 		contentPane.add(mainpanel);
 	}
 
-
 }

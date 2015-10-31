@@ -150,6 +150,17 @@ public class Game {
 
     }
 
+	// Диалог закрытия игры
+	void checkQuit() {
+		frame1.setFocusable(false);
+		frame1.setFocusableWindowState(false);
+        QuitWindow frame1 = new QuitWindow(map.getGame());
+        frame1.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame1.setLocation(map.getGame().frame1.WINDOW_WIDTH / 2 - frame1.WINDOW_WIDTH / 2, map.getGame().frame1.WINDOW_HEIGHT / 2 - frame1.WINDOW_HEIGHT / 2);
+        frame1.toFront();
+        frame1.setVisible(true);		
+	}
+	
     // проверить изменялся ли Stat s в худшую сторону, если так то вывести первую строку, иначе вторую
     void checkStatChanges(Stat s, String s1, String s2) {
         if (s.getTimer() > 0) {
@@ -205,7 +216,7 @@ public class Game {
             frame1.setFocusable(false);
             frame1.setFocusableWindowState(false);
             LevelUpWindow frame1 = new LevelUpWindow(map.getGame());
-            frame1.setUndecorated(true);
+            frame1.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             frame1.setLocation(map.getGame().frame1.WINDOW_WIDTH / 2 - frame1.WINDOW_WIDTH / 2, map.getGame().frame1.WINDOW_HEIGHT / 2 - frame1.WINDOW_HEIGHT / 2);
             frame1.toFront();
             frame1.setVisible(true);

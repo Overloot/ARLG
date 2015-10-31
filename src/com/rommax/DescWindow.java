@@ -3,7 +3,6 @@ package com.rommax;
 import javax.swing.*;
 import java.awt.*;
 
-
 public class DescWindow extends JFrame{
 
 	public static int WINDOW_HEIGHT;

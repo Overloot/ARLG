@@ -132,6 +132,33 @@ public class PlayerAction {
 		return false;
 	}
 	
+	// Поднимаем что-то с земли
+	public boolean pickupIt() {
+		if (map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList().size() == 0) {
+			map.getGame().logMessage("На земле пусто, нечего взять!");
+			mp.repaint();
+			return false;
+		}
+		if (map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList().size() == 1){
+			message = new ItemSelectMessage();
+			map.getGame().keyHandler.keyPressed(null);
+			map.getGame().tryToPickupItem(map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message.number);
+			return true;
+		} else {
+			map.getGame().frame1.setFocusable(false);
+			map.getGame().frame1.setFocusableWindowState(false);
+			message = new ItemSelectMessage();
+			message.command = 'g';
+			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message);
+			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			frame2.setTitle("Что вы хотите поднять?");
+			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
+			frame2.toFront();
+			frame2.setVisible(true);
+			return false;
+		}
+	}
+	
 	private boolean move(int y, int x) {
 		return map.getGame().player.move(y, x);
 	}
