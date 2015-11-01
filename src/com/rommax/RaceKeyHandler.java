@@ -18,28 +18,31 @@ public class RaceKeyHandler implements KeyListener{
 
 		if (keycode == KeyEvent.VK_UP){
 			panel.select--;
-			if (panel.select == 0) panel.select = 2;
+			if (panel.select == 0) panel.select = 3;
 		}
 		else if (keycode == KeyEvent.VK_DOWN){
 			panel.select++;
-			if (panel.select == 3) panel.select = 1;
+			if (panel.select == 4) panel.select = 1;
 		}
 		else if (keycode == KeyEvent.VK_ENTER){
-			panel.window.game.statsFree--;
 			switch (panel.select){
 				case 1:
 					// Человек
-					
-			panel.window.stop();
-			MainPanel.hasNewGame = false;					
+					Game.currentPlayerRace = "human";
+				//panel.window.game.player.setName("+++");
+				//panel.window.game.player.setPath("res/monsters/goblin.png");
 			break;
 				case 2:
 					// Гном
-					
-			panel.window.stop();
-			MainPanel.hasNewGame = false;					
+					Game.currentPlayerRace = "gnome";
+			break;
+				case 3:
+					// Эльф
+					Game.currentPlayerRace = "elf";
 			break;
 			}
+			MainPanel.hasNewGame = false;					
+			panel.window.stop();
 		}
 		panel.repaint();
 	}

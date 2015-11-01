@@ -90,6 +90,7 @@ public class BaseMonster{
 
 	public Stat getAP(){return AP;};
 
+	public void setPath(String path){this.path = path;};
 
 
 

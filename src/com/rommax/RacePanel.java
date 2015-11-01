@@ -33,6 +33,10 @@ class RacePanel extends JPanel
 		y = (Tileset.TILE_SIZE - 1);
 		x = (0) ;
 		g.drawImage(image,x, y,this);
+		image = Toolkit.getDefaultToolkit().getImage("res/icons/end_icon.png");
+		y = (Tileset.TILE_SIZE  * 2 - 1);
+		x = (0) ;
+		g.drawImage(image,x,y,this);
 		image = Toolkit.getDefaultToolkit().getImage("res/icons/icon_plus.png");
 		y = ((select - 1) * Tileset.TILE_SIZE);
 		x = (window.WINDOW_WIDTH - Tileset.TILE_SIZE - 5);
@@ -40,5 +44,6 @@ class RacePanel extends JPanel
      	g2.setPaint(Color.YELLOW);
 		g.drawString("Человек",Tileset.TILE_SIZE + 5, (int)Tileset.TILE_SIZE/2);
 		g.drawString("Гном",Tileset.TILE_SIZE + 5, (int)(Tileset.TILE_SIZE * 1.5));
+		g.drawString("Эльф",Tileset.TILE_SIZE + 5, (int)(Tileset.TILE_SIZE * 2.5));
 	}
 }

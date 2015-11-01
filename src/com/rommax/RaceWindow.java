@@ -11,7 +11,7 @@ public class RaceWindow extends JFrame{
     public Game game;
 
 	static{
-		WINDOW_HEIGHT = Tileset.TILE_SIZE * 3;
+		WINDOW_HEIGHT = 300;
 	}
 
 	public void stop(){
@@ -24,9 +24,8 @@ public class RaceWindow extends JFrame{
 	}
 	
 	public RaceWindow(Game game){
-		setTitle("Вы уверены, что хотите выйти?");
 		this.game = game;
-		WINDOW_WIDTH = 400;
+		WINDOW_WIDTH = 500;
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		setResizable(false);
 		panel = new RacePanel(this);

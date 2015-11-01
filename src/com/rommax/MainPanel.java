@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.awt.font.*;
 import java.util.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 class MainPanel extends JPanel
 {
@@ -204,7 +206,7 @@ class MainPanel extends JPanel
 		g2.setPaint(Color.BLACK);
 		g2.fill(canvas);
 		g2.draw(canvas);
-		if (hasNewGame) return;
+		if (hasNewGame) return; // Чтобы не прорисовывалась панель, пока игрок в меню
 		for (int i=0; i<SCREEN_TILE_SIZE_Y; i++)
 		for (int j=0; j<SCREEN_TILE_SIZE_X; j++){
 			if (!DrawingMap.hasTileAt(i + DrawingMap.getCurrentY(), j + DrawingMap.getCurrentX()) || (!DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getVisible() && !DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getSeen()) ){
@@ -245,7 +247,9 @@ class MainPanel extends JPanel
 
 							// Рисуем монстров
 							if (DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getMonster()!=null){
-								image = Toolkit.getDefaultToolkit().getImage(MonsterSet.getMonster(DrawingMap.field[i + DrawingMap.getCurrentY()][j + DrawingMap.getCurrentX()].getMonster().getID()).getPath());
+								if (DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getMonster() == DrawingMap.getGame().player) {
+									image = Toolkit.getDefaultToolkit().getImage("res/monsters/races/" + Game.currentPlayerRace + ".png");
+								} else image = Toolkit.getDefaultToolkit().getImage(MonsterSet.getMonster(DrawingMap.field[i + DrawingMap.getCurrentY()][j + DrawingMap.getCurrentX()].getMonster().getID()).getPath());
 								int px = DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getMonster().getX();
 								int py = DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getMonster().getY();
 								y = (j*Tileset.TILE_SIZE);

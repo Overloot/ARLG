@@ -307,10 +307,11 @@ public class Game {
         currentMapNumber = 0;                                               // номер текущей карты в массиве
         map.setGame(this);
         map.generate();
+	
         frame1 = new GameWindow(map);
         frame1.setVisible(true);
         frame1.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
+		
         int y = 10;
         int x = 10;
         Random random = new Random();
@@ -328,11 +329,16 @@ public class Game {
         fillLevelByItems();         // добавляет столько итемов, сколько положено на уровень ( MAX_ITEM_PER_LEVEL )
         map.FOV(y, x, player.getFOVRAD().getCurrent());
         frame1.mainpanel.repaint();
+		
+		//selectRace();
+		//frame1.setFocusable(true);
+		//frame1.setFocusableWindowState(true);
+
 	}
 
-	public void sellectRace() {
-		frame1.setFocusable(false);
-		frame1.setFocusableWindowState(false);
+	public void selectRace() {
+		//frame1.setFocusable(false);
+		//frame1.setFocusableWindowState(false);
 		RaceWindow frame2 = new RaceWindow(this);
         frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame2.setLocation(frame1.WINDOW_WIDTH / 2 - frame2.WINDOW_WIDTH / 2, frame1.WINDOW_HEIGHT / 2 - frame2.WINDOW_HEIGHT / 2);
@@ -696,5 +702,7 @@ public class Game {
     // для удобства =)
     public void done() {
     }
+	
+	public static String currentPlayerRace = "human";
 
 }

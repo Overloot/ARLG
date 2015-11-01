@@ -26,6 +26,10 @@ public class KeyHandler implements KeyListener{
 	}
 
 	public synchronized void keyPressed(KeyEvent event){
+		
+		// Пока идет создание персонажа, отключаем все клавиши
+		if (MainPanel.hasNewGame) return;
+		
 		int keycode = 0;
 
 		// Действия игрока
@@ -42,11 +46,14 @@ public class KeyHandler implements KeyListener{
 		boolean flag = true;
 
 		if (event != null) keycode = event.getKeyCode();
-
+		
 		if (keycode==KeyEvent.VK_ESCAPE && !LOOK_MODE) {
 			map.getGame().checkQuit();			
 			flag = false;
 		}
+		else if (keycode == KeyEvent.VK_P && event.isShiftDown()){ 
+			map.getGame().selectRace();
+		}		
 		else if (keycode==KeyEvent.VK_F10) {
 		}
 		else if (map.getGame().player.getparalyzecount()>0 && !LOOK_MODE){
@@ -127,8 +134,8 @@ public class KeyHandler implements KeyListener{
 				frame2.toFront();
 				frame2.setVisible(true);
 				flag = false;
-				}
 			}
+		}
 		else if (keycode == KeyEvent.VK_Q && event.isShiftDown()){
 			if (map.getGame().player.getInventory().size() == 0) {
 				map.getGame().logMessage("У вас пусто в инвентаре, нечего выпить!");
