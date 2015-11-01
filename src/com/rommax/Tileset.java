@@ -30,6 +30,7 @@ public class Tileset{
 	public static String getTileName(int id){
 		return TILESET[id].getName();
 	}
+	
 	static{
 		TILESET = new BaseTile[MAX_TILES];
 		TILESET[TILE_EMPTY] = new BaseTile(TILE_EMPTY, "Пустой тайл", "res/dungeons/empty.png", false, false, false);

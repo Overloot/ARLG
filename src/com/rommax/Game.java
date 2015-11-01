@@ -112,7 +112,7 @@ public class Game {
         return (int) Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
     }
 
-
+	// AI для мостра
     public void monstersAI() {
         turn++;
         CheckMonsters(); // метод проверят не многовато ли у монстра HitPoints, а так же окончательно добивает убитых
