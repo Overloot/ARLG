@@ -204,6 +204,7 @@ class MainPanel extends JPanel
 		g2.setPaint(Color.BLACK);
 		g2.fill(canvas);
 		g2.draw(canvas);
+		if (hasNewGame) return;
 		for (int i=0; i<SCREEN_TILE_SIZE_Y; i++)
 		for (int j=0; j<SCREEN_TILE_SIZE_X; j++){
 			if (!DrawingMap.hasTileAt(i + DrawingMap.getCurrentY(), j + DrawingMap.getCurrentX()) || (!DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getVisible() && !DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getSeen()) ){
@@ -293,4 +294,5 @@ class MainPanel extends JPanel
 	}
 	private int left = 0;
 	private int top = 0;
+	static boolean hasNewGame = true;
 }

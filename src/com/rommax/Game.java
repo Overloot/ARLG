@@ -328,8 +328,19 @@ public class Game {
         fillLevelByItems();         // добавляет столько итемов, сколько положено на уровень ( MAX_ITEM_PER_LEVEL )
         map.FOV(y, x, player.getFOVRAD().getCurrent());
         frame1.mainpanel.repaint();
-    }
+	}
 
+	public void sellectRace() {
+		frame1.setFocusable(false);
+		frame1.setFocusableWindowState(false);
+		RaceWindow frame2 = new RaceWindow(this);
+        frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame2.setLocation(frame1.WINDOW_WIDTH / 2 - frame2.WINDOW_WIDTH / 2, frame1.WINDOW_HEIGHT / 2 - frame2.WINDOW_HEIGHT / 2);
+        frame2.toFront();
+        frame2.setTitle("Выбор расы");
+        frame2.setVisible(true);
+	}
+	
     public void fillLevelByMonsters() {
         for (int i = 0; i < MAX_MONSTER_PER_LEVEL; i++)
             addRandomMonster();

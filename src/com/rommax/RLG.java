@@ -18,6 +18,7 @@ public class RLG{
         Game game1 = new Game();
         game1.init();
         game1.run();
+		game1.sellectRace();
         game1.done();
     }
 }
