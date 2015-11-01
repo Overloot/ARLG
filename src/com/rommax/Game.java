@@ -702,7 +702,5 @@ public class Game {
     // для удобства =)
     public void done() {
     }
-	
-	public static String currentPlayerRace = "human";
 
 }

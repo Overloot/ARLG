@@ -7,14 +7,10 @@ public class LevelUpKeyHandler implements KeyListener{
 
 	LevelUpPanel lp;
 
-
 	public LevelUpKeyHandler(LevelUpPanel lp){
 		super();
 		this.lp = lp;
 	}
-
-
-
 
 	public synchronized void keyPressed(KeyEvent event){
 		int keycode = event.getKeyCode();
@@ -69,7 +65,6 @@ public class LevelUpKeyHandler implements KeyListener{
 			}
 		}
 		lp.repaint();
-
 	}
 
 	public void keyReleased(KeyEvent event){}

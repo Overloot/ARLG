@@ -14,7 +14,7 @@ public class MonsterSet {
 		MONSTERSET = new BaseMonster[MAX_MONSTERS];
 
 //!!!
-MONSTERSET[0] = new BaseMonster(1,0,"Человек","res/monsters/player.png",100,10,10,10,10,5,10,0,0,0,0,0,0,0,0,0,0,0,0,0,10, 5);
+MONSTERSET[0] = new BaseMonster(1,0,"Игрок","res/monsters/player.png",100,10,10,10,10,5,10,0,0,0,0,0,0,0,0,0,0,0,0,0,10, 5);
 MONSTERSET[1] = new BaseMonster(1,1,"Мышь","res/monsters/mouse.png",10,1,12,1,1,1,3,0,0,0,-15,0,0,15,0,0,0,0,2,20,15, 7);
 MONSTERSET[2] = new BaseMonster(1,2,"Жук","res/monsters/beetle.png",20,3,8,2,1,2,5,10,0,0,10,0,0,10,0,0,10,0,0,10,10, 4);
 MONSTERSET[3] = new BaseMonster(2,3,"Гоблин","res/monsters/goblin.png",35,6,8,6,10,3,7,0,0,0,-20,0,0,0,0,0,0,0,2,20,10, 8);

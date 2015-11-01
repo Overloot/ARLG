@@ -109,6 +109,7 @@ public class KeyHandler implements KeyListener{
 		}
 		// Поднимаем предмет(ы)
 		else if (keycode == KeyEvent.VK_G && !event.isShiftDown()) flag = playerAction.pickupIt();
+		// Бросаем предмет(ы)
 		else if (keycode == KeyEvent.VK_D && event.isShiftDown()){
 			if (map.getGame().player.getInventory().size() == 0) {
 				  map.getGame().logMessage("У вас пусто в инвентаре, нечего бросить!");

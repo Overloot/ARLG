@@ -102,6 +102,21 @@ public class Monster{
 	public void setXP(int amount){exp = amount;}
 	public int getXP(){return exp;}
 
+	public void setSTR(int STR){
+		this.STR = new Stat(STR, STR);
+	}
+
+	public void setAGI(int AGI){
+		this.AGI = new Stat(AGI, AGI);
+	}
+
+	public void setEND(int END){
+		this.END = new Stat(END, END);
+	}
+
+	public void setLUCK(int LUCK){
+		this.LUCK = new Stat(LUCK, LUCK);
+	}
 
 	public Monster(BaseMonster bm, int y, int x, Map map, Game game){
 		this.name = bm.getName();

@@ -153,7 +153,7 @@ class MainPanel extends JPanel
 		left = Tileset.TILE_SIZE * SCREEN_TILE_SIZE_X + 10;
 		g2.setPaint(Color.WHITE);
 		top = 50;
-		addLine(g, "#7#" + DrawingMap.getGame().player.getName() + "#^#");
+		addLine(g, "#7#" + RaceSet.getRace(RaceSet.getCurrentRaceID).getName() + "#^#");
 		top = 85;
 		// Level
 		addLine(g, "#8#УРОВЕНЬ#^#", DrawingMap.getGame().player.getLevel(), 0);
@@ -248,7 +248,7 @@ class MainPanel extends JPanel
 							// Рисуем монстров
 							if (DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getMonster()!=null){
 								if (DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getMonster() == DrawingMap.getGame().player) {
-									image = Toolkit.getDefaultToolkit().getImage("res/monsters/races/" + Game.currentPlayerRace + ".png");
+									image = Toolkit.getDefaultToolkit().getImage(RaceSet.getRace(RaceSet.getCurrentRaceID).getPath());
 								} else image = Toolkit.getDefaultToolkit().getImage(MonsterSet.getMonster(DrawingMap.field[i + DrawingMap.getCurrentY()][j + DrawingMap.getCurrentX()].getMonster().getID()).getPath());
 								int px = DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getMonster().getX();
 								int py = DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getMonster().getY();
@@ -262,7 +262,7 @@ class MainPanel extends JPanel
 								double height = 2;
 								Rectangle2D rect = new Rectangle2D.Double(leftX, topY, width, height);
 								Rectangle2D br = new Rectangle2D.Double(leftX, topY, 31D, height);
-								g.drawImage(image,y,x,this);
+								g.drawImage(image, y, x, this);
 								g2.setPaint(Color.BLACK);
 								g2.fill(br);
 								g2.draw(br);
