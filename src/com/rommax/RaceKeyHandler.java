@@ -28,10 +28,7 @@ public class RaceKeyHandler implements KeyListener{
 		else if (keycode == KeyEvent.VK_ENTER){
 			curRace = panel.select - 1;
 			RaceSet.getCurrentRaceID = curRace;
-			panel.window.game.player.setSTR(RaceSet.getRace(curRace).getSTR());
-			panel.window.game.player.setAGI(RaceSet.getRace(curRace).getAGI());
-			panel.window.game.player.setEND(RaceSet.getRace(curRace).getEND());
-			panel.window.game.player.setLUCK(RaceSet.getRace(curRace).getLUCK());
+			panel.window.game.setRace(curRace);
 			MainPanel.hasNewGame = false;					
 			panel.window.stop();
 		}

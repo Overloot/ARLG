@@ -30,10 +30,10 @@ public class Game {
     public static final int MAX_MONSTER_PER_LEVEL = 50;
     public static final int MAX_ITEM_PER_LEVEL = 150;
     public static final int MAX_PLAYER_LEVEL = 30;
-    public final int HIT_POINTS_PER_STRENGTH = 5;
-    public final int CARRYING_PER_STRENGTH = 5;
+    public final int HIT_POINTS_PER_STRENGTH = 3;
+    public final int CARRYING_PER_STRENGTH = 7;
     public final int MIN_SIZE = 100;
-    public final int HIT_POINTS_PER_ENDURANCE = 10;
+    public final int HIT_POINTS_PER_ENDURANCE = 11;
     final int MAX_MONSTERS = MAX_FLOORS * MAX_MONSTER_PER_LEVEL + 1;
     final int MAX_ITEMS = MAX_FLOORS * MAX_ITEM_PER_LEVEL + 1;
 
@@ -698,6 +698,29 @@ public class Game {
         monsterList[index] = null;
     }
 
+	// Здоровье зависит от силы и выносливости
+	public int calcHP(int STR, int END) {
+		return (END * HIT_POINTS_PER_ENDURANCE) + (STR * HIT_POINTS_PER_STRENGTH);
+	}
+	
+	// Нагрузка зависит от силы
+	public int calcCarrying(int STR) {
+		return STR * CARRYING_PER_STRENGTH;
+	}
+	
+	
+	// Даем игроку расу, которую он выбрал
+	public void setRace(int id) {
+		player.setSTR(RaceSet.getRace(id).getSTR());
+		player.setAGI(RaceSet.getRace(id).getAGI());
+		player.setEND(RaceSet.getRace(id).getEND());
+		player.setLUCK(RaceSet.getRace(id).getLUCK());
+		// Пересчитываем статы
+		player.getHP().setMax(calcHP(player.getSTR().getCurrent(), player.getEND().getCurrent())); 
+		player.getHP().setCurrent(calcHP(player.getSTR().getCurrent(), player.getEND().getCurrent())); 
+		player.getCurrentWeight().setMax(calcCarrying(player.getSTR().getCurrent()));
+		
+	}
 
     // для удобства =)
     public void done() {

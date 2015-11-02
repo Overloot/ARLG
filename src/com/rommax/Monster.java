@@ -195,17 +195,14 @@ public class Monster{
 		return false;
 	}
 
-
 	public void setEffectFrom(ScriptObject so, boolean b){
-		if (so.IDENTIFY){
-			game.frame1.mainpanel.listener.ID_MODE = true;
-		}
-
 		getHP().setMax(getHP().getMax() + game.HIT_POINTS_PER_ENDURANCE * so.END_UP.getCurrent());
 		getHP().setCurrent(getHP().getCurrent() + game.HIT_POINTS_PER_ENDURANCE * so.END_UP.getCurrent());
 		getHP().setMax(getHP().getMax() + game.HIT_POINTS_PER_STRENGTH * so.STR_UP.getCurrent());
 		getHP().setCurrent(getHP().getCurrent() + game.HIT_POINTS_PER_STRENGTH * so.STR_UP.getCurrent());
 		getCurrentWeight().setMax(getCurrentWeight().getMax() + game.CARRYING_PER_STRENGTH * so.STR_UP.getCurrent());
+
+		if (so.IDENTIFY) game.frame1.mainpanel.listener.ID_MODE = true;
 
 		STR.add(so.STR_UP);
 
@@ -346,17 +343,17 @@ public class Monster{
 	}
 
 	public void deleteEffectFrom(ScriptObject so, boolean b){
-		STR.sub(so.STR_UP);
-		if (b)
-		if (so.STR_UP.getCurrent()<0) game.logMessage("Вы почувствовали себя #3#сильнее!#^#");
-		else
-		if (so.STR_UP.getCurrent()>0) game.logMessage("Вы почувствовали себя #2#слабее!#^#");
-
 		getHP().setMax(getHP().getMax() - game.HIT_POINTS_PER_ENDURANCE * so.END_UP.getCurrent());
 		getHP().setCurrent(getHP().getCurrent() - game.HIT_POINTS_PER_ENDURANCE * so.END_UP.getCurrent());
 		getHP().setMax(getHP().getMax() - game.HIT_POINTS_PER_STRENGTH * so.STR_UP.getCurrent());
 		getHP().setCurrent(getHP().getCurrent() - game.HIT_POINTS_PER_STRENGTH * so.STR_UP.getCurrent());
 		getCurrentWeight().setMax(getCurrentWeight().getMax() - game.CARRYING_PER_STRENGTH * so.STR_UP.getCurrent());
+
+		STR.sub(so.STR_UP);
+		if (b)
+		if (so.STR_UP.getCurrent()<0) game.logMessage("Вы почувствовали себя #3#сильнее!#^#");
+		else
+		if (so.STR_UP.getCurrent()>0) game.logMessage("Вы почувствовали себя #2#слабее!#^#");
 
 
 		AGI.sub(so.AGI_UP);
