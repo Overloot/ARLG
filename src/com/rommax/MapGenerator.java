@@ -6,7 +6,7 @@ package com.rommax;
 import java.util.*;
 
 public class MapGenerator {
-
+    // проверка
     public Map map;
     public static final int MAX_GENERATORS = 6; // должно соответствовать количеству типов карт
     private Random rand = new Random();
