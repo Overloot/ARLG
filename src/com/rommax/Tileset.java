@@ -1,7 +1,6 @@
 package com.rommax;
 
 public class Tileset{
-	// проверка
 	public static final int TILE_EMPTY  = 0;
 	public static final int TILE_GRASS = 1;
 	public static final int TILE_TREE   = 2;
