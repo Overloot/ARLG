@@ -15,12 +15,14 @@ public class Tileset{
 	public static final int TILE_WATER = 10;
 	public static final int TILE_DUNGEON_FLOOR = 11;
 	public static final int TILE_DUNGEON_WALL = 12;
+	public static final int TILE_SWAMP = 13;
+	public static final int TILE_FARM = 14;
 
 
 
 
 
-	public static final int MAX_TILES = 13;
+	public static final int MAX_TILES = 15;
 
     public static final int TILE_SIZE = 32;
 
@@ -46,6 +48,8 @@ public class Tileset{
 		TILESET[TILE_TOWER_FLOOR] = new BaseTile(TILE_TOWER_FLOOR, "Пол башни", "res/dungeons/tower_floor.png", true, true, false);
 		TILESET[TILE_DUNGEON_FLOOR] = new BaseTile(TILE_DUNGEON_FLOOR, "Пол подземелья", "res/dungeons/dungeon_floor.png", true, true, false);
 		TILESET[TILE_DUNGEON_WALL] = new BaseTile(TILE_DUNGEON_WALL, "Стена подземелья", "res/dungeons/dungeon_wall.png", false, false, false);
+		TILESET[TILE_SWAMP] = new BaseTile(TILE_SWAMP, "Болото", "res/dungeons/swamp.png", true, true, false);
+		TILESET[TILE_FARM] = new BaseTile(TILE_FARM, "Ферма", "res/dungeons/farm.png", false, false, false);
 
 
 	}

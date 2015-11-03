@@ -303,6 +303,9 @@ public class KeyHandler implements KeyListener{
 		// Вверх по лестнице
 		else if (keycode==KeyEvent.VK_G && event.isShiftDown()) playerAction.upStair();
 		//
+		else if (keycode == KeyEvent.VK_F12){
+			map.getGame().player.getHP().setCurrent(map.getGame().player.getHP().getMax());
+		}
 		else flag = false;
 
 		mp.repaint();

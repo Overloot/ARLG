@@ -8,7 +8,7 @@ import java.util.*;
 public class MapGenerator {
 
     public Map map;
-    public static final int MAX_GENERATORS = 5;
+    public static final int MAX_GENERATORS = 6; // должно соответствовать количеству типов карт
     private Random rand = new Random();
 
     public static final int ID_FOREST_1 = 0;
@@ -16,9 +16,11 @@ public class MapGenerator {
     public static final int ID_FOREST_2 = 2;
     public static final int ID_MAZE_2 = 3;
     public static final int ID_TOWER = 4;
+    public static final int ID_VILLAGE = 5;
 
     public void generateMap(Map map, int ID) {
         this.map = map;
+        //ID = 5; для теста реки
         if (ID == ID_FOREST_1)
             ForestCreate();
         else if (ID == ID_MAZE_1)
@@ -29,6 +31,8 @@ public class MapGenerator {
             RiftCreate();
         else if (ID == ID_TOWER)
             TowerCreate();
+        else if (ID == ID_VILLAGE)
+            VillageCreate();
     }
 
 
@@ -76,19 +80,19 @@ public class MapGenerator {
                     }
             k -= 2;
         }
-        AddModOnMap(1);
-        AddModOnMap(2);
-        AddModOnMap(3);
-
-
+        AddModOnMap(1); // добавляет траву
+        AddModOnMap(2); // добавляет лес
+        AddModOnMap(3); // добавляет болото
     }
 
+    // добавляет различные элементу на карту
     public void AddModOnMap(int modtype) {
         int i, j, x, y;
         int MapY = map.getHeight();
         int MapX = map.getWidth();
         switch (modtype) {
-            case 1: {
+
+            case 1: { // добавляет траву
                 for (i = 0; i < MapY; i++)
                     for (j = 0; j < MapX; j++)
                         if (!map.field[i][j].getPassable())
@@ -96,20 +100,111 @@ public class MapGenerator {
                                 map.setTileAt(i, j, Tileset.TILE_GRASS);
             }
             break;
-            case 2:
+
+            case 2: // добавляет лес
                 for (i = 0; i < MapX * MapY / 25; i++)
                     ForestPartDraw(rand.nextInt(MapX) + 1, rand.nextInt(MapY) + 1);
                 break;
-            case 3:
+
+            case 3: // добавляет болото
                 for (i = 0; i < MapY; i++) {
                     for (j = 0; j < MapX; j++)
                         if (rand.nextInt(100) <= 20)
-                            map.setTileAt(i, j, Tileset.TILE_WATER);//WATER
+                            map.setTileAt(i, j, Tileset.TILE_SWAMP);//SWAMP
                 }
                 break;
         }
     }
 
+    public void VillageCreate() {
+        map.setName("#5Фермы у реки#^#");
+
+        double density = 0.8F; // density переводится как плотность
+        int i, j;
+        int res;
+        int x, y;
+
+        x = map.getHeight();
+        y = map.getWidth();
+        for (i = 0; i < (int) x * y * density; i++)
+            map.setTileAt(rand.nextInt(x), rand.nextInt(y), Tileset.TILE_TREE);
+
+        for (i = 0; i < x; i++)
+            for (j = 0; j < y; j++) {
+                if ((i == 0) || (j == 0) || (i == x - 1) || (j == y - 1)) {
+                    map.setTileAt(i, j, Tileset.TILE_GRASS);
+                    continue;
+                }
+                res = countnearby(i, j, Tileset.TILE_TREE);
+                if (map.field[i][j].getID() == Tileset.TILE_TREE) {
+                    if (res < 4)
+                        map.setTileAt(i, j, Tileset.TILE_GRASS);
+                    else
+                        map.setTileAt(i, j, Tileset.TILE_TREE);
+                }
+
+            }
+
+        for (i = 0; i < x; i++)
+            for (j = 0; j < y; j++)
+                if (countnearby(i, j, Tileset.TILE_GRASS) < 3)
+                    map.setTileAt(i, j, Tileset.TILE_TREE);
+
+        for (i = 0; i < x; i++)
+            for (j = 0; j < y; j++)
+                if ((countnearby(i, j, Tileset.TILE_GRASS) >= 7))
+                    map.setTileAt(i, j, Tileset.TILE_GRASS);
+
+        for (i = 0; i < x; i++)
+            for (j = 0; j < y; j++)
+                if (countnearby(i, j, Tileset.TILE_GRASS) < 3)
+                    map.setTileAt(i, j, Tileset.TILE_TREE);
+
+        // создаем реку
+        //TODO: река должна больше гулять
+        //TODO: добавить тайлы для ровных изгибов
+        //TODO: река должна иметь ответвления
+        //TODO: через реку должны быть мосты, но мало
+        int springhead_x;
+        int springhead_y;
+        int farmPlace;
+        int whence = new Random().nextInt(2); // 0 река будет течь по горизонтале, 1 по вертикале
+        if (whence == 0) {
+            springhead_x = 0; // координаты начала истока реки
+            springhead_y = new Random().nextInt(y);
+            for (int river_x = springhead_x; river_x < x; river_x++)
+            {
+                springhead_y = WhereCreate(springhead_y, 1); // чтоб речка гуляла
+                map.setTileAt(river_x, springhead_y, Tileset.TILE_WATER);
+                farmPlace = WhereCreate(springhead_y, 2);
+                map.setTileAt(river_x, farmPlace, Tileset.TILE_FARM);
+            }
+        }
+        else {
+            springhead_x = new Random().nextInt(y); // координаты начала истока реки
+            springhead_y = 0;
+            for (int river_y = springhead_y; river_y < x; river_y++)
+            {
+                springhead_x = WhereCreate(springhead_x, 1); // чтоб речка гуляла
+                map.setTileAt(springhead_x, river_y, Tileset.TILE_WATER);
+                farmPlace = WhereCreate(springhead_x, 2);
+                map.setTileAt(farmPlace, river_y, Tileset.TILE_FARM);
+            }
+        }
+
+    }
+
+    // метод принимает начальную точку, и значение которое в приделах которого следует отступить
+    // возвращается точная координата которая отличчается минимум на 1, но не меньше нуля и не больше 100,
+    public int WhereCreate(int startPoint, int scatter)
+    {
+        int rand = new Random().nextInt(2);
+        if (rand == 0) startPoint = startPoint - new Random().nextInt(scatter) - 1;
+        else startPoint = startPoint + new Random().nextInt(scatter) + 1;
+        if (startPoint < 0) startPoint = 0;
+        if (startPoint >= 100) startPoint = 99;
+        return startPoint;
+    }
 
     public void LakesCreate(int typ) {
         map.setName("#5#Старый лес#^#");
