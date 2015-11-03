@@ -7,6 +7,7 @@ package com.rommax;
 import java.util.*;
 
 public class MapGenerator {
+
     public Map map;
     public static final int MAX_GENERATORS = 6; // должно соответствовать количеству типов карт
     private Random rand = new Random();
@@ -20,7 +21,7 @@ public class MapGenerator {
 
     public void generateMap(Map map, int ID) {
         this.map = map;
-        //ID = 5; для теста реки
+        //ID = 5; // для теста реки
         if (ID == ID_FOREST_1)
             ForestCreate();
         else if (ID == ID_MAZE_1)
@@ -117,9 +118,9 @@ public class MapGenerator {
     }
 
     public void VillageCreate() {
-        map.setName("#5Фермы у реки#^#");
+        map.setName("#5#Фермы у реки#^#");
 
-        double density = 0.8F; // density переводится как плотность
+        double density = 0.9F; // density переводится как плотность
         int i, j;
         int res;
         int x, y;
@@ -164,45 +165,79 @@ public class MapGenerator {
         //TODO: река должна больше гулять
         //TODO: добавить тайлы для ровных изгибов
         //TODO: река должна иметь ответвления
-        //TODO: через реку должны быть мосты, но мало
         int springhead_x;
         int springhead_y;
         int farmPlace;
-        int whence = new Random().nextInt(2); // 0 река будет течь по горизонтале, 1 по вертикале
-        if (whence == 0) {
+        boolean bridgeAlreadyBuilt = false;
+        if (new Random().nextInt(2) == 0) { // 0 река будет течь по горизонтали, 1 по вертикали
             springhead_x = 0; // координаты начала истока реки
             springhead_y = new Random().nextInt(y);
             for (int river_x = springhead_x; river_x < x; river_x++)
             {
-                springhead_y = WhereCreate(springhead_y, 1); // чтоб речка гуляла
+                springhead_y = CalcOffset(springhead_y, 1, map.getWidth(), 1); // чтоб речка гуляла
+
+                // создание фермы
+                if (new Random().nextInt(100) < 30) {
+                    farmPlace = CalcOffset(springhead_y, 1, map.getWidth(), 2);
+                    map.setTileAt(river_x, farmPlace, Tileset.TILE_FARM);
+                }
+
+                // создание воды
                 map.setTileAt(river_x, springhead_y, Tileset.TILE_WATER);
-                farmPlace = WhereCreate(springhead_y, 2);
-                map.setTileAt(river_x, farmPlace, Tileset.TILE_FARM);
+                map.setTileAt(river_x, springhead_y + 1, Tileset.TILE_WATER);
+                map.setTileAt(river_x, springhead_y - 1, Tileset.TILE_WATER);
+
+                //если повезет - здесь будет мост
+                if ( (new Random().nextInt(100) <= 5) && (!bridgeAlreadyBuilt))
+                {
+                    map.setTileAt(river_x, springhead_y, Tileset.TILE_BRIDGE_HOR);
+                    map.setTileAt(river_x, springhead_y + 1, Tileset.TILE_BRIDGE_HOR);
+                    map.setTileAt(river_x, springhead_y - 1, Tileset.TILE_BRIDGE_HOR);
+                    bridgeAlreadyBuilt = true;
+                }
             }
         }
+
         else {
             springhead_x = new Random().nextInt(y); // координаты начала истока реки
             springhead_y = 0;
             for (int river_y = springhead_y; river_y < x; river_y++)
             {
-                springhead_x = WhereCreate(springhead_x, 1); // чтоб речка гуляла
+                springhead_x = CalcOffset(springhead_x, 1, map.getHeight(), 1); // чтоб речка гуляла
+
+                // создание фермы
+                if (new Random().nextInt(100) < 30) {
+                    farmPlace = CalcOffset(springhead_x, 1, map.getHeight(), 2);
+                    map.setTileAt(farmPlace, river_y, Tileset.TILE_FARM);
+                }
+
+                // создание воды
                 map.setTileAt(springhead_x, river_y, Tileset.TILE_WATER);
-                farmPlace = WhereCreate(springhead_x, 2);
-                map.setTileAt(farmPlace, river_y, Tileset.TILE_FARM);
+                map.setTileAt(springhead_x - 1, river_y, Tileset.TILE_WATER);
+                map.setTileAt(springhead_x + 1, river_y, Tileset.TILE_WATER);
+
+
+                //если повезет - здесь будет мост
+                if ( (new Random().nextInt(100) <= 5) && (!bridgeAlreadyBuilt))
+                {
+                    map.setTileAt(springhead_x, river_y, Tileset.TILE_BRIDGE_VER);
+                    map.setTileAt(springhead_x + 1, river_y, Tileset.TILE_BRIDGE_VER);
+                    map.setTileAt(springhead_x - 1, river_y, Tileset.TILE_BRIDGE_VER);
+                    bridgeAlreadyBuilt = true;
+                }
             }
         }
-
     }
 
-    // метод принимает начальную точку, и значение которое в приделах которого следует отступить
-    // возвращается точная координата которая отличчается минимум на 1, но не меньше нуля и не больше 100,
-    public int WhereCreate(int startPoint, int scatter)
+    // метод смещения в сторону от заданной точки
+    // принимает начальную точку, и значение в приделах которого следует отступить
+    // возвращается точная координата которая отличчается минимум на 1, но не меньше 1 и не больше range - 2,
+    public int CalcOffset(int startPoint, int max_scatter, int range, int min_scatter)
     {
-        int rand = new Random().nextInt(2);
-        if (rand == 0) startPoint = startPoint - new Random().nextInt(scatter) - 1;
-        else startPoint = startPoint + new Random().nextInt(scatter) + 1;
-        if (startPoint < 0) startPoint = 0;
-        if (startPoint >= 100) startPoint = 99;
+        if (new Random().nextInt(2) == 0) startPoint = startPoint - new Random().nextInt(max_scatter) - min_scatter;
+        else startPoint = startPoint + new Random().nextInt(max_scatter) + min_scatter;
+        if (startPoint < 1) startPoint = 1;
+        if (startPoint >= range) startPoint = range - 2;
         return startPoint;
     }
 

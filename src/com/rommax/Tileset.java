@@ -1,6 +1,7 @@
 package com.rommax;
 
 public class Tileset{
+
 	public static final int TILE_EMPTY  = 0;
 	public static final int TILE_GRASS = 1;
 	public static final int TILE_TREE   = 2;
@@ -16,12 +17,11 @@ public class Tileset{
 	public static final int TILE_DUNGEON_WALL = 12;
 	public static final int TILE_SWAMP = 13;
 	public static final int TILE_FARM = 14;
+	public static final int TILE_BRIDGE_HOR = 15;
+	public static final int TILE_BRIDGE_VER = 16;
 
 
-
-
-
-	public static final int MAX_TILES = 15;
+	public static final int MAX_TILES = 17;
 
     public static final int TILE_SIZE = 32;
 
@@ -49,6 +49,8 @@ public class Tileset{
 		TILESET[TILE_DUNGEON_WALL] = new BaseTile(TILE_DUNGEON_WALL, "Стена подземелья", "res/dungeons/dungeon_wall.png", false, false, false);
 		TILESET[TILE_SWAMP] = new BaseTile(TILE_SWAMP, "Болото", "res/dungeons/swamp.png", true, true, false);
 		TILESET[TILE_FARM] = new BaseTile(TILE_FARM, "Ферма", "res/dungeons/farm.png", false, false, false);
+		TILESET[TILE_BRIDGE_HOR] = new BaseTile(TILE_BRIDGE_HOR, "Мост", "res/dungeons/bridge_hor.png", true, true, false);
+		TILESET[TILE_BRIDGE_VER] = new BaseTile(TILE_BRIDGE_VER, "Мост", "res/dungeons/bridge_ver.png", true, true, false);
 
 
 	}
