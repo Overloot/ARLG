@@ -6,18 +6,18 @@ import javax.swing.*;
 
 public class DescKeyHandler implements KeyListener{
 
-	DescPanel dp;
+	DescPanel panel;
 
-	public DescKeyHandler(DescPanel dp){
+	public DescKeyHandler(DescPanel panel){
 		super();
-		this.dp = dp;
+		this.panel = panel;
 	}
 
 	public synchronized void keyPressed(KeyEvent event){
-		int keycode = event.getKeyCode();
-		if (keycode == KeyEvent.VK_ESCAPE){
-			dp.dwindow.stop();
-			return;
+		switch (event.getKeyCode()) {
+			case KeyEvent.VK_ESCAPE:
+				panel.dwindow.stop();
+				break;
 		}
 	}
 

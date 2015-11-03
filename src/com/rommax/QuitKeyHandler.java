@@ -6,44 +6,39 @@ import javax.swing.*;
 
 public class QuitKeyHandler implements KeyListener{
 
-	QuitPanel qp;
+	QuitPanel panel;
 
-	public QuitKeyHandler(QuitPanel qp){
+	public QuitKeyHandler(QuitPanel panel){
 		super();
-		this.qp = qp;
+		this.panel = panel;
 	}
 
 	public synchronized void keyPressed(KeyEvent event){
 		int keycode = event.getKeyCode();
-		if (keycode == KeyEvent.VK_ESCAPE){
-			qp.qw.stop();
-			return;
+		switch (keycode) {
+			case KeyEvent.VK_ESCAPE:
+				panel.qw.stop();
+				break;
+			case KeyEvent.VK_UP:
+				panel.select--;
+				if (panel.select == 0) panel.select = 2;
+				break;
+			case KeyEvent.VK_DOWN:
+				panel.select++;
+				if (panel.select == 3) panel.select = 1;
+				break;
+			case KeyEvent.VK_ENTER:
+				switch (panel.select) {
+					case 1:
+						panel.qw.stop();
+						break;
+					case 2:
+						System.exit(0);
+						break;
+				}
+			break;
 		}
-		else if (keycode == KeyEvent.VK_UP){
-			qp.select--;
-			if (qp.select == 0) qp.select = 2;
-		}
-		else if (keycode == KeyEvent.VK_DOWN){
-			qp.select++;
-			if (qp.select == 3) qp.select = 1;
-		}
-		else if (keycode == KeyEvent.VK_ENTER){
-			qp.qw.game.statsFree--;
-			switch (qp.select){
-				case 1:
-					qp.qw.stop();
-					break;
-				case 2:
-					System.exit(0);
-					break;
-			}
-			if (qp.qw.game.statsFree == 0)
-			{
-				qp.qw.stop();
-				return;
-			}
-		}
-		qp.repaint();
+		panel.repaint();
 	}
 
 	public void keyReleased(KeyEvent event){}

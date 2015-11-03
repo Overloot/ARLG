@@ -2,68 +2,58 @@ package com.rommax;
 
 import java.awt.event.*;
 
-
 public class EqKeyHandler implements KeyListener{
 
-	EqPanel ep;
+	EqPanel panel;
 
 
-	public EqKeyHandler(EqPanel ep){
+	public EqKeyHandler(EqPanel panel){
 		super();
-		this.ep = ep;
+		this.panel = panel;
 	}
 
-
-
-
 	public synchronized void keyPressed(KeyEvent event){
-		int keycode = event.getKeyCode();
-		if (keycode == KeyEvent.VK_DOWN){
-			if (ep.current != -1){
-				int nc = ep.current + 1;
-				if (nc >=( ItemSet.MAX_SLOTS - 1)) nc = 0;
-				while (ep.ewindow.monster.Equipment[nc] == null){
-				    nc++;
-					if (nc >=( ItemSet.MAX_SLOTS - 1)) nc = 0;
+		switch (event.getKeyCode()) {
+			case KeyEvent.VK_ESCAPE:
+				panel.ewindow.stop();
+				break;
+			case KeyEvent.VK_T:
+				if (panel.current!=-1) {
+					panel.ewindow.game.TryToTakeOffItem(panel.current);
+					boolean b = false;
+					for (int i=0; i< ItemSet.MAX_SLOTS; i++)
+						if (panel.ewindow.monster.Equipment[i] != null) b = true;
+					if (!b) panel.ewindow.stop();
 				}
-				ep.current = nc;
-			}
-		}
-		else
-		if (keycode == KeyEvent.VK_UP){
-			if (ep.current != -1){
-				int nc = ep.current - 1 ;
-				if (nc < 0 ) nc = ItemSet.MAX_SLOTS - 1;
-				while (ep.ewindow.monster.Equipment[nc] == null){
-					   nc--;
+				break;
+			case KeyEvent.VK_DOWN:
+				if (panel.current != -1){
+					int nc = panel.current + 1;
+					if (nc >=( ItemSet.MAX_SLOTS - 1)) nc = 0;
+					while (panel.ewindow.monster.Equipment[nc] == null){
+						nc++;
+						if (nc >=( ItemSet.MAX_SLOTS - 1)) nc = 0;
+					}
+					panel.current = nc;
+				}
+				break;
+			case KeyEvent.VK_UP:
+				if (panel.current != -1){
+					int nc = panel.current - 1 ;
+					if (nc < 0 ) nc = ItemSet.MAX_SLOTS - 1;
+					while (panel.ewindow.monster.Equipment[nc] == null){
+						nc--;
 						if (nc < 0 ) nc = ItemSet.MAX_SLOTS - 1;
 					}
-
-				ep.current = nc;
-			}
+					panel.current = nc;
+				}
+				break;
+			case KeyEvent.VK_ENTER:
+				if (panel.current!=-1)
+					panel.ewindow.game.tryToExamineItem(panel.ewindow.game.player.Equipment[panel.current]);
+				break;
 		}
-
-		else
-		if (keycode == KeyEvent.VK_ENTER && ep.current!=-1){
-			ep.ewindow.game.tryToExamineItem(ep.ewindow.game.player.Equipment[ep.current]);
-		}
-		else
-		if (keycode == KeyEvent.VK_T && ep.current!=-1){
-			ep.ewindow.game.TryToTakeOffItem(ep.current);
-		 	boolean b = false;
-		 	for (int i=0; i< ItemSet.MAX_SLOTS; i++)
-		 		if (ep.ewindow.monster.Equipment[i] != null) b = true;
-		 		if (!b) ep.ewindow.stop();
-		}
-		else
-		if (keycode == KeyEvent.VK_ESCAPE){
-			ep.ewindow.stop();
-			return;
-		}
-
-		ep.repaint();
-
-
+		panel.repaint();
 	}
 
 	public void keyReleased(KeyEvent event){}

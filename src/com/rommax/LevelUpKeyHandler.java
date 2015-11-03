@@ -2,69 +2,57 @@ package com.rommax;
 
 import java.awt.event.*;
 
-
 public class LevelUpKeyHandler implements KeyListener{
 
-	LevelUpPanel lp;
+	LevelUpPanel panel;
 
-	public LevelUpKeyHandler(LevelUpPanel lp){
+	public LevelUpKeyHandler(LevelUpPanel panel){
 		super();
-		this.lp = lp;
+		this.panel = panel;
 	}
 
 	public synchronized void keyPressed(KeyEvent event){
 		int keycode = event.getKeyCode();
-		if (keycode == KeyEvent.VK_UP){
-			lp.select--;
-			if (lp.select == 0) lp.select = 3;
-		}
-		else
-		if (keycode == KeyEvent.VK_DOWN){
-			lp.select++;
-			if (lp.select == 4) lp.select = 1;
-		}
-		else
-		if (keycode == KeyEvent.VK_ENTER){
-			lp.lwindow.game.statsFree--;
-
-			switch (lp.select){
-				case 1: {
-					lp.lwindow.game.player.getSTR().setCurrent(lp.lwindow.game.player.getSTR().getCurrent() + 1);
-					lp.lwindow.game.player.getSTR().setMax(lp.lwindow.game.player.getSTR().getMax() + 1);
-
-					lp.x1++;
-					lp.lwindow.game.player.getHP().setMax(lp.lwindow.game.player.getHP().getMax() + lp.lwindow.game.HIT_POINTS_PER_STRENGTH);
-					lp.lwindow.game.player.getHP().setCurrent(lp.lwindow.game.player.getHP().getCurrent() + lp.lwindow.game.HIT_POINTS_PER_STRENGTH);
-					lp.lwindow.game.player.getCurrentWeight().setMax(lp.lwindow.game.player.getCurrentWeight().getMax() + lp.lwindow.game.CARRYING_PER_STRENGTH);
+		switch (keycode) {
+			case KeyEvent.VK_UP:
+				panel.select--;
+				if (panel.select == 0) panel.select = 3;
+				break;
+			case KeyEvent.VK_DOWN:
+				panel.select++;
+				if (panel.select == 4) panel.select = 1;
+				break;
+			case KeyEvent.VK_ENTER:
+				panel.lwindow.game.statsFree--;
+				switch (panel.select){
+					case 1:
+						panel.lwindow.game.player.getSTR().setCurrent(panel.lwindow.game.player.getSTR().getCurrent() + 1);
+						panel.lwindow.game.player.getSTR().setMax(panel.lwindow.game.player.getSTR().getMax() + 1);
+						panel.x1++;
+						panel.lwindow.game.player.getHP().setMax(panel.lwindow.game.player.getHP().getMax() + panel.lwindow.game.HIT_POINTS_PER_STRENGTH);
+						panel.lwindow.game.player.getHP().setCurrent(panel.lwindow.game.player.getHP().getCurrent() + panel.lwindow.game.HIT_POINTS_PER_STRENGTH);
+						panel.lwindow.game.player.getCurrentWeight().setMax(panel.lwindow.game.player.getCurrentWeight().getMax() + panel.lwindow.game.CARRYING_PER_STRENGTH);
+						break;
+					case 2:
+						panel.lwindow.game.player.getAGI().setCurrent(panel.lwindow.game.player.getAGI().getCurrent() + 1);
+						panel.lwindow.game.player.getAGI().setMax(panel.lwindow.game.player.getAGI().getMax() + 1);
+						panel.x2++;
+						break;
+					case 3:
+						panel.lwindow.game.player.getEND().setCurrent(panel.lwindow.game.player.getEND().getCurrent() + 1);
+						panel.lwindow.game.player.getEND().setMax(panel.lwindow.game.player.getEND().getMax() + 1);
+						panel.x3++;
+						panel.lwindow.game.player.getHP().setMax(panel.lwindow.game.player.getHP().getMax() + panel.lwindow.game.HIT_POINTS_PER_ENDURANCE);
+						panel.lwindow.game.player.getHP().setCurrent(panel.lwindow.game.player.getHP().getCurrent() + panel.lwindow.game.HIT_POINTS_PER_ENDURANCE);
+						break;
+				}
+				if (panel.lwindow.game.statsFree == 0){
+					panel.lwindow.stop();
+					return;
 				}
 				break;
-				case 2: {
-					lp.lwindow.game.player.getAGI().setCurrent(lp.lwindow.game.player.getAGI().getCurrent() + 1);
-					lp.lwindow.game.player.getAGI().setMax(lp.lwindow.game.player.getAGI().getMax() + 1);
-
-					lp.x2++;
-
-					} break;
-				case 3:
-				{
-
-					lp.lwindow.game.player.getEND().setCurrent(lp.lwindow.game.player.getEND().getCurrent() + 1);
-					lp.lwindow.game.player.getEND().setMax(lp.lwindow.game.player.getEND().getMax() + 1);
-
-					lp.x3++;
-					lp.lwindow.game.player.getHP().setMax(lp.lwindow.game.player.getHP().getMax() + lp.lwindow.game.HIT_POINTS_PER_ENDURANCE);
-					lp.lwindow.game.player.getHP().setCurrent(lp.lwindow.game.player.getHP().getCurrent() + lp.lwindow.game.HIT_POINTS_PER_ENDURANCE);
-
-
-				} break;
-			}
-			if (lp.lwindow.game.statsFree == 0)
-			{
-				lp.lwindow.stop();
-				return;
-			}
 		}
-		lp.repaint();
+		panel.repaint();
 	}
 
 	public void keyReleased(KeyEvent event){}

@@ -477,13 +477,12 @@ public class Monster{
 				//game.logMessage(dlog);
 
 				if (min>=max){
-					if (game.dice(LUCK.getCurrent() * 100,100000) ){
+					if (game.dice(LUCK.getCurrent() * 100,100000)){
 						damage += (rand.nextInt(ndamage) + 1);
 						if (enemy == game.player)
-							game.logMessage(this.getName().toLowerCase() + "  #8#критически#^# бьет вас! ");
-						else
-						if (this==game.player)
-							game.logMessage("Вы наносите #3#критически#^# удар! ");
+							game.logMessage(this.getName().toLowerCase() + "  #8#критически#^# бьет вас!");
+								else if (this == game.player)
+									game.logMessage("Вы наносите #3#критический#^# удар!");
 					}
 					enemy.hp.setCurrent(pd-damage);
 					if (pdamage>0) enemy.poisoncount += pdamage;
@@ -498,8 +497,7 @@ public class Monster{
 						if (ndamage<0)
 						game.logMessage("Вас #8#бьет#^# " + this.getName().toLowerCase() + "! Удар #3#исцеляет#^# вас! (" + Integer.toString(-ndamage) + ") #/#");
 					}
-					else
-					if (this==game.player){
+					else if (this==game.player){
 						if (ndamage>0)
 						game.logMessage(enemy.getName() + " #8#получает удар от вас!#^# (" + Integer.toString(ndamage) + ") #/#");
 						if (ndamage==0)
@@ -507,7 +505,6 @@ public class Monster{
 						if (ndamage<0)
 						game.logMessage(enemy.getName() + " получает удар от вас и внезапно #3#исцеляется!#^# (" + Integer.toString(-ndamage) + ") #/#");
 					}
-
 
 				if (DFire.getMax()>0)
 				if (enemy==game.player){

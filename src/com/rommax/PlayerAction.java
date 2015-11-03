@@ -44,6 +44,16 @@ public class PlayerAction {
 		
 	}
 	
+	// Включить режим осмотра местности
+	public boolean startLookMode() {
+		KeyHandler.ly = map.getGame().player.getY();
+		KeyHandler.lx = map.getGame().player.getX();
+		map.field[KeyHandler.ly][KeyHandler.lx].setCursor(true);
+		KeyHandler.LOOK_MODE = true;
+		this.lookTo(0, 0);
+		return false;
+	}
+	
 	// Пропуск хода и отдых
 	public void rest() {
 		move(0, 0);
@@ -152,6 +162,137 @@ public class PlayerAction {
 			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message);
 			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			frame2.setTitle("Что вы хотите поднять?");
+			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
+			frame2.toFront();
+			frame2.setVisible(true);
+			return false;
+		}
+	}
+	
+	// Бросаем что-то на землю
+	public boolean dropIt() {
+		if (map.getGame().player.getInventory().size() == 0) {
+			map.getGame().logMessage("У вас пусто в инвентаре, нечего бросить!");
+			mp.repaint();
+			return false;
+		} else {
+			map.getGame().frame1.setFocusable(false);
+			map.getGame().frame1.setFocusableWindowState(false);
+			message = new ItemSelectMessage();
+			message.command = 'd';
+			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.getGame().player.getInventory(), message);
+			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			frame2.setTitle("Что вы хотите бросить?");
+			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
+			frame2.toFront();
+			frame2.setVisible(true);
+			return false;
+		}
+	}
+	
+	// Информация об игроке
+	public boolean info() {
+		map.getGame().frame1.setFocusable(false);
+		map.getGame().frame1.setFocusableWindowState(false);
+		DescWindow frame2 = new DescWindow(map.getGame(), map.getGame().player);
+		frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
+		frame2.toFront();
+		frame2.setTitle("Информация об игроке");
+		frame2.setVisible(true);
+		return false;
+	}
+
+	// Пьем зелья
+	public boolean quaffIt() {
+		if (map.getGame().player.getInventory().size() == 0) {
+			map.getGame().logMessage("У вас пусто в инвентаре, нечего выпить!");
+			mp.repaint();
+			return false;
+		} else {
+			map.getGame().frame1.setFocusable(false);
+			map.getGame().frame1.setFocusableWindowState(false);
+			message = new ItemSelectMessage();
+			message.command = 'q';
+			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_POTION, map.getGame().player.getInventory(), message);
+			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			frame2.setTitle("Что вы хотите выпить?");
+			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
+			frame2.toFront();
+			frame2.setVisible(true);
+			return false;
+		}
+	}
+	
+	// Читаем свитки
+	public boolean readIt() {
+		if (map.getGame().player.getInventory().size() == 0) {
+			map.getGame().logMessage("У вас пусто в инвентаре, нечего прочитать!");
+			mp.repaint();
+			return false;
+		} else {
+			map.getGame().frame1.setFocusable(false);
+			map.getGame().frame1.setFocusableWindowState(false);
+			message = new ItemSelectMessage();
+			message.command = 'r';
+			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_SCROLL, map.getGame().player.getInventory(), message);
+			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			frame2.setTitle("Что вы хотите прочитать?");
+			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
+			frame2.toFront();
+			frame2.setVisible(true);
+			return false;
+		}
+	}
+	
+	// Одеваем персонажа
+	public boolean wearIt() {
+		if (map.getGame().player.getInventory().size() == 0) {
+			map.getGame().logMessage("У вас пусто в инвентаре, нечего надеть!");
+			mp.repaint();
+			return false;
+		} else {
+			map.getGame().frame1.setFocusable(false);
+			map.getGame().frame1.setFocusableWindowState(false);
+			message = new ItemSelectMessage();
+			message.command = 'w';
+			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.getGame().player.getInventory(), message);
+			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			frame2.setTitle("Что вы хотите надеть?" + message.command);
+			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
+			frame2.toFront();
+			frame2.setVisible(true);
+			return false;
+		}		
+	}
+	
+	// Экипировка
+	public boolean showEq() {
+		map.getGame().frame1.setFocusable(false);
+		map.getGame().frame1.setFocusableWindowState(false);
+	 	EqWindow frame2 = new EqWindow(map.getGame(), map.getGame().player);
+		frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
+		frame2.toFront();
+		frame2.setTitle("Экипировка игрока");
+		frame2.setVisible(true);
+		return false;
+	}
+	
+	// Открываем инвентарь
+	public boolean inventory() {
+		if (map.getGame().player.getInventory().size() == 0) {
+			map.getGame().logMessage("У вас пусто в инвентаре, нечего осмотреть!");
+			mp.repaint();
+			return false;
+		} else {
+			map.getGame().frame1.setFocusable(false);
+			map.getGame().frame1.setFocusableWindowState(false);
+			message = new ItemSelectMessage();
+			message.command = 'i';
+			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.getGame().player.getInventory(), message);
+			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			frame2.setTitle("Что вы хотите осмотреть?");
 			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
 			frame2.toFront();
 			frame2.setVisible(true);

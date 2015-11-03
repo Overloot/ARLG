@@ -673,6 +673,13 @@ public class Game {
 
     }
 
+	// Обновление экрана
+	public void refresh() {
+		keyHandler.map.FOV(player.getY(), player.getX(), player.getFOVRAD().getCurrent());
+		keyHandler.mp.repaint();
+		keyHandler.keyPressed(null);
+	}
+	
     // метод описывает убийство монстра
     public void killMonster(int index) {
         logMessage(monsterList[index].getName() + " #2#УМИРАЕТ В МУКАХ#^#!!!#/#");
