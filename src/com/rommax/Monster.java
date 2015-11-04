@@ -477,7 +477,8 @@ public class Monster{
 				//game.logMessage(dlog);
 
 				if (min>=max){
-					if (game.dice(LUCK.getCurrent() * 100,100000)){
+					//if (game.dice(LUCK.getCurrent() * 100,100000)){
+					if (game.dice(LUCK.getCurrent(), 100)){
 						damage += (rand.nextInt(ndamage) + 1);
 						if (enemy == game.player)
 							game.logMessage(this.getName().toLowerCase() + "  #8#критически#^# бьет вас!");

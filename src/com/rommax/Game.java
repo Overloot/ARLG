@@ -646,7 +646,7 @@ public class Game {
 	private void loot(int index) {
         Random r = new Random();
 		for(int i = 0; i < 3; i++)
-			if (r.nextInt(8) == 0)
+			if (this.dice(player.getLUCK().getCurrent(), 100))
 				addRandomItem(monsterList[index].getY(), monsterList[index].getX());
 	}
 
