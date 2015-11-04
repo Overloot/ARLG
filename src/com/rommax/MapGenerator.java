@@ -118,6 +118,9 @@ public class MapGenerator {
     }
 
     public void VillageCreate() {
+
+        // ************************************************************************
+        // код полностью соответствует ForestCreate, кроме отмеченного комментариями
         map.setName("#5#Фермы у реки#^#");
 
         double density = 0.9F; // density переводится как плотность
@@ -160,73 +163,97 @@ public class MapGenerator {
             for (j = 0; j < y; j++)
                 if (countnearby(i, j, Tileset.TILE_GRASS) < 3)
                     map.setTileAt(i, j, Tileset.TILE_TREE);
+        // ************************************************************************
 
-        // создаем реку
+        // ниже создаем реку
         //TODO: река должна больше гулять
         //TODO: добавить тайлы для ровных изгибов
         //TODO: река должна иметь ответвления
         int springhead_x;
         int springhead_y;
         int farmPlace;
+        int creekPlace;
         boolean bridgeAlreadyBuilt = false;
+        // вертикальное расположение
         if (new Random().nextInt(2) == 0) { // 0 река будет течь по горизонтали, 1 по вертикали
             springhead_x = 0; // координаты начала истока реки
             springhead_y = new Random().nextInt(y);
             for (int river_x = springhead_x; river_x < x; river_x++)
             {
-                springhead_y = CalcOffset(springhead_y, 1, map.getWidth(), 1); // чтоб речка гуляла
-
+                springhead_y = CalcOffset(springhead_y, 1, map.getHeight(), 1); // чтоб речка гуляла
                 // создание фермы
                 if (new Random().nextInt(100) < 30) {
-                    farmPlace = CalcOffset(springhead_y, 1, map.getWidth(), 2);
+                    farmPlace = CalcOffset(springhead_y, 1, map.getHeight(), 2);
                     map.setTileAt(river_x, farmPlace, Tileset.TILE_FARM);
                 }
-
-                // создание воды
-                map.setTileAt(river_x, springhead_y, Tileset.TILE_WATER);
-                map.setTileAt(river_x, springhead_y + 1, Tileset.TILE_WATER);
-                map.setTileAt(river_x, springhead_y - 1, Tileset.TILE_WATER);
-
+                //рукав реки
+                if (new Random().nextInt(100) < 2) {
+                    creekPlace = river_x;
+                    for (int yy = springhead_y; yy < y; yy++)
+                        {
+                            creekPlace=(CalcOffset(creekPlace, 1, map.getWidth(), 1));
+                            CreateThreeTilesHorizontal(creekPlace, yy, Tileset.TILE_WATER);
+                        }
+                }
+                else {
+                    // главная река
+                    CreateThreeTilesVertical(river_x, springhead_y, Tileset.TILE_WATER);
+                }
                 //если повезет - здесь будет мост
                 if ( (new Random().nextInt(100) <= 5) && (!bridgeAlreadyBuilt))
                 {
-                    map.setTileAt(river_x, springhead_y, Tileset.TILE_BRIDGE_HOR);
-                    map.setTileAt(river_x, springhead_y + 1, Tileset.TILE_BRIDGE_HOR);
-                    map.setTileAt(river_x, springhead_y - 1, Tileset.TILE_BRIDGE_HOR);
+                    CreateThreeTilesVertical(river_x, springhead_y, Tileset.TILE_BRIDGE_HOR);
                     bridgeAlreadyBuilt = true;
                 }
             }
         }
-
+        // горизонтальное расположение
         else {
             springhead_x = new Random().nextInt(y); // координаты начала истока реки
             springhead_y = 0;
             for (int river_y = springhead_y; river_y < x; river_y++)
             {
-                springhead_x = CalcOffset(springhead_x, 1, map.getHeight(), 1); // чтоб речка гуляла
-
+                springhead_x = CalcOffset(springhead_x, 1, map.getWidth(), 1); // чтоб речка гуляла
                 // создание фермы
                 if (new Random().nextInt(100) < 30) {
-                    farmPlace = CalcOffset(springhead_x, 1, map.getHeight(), 2);
+                    farmPlace = CalcOffset(springhead_x, 1, map.getWidth(), 2);
                     map.setTileAt(farmPlace, river_y, Tileset.TILE_FARM);
                 }
-
-                // создание воды
-                map.setTileAt(springhead_x, river_y, Tileset.TILE_WATER);
-                map.setTileAt(springhead_x - 1, river_y, Tileset.TILE_WATER);
-                map.setTileAt(springhead_x + 1, river_y, Tileset.TILE_WATER);
-
-
-                //если повезет - здесь будет мост
+                // рукав реки
+                if (new Random().nextInt(100) < 2) {
+                    creekPlace = river_y;
+                    for (int xx = springhead_x; xx < x; xx++)
+                        {
+                            creekPlace=(CalcOffset(creekPlace, 1, map.getHeight(), 1));
+                            CreateThreeTilesVertical(xx, creekPlace, Tileset.TILE_WATER);
+                        }
+                }
+                else {
+                    // главная река
+                    CreateThreeTilesHorizontal(springhead_x, river_y, Tileset.TILE_WATER);
+                }
+                // если повезет - здесь будет мост
                 if ( (new Random().nextInt(100) <= 5) && (!bridgeAlreadyBuilt))
                 {
-                    map.setTileAt(springhead_x, river_y, Tileset.TILE_BRIDGE_VER);
-                    map.setTileAt(springhead_x + 1, river_y, Tileset.TILE_BRIDGE_VER);
-                    map.setTileAt(springhead_x - 1, river_y, Tileset.TILE_BRIDGE_VER);
+                    CreateThreeTilesHorizontal(springhead_x, river_y, Tileset.TILE_BRIDGE_VER);
                     bridgeAlreadyBuilt = true;
                 }
             }
         }
+    }
+
+    public void CreateThreeTilesHorizontal(int x, int y, int tile)
+    {
+        if (x + 1 < map.getWidth()) map.setTileAt(x + 1, y, tile);
+        if (x - 1 > 0) map.setTileAt(x - 1, y, tile);
+        map.setTileAt(x, y, tile);
+    }
+
+    public void CreateThreeTilesVertical(int x, int y, int tile)
+    {
+        if (y + 1 < map.getHeight()) map.setTileAt(x, y + 1, tile);
+        if (y - 1 > 0) map.setTileAt(x, y - 1, tile);
+        map.setTileAt(x, y, tile);
     }
 
     // метод смещения в сторону от заданной точки
