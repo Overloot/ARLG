@@ -13,9 +13,9 @@ public class BaseTile{
 	public BaseTile(int id, String name, String path, boolean isPassable, boolean isTransparent, boolean isOpenable){
 		this.id = id;
 		this.path = path;
-		this.isPassable = isPassable;
-		this.isTransparent = isTransparent;
-		this.isOpenable = isOpenable;
+		this.isPassable = isPassable;		// проходимый или нет
+		this.isTransparent = isTransparent; // видно сквозь или нет
+		this.isOpenable = isOpenable;		// можно открыть или нет
 		this.name = name;
 	}
 

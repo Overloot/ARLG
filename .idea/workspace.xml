@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="472d3370-865c-421f-947f-0101a5c137f4" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ARLG/com/rommax/Map.class" afterPath="$PROJECT_DIR$/out/production/ARLG/com/rommax/Map.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rommax/BaseTile.java" afterPath="$PROJECT_DIR$/src/com/rommax/BaseTile.java" />
+    </list>
+    <list id="0566411a-1569-4ae3-bfa2-01c2b641e393" name="03.11.2015" comment="замена воды на карте типа &quot;затонувшая башня&quot;, добавлен новый тип карты &quot;деревня у реки&quot;">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ARLG/com/rommax/BaseItem.class" afterPath="$PROJECT_DIR$/out/production/ARLG/com/rommax/BaseItem.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ARLG/com/rommax/BaseMonster.class" afterPath="$PROJECT_DIR$/out/production/ARLG/com/rommax/BaseMonster.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ARLG/com/rommax/BaseTile.class" afterPath="$PROJECT_DIR$/out/production/ARLG/com/rommax/BaseTile.class" />
@@ -30,8 +34,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ARLG/com/rommax/ScriptParser.class" afterPath="$PROJECT_DIR$/out/production/ARLG/com/rommax/ScriptParser.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ARLG/com/rommax/Stat.class" afterPath="$PROJECT_DIR$/out/production/ARLG/com/rommax/Stat.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ARLG/com/rommax/Tileset.class" afterPath="$PROJECT_DIR$/out/production/ARLG/com/rommax/Tileset.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rommax/MapGenerator.java" afterPath="$PROJECT_DIR$/src/com/rommax/MapGenerator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/rommax/Tileset.java" afterPath="$PROJECT_DIR$/src/com/rommax/Tileset.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MOVED" beforePath="D:\Documents\java\ARLG\out\production\ARLG\com\rommax\Monsterset.class" afterPath="$PROJECT_DIR$/out/production/ARLG/com/rommax/MonsterSet.class" />
     </list>
@@ -39,6 +41,7 @@
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <file path="$PROJECT_DIR$/.idea/workspace.xml" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,11 +58,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Tileset.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Tileset.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/rommax/Tileset.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.037527595">
-              <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
+            <state vertical-scroll-proportion="-13.28125">
+              <caret line="51" column="114" selection-start-line="51" selection-start-column="114" selection-end-line="51" selection-end-column="114" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BaseTile.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/rommax/BaseTile.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.4840871">
+              <caret line="17" column="68" selection-start-line="17" selection-start-column="68" selection-end-line="17" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -68,10 +81,10 @@
       <file leaf-file-name="MapGenerator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/rommax/MapGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
+            <state vertical-scroll-proportion="-11.5">
+              <caret line="23" column="10" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="10" />
               <folding>
-                <element signature="e#0#12861#0" expanded="true" />
+                <element signature="e#0#14536#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -129,7 +142,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/com/rommax/BaseItem.java" />
-        <option value="$PROJECT_DIR$/src/com/rommax/BaseTile.java" />
         <option value="$PROJECT_DIR$/src/com/rommax/ColorSet.java" />
         <option value="$PROJECT_DIR$/src/com/rommax/DescPanel.java" />
         <option value="$PROJECT_DIR$/src/com/rommax/DescKeyHandler.java" />
@@ -167,6 +179,7 @@
         <option value="$PROJECT_DIR$/src/com/rommax/KeyHandler.java" />
         <option value="$PROJECT_DIR$/src/com/rommax/RLG.java" />
         <option value="$PROJECT_DIR$/src/com/rommax/MapGenerator.java" />
+        <option value="$PROJECT_DIR$/src/com/rommax/BaseTile.java" />
         <option value="$PROJECT_DIR$/src/com/rommax/Tileset.java" />
       </list>
     </option>
@@ -435,6 +448,7 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="472d3370-865c-421f-947f-0101a5c137f4" name="Default" comment="" />
+      <changelist id="0566411a-1569-4ae3-bfa2-01c2b641e393" name="03.11.2015" comment="замена воды на карте типа &quot;затонувшая башня&quot;, добавлен новый тип карты &quot;деревня у реки&quot;" />
       <created>1444163784315</created>
       <option name="number" value="Default" />
       <updated>1444163784315</updated>
@@ -481,7 +495,19 @@
       <option name="project" value="LOCAL" />
       <updated>1446576143000</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="замена воды на карте типа &quot;затонувшая башня&quot;, добавлен новый тип карты &quot;деревня у реки&quot;">
+      <created>1446576321547</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1446576321547</updated>
+    </task>
+    <task id="LOCAL-00009" summary="доработка карты &quot;ферма у воды&quot;. Добавлены мосты.">
+      <created>1446587455575</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1446587455575</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView">
@@ -505,7 +531,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3290735" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17552084" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -564,7 +590,8 @@
     <MESSAGE value="некоторые изменения" />
     <MESSAGE value="fix bug with moves" />
     <MESSAGE value="замена воды на карте типа &quot;затонувшая башня&quot;, добавлен новый тип карты &quot;деревня у реки&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="замена воды на карте типа &quot;затонувшая башня&quot;, добавлен новый тип карты &quot;деревня у реки&quot;" />
+    <MESSAGE value="доработка карты &quot;ферма у воды&quot;. Добавлены мосты." />
+    <option name="LAST_COMMIT_MESSAGE" value="доработка карты &quot;ферма у воды&quot;. Добавлены мосты." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -590,7 +617,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#12861#0" expanded="true" />
+            <element signature="e#0#14536#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -687,6 +714,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/rommax/Map.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="111" column="20" selection-start-line="111" selection-start-column="11" selection-end-line="111" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/rommax/KeyHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -703,28 +738,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/rommax/Map.java">
+    <entry file="file://$PROJECT_DIR$/src/com/rommax/Tileset.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="111" column="20" selection-start-line="111" selection-start-column="11" selection-end-line="111" selection-end-column="20" />
+        <state vertical-scroll-proportion="-13.28125">
+          <caret line="51" column="114" selection-start-line="51" selection-start-column="114" selection-end-line="51" selection-end-column="114" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/rommax/MapGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
+        <state vertical-scroll-proportion="-11.5">
+          <caret line="23" column="10" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="10" />
           <folding>
-            <element signature="e#0#12861#0" expanded="true" />
+            <element signature="e#0#14536#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/rommax/Tileset.java">
+    <entry file="file://$PROJECT_DIR$/src/com/rommax/BaseTile.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.037527595">
-          <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.4840871">
+          <caret line="17" column="68" selection-start-line="17" selection-start-column="68" selection-end-line="17" selection-end-column="68" />
           <folding />
         </state>
       </provider>
