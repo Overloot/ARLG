@@ -28,7 +28,7 @@ public class Game {
     public final int MAP_SIZE_X = 100;
     final int MAX_FLOORS = 12;
     public static final int MAX_MONSTER_PER_LEVEL = 50;
-    public static final int MAX_ITEM_PER_LEVEL = 150;
+    public static final int MAX_ITEM_PER_LEVEL = 50;
     public static final int MAX_PLAYER_LEVEL = 30;
     public final int HIT_POINTS_PER_STRENGTH = 3;
     public final int CARRYING_PER_STRENGTH = 7;
@@ -203,7 +203,7 @@ public class Game {
         checkStatChanges(m.getFOVRAD(), "Вы снова стали #3#лучше#^# видеть!#^#", "Вы снова стали #2#хуже#^# видеть!#^#");
     }
 
-    //метод проверят не пара ли поднять уровень игроку, наносит урон ядом и т.д.
+    //метод проверят не пора ли поднять уровень игроку, наносит урон ядом и т.д.
     void checkTimeEffects() {
         boolean x = false;
         // если у игрока хватает опыта для поднятия уровня, то поднимаем
@@ -283,7 +283,7 @@ public class Game {
                 logMessage("ВЫ ДОБРАЛИСЬ ДО ПОСЛЕДНЕГО УРОВНЯ И ВЫИГРАЛИ ИГРУ! СПАСИБО ЗА ТЕСТИРОВАНИЕ!");
 
         }
-        // а если карта уже существует, то тупо переносим на нее игрока
+        // а если карта уже существует, то переносим на нее игрока
         else {
             map.field[player.getY()][player.getX()].setMonster(null);
             map = mapList[newMapLevel];
@@ -609,12 +609,11 @@ public class Game {
     }
 
 
-    // устал
-    public void addRandomItem() {
+    // Добавляем предмет на карту в указанные координаты
+    public void addRandomItem(int y, int x) {
         Random random = new Random();
         int newID = 0;
-
-        while (true) {
+		while (true) {
             newID = random.nextInt(ItemSet.MAX_ITEMS);
             // выпавший итем не должен быть уровнем выше чем
             if (ItemSet.getItem(newID).getLevel() > currentMapNumber + 4) continue;
@@ -625,8 +624,14 @@ public class Game {
             if (!dice(ItemSet.getItem(newID).getChanse(), 100)) continue;
             break;
         }
+		BaseItem baseItem = ItemSet.getItem(newID);
+        itemList[itemsQuantity] = new Item(baseItem, y, x, map, this);
+        itemsQuantity++;
+    }
 
-        BaseItem baseItem = ItemSet.getItem(newID);
+    // Добавляем предмет на карту
+    public void addRandomItem() {
+        Random random = new Random();
         // выбираем место сброса итема, если оно непроходимо или на нем есть монстр, то ищем другое место
         int y = random.nextInt(map.getHeight());
         int x = random.nextInt(map.getWidth());
@@ -634,10 +639,16 @@ public class Game {
             y = random.nextInt(map.getHeight());
             x = random.nextInt(map.getWidth());
         }
-        // сброс итема по случайным координатам
-        itemList[itemsQuantity] = new Item(baseItem, y, x, map, this);
-        itemsQuantity++;
-    }
+		addRandomItem(y, x);
+	}
+	
+	// Ставим предмет(ы)
+	private void loot(int index) {
+        Random r = new Random();
+		for(int i = 0; i < 3; i++)
+			if (r.nextInt(8) == 0)
+				addRandomItem(monsterList[index].getY(), monsterList[index].getX());
+	}
 
     // метод проверят не многовато ли у монстра HitPoints, а так же окончательно добивает убитых
     public void CheckMonsters() {
@@ -687,6 +698,8 @@ public class Game {
         Map map = monsterList[index].getMap();
         // ставим кровь на месте смерти монстра
         map.field[monsterList[index].getY()][monsterList[index].getX()].setBlood(true);
+		// Шанс выкинуть на землю предмет(ы)
+		loot(index);
         // убираем монстра с карты
         map.deleteMonsterAt(monsterList[index].getY(), monsterList[index].getX());
 
