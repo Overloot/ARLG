@@ -2,6 +2,7 @@ package com.rommax;
 
 import javax.swing.*;
 import java.util.*;
+import java.io.*;
 
 
 public class Game {
@@ -73,7 +74,6 @@ public class Game {
         if (x < 0) return -1;
         return 0;
     }
-
 
     // попытка открыть или закрыть что-то, точно вызывается из класса KeyHandler
     public void tryToOpenSomething(boolean isPlayer, int ny, int nx, boolean mode) {
@@ -334,11 +334,7 @@ public class Game {
         fillLevelByItems();         // добавляет столько итемов, сколько положено на уровень ( MAX_ITEM_PER_LEVEL )
         map.FOV(y, x, player.getFOVRAD().getCurrent());
         frame1.mainpanel.repaint();
-		
-		//selectRace();
-		//frame1.setFocusable(true);
-		//frame1.setFocusableWindowState(true);
-
+		this.selectRace();
 	}
 
 	public void selectRace() {
