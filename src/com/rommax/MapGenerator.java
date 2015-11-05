@@ -9,7 +9,7 @@ import java.util.*;
 public class MapGenerator {
 
     public Map map;
-    public static final int MAX_GENERATORS = 6; // должно соответствовать количеству типов карт
+    public static final int MAX_GENERATORS = 7; // должно соответствовать количеству типов карт
     private Random rand = new Random();
 
     public static final int ID_FOREST_1 = 0;
@@ -18,10 +18,11 @@ public class MapGenerator {
     public static final int ID_MAZE_2 = 3;
     public static final int ID_TOWER = 4;
     public static final int ID_VILLAGE = 5;
+    public static final int ID_OLD_CASTLE = 6;
 
     public void generateMap(Map map, int ID) {
         this.map = map;
-        //ID = 5; // для теста реки
+        //ID = 6; // для теста
         if (ID == ID_FOREST_1)
             ForestCreate();
         else if (ID == ID_MAZE_1)
@@ -34,6 +35,10 @@ public class MapGenerator {
             TowerCreate();
         else if (ID == ID_VILLAGE)
             VillageCreate();
+        else if (ID == ID_OLD_CASTLE) {
+            OldCastleCreate();
+        }
+
     }
 
 
@@ -167,8 +172,6 @@ public class MapGenerator {
 
         // ниже создаем реку
         //TODO: река должна больше гулять
-        //TODO: добавить тайлы для ровных изгибов
-        //TODO: река должна иметь ответвления
         int springhead_x;
         int springhead_y;
         int farmPlace;
@@ -177,9 +180,8 @@ public class MapGenerator {
         // вертикальное расположение
         if (new Random().nextInt(2) == 0) { // 0 река будет течь по горизонтали, 1 по вертикали
             springhead_x = 0; // координаты начала истока реки
-            springhead_y = new Random().nextInt(y);
-            for (int river_x = springhead_x; river_x < x; river_x++)
-            {
+            springhead_y = new Random().nextInt(map.getHeight());
+            for (int river_x = springhead_x; river_x < map.getHeight(); river_x++) {
                 springhead_y = CalcOffset(springhead_y, 1, map.getHeight(), 1); // чтоб речка гуляла
                 // создание фермы
                 if (new Random().nextInt(100) < 30) {
@@ -189,19 +191,16 @@ public class MapGenerator {
                 //рукав реки
                 if (new Random().nextInt(100) < 2) {
                     creekPlace = river_x;
-                    for (int yy = springhead_y; yy < y; yy++)
-                        {
-                            creekPlace=(CalcOffset(creekPlace, 1, map.getWidth(), 1));
-                            CreateThreeTilesHorizontal(creekPlace, yy, Tileset.TILE_WATER);
-                        }
-                }
-                else {
+                    for (int yy = springhead_y; yy < y; yy++) {
+                        creekPlace = (CalcOffset(creekPlace, 1, map.getWidth(), 1));
+                        CreateThreeTilesHorizontal(creekPlace, yy, Tileset.TILE_WATER);
+                    }
+                } else {
                     // главная река
                     CreateThreeTilesVertical(river_x, springhead_y, Tileset.TILE_WATER);
                 }
                 //если повезет - здесь будет мост
-                if ( (new Random().nextInt(100) <= 5) && (!bridgeAlreadyBuilt))
-                {
+                if ((new Random().nextInt(100) <= 5) && (!bridgeAlreadyBuilt)) {
                     CreateThreeTilesVertical(river_x, springhead_y, Tileset.TILE_BRIDGE_HOR);
                     bridgeAlreadyBuilt = true;
                 }
@@ -209,10 +208,9 @@ public class MapGenerator {
         }
         // горизонтальное расположение
         else {
-            springhead_x = new Random().nextInt(y); // координаты начала истока реки
+            springhead_x = new Random().nextInt(map.getWidth()); // координаты начала истока реки
             springhead_y = 0;
-            for (int river_y = springhead_y; river_y < x; river_y++)
-            {
+            for (int river_y = springhead_y; river_y < map.getWidth(); river_y++) {
                 springhead_x = CalcOffset(springhead_x, 1, map.getWidth(), 1); // чтоб речка гуляла
                 // создание фермы
                 if (new Random().nextInt(100) < 30) {
@@ -222,19 +220,16 @@ public class MapGenerator {
                 // рукав реки
                 if (new Random().nextInt(100) < 2) {
                     creekPlace = river_y;
-                    for (int xx = springhead_x; xx < x; xx++)
-                        {
-                            creekPlace=(CalcOffset(creekPlace, 1, map.getHeight(), 1));
-                            CreateThreeTilesVertical(xx, creekPlace, Tileset.TILE_WATER);
-                        }
-                }
-                else {
+                    for (int xx = springhead_x; xx < x; xx++) {
+                        creekPlace = (CalcOffset(creekPlace, 1, map.getHeight(), 1));
+                        CreateThreeTilesVertical(xx, creekPlace, Tileset.TILE_WATER);
+                    }
+                } else {
                     // главная река
                     CreateThreeTilesHorizontal(springhead_x, river_y, Tileset.TILE_WATER);
                 }
                 // если повезет - здесь будет мост
-                if ( (new Random().nextInt(100) <= 5) && (!bridgeAlreadyBuilt))
-                {
+                if ((new Random().nextInt(100) <= 5) && (!bridgeAlreadyBuilt)) {
                     CreateThreeTilesHorizontal(springhead_x, river_y, Tileset.TILE_BRIDGE_VER);
                     bridgeAlreadyBuilt = true;
                 }
@@ -242,15 +237,13 @@ public class MapGenerator {
         }
     }
 
-    public void CreateThreeTilesHorizontal(int x, int y, int tile)
-    {
+    public void CreateThreeTilesHorizontal(int x, int y, int tile) {
         if (x + 1 < map.getWidth()) map.setTileAt(x + 1, y, tile);
         if (x - 1 > 0) map.setTileAt(x - 1, y, tile);
         map.setTileAt(x, y, tile);
     }
 
-    public void CreateThreeTilesVertical(int x, int y, int tile)
-    {
+    public void CreateThreeTilesVertical(int x, int y, int tile) {
         if (y + 1 < map.getHeight()) map.setTileAt(x, y + 1, tile);
         if (y - 1 > 0) map.setTileAt(x, y - 1, tile);
         map.setTileAt(x, y, tile);
@@ -259,8 +252,7 @@ public class MapGenerator {
     // метод смещения в сторону от заданной точки
     // принимает начальную точку, и значение в приделах которого следует отступить
     // возвращается точная координата которая отличчается минимум на 1, но не меньше 1 и не больше range - 2,
-    public int CalcOffset(int startPoint, int max_scatter, int range, int min_scatter)
-    {
+    public int CalcOffset(int startPoint, int max_scatter, int range, int min_scatter) {
         if (new Random().nextInt(2) == 0) startPoint = startPoint - new Random().nextInt(max_scatter) - min_scatter;
         else startPoint = startPoint + new Random().nextInt(max_scatter) + min_scatter;
         if (startPoint < 1) startPoint = 1;
@@ -427,6 +419,59 @@ public class MapGenerator {
         Random random = new Random();
         for (int i = 0; i < (map.getHeight() * map.getWidth() / 10); i++)
             ForestPartDraw(random.nextInt(map.getHeight()), random.nextInt(map.getWidth()));
+    }
+
+    public void OldCastleCreate() {
+        map.setName("#7#Старый замок #^#");
+
+        //заполняем массив проходимыми тайлами
+        for (int x = 0; x < map.getHeight(); x++)
+            for (int y = 0; y < map.getWidth(); y++)
+                map.setTileAt(x, y, Tileset.TILE_DUNGEON_WALL);
+
+        int pointX = 1;
+        int pointY = 1;
+        int sizeX;
+        int sizeY;
+        int doorX;
+        int doorY;
+        int sizeHall;
+
+        while (true) {
+            sizeX = new Random().nextInt(4) + 2; //максимальный размер комнаты 5х5
+            sizeY = new Random().nextInt(4) + 2;
+            if (pointX + sizeX > map.getHeight() -1) {
+                pointX = 1;
+                pointY = pointY + 6;
+                continue;
+            }
+            if (pointY + sizeY > map.getWidth() - 1) break;
+
+            for (int x = pointX; x <= pointX + sizeX; x++)
+                for (int y = pointY; y <= pointY + sizeY; y++)
+                    map.setTileAt(x, y, Tileset.TILE_DUNGEON_FLOOR);
+
+            doorX = pointX + sizeX;
+            doorY = (int) pointY + sizeY / 2;
+            map.setTileAt(doorX, doorY, Tileset.TILE_CLOSED_DOOR);
+
+            sizeHall = new Random().nextInt(3) + 1;
+            if (doorX + sizeHall > map.getHeight() -1) {
+                pointX = 1;
+                pointY = pointY + 6;
+                continue;
+            }
+
+            for (int x = doorX; x <= doorX + sizeHall; x++)
+                    map.setTileAt(x, doorY, Tileset.TILE_DUNGEON_FLOOR);
+
+            doorX = doorX + sizeHall;
+            map.setTileAt(doorX, doorY, Tileset.TILE_CLOSED_DOOR);
+
+            pointX = pointX + sizeX + sizeHall + 1;
+
+        }
+
     }
 
 
