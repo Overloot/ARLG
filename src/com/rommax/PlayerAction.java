@@ -15,6 +15,27 @@ public class PlayerAction {
 		this.mp = mp;
 	}
 	
+	// Используем скилл
+	public boolean useSkill(int n){
+		boolean ret = false;
+		if (Skill.getAmount() >= n) {
+			n--;
+			ret = true;
+			if (Skill.getCooldown(n) > 0) {
+				map.getGame().logMessage("У вас #2#нет сил#^# использовать навык #8#" + 
+					SkillSet.getSkill(Skill.skill[n]).getName() + "#^#!");
+				return false;
+			}else{
+				// Используем навык героя
+				map.getGame().logMessage("Вы #4#использовали#^# навык #8#" + 
+					SkillSet.getSkill(Skill.skill[n]).getName() + ".#^#");
+				Skill.setCooldown(n, SkillSet.getSkill(Skill.skill[n]).getСooldown());
+				map.getGame().player.setEffectFrom(ScriptParser.parseString(SkillSet.getSkill(Skill.skill[n]).getScript()), true);
+			}
+		} else map.getGame().logMessage("Вы #2#не владеете#^# таким навыком!");
+		return ret;
+	}
+	
 	// Осмотр тайла
 	public void lookTo(int dx, int dy) {
 		if (!map.hasTileAt(KeyHandler.ly + dy, KeyHandler.lx + dx)) return;

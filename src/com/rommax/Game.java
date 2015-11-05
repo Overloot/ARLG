@@ -191,7 +191,7 @@ public class Game {
             m.getHP().setCurrent(m.getHP().getCurrent() + HIT_POINTS_PER_STRENGTH * (m.getSTR().getMax() - m.getSTR().getCurrent()));
             m.getCurrentWeight().setMax(m.getCurrentWeight().getMax() + CARRYING_PER_STRENGTH * (m.getSTR().getMax() - m.getSTR().getCurrent()));
         }
-
+		
         checkStatChanges(m.getAGI(), "Вы снова стали более #3#ловким!#^#", "Вы снова стали менее #2#ловким!#^#");
         checkStatChanges(m.getEND(), "Вы снова стали #3#выносливее!#^#", "Вы снова стали менее #2#выносливее!#^#");
         checkStatChanges(m.getLUCK(), "Вы снова стали #3#удачливее!#^#", "Вы снова стали менее #2#удачливее!#^#");
@@ -201,6 +201,11 @@ public class Game {
         checkStatChanges(m.getRNormal(), "Вы снова стали #3#сильнее#^# сопротивляться #8#ударам!#^#", "Вы снова стали #2#слабее#^# сопротивляться #8#ударам!#^#");
         checkStatChanges(m.getRPoison(), "Вы снова стали #3#сильнее#^# сопротивляться #3#яду!#^#", "Вы снова стали #2#слабее#^# сопротивляться #3#яду!#^#");
         checkStatChanges(m.getFOVRAD(), "Вы снова стали #3#лучше#^# видеть!#^#", "Вы снова стали #2#хуже#^# видеть!#^#");
+        checkStatChanges(m.getAddHP(), "Вы #3#исцеляетесь#^#!#^#", "Вы #2#теряете здоровье#^#!#^#");
+		
+		// Медленное исцеление
+		if (m.getAddHP().getCurrent() != 0) m.getHP().setCurrent(m.getHP().getCurrent() + (m.getAddHP().getCurrent() * m.getLevel()));
+			
     }
 
     //метод проверят не пора ли поднять уровень игроку, наносит урон ядом и т.д.
@@ -739,7 +744,8 @@ public class Game {
 		player.getHP().setMax(calcHP(player.getSTR().getCurrent(), player.getEND().getCurrent())); 
 		player.getHP().setCurrent(calcHP(player.getSTR().getCurrent(), player.getEND().getCurrent())); 
 		player.getCurrentWeight().setMax(calcCarrying(player.getSTR().getCurrent()));
-		
+		// Даем расовый навык
+		Skill.add(RaceSet.getRace(id).getSkill());
 	}
 
     // для удобства =)

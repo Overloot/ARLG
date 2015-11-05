@@ -89,6 +89,7 @@ public class ScriptParser{
 			case "RELEC": setStatAs(so.RELEC, number); break;
 			case "RNORMAL": setStatAs(so.RNORMAL, number); break;
 			case "HEALSELF": setStatAs(so.HEALSELF, number); break;
+			case "HEALTIME": setStatAs(so.HEALTIME, number); break;
 			case "BLINK": so.BLINK = true; break;
 			case "TELEPORT": so.TELEPORT = true; break;
 			case "IDENTIFY": so.IDENTIFY = true; break;

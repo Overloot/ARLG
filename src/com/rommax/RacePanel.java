@@ -27,6 +27,10 @@ class RacePanel extends JPanel
 		g.drawString(itemName, (Tileset.TILE_SIZE * (X + 2)) + 5, Tileset.TILE_SIZE * (RaceSet.MAX_RACES + Y + 1) + 32);		
 	}
 	
+	private void addLine(Graphics g, String itemName, int X, int Y) {
+		g.drawString(itemName, (Tileset.TILE_SIZE * (X + 2)) + 5, Tileset.TILE_SIZE * (RaceSet.MAX_RACES + Y + 1) + 32);		
+	}
+		
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Image im =  Toolkit.getDefaultToolkit().getImage("res/icons/texture_menu.png");
@@ -59,6 +63,11 @@ class RacePanel extends JPanel
 				y = window.game.calcHP(RaceSet.getRace(i).getSTR(), RaceSet.getRace(i).getEND());
 				addLine(g, "res/icons/icon_life.png", "Жизнь: " + y + "/" + y, 7, 1);
 				addLine(g, "res/items/backpack1.png", "Нагрузка: " + window.game.calcCarrying(RaceSet.getRace(i).getSTR()), 7, 2);
+				
+				// Расовый навык
+				addLine(g, "Расовый навык:", 6, 3); 
+				addLine(g, SkillSet.getSkill(RaceSet.getRace(i).getSkill()).getPath(), 
+					SkillSet.getSkill(RaceSet.getRace(i).getSkill()).getName(), 7, 4);
 			}
 		}
 		image = Toolkit.getDefaultToolkit().getImage("res/icons/icon_plus.png");

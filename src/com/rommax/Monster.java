@@ -9,6 +9,7 @@ public class Monster{
 	private int X;
 	private int id;
 	private Stat hp;
+	private Stat addHP;
 	private Stat AP;
 	private Stat fovrad;
 
@@ -58,7 +59,7 @@ public class Monster{
 	public void setY(int Y){
 		this.Y = Y;
 	}
-
+	
 	public void setCurrentWeight(Stat currentWeight)
 	{
 		this.currentWeight = currentWeight;
@@ -72,6 +73,9 @@ public class Monster{
 		this.X = X;
 	}
 
+	public void setAddHP(int HP){this.addHP = new Stat(HP, HP);}
+	public Stat getAddHP(){return addHP;}
+	
 	public int getX(){return X;}
 	public int getY(){return Y;}
 	public int getID(){return id;}
@@ -127,6 +131,7 @@ public class Monster{
 		this.map.placeMonsterAt(y, x, this);
 		this.Y = y;
 		this.X = x;
+		this.addHP = new Stat(0, 0);
 		this.hp = new Stat(bm.getHP().getCurrent(), bm.getHP().getMax());
 		this.fovrad = new Stat(bm.getFOVRAD().getCurrent(), bm.getFOVRAD().getMax());
 		this.STR = new Stat(bm.getSTR().getCurrent(), bm.getSTR().getMax());
@@ -163,6 +168,7 @@ public class Monster{
 			game.logMessage("Вы несете #2#слишком много вещей!#^#");
 			return false;
 		}
+		if (this == game.player) Skill.update();
 		int ny = (this.Y + y);
 		int nx = (this.X + x);
 		if (map.hasTileAt(ny, nx)){
@@ -293,17 +299,20 @@ public class Monster{
 		if (so.RELEC.getCurrent()<0) game.logMessage("Вы стали #2#более#^# восприимчивы к #5#электричеству!#^#");
 
 		RElec.add(so.RELEC);
-		if (b)
-		if (so.HEALSELF.getCurrent()>0) game.logMessage("Вы #3#исцеляетесь!#^#");
-		else
-		if (so.HEALSELF.getCurrent()<0) game.logMessage("Вы #2#корчитесь от боли!#^#");
+		
+		// Медленное исцеление
+		if (b) if (so.HEALTIME.getCurrent()>0) game.logMessage("Вы #3#исцеляетесь!#^#");
+			else if (so.HEALTIME.getCurrent()<0) game.logMessage("Вы #2#корчитесь от боли!#^#");
+		addHP.add(so.HEALTIME);
 
+		// Молниеносное исцеление
+		if (b) if (so.HEALSELF.getCurrent()>0) game.logMessage("Вы #3#исцеляетесь!#^#");
+			else if (so.HEALSELF.getCurrent()<0) game.logMessage("Вы #2#корчитесь от боли!#^#");
 		hp.setCurrent(hp.getCurrent() + so.HEALSELF.getCurrent());
-		if (b)
-		if (so.FOVRAD.getCurrent()>0) game.logMessage("Вы стали #8#лучше#^# видеть!");
-		else
-		if (so.FOVRAD.getCurrent()<0) game.logMessage("Вы стали #2#хуже#^# видеть!");
-
+		
+		// Радиус обзора
+		if (b) if (so.FOVRAD.getCurrent()>0) game.logMessage("Вы стали #8#лучше#^# видеть!");
+			else if (so.FOVRAD.getCurrent()<0) game.logMessage("Вы стали #2#хуже#^# видеть!");
 		fovrad.add(so.FOVRAD);
 
 		if (b)
@@ -432,20 +441,20 @@ public class Monster{
 		if (so.RELEC.getCurrent()<0) game.logMessage("Вы стали #8#менее#^# восприимчивы к #5#электричеству!#^#");
 		else
 		if (so.RELEC.getCurrent()>0) game.logMessage("Вы стали #2#более#^# восприимчивы к #5#электричеству!#^#");
-
 		RElec.sub(so.RELEC);
-		if (b)
-		if (so.HEALSELF.getCurrent()<0) game.logMessage("Вы #3#исцеляетесь!#^#");
-		else
-		if (so.HEALSELF.getCurrent()>0) game.logMessage("Вы #2#корчитесь от боли!#^#");
 
+		if (b) if (so.HEALTIME.getCurrent()>0) game.logMessage("Вы #3#исцеляетесь!#^#");
+			else if (so.HEALTIME.getCurrent()<0) game.logMessage("Вы #2#корчитесь от боли!#^#");
+		addHP.sub(so.HEALTIME);
+
+		if (b) if (so.HEALSELF.getCurrent()<0) game.logMessage("Вы #3#исцеляетесь!#^#");
+			else if (so.HEALSELF.getCurrent()>0) game.logMessage("Вы #2#корчитесь от боли!#^#");
 		hp.setCurrent(hp.getCurrent() - so.HEALSELF.getCurrent());
-		if (b)
-		if (so.FOVRAD.getCurrent()<0) game.logMessage("Вы стали #8#лучше#^# видеть!");
-		else
-		if (so.FOVRAD.getCurrent()>0) game.logMessage("Вы стали #2#хуже#^# видеть!");
 
+		if (b) if (so.FOVRAD.getCurrent()<0) game.logMessage("Вы стали #8#лучше#^# видеть!");
+			else if (so.FOVRAD.getCurrent()>0) game.logMessage("Вы стали #2#хуже#^# видеть!");
 		fovrad.sub(so.FOVRAD);
+
 		if (b)
 		if (so.SW_UP.getCurrent()<0) game.logMessage("Теперь вы можете нести #3#больше#^# вещей!");
 		else

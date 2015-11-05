@@ -10,8 +10,11 @@ public class BaseRace{
 	private int AGI;
 	private int END;
 	private int LUCK;
+	private int skill; // Расовый скилл
 
-	public BaseRace(int id, String name, String path, String descr1, String descr2, String descr3, int STR, int AGI, int END, int LUCK){
+	public BaseRace(int id, String name, String path, String descr1, 
+	String descr2, String descr3, int STR, int AGI, int END, int LUCK, 
+	int skill){
 		this.id = id;
 		this.name = name;
 		this.path = path;
@@ -22,6 +25,7 @@ public class BaseRace{
 		this.AGI = AGI;
 		this.END = END;
 		this.LUCK = LUCK;
+		this.skill = skill;
 	}
 	
 	public int getID(){return id;}
@@ -34,5 +38,6 @@ public class BaseRace{
 	public int getAGI(){return AGI;}
 	public int getEND(){return END;}
 	public int getLUCK(){return LUCK;}
+	public int getSkill(){return skill;}
 
 }

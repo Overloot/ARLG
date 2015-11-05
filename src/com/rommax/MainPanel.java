@@ -51,7 +51,24 @@ class MainPanel extends JPanel
 		LogString += (str + "#/#");
 		else
 		LogString += (str);
-
+	}
+	
+	public void drawSkills(Graphics g){
+		Image image, fog;
+		fog = Toolkit.getDefaultToolkit().getImage("res/icons/transparent.png");
+		int top = 200;
+		int left = Tileset.TILE_SIZE * SCREEN_TILE_SIZE_X + 10;
+		for(int i = 0; i < Skill.getAmount(); i++){
+			image = Toolkit.getDefaultToolkit().getImage(SkillSet.getSkill(Skill.skill[i]).getPath());
+			g.drawImage(image, left, top + (i * 35), this);
+			String str = " (F" + (i + 5) + ")"; // Клавиши F5-F8
+			if (Skill.getCooldown(i) > 0){
+				g.drawImage(fog, left, top + (i * 35), this);
+				str = " (" + Skill.getCooldown(i) + ")";
+			}
+			drawColorString(g, "#3#" + SkillSet.getSkill(Skill.skill[i]).getName() + str + "#^#", 
+				left + 40, top + (i * 35) + 20);
+		}
 	}
 
 	public void drawLog(Graphics g){
@@ -70,9 +87,9 @@ class MainPanel extends JPanel
 		while (st.hasMoreTokens()){
 			str = st.nextToken();
 			if (str.equals("/")){
-					lastX = 15;
-					linenumber++;
-					continue;
+				lastX = 15;
+				linenumber++;
+				continue;
 			}
 			else
 			if (str.equals("^")){
@@ -295,6 +312,7 @@ class MainPanel extends JPanel
 		}
 		paintGUI(g);
 		drawLog(g);
+		drawSkills(g);
 	}
 	private int left = 0;
 	private int top = 0;

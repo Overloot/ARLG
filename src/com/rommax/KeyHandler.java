@@ -99,6 +99,11 @@ public class KeyHandler implements KeyListener{
 		else if (keycode==KeyEvent.VK_G && event.isShiftDown()) playerAction.upStair();
 		// Look mode
 		else if (keycode == KeyEvent.VK_L) flag = playerAction.startLookMode();
+		// Используем навыки
+		else if (keycode == KeyEvent.VK_F5) flag = playerAction.useSkill(1);
+		else if (keycode == KeyEvent.VK_F6) flag = playerAction.useSkill(2);
+		else if (keycode == KeyEvent.VK_F7) flag = playerAction.useSkill(3);
+		else if (keycode == KeyEvent.VK_F8) flag = playerAction.useSkill(4);
 		//
 		else if (keycode == KeyEvent.VK_F12){
 			map.getGame().player.getHP().setCurrent(map.getGame().player.getHP().getMax());
