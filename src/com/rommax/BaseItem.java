@@ -1,12 +1,8 @@
 package com.rommax;
 
 
-public class BaseItem{
+public class BaseItem extends Entity{
 
-	private int id;
-	private String name;
-	private String path;
-	private int level;
 	private int slot;
 	private int size;
 	private int mass;
@@ -16,10 +12,7 @@ public class BaseItem{
 
 	public BaseItem(int chanse, int id, int level, int slot, int type, String name, String path, int size, int mass, String script)
 	{
-		this.id = id;
-		this.level = level;
-		this.path = path;
-		this.name = name;
+		super(id, name, path, level);
 		this.size = size;
 		this.mass = mass;
 		this.slot = slot;
@@ -28,16 +21,10 @@ public class BaseItem{
 		this.chanse = chanse;
 	}
 
-	public int getID(){return id;};
-	public int getLevel(){return level;};
 	public int getMass(){return mass;};
 	public int getSlot(){return slot;};
 	public int getSize(){return size;};
-	public String getPath(){return path;};
-	public String getName(){return name;};
 	public int getType(){return type;};
 	public String getScript(){return script;};
 	public int getChanse(){return chanse;};
-
-
 }

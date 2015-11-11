@@ -12,6 +12,7 @@ class RacePanel extends JPanel
 	public RaceKeyHandler listener;
 	public int select =  1;
 	private int x, y;
+	private int z = 0;
 	
 	RacePanel(RaceWindow window){
 		super();
@@ -24,7 +25,7 @@ class RacePanel extends JPanel
 	private void addLine(Graphics g, String iconPath, String itemName, int X, int Y) {
 		Image image = Toolkit.getDefaultToolkit().getImage(iconPath);
 		g.drawImage(image, Tileset.TILE_SIZE * (X + 1), Tileset.TILE_SIZE * (RaceSet.MAX_RACES + Y + 1) + 10, this);
-		g.drawString(itemName, (Tileset.TILE_SIZE * (X + 2)) + 5, Tileset.TILE_SIZE * (RaceSet.MAX_RACES + Y + 1) + 32);		
+		g.drawString(itemName, (Tileset.TILE_SIZE * (X + 2)) + 5, Tileset.TILE_SIZE * (RaceSet.MAX_RACES + Y + 1) + 32 + z);		
 	}
 	
 	private void addLine(Graphics g, String itemName, int X, int Y) {
@@ -33,6 +34,7 @@ class RacePanel extends JPanel
 		
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
+		z = 0;
 		Image im =  Toolkit.getDefaultToolkit().getImage("res/icons/texture_menu.png");
 		g.drawImage(im, 0, 0, this);
 		Graphics2D g2 = (Graphics2D)g;
@@ -65,9 +67,12 @@ class RacePanel extends JPanel
 				addLine(g, "res/items/backpack1.png", "Нагрузка: " + window.game.calcCarrying(RaceSet.getRace(i).getSTR()), 7, 2);
 				
 				// Расовый навык
-				addLine(g, "Расовый навык:", 6, 3); 
+				addLine(g, "Расовый навык:", 6, 3); z = -10;
 				addLine(g, SkillSet.getSkill(RaceSet.getRace(i).getSkill()).getPath(), 
 					SkillSet.getSkill(RaceSet.getRace(i).getSkill()).getName(), 7, 4);
+				g2.setFont(f2);
+				g.drawString(SkillSet.getSkill(RaceSet.getRace(i).getSkill()).getDescr(),
+					(Tileset.TILE_SIZE * (7 + 2)) + 5, Tileset.TILE_SIZE * (RaceSet.MAX_RACES + 4 + 1) + 40);
 			}
 		}
 		image = Toolkit.getDefaultToolkit().getImage("res/icons/icon_plus.png");

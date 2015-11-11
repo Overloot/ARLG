@@ -121,17 +121,25 @@ public class PlayerAction {
 	}
 	
 	// Вверх по лестнице
-	public void upStair() {
-		if (map.field[map.getGame().player.getY()][map.getGame().player.getX()].getID()!=Tileset.TILE_STAIR_UP )
+	public boolean upStair() {
+		if (map.field[map.getGame().player.getY()][map.getGame().player.getX()].getID()!=Tileset.TILE_STAIR_UP){
 			map.getGame().logMessage("Вы #2#не можете#^# подняться #8#вверх#^# здесь!#/#");
-				else map.getGame().switchMap(-1);
+			return false;
+		} else {
+			map.getGame().switchMap(-1);
+			return true;
+		}
 	}
 	
 	// Вниз по лестнице
-	public void downStair() {
-		if (map.field[map.getGame().player.getY()][map.getGame().player.getX()].getID()!=Tileset.TILE_STAIR_DOWN )
+	public boolean downStair() {
+		if (map.field[map.getGame().player.getY()][map.getGame().player.getX()].getID()!=Tileset.TILE_STAIR_DOWN ){
 			map.getGame().logMessage("Вы #2#не можете#^# спуститься #8#вниз#^# здесь!#/#");
-			   else map.getGame().switchMap(+1);
+			return false;
+		} else {
+			map.getGame().switchMap(+1);
+			return true;
+		}
 	}
 	
 	// Открыть что-то
@@ -326,16 +334,16 @@ public class PlayerAction {
 	}
 	
 	private void setX(int x) {
-		map.setCurrentX(map.getCurrentX() + x);
+		map.setX(map.getX() + x);
 	}
 
 	private void setY(int y) {
-		map.setCurrentY(map.getCurrentY() + y);
+		map.setY(map.getY() + y);
 	}
 
 	private void setYX(int y, int x) {
-		map.setCurrentY(map.getCurrentY() + y);
-		map.setCurrentX(map.getCurrentX() + x);
+		map.setY(map.getY() + y);
+		map.setX(map.getX() + x);
 
 	}
 

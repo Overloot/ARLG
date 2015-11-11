@@ -6,9 +6,8 @@ import java.io.*;
 
 
 public class Game {
-
     public Monster player;
-    public Map map;
+    private Map map;
     public KeyHandler keyHandler;
     public Monster[] monsterList;                           // игрок по индексу [0]
     public Item[] itemList;
@@ -16,20 +15,20 @@ public class Game {
     public GameWindow frame1;
     private int monstersQuantity;
     private int itemsQuantity;
-    public int currentMapNumber;
+    public int currentMapNumber = 0;
     public int turn = 0;
     public static int maxExperience = 200;
     public int statsFree = 0;
     public int hitPointsRegeneration = 0;                   //later reghp
 
-    // FINAL'илизированные
+    // FINAL'изированные
     final int minFovRad = 4;
     final int MOVE_COST_ActionPoints = 10;
-    public final int MAP_SIZE_Y = 100;
-    public final int MAP_SIZE_X = 100;
-    final int MAX_FLOORS = 12;
-    public static final int MAX_MONSTER_PER_LEVEL = 50;
-    public static final int MAX_ITEM_PER_LEVEL = 50;
+    public final int MAP_SIZE_Y = 30;
+    public final int MAP_SIZE_X = 30;
+    final int MAX_FLOORS = 3;
+    public static final int MAX_MONSTER_PER_LEVEL = 5;
+    public static final int MAX_ITEM_PER_LEVEL = 5;
     public static final int MAX_PLAYER_LEVEL = 30;
     public final int HIT_POINTS_PER_STRENGTH = 3;
     public final int CARRYING_PER_STRENGTH = 7;
@@ -38,6 +37,8 @@ public class Game {
     final int MAX_MONSTERS = MAX_FLOORS * MAX_MONSTER_PER_LEVEL + 1;
     final int MAX_ITEMS = MAX_FLOORS * MAX_ITEM_PER_LEVEL + 1;
 
+	public Map getMap(){return map;}	
+	
     public int rand(int value) {
         Random random = new Random();
         return random.nextInt(value) + 1;
@@ -144,9 +145,8 @@ public class Game {
             }
 
         }
-
         CheckMonsters();
-        checkTimeEffects(); // метод проверят не пара ли поднять уровень игроку, наносит урон ядом и т.д.
+        checkTimeEffects(); // метод проверят не пора ли поднять уровень игроку, наносит урон ядом и т.д.
 
     }
 
@@ -161,7 +161,7 @@ public class Game {
         frame1.setVisible(true);		
 	}
 	
-    // проверить изменялся ли Stat s в худшую сторону, если так то вывести первую строку, иначе вторую
+    // проверить изменялся ли Stat в худшую сторону, если так то вывести первую строку, иначе вторую
     void checkStatChanges(Stat s, String s1, String s2) {
         if (s.getTimer() > 0) {
             s.subTimer();
@@ -173,8 +173,6 @@ public class Game {
                 s.setCurrent(s.getMax());
             }
         }
-
-
     }
 
     // временные эффекты.
@@ -205,6 +203,8 @@ public class Game {
 		
 		// Медленное исцеление
 		if (m.getAddHP().getCurrent() != 0) m.getHP().setCurrent(m.getHP().getCurrent() + (m.getAddHP().getCurrent() * m.getLevel()));
+		// Медленное вост. маны
+		//if (m.getAddMP().getCurrent() != 0) m.getMP().setCurrent(m.getMP().getCurrent() + (m.getAddMP().getCurrent() * m.getLevel()));
 			
     }
 
@@ -258,59 +258,64 @@ public class Game {
         if (hitPointsRegeneration > 100) hitPointsRegeneration = 0;
     }
 
-
     // смена карты/переход на другой этаж, метод вызывается из класса KeyHandler
     // changeMapLevel может иметь значения -1 или 1
     public void switchMap(int changeMapLevel) {
         int newMapLevel = changeMapLevel + currentMapNumber;
         // если дальше положенного ходить нельзя
         if (newMapLevel < 0 || newMapLevel >= MAX_FLOORS) return;
-
         // если карты, на которую осуществляется переход, не существует, то создаем ее
         if (mapList[newMapLevel] == null) {
-            mapList[newMapLevel] = new Map(MAP_SIZE_Y, MAP_SIZE_X);
-            map.field[player.getY()][player.getX()].setMonster(null);
+            mapList[newMapLevel] = new Map(MAP_SIZE_Y, MAP_SIZE_X, this);
+		
+			map.field[player.getY()][player.getX()].setMonster(null);
             map = mapList[newMapLevel];
             map.setGame(this);
             frame1.SwitchMap(map);
             currentMapNumber = newMapLevel;
             map.placeMonsterAt(player.getY(), player.getX(), player);
-            player.map = map;
-            while (!map.field[player.getY()][player.getX()].getPassable())
-                map.generate();
-            map.setCurrentX(player.getX() - ((GameWindow.getScreenTileSizeX() * Tileset.TILE_SIZE) / (Tileset.TILE_SIZE * 2)));
-            map.setCurrentY(player.getY() - ((GameWindow.getScreenTileSizeY() * Tileset.TILE_SIZE) / (Tileset.TILE_SIZE * 2)));
+            player.setMap(map);
+
+            while (!map.field[player.getY()][player.getX()].getPassable()) map.generate();
             fillLevelByMonsters();
             fillLevelByItems();
-            map.FOV(player.getY(), player.getX(), player.getFOVRAD().getCurrent());
-            //TODO: конец игры слишком уныл
-            if (currentMapNumber == MAX_FLOORS - 1)
-                logMessage("ВЫ ДОБРАЛИСЬ ДО ПОСЛЕДНЕГО УРОВНЯ И ВЫИГРАЛИ ИГРУ! СПАСИБО ЗА ТЕСТИРОВАНИЕ!");
-
+			finish();
         }
         // а если карта уже существует, то переносим на нее игрока
         else {
-            map.field[player.getY()][player.getX()].setMonster(null);
+
+			map.field[player.getY()][player.getX()].setMonster(null);
             map = mapList[newMapLevel];
+            map.setGame(this);
             frame1.SwitchMap(map);
             currentMapNumber = newMapLevel;
             map.placeMonsterAt(player.getY(), player.getX(), player);
-            player.map = map;
-            map.setCurrentX(player.getX() - ((GameWindow.getScreenTileSizeX() * Tileset.TILE_SIZE) / (Tileset.TILE_SIZE * 2)));
-            map.setCurrentY(player.getY() - ((GameWindow.getScreenTileSizeY() * Tileset.TILE_SIZE) / (Tileset.TILE_SIZE * 2)));
-            map.FOV(player.getY(), player.getX(), player.getFOVRAD().getCurrent());
-        }
+            player.setMap(map);
 
+		}
+		if (changeMapLevel == 1)
+			for (int i=0; i<map.getHeight(); i++)
+				for (int j=0; j<map.getWidth(); j++){
+					if (mapList[currentMapNumber - 1].field[i][j].getID() == Tileset.TILE_STAIR_DOWN) {
+						if (map.field[i][j].getID() == Tileset.TILE_STAIR_UP) continue;
+						if (map.field[i][j].getID() == Tileset.TILE_STAIR_DOWN) continue;
+						map.setTileAt(i, j, Tileset.TILE_STAIR_UP);
+					}
+				}
     }
 
-
+	//TODO: конец игры слишком уныл
+	public void finish(){
+        if (currentMapNumber == MAX_FLOORS - 1)
+			logMessage("ВЫ ДОБРАЛИСЬ ДО ПОСЛЕДНЕГО УРОВНЯ И ВЫИГРАЛИ ИГРУ! СПАСИБО ЗА ТЕСТИРОВАНИЕ!");		
+	}
+	
     // этот метод вызывается из main вторым, сразу после Game.init()
     public void run() {
-        mapList[0] = new Map(MAP_SIZE_Y, MAP_SIZE_X);                       // mapList класса Map
+        mapList[0] = new Map(MAP_SIZE_Y, MAP_SIZE_X, this);                 // mapList класса Map
         map = mapList[0];                                                   // map это текущая карта, над ней происходят все операции
                                                                             // mapList нужен только для хранения карт
         currentMapNumber = 0;                                               // номер текущей карты в массиве
-        map.setGame(this);
         map.generate();
 	
         frame1 = new GameWindow(map);
@@ -327,12 +332,10 @@ public class Game {
             x = random.nextInt(map.getWidth());
         }
         addMonster(MonsterSet.MONSTER_PLAYER, y, x, map);                   // "высадка" игрока
-        map.setCurrentX(x - ((GameWindow.getScreenTileSizeX() * Tileset.TILE_SIZE) / (Tileset.TILE_SIZE * 2)));             // видимо по этим координатам центрируется карта
-        map.setCurrentY(y - ((GameWindow.getScreenTileSizeY() * Tileset.TILE_SIZE) / (Tileset.TILE_SIZE * 2)));
         player = monsterList[0];
+		map.updatePlayer();
         fillLevelByMonsters();      // добавляет столько монстров, сколько положено на уровень ( MAX_MONSTER_PER_LEVEL )
         fillLevelByItems();         // добавляет столько итемов, сколько положено на уровень ( MAX_ITEM_PER_LEVEL )
-        map.FOV(y, x, player.getFOVRAD().getCurrent());
         frame1.mainpanel.repaint();
 		this.selectRace();
 	}
@@ -358,14 +361,12 @@ public class Game {
             addRandomItem();
     }
 
-
     // добавление монстра по заданным координатам. Этим методом производится "высадка" игрока
     public void addMonster(int id, int y, int x, Map map) {
         BaseMonster baseMonster = MonsterSet.getMonster(id);
         monsterList[monstersQuantity] = new Monster(baseMonster, y, x, map, this);
         monstersQuantity++;
     }
-
 
     public void addRandomMonster() {
         Random random = new Random();
@@ -384,15 +385,6 @@ public class Game {
             if (!dice(chance, 100)) continue; // см.ниже
             break;
         }
-
-        /* код метода dice для понимания
-        public boolean dice(int value, int max) {
-        Random random = new Random();
-        int res = (random.nextInt(max) + 1);
-        return (res <= value);
-        }
-        */
-
         BaseMonster baseMonster = MonsterSet.getMonster(newID);
         int y = 0;
         int x = 0;
@@ -405,7 +397,6 @@ public class Game {
         monsterList[monstersQuantity] = new Monster(baseMonster, y, x, map, this);
         monstersQuantity++;
     }
-
 
     // int number это message.number класса ItemSelectMessage
     // данный метод вызывается из KeyHandler
@@ -446,7 +437,6 @@ public class Game {
             frame2.setVisible(true);
         } else if (map.field[y][x].getItemList().size() != 0) {
             tryToExamineItem(map.field[y][x].getItemList(), 0);                                                             // если на клетке есть итемы, то будет показана инфа о них
-
         }
     }
 
@@ -537,7 +527,6 @@ public class Game {
         item.setIdentify(true);
     }
 
-
     // метод осмотра вещи, например из инвентаря по нажатию Enter
     // этот метод вызывается из KeyHandler
     public void tryToExamineItem(LinkedList<Item> list, int number) {
@@ -596,7 +585,6 @@ public class Game {
         if (li != null) player.getInventory().add(li); // если предварительно была снята вещь, то добавляем ее в инвентарь
         player.Equipment[player.getInventory().get(number).getSlot()] = player.getInventory().get(number);
         player.getInventory().remove(number); // удаляем надетую вещь из инвентаря
-
     }
 
     // просто снимаем надетую вещь
@@ -608,7 +596,6 @@ public class Game {
         player.getInventory().add(player.Equipment[num]);
         player.Equipment[num] = null;
     }
-
 
     // Добавляем предмет на карту в указанные координаты
     public void addRandomItem(int y, int x) {
@@ -656,16 +643,12 @@ public class Game {
         for (int i = 0; i < monstersQuantity; i++) {
             if (monsterList[i] != null && monsterList[i].getHP().getCurrent() > monsterList[i].getHP().getMax())
                 monsterList[i].getHP().setCurrent(monsterList[i].getHP().getMax());
-
         }
-
         for (int i = 1; i < monstersQuantity; i++) {
             if (monsterList[i] != null)
                 if (monsterList[i].getHP().getCurrent() <= 0)
                     killMonster(i);
         }
-
-
     }
 
     // подъем уровня игрока
@@ -681,8 +664,6 @@ public class Game {
         Game.maxExperience *= 2;
         logMessage("Вы достигли следующего уровня! ");
         statsFree += 5;
-
-
     }
 
 	// Обновление экрана
@@ -703,14 +684,12 @@ public class Game {
 		loot(index);
         // убираем монстра с карты
         map.deleteMonsterAt(monsterList[index].getY(), monsterList[index].getX());
-
         // модификатор получаемого количества опыта за убитого монстра
         int mod;
         // если игрок убивает равного себе монстра или монстра сильнее себя, то получает модификатор соответствующий уровню убитого монстра
         if (player.getLevel() <= monsterList[index].getLevel()) mod = monsterList[index].getLevel();
         // иначе модификатор равен единице
         else mod = 1;
-
         // высчитывает сколько же игрок получит опыта
         int Exp = getValueFrom((int) (0.75 * (mod * mod) * 10), (int) (1.5 * (mod * mod) * 10));
         player.setXP(player.getXP() + Exp);

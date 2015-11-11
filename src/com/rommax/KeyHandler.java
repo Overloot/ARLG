@@ -53,6 +53,7 @@ public class KeyHandler implements KeyListener{
 		}
 		else if (map.getGame().player.getparalyzecount()>0 && !LOOK_MODE){
 			map.getGame().logMessage("ВЫ #5#ПАРАЛИЗОВАНЫ!!!#^#/#");
+			if (map.getGame().player.getparalyzecount()>5) map.getGame().player.setparalyzecount(5);
 			flag = true;
 		}
 		// Look mode
@@ -94,9 +95,9 @@ public class KeyHandler implements KeyListener{
 		// Игрок пытается что-то закрыть
 		else if (keycode ==KeyEvent.VK_C && event.isShiftDown()) flag = playerAction.closeIt();
 		// Вниз по лестнице
-		else if (keycode==KeyEvent.VK_B && event.isShiftDown()) playerAction.downStair();
+		else if (keycode==KeyEvent.VK_B && event.isShiftDown()) flag = playerAction.downStair();
 		// Вверх по лестнице
-		else if (keycode==KeyEvent.VK_G && event.isShiftDown()) playerAction.upStair();
+		else if (keycode==KeyEvent.VK_G && event.isShiftDown()) flag = playerAction.upStair();
 		// Look mode
 		else if (keycode == KeyEvent.VK_L) flag = playerAction.startLookMode();
 		// Используем навыки
@@ -122,7 +123,7 @@ public class KeyHandler implements KeyListener{
 		// Действия AI и перерисовка карты
 		if (flag) {
 			map.getGame().monstersAI();
-			map.FOV(map.getGame().player.getY(),map.getGame().player.getX(),map.getGame().player.getFOVRAD().getCurrent());
+			map.updatePlayer();
 			mp.repaint();
 		}
 	}

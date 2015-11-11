@@ -1,10 +1,7 @@
 package com.rommax;
 
-public class BaseRace{
+public class BaseRace extends Entity{
 
-	private int id;
-	private String name;
-	private String path;
 	private String descr1, descr2, descr3;
 	private int STR;
 	private int AGI;
@@ -15,9 +12,7 @@ public class BaseRace{
 	public BaseRace(int id, String name, String path, String descr1, 
 	String descr2, String descr3, int STR, int AGI, int END, int LUCK, 
 	int skill){
-		this.id = id;
-		this.name = name;
-		this.path = path;
+		super(id, name, path);
 		this.descr1 = descr1;
 		this.descr2 = descr2;
 		this.descr3 = descr3;
@@ -28,9 +23,6 @@ public class BaseRace{
 		this.skill = skill;
 	}
 	
-	public int getID(){return id;}
-	public String getName(){return name;}
-	public String getPath(){return path;}
 	public String getDescr1(){return descr1;}
 	public String getDescr2(){return descr2;}
 	public String getDescr3(){return descr3;}

@@ -1,10 +1,7 @@
 package com.rommax;
 
-public class BaseMonster{
+public class BaseMonster extends Entity{
 
-	private int id;
-	private String name;
-	private String path;
 	private Stat hp;
 	private Stat fovrad;
 	private Stat AP;
@@ -13,7 +10,6 @@ public class BaseMonster{
 	private Stat AGI;
 	private Stat END;
 	private Stat LUCK;
-	private int level;
 
 	private Stat RFire;
 	private Stat RCold;
@@ -37,10 +33,8 @@ public class BaseMonster{
 	        int DPoison1, int DPoison2, int RPoison,
 	        int AP, int fovrad)
 	{
-		this.id = id;
-		this.level = level;
-		this.path = path;
-		this.name = name;
+		super(id, name, path, level);
+		
 		hp = new Stat(maxHP, maxHP);
 		//статы
 		this.STR = new Stat(STR, STR);
@@ -66,9 +60,12 @@ public class BaseMonster{
 
 	public Stat getHP(){return hp;}
 	public Stat getFOVRAD(){return fovrad;}
-	public String getName(){return name;}
-	public int getID(){return id;}
-	public String getPath(){return path;};
+	public Stat getAP(){return AP;};
+
+	public Stat getSTR(){return STR;};
+	public Stat getAGI(){return AGI;};
+	public Stat getEND(){return END;};
+	public Stat getLUCK(){return LUCK;};
 
 	public Stat getRFire(){return RFire;};
 	public Stat getRCold(){return RCold;};
@@ -81,17 +78,4 @@ public class BaseMonster{
 	public Stat getDPoison(){return DPoison;};
 	public Stat getDElec(){return DElec;};
 	public Stat getDNormal(){return DNormal;};
-
-	public Stat getSTR(){return STR;};
-	public Stat getAGI(){return AGI;};
-	public Stat getEND(){return END;};
-	public Stat getLUCK(){return LUCK;};
-	public int getLevel(){return level;};
-
-	public Stat getAP(){return AP;};
-
-	public void setPath(String path){this.path = path;};
-
-
-
 }

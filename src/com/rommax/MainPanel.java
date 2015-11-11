@@ -8,8 +8,7 @@ import java.util.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-class MainPanel extends JPanel
-{
+class MainPanel extends JPanel{
 	private static int SCREEN_TILE_SIZE_X;
 	private static int SCREEN_TILE_SIZE_Y;
 	private Map DrawingMap;
@@ -29,7 +28,7 @@ class MainPanel extends JPanel
 	}
 
 	public boolean HasTileAtScreen(int y, int x){
-		return (y>=DrawingMap.getCurrentY() && y<SCREEN_TILE_SIZE_Y+DrawingMap.getCurrentY() && x>=DrawingMap.getCurrentX() && x<SCREEN_TILE_SIZE_X+DrawingMap.getCurrentX());
+		return (y>=DrawingMap.getY() && y<SCREEN_TILE_SIZE_Y+DrawingMap.getY() && x>=DrawingMap.getX() && x<SCREEN_TILE_SIZE_X+DrawingMap.getX());
 	}
 
 	MainPanel(GameWindow window, Map DrawingMap, int stsx, int stsy){
@@ -67,10 +66,37 @@ class MainPanel extends JPanel
 				str = " (" + Skill.getCooldown(i) + ")";
 			}
 			drawColorString(g, "#3#" + SkillSet.getSkill(Skill.skill[i]).getName() + str + "#^#", 
-				left + 40, top + (i * 35) + 20);
+				left + 40, top + (i * 35) + 10);
+			drawColorString(g, "#1#" + SkillSet.getSkill(Skill.skill[i]).getDescr() + "#^#", 
+				left + 40, top + (i * 35) + 30);
 		}
 	}
-
+	
+	private void drawMap(Graphics g){
+		Graphics2D g2 = (Graphics2D)g;
+		final int top = 540;
+		Rectangle2D canvas = new Rectangle2D.Double(left, top, DrawingMap.getWidth() * 3, DrawingMap.getHeight() * 3);
+		g2.setPaint(Color.BLACK);
+		g2.fill(canvas);
+		g2.draw(canvas);
+		if (hasNewGame) return;
+		Image player = Toolkit.getDefaultToolkit().getImage("res/maps/player.png");
+		Image water = Toolkit.getDefaultToolkit().getImage("res/maps/water.png");
+		for (int i=0; i<DrawingMap.getHeight(); i++)
+			for (int j=0; j<DrawingMap.getWidth(); j++){
+				//if (DrawingMap.field[i][j].getSeen()) g.drawImage(water, left + j * 3, top + i * 3, this);
+				switch (DrawingMap.field[i][j].getID()){
+					case Tileset.TILE_STAIR_UP:
+						g.drawImage(player, left + j * 3, top + i * 3, this);
+						break;
+					case Tileset.TILE_STAIR_DOWN:
+						g.drawImage(water, left + j * 3, top + i * 3, this);
+						break;
+				}
+			}
+		g.drawImage(player, left + DrawingMap.getGame().player.getX() * 3, top + DrawingMap.getGame().player.getY() * 3, this);
+	}
+	
 	public void drawLog(Graphics g){
 		linenumber = 1;
 		int leftX = 15;
@@ -112,7 +138,6 @@ class MainPanel extends JPanel
 			lastX += (bounds.getWidth());
 		}
 			if (linenumber > 15) LogString = "";
-
 	}
 
 	void drawColorString(Graphics g, String str, int lastX, int lastY){
@@ -226,35 +251,35 @@ class MainPanel extends JPanel
 		if (hasNewGame) return; // Чтобы не прорисовывалась панель, пока игрок в меню
 		for (int i=0; i<SCREEN_TILE_SIZE_Y; i++)
 		for (int j=0; j<SCREEN_TILE_SIZE_X; j++){
-			if (!DrawingMap.hasTileAt(i + DrawingMap.getCurrentY(), j + DrawingMap.getCurrentX()) || (!DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getVisible() && !DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getSeen()) ){
+			if (!DrawingMap.hasTileAt(i + DrawingMap.getY(), j + DrawingMap.getX()) || (!DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getVisible() && !DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getSeen()) ){
 			Image image = Toolkit.getDefaultToolkit().getImage("res/dungeons/empty.png");
 				int y = (j*Tileset.TILE_SIZE);
 				int x = (i*Tileset.TILE_SIZE) ;
 				g.drawImage(image,y,x,this);
 
 			}
-			else if (DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getSeen() &&  !DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getVisible()){
-				Image image = Toolkit.getDefaultToolkit().getImage(Tileset.getTile(DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].lastseenID).getPath());
+			else if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getSeen() &&  !DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getVisible()){
+				Image image = Toolkit.getDefaultToolkit().getImage(Tileset.getTile(DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].lastseenID).getPath());
 				int y = (j*Tileset.TILE_SIZE);
 				int x = (i*Tileset.TILE_SIZE) ;
 				g.drawImage(image,y,x,this);
 				image = Toolkit.getDefaultToolkit().getImage("res/icons/transparent.png");
 				g.drawImage(image,y,x,this);
 			}else{
-				Image image = Toolkit.getDefaultToolkit().getImage(Tileset.getTile(DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getID()).getPath());
+				Image image = Toolkit.getDefaultToolkit().getImage(Tileset.getTile(DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getID()).getPath());
 				int y = (j*Tileset.TILE_SIZE);
 				int x = (i*Tileset.TILE_SIZE) ;
 				g.drawImage(image,y,x,this);
 				image = Toolkit.getDefaultToolkit().getImage("res/icons/blood.png");
-				if (DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getBlood())
+				if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getBlood())
 					g.drawImage(image,y,x,this);
 
-				if (DrawingMap.hasTileAt(i + DrawingMap.getCurrentY(), j + DrawingMap.getCurrentX())){
-					if (DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getItemsQty()!=0){
-						if (DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getItemsQty() > 1)
+				if (DrawingMap.hasTileAt(i + DrawingMap.getY(), j + DrawingMap.getX())){
+					if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getItemsQty()!=0){
+						if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getItemsQty() > 1)
 							image = Toolkit.getDefaultToolkit().getImage("res/icons/manyitems.png");
 								else{
-									LinkedList<Item> itemlist = DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getItemList();
+									LinkedList<Item> itemlist = DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getItemList();
 								    image = Toolkit.getDefaultToolkit().getImage(ItemSet.getItem(itemlist.getFirst().getID()).getPath());
 								}
 							g.drawImage(image,y,x,this);
@@ -263,18 +288,18 @@ class MainPanel extends JPanel
 
 
 							// Рисуем монстров
-							if (DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getMonster()!=null){
-								if (DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getMonster() == DrawingMap.getGame().player) {
+							if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster()!=null){
+								if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster() == DrawingMap.getGame().player) {
 									image = Toolkit.getDefaultToolkit().getImage(RaceSet.getRace(RaceSet.getCurrentRaceID).getPath());
-								} else image = Toolkit.getDefaultToolkit().getImage(MonsterSet.getMonster(DrawingMap.field[i + DrawingMap.getCurrentY()][j + DrawingMap.getCurrentX()].getMonster().getID()).getPath());
-								int px = DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getMonster().getX();
-								int py = DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getMonster().getY();
+								} else image = Toolkit.getDefaultToolkit().getImage(MonsterSet.getMonster(DrawingMap.field[i + DrawingMap.getY()][j + DrawingMap.getX()].getMonster().getID()).getPath());
+								int px = DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster().getX();
+								int py = DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster().getY();
 								y = (j*Tileset.TILE_SIZE);
 								x = (i*Tileset.TILE_SIZE);
 								double leftX = (double)y;
 								double topY = (double)x;
-								double curHP = (double)(DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getMonster().getHP().getCurrent());
-								double maxHP = (double)(DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getMonster().getHP().getMax());
+								double curHP = (double)(DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster().getHP().getCurrent());
+								double maxHP = (double)(DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster().getHP().getMax());
 								double width = (double)(curHP/maxHP*32-1);
 								double height = 2;
 								Rectangle2D rect = new Rectangle2D.Double(leftX, topY, width, height);
@@ -292,18 +317,18 @@ class MainPanel extends JPanel
 								g2.setPaint(Color.RED);
 								g2.fill(rect);
 								g2.draw(rect);
-								if (DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getMonster().getparalyzecount()!=0){
+								if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster().getparalyzecount()!=0){
 									image = Toolkit.getDefaultToolkit().getImage("res/icons/paralyzed.png");
 									g.drawImage(image,y,x,this);
 								}
-								if (DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].getMonster().getPoisonCount()!=0){
+								if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster().getPoisonCount()!=0){
 									image = Toolkit.getDefaultToolkit().getImage("res/icons/poisoned.png");
 									g.drawImage(image,y,x,this);
 								}
 							}
 				}
 			}
-			if (DrawingMap.hasTileAt(i + DrawingMap.getCurrentY(), j + DrawingMap.getCurrentX()) && DrawingMap.field[i+DrawingMap.getCurrentY()][j+DrawingMap.getCurrentX()].isSelected()){
+			if (DrawingMap.hasTileAt(i + DrawingMap.getY(), j + DrawingMap.getX()) && DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].isSelected()){
 				Image image = Toolkit.getDefaultToolkit().getImage("res/icons/selected.png");
 				int y = (j*Tileset.TILE_SIZE);
 				int x = (i*Tileset.TILE_SIZE) ;
@@ -313,6 +338,7 @@ class MainPanel extends JPanel
 		paintGUI(g);
 		drawLog(g);
 		drawSkills(g);
+		drawMap(g);
 	}
 	private int left = 0;
 	private int top = 0;
