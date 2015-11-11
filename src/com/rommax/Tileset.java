@@ -19,9 +19,10 @@ public class Tileset{
 	public static final int TILE_FARM = 14;
 	public static final int TILE_BRIDGE_HOR = 15;
 	public static final int TILE_BRIDGE_VER = 16;
+	public static final int TILE_OLD_CASTLE_WALL = 17;
+	public static final int TILE_OLD_CASTLE_FLOOR = 18;
 
-
-	public static final int MAX_TILES = 17;
+	public static final int MAX_TILES = 19;
 
     public static final int TILE_SIZE = 32;
 
@@ -51,6 +52,8 @@ public class Tileset{
 		TILESET[TILE_FARM] = new BaseTile(TILE_FARM, "Ферма", "res/dungeons/farm.png", false, false, false);
 		TILESET[TILE_BRIDGE_HOR] = new BaseTile(TILE_BRIDGE_HOR, "Мост", "res/dungeons/bridge_hor.png", true, true, false);
 		TILESET[TILE_BRIDGE_VER] = new BaseTile(TILE_BRIDGE_VER, "Мост", "res/dungeons/bridge_ver.png", true, true, false);
+		TILESET[TILE_OLD_CASTLE_FLOOR] = new BaseTile(TILE_OLD_CASTLE_FLOOR, "Пол старого замка", "res/dungeons/oldcastle_floor.png", true, true, false);
+		TILESET[TILE_OLD_CASTLE_WALL] = new BaseTile(TILE_OLD_CASTLE_WALL, "Стена старого замка", "res/dungeons/oldcastle_wall.png", false, false, false);
 
 
 	}

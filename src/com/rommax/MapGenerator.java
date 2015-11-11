@@ -424,9 +424,9 @@ public class MapGenerator {
     public void OldCastleCreate() {
         map.setName("#7#Старый замок #^#");
         //заполняем карту сплошыми стенами
-        for (int x = 0; x < map.getHeight(); x++)
-            for (int y = 0; y < map.getWidth(); y++)
-            { map.setTileAt(x, y, Tileset.TILE_DUNGEON_WALL); }
+        for (int y = 0; y < map.getHeight(); y++)
+            for (int x = 0; x < map.getWidth(); x++)
+            { map.setTileAt(y, x, Tileset.TILE_OLD_CASTLE_WALL); }
         final int MAX_ROOM_SIZE = 16;
         int pointX = 1, pointY = 1;
         int sizeX, sizeY;
@@ -437,61 +437,64 @@ public class MapGenerator {
             sizeX = new Random().nextInt(10) + 5; // максимальный размер комнаты 14х14, сумма чисел(10 + 5) + 1 должна быть присвоено MAX_ROOM_SIZE(16)
             sizeY = new Random().nextInt(10) + 5;
             // проверка на выход за границы карты
-            if (pointY + sizeY > map.getWidth() -1) {
-                pointX = pointX + MAX_ROOM_SIZE;
-                pointY = 1;
+            if (pointX + sizeX > map.getWidth() -1) {
+                pointY = pointY + MAX_ROOM_SIZE;
+                pointX = 1;
                 continue;
             }
-            if (pointX + sizeX > map.getHeight() - 1) break;
+            if (pointY + sizeY > map.getHeight() - 1) break;
             // создаем комнату
-            for (int x = pointX; x <= pointX + sizeX; x++)
-                for (int y = pointY; y <= pointY + sizeY; y++)
-                    map.setTileAt(x, y, Tileset.TILE_DUNGEON_FLOOR);
+            for (int y = pointY; y <= pointY + sizeY; y++)
+                for (int x = pointX; x <= pointX + sizeX; x++)
+                    map.setTileAt(y, x, Tileset.TILE_OLD_CASTLE_FLOOR);
             // вычисляем координаты для двери и перехода
-            doorX = 1 + pointX + sizeX;
-            doorY = (int) pointY + sizeY / 2;
+            doorY = 1 + pointY + sizeY;
+            doorX = (int) pointX + sizeX / 2;
             // создаем переход
-            sizeHall = MAX_ROOM_SIZE - sizeX;
-            if (doorX + sizeHall > map.getWidth() -1) {
+            sizeHall = MAX_ROOM_SIZE - sizeY;
+            if (doorY + sizeHall > map.getWidth() -1) {
                 break;
             }
-            for (int x = doorX; x <= doorX + sizeHall; x++)
-                    map.setTileAt(x, doorY, Tileset.TILE_DUNGEON_FLOOR);
+            for (int y = doorY; y <= doorY + sizeHall; y++)
+                    map.setTileAt(y, doorX, Tileset.TILE_OLD_CASTLE_FLOOR);
             // ставим дверь
-            map.setTileAt(doorX, doorY, Tileset.TILE_CLOSED_DOOR);
+            map.setTileAt(doorY, doorX, Tileset.TILE_CLOSED_DOOR);
             // ставим опцианальную дверь, если есть возможность
-            doorX = (int) pointX + sizeX / 2;
-            doorY = 1 + pointY + sizeY;
-            if (doorY + 1 > map.getWidth() - 1) {
-                pointX = pointX + MAX_ROOM_SIZE;
-                pointY = 1;
+            doorY = (int) pointY + sizeY / 2;
+            doorX = 1 + pointX + sizeX;
+            if (doorX + 1 > map.getWidth() - 1) {
+                pointY = pointY + MAX_ROOM_SIZE;
+                pointX = 1;
                 continue;
             }
             tempX = doorX;
             tempY = doorY;
             while (true){
-                doorY++;
-                if (doorY >= map.getWidth() - 1) break; // проверка на выход за границы карты
-                if (checkTile(doorX, doorY, Tileset.TILE_DUNGEON_FLOOR)) {
-                    for (int yy = tempY; yy < doorY; yy++) { // создаем проход между комнатами
-                        map.setTileAt(doorX, yy, Tileset.TILE_DUNGEON_FLOOR);
+                doorX++;
+                if (doorX >= map.getWidth() - 1) break; // проверка на выход за границы карты
+                if (map.field[doorX][doorY].getPassable()) { // работает, только если инвертировать координаты
+                    for (int xx = tempX; xx < doorX; xx++) { // создаем проход между комнатами
+                        map.setTileAt(doorY, xx, Tileset.TILE_OLD_CASTLE_FLOOR);
                     }
-                    doorY--;
-                    map.setTileAt(tempX, tempY, Tileset.TILE_CLOSED_DOOR); // левая дверь в проходе
-                    map.setTileAt(doorX, doorY, Tileset.TILE_CLOSED_DOOR); // правая дверь в проходе
+                    doorX--;
+                    map.setTileAt(tempY, tempX, Tileset.TILE_CLOSED_DOOR); // левая дверь в проходе
+                    map.setTileAt(doorY, doorX, Tileset.TILE_CLOSED_DOOR); // правая дверь в проходе
                     //System.exit(0);
                     break;
+
                 }
             }
             // координаты будущей новой комнаты
-            pointY = pointY + MAX_ROOM_SIZE;
+            pointX = pointX + MAX_ROOM_SIZE;
         }
 
     }
 
-    private boolean checkTile (int x, int y, int id) {
-        if (map.field[y][x].getID() == id) return true; //перестановка xy местами, так работает, но не всегда правильно
+    /*
+    private boolean checkTile (int y, int x, int id) {
+        if (map.field[x][y].getID() == id) return true;
         return false;
     }
+    */
 
 }
