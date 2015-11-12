@@ -22,24 +22,22 @@ class QuitPanel extends JPanel
 
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		Image im =  Toolkit.getDefaultToolkit().getImage("res/icons/texture_menu.png");
-		g.drawImage(im,0,0, this);
+		g.drawImage(qw.game.background, 0, 0, this);
 		Graphics2D g2 = (Graphics2D)g;
 		FontRenderContext context = g2.getFontRenderContext();
 		Font f1 = new Font("Serif", Font.PLAIN, 20);
 		g2.setFont(f1);
-		Image image = Toolkit.getDefaultToolkit().getImage("res/icons/flames.png");
+		Image image = qw.game.loader.getImage("res/icons/flames.png");
 		int y = (0);
 		int x = (0) ;
 		g.drawImage(image,x,y,this);
-		image = Toolkit.getDefaultToolkit().getImage("res/icons/quit.png");
+		image = qw.game.loader.getImage("res/icons/quit.png");
 		y = (Tileset.TILE_SIZE - 1);
 		x = (0) ;
 		g.drawImage(image,x, y,this);
-		image = Toolkit.getDefaultToolkit().getImage("res/icons/icon_plus.png");
 		y = ((select - 1) * Tileset.TILE_SIZE);
 		x = (qw.WINDOW_WIDTH - Tileset.TILE_SIZE - 5);
-		g.drawImage(image,x,y,this);
+		g.drawImage(qw.game.cursor, x, y, this);
      	g2.setPaint(Color.YELLOW);
 		g.drawString("Нет, еще поиграем!",Tileset.TILE_SIZE + 5, 23);
 		g.drawString("Да, выходим!",Tileset.TILE_SIZE + 5, 55);

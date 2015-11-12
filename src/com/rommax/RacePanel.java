@@ -13,8 +13,6 @@ class RacePanel extends JPanel
 	public int select =  1;
 	private int x, y;
 	private int z = 0;
-	Image background;
-	Image cursor;
 	
 	RacePanel(RaceWindow window){
 		super();
@@ -22,12 +20,10 @@ class RacePanel extends JPanel
 		listener = new RaceKeyHandler(this);
 		addKeyListener(listener);
 		setFocusable(true);
-		background = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/res/icons/texture_menu.png"));
-		cursor = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/res/icons/icon_plus.png"));
 	}
 	
 	private void addLine(Graphics g, String iconPath, String itemName, int X, int Y) {
-		Image image = Toolkit.getDefaultToolkit().getImage(iconPath);
+		Image image = window.game.loader.getImage(iconPath);
 		g.drawImage(image, Tileset.TILE_SIZE * (X + 1), Tileset.TILE_SIZE * (RaceSet.MAX_RACES + Y + 1) + 10, this);
 		g.drawString(itemName, (Tileset.TILE_SIZE * (X + 2)) + 5, Tileset.TILE_SIZE * (RaceSet.MAX_RACES + Y + 1) + 32 + z);		
 	}
@@ -39,7 +35,7 @@ class RacePanel extends JPanel
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		z = 0;
-		g.drawImage(background, 0, 0, this);
+		g.drawImage(window.game.background, 0, 0, this);
 		Graphics2D g2 = (Graphics2D)g;
 		FontRenderContext context = g2.getFontRenderContext();
 		Font f1 = new Font("Serif", Font.PLAIN, 20);
@@ -47,7 +43,7 @@ class RacePanel extends JPanel
 		Font f3 = new Font("Serif", Font.PLAIN, 16);
 		Image image;
 		for(int i = 0; i < RaceSet.MAX_RACES; i++) {
-			image = Toolkit.getDefaultToolkit().getImage(RaceSet.getRace(i).getPath());
+			image = window.game.loader.getImage(RaceSet.getRace(i).getPath());
 			y = i * Tileset.TILE_SIZE;
 			g.drawImage(image, 0, y, this);
 			if (i == select - 1) g2.setPaint(Color.YELLOW); else g2.setPaint(Color.WHITE);
@@ -80,6 +76,6 @@ class RacePanel extends JPanel
 		}
 		y = ((select - 1) * Tileset.TILE_SIZE);
 		x = (window.WINDOW_WIDTH - Tileset.TILE_SIZE - 5);
-		g.drawImage(cursor, x, y, this);
+		g.drawImage(window.game.cursor, x, y, this);
 	}
 }

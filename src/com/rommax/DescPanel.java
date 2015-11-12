@@ -53,8 +53,7 @@ class DescPanel extends JPanel
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setPaint(Color.WHITE);
 		int fontsize = 15;
-		Image im = Toolkit.getDefaultToolkit().getImage("res/icons/texture_menu.png");
-		g.drawImage(im,0,0,this);
+		g.drawImage(dwindow.game.background, 0, 0, this);
 		ScriptObject so = ScriptParser.parseString(dwindow.item.getScript());
 		int leftX = 10;
 		strY = 15;
@@ -152,8 +151,7 @@ class DescPanel extends JPanel
 	}
 
 	public void DrawMonsterDesc(Graphics g){
-		Image im = Toolkit.getDefaultToolkit().getImage("res/icons/texture_menu.png");
-		g.drawImage(im,0,0,this);
+		g.drawImage(dwindow.game.background,0,0,this);
 		int leftX = 10;
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setPaint(Color.YELLOW);

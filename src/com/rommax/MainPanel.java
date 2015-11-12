@@ -54,11 +54,11 @@ class MainPanel extends JPanel{
 	
 	public void drawSkills(Graphics g){
 		Image image, fog;
-		fog = Toolkit.getDefaultToolkit().getImage("res/icons/transparent.png");
+		fog = window.game.loader.getImage("res/icons/transparent.png");
 		int top = 200;
 		int left = Tileset.TILE_SIZE * SCREEN_TILE_SIZE_X + 10;
 		for(int i = 0; i < Skill.getAmount(); i++){
-			image = Toolkit.getDefaultToolkit().getImage(SkillSet.getSkill(Skill.skill[i]).getPath());
+			image = window.game.loader.getImage(SkillSet.getSkill(Skill.skill[i]).getPath());
 			g.drawImage(image, left, top + (i * 35), this);
 			String str = " (F" + (i + 5) + ")"; // Клавиши F5-F8
 			if (Skill.getCooldown(i) > 0){
@@ -80,8 +80,8 @@ class MainPanel extends JPanel{
 		g2.fill(canvas);
 		g2.draw(canvas);
 		if (hasNewGame) return;
-		Image player = Toolkit.getDefaultToolkit().getImage("res/maps/player.png");
-		Image water = Toolkit.getDefaultToolkit().getImage("res/maps/water.png");
+		Image player = window.game.loader.getImage("res/maps/player.png");
+		Image water = window.game.loader.getImage("res/maps/water.png");
 		for (int i=0; i<DrawingMap.getHeight(); i++)
 			for (int j=0; j<DrawingMap.getWidth(); j++){
 				//if (DrawingMap.field[i][j].getSeen()) g.drawImage(water, left + j * 3, top + i * 3, this);
@@ -172,9 +172,9 @@ class MainPanel extends JPanel{
 		if (c < 0) c = 0;
 		int y = top - 25;
 		Graphics2D g2 = (Graphics2D)g;
-		Image back = Toolkit.getDefaultToolkit().getImage("res/icons/backbar.png");
+		Image back = window.game.loader.getImage("res/icons/backbar.png");
 		g.drawImage(back, GameWindow.WINDOW_WIDTH - 202 - 10, y, this);
-		Image bar = Toolkit.getDefaultToolkit().getImage(path);
+		Image bar = window.game.loader.getImage(path);
 		g.drawImage(bar, GameWindow.WINDOW_WIDTH - 201 - 10, y + 1, (int)(c / m * 200), 8, this);	
 	}
 	
@@ -252,35 +252,35 @@ class MainPanel extends JPanel{
 		for (int i=0; i<SCREEN_TILE_SIZE_Y; i++)
 		for (int j=0; j<SCREEN_TILE_SIZE_X; j++){
 			if (!DrawingMap.hasTileAt(i + DrawingMap.getY(), j + DrawingMap.getX()) || (!DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getVisible() && !DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getSeen()) ){
-			Image image = Toolkit.getDefaultToolkit().getImage("res/dungeons/empty.png");
+			Image image = window.game.loader.getImage("res/dungeons/empty.png");
 				int y = (j*Tileset.TILE_SIZE);
 				int x = (i*Tileset.TILE_SIZE) ;
 				g.drawImage(image,y,x,this);
 
 			}
 			else if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getSeen() &&  !DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getVisible()){
-				Image image = Toolkit.getDefaultToolkit().getImage(Tileset.getTile(DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].lastseenID).getPath());
+				Image image = window.game.loader.getImage(Tileset.getTile(DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].lastseenID).getPath());
 				int y = (j*Tileset.TILE_SIZE);
 				int x = (i*Tileset.TILE_SIZE) ;
 				g.drawImage(image,y,x,this);
-				image = Toolkit.getDefaultToolkit().getImage("res/icons/transparent.png");
+				image = window.game.loader.getImage("res/icons/transparent.png");
 				g.drawImage(image,y,x,this);
 			}else{
-				Image image = Toolkit.getDefaultToolkit().getImage(Tileset.getTile(DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getID()).getPath());
+				Image image = window.game.loader.getImage(Tileset.getTile(DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getID()).getPath());
 				int y = (j*Tileset.TILE_SIZE);
 				int x = (i*Tileset.TILE_SIZE) ;
 				g.drawImage(image,y,x,this);
-				image = Toolkit.getDefaultToolkit().getImage("res/icons/blood.png");
+				image = window.game.loader.getImage("res/icons/blood.png");
 				if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getBlood())
 					g.drawImage(image,y,x,this);
 
 				if (DrawingMap.hasTileAt(i + DrawingMap.getY(), j + DrawingMap.getX())){
 					if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getItemsQty()!=0){
 						if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getItemsQty() > 1)
-							image = Toolkit.getDefaultToolkit().getImage("res/icons/manyitems.png");
+							image = window.game.loader.getImage("res/icons/manyitems.png");
 								else{
 									LinkedList<Item> itemlist = DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getItemList();
-								    image = Toolkit.getDefaultToolkit().getImage(ItemSet.getItem(itemlist.getFirst().getID()).getPath());
+								    image = window.game.loader.getImage(ItemSet.getItem(itemlist.getFirst().getID()).getPath());
 								}
 							g.drawImage(image,y,x,this);
 					}
@@ -290,8 +290,8 @@ class MainPanel extends JPanel{
 							// Рисуем монстров
 							if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster()!=null){
 								if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster() == DrawingMap.getGame().player) {
-									image = Toolkit.getDefaultToolkit().getImage(RaceSet.getRace(RaceSet.getCurrentRaceID).getPath());
-								} else image = Toolkit.getDefaultToolkit().getImage(MonsterSet.getMonster(DrawingMap.field[i + DrawingMap.getY()][j + DrawingMap.getX()].getMonster().getID()).getPath());
+									image = window.game.loader.getImage(RaceSet.getRace(RaceSet.getCurrentRaceID).getPath());
+								} else image = window.game.loader.getImage(MonsterSet.getMonster(DrawingMap.field[i + DrawingMap.getY()][j + DrawingMap.getX()].getMonster().getID()).getPath());
 								int px = DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster().getX();
 								int py = DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster().getY();
 								y = (j*Tileset.TILE_SIZE);
@@ -318,18 +318,18 @@ class MainPanel extends JPanel{
 								g2.fill(rect);
 								g2.draw(rect);
 								if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster().getparalyzecount()!=0){
-									image = Toolkit.getDefaultToolkit().getImage("res/icons/paralyzed.png");
+									image = window.game.loader.getImage("res/icons/paralyzed.png");
 									g.drawImage(image,y,x,this);
 								}
 								if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster().getPoisonCount()!=0){
-									image = Toolkit.getDefaultToolkit().getImage("res/icons/poisoned.png");
+									image = window.game.loader.getImage("res/icons/poisoned.png");
 									g.drawImage(image,y,x,this);
 								}
 							}
 				}
 			}
 			if (DrawingMap.hasTileAt(i + DrawingMap.getY(), j + DrawingMap.getX()) && DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].isSelected()){
-				Image image = Toolkit.getDefaultToolkit().getImage("res/icons/selected.png");
+				Image image = window.game.loader.getImage("res/icons/selected.png");
 				int y = (j*Tileset.TILE_SIZE);
 				int x = (i*Tileset.TILE_SIZE) ;
 				g.drawImage(image,y,x,this);

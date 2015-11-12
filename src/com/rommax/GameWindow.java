@@ -8,6 +8,7 @@ public class GameWindow extends JFrame{
 	public static int WINDOW_HEIGHT;
 	public static int WINDOW_WIDTH;
     public MainPanel mainpanel;
+	public Game game;
 
 	static{
 		Toolkit kit = Toolkit.getDefaultToolkit();
@@ -28,11 +29,12 @@ public class GameWindow extends JFrame{
 		return (WINDOW_HEIGHT/Tileset.TILE_SIZE-1);
 	}
 
-	public GameWindow(Map DrawingMap){
+	public GameWindow(Map map, Game game){
 		setTitle("PROJECT1");
+		this.game = game;
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		setResizable(false);
-		mainpanel = new MainPanel(this, DrawingMap, getScreenTileSizeX(), getScreenTileSizeY());
+		mainpanel = new MainPanel(this, map, getScreenTileSizeX(), getScreenTileSizeY());
 		Container contentPane = getContentPane();
 		contentPane.add(mainpanel);
 	}

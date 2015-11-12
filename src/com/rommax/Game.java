@@ -2,6 +2,7 @@ package com.rommax;
 
 import javax.swing.*;
 import java.util.*;
+import java.awt.*;
 import java.io.*;
 
 
@@ -20,6 +21,9 @@ public class Game {
     public static int maxExperience = 200;
     public int statsFree = 0;
     public int hitPointsRegeneration = 0;                   //later reghp
+	public Loader loader;
+	public Image background;
+	public Image cursor;
 
     // FINAL'изированные
     final int minFovRad = 4;
@@ -67,6 +71,9 @@ public class Game {
         monsterList = new Monster[MAX_MONSTERS];
         itemList = new Item[MAX_ITEMS];
         mapList = new Map[MAX_FLOORS];
+		loader = new Loader();
+		background = loader.getImage("res/icons/texture_menu.png");
+		cursor = loader.getImage("res/icons/icon_plus.png");
     }
 
     // позволяет определить направление движения к цели, вызывается из Game.monsterIA
@@ -318,7 +325,7 @@ public class Game {
         currentMapNumber = 0;                                               // номер текущей карты в массиве
         map.generate();
 	
-        frame1 = new GameWindow(map);
+        frame1 = new GameWindow(map, this);
         frame1.setVisible(true);
         frame1.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		

@@ -57,28 +57,27 @@ class EqPanel extends JPanel
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
-		Image im = Toolkit.getDefaultToolkit().getImage("res/icons/texture_menu.png");
-		g.drawImage(im,0,0,this);
+		Image im;
+		g.drawImage(ewindow.game.background, 0, 0, this);
 		for (int i=0; i< ItemSet.MAX_SLOTS; i++){
-			im =  Toolkit.getDefaultToolkit().getImage("res/icons/item_place.png");
+			im = ewindow.game.loader.getImage("res/icons/item_place.png");
 			g.drawImage(im, 0 , i*Tileset.TILE_SIZE + 10, this);
 
 			if (ewindow.monster.Equipment[i] != null){
-					im =  Toolkit.getDefaultToolkit().getImage(ItemSet.getItem(ewindow.monster.Equipment[i].getID()).getPath());
+					im =  ewindow.game.loader.getImage(ItemSet.getItem(ewindow.monster.Equipment[i].getID()).getPath());
 				    g.drawImage(im, 0 , i*Tileset.TILE_SIZE + 10, this);
 				    g2.setPaint(Color.WHITE);
 					drawColorString(g,ewindow.monster.Equipment[i].getName().toLowerCase(),Tileset.TILE_SIZE + 5, (int)(Tileset.TILE_SIZE * (0.5 + (i))) + 10);
 					if (i == current){
 						g2.setPaint(Color.YELLOW);
 						drawColorString(g, ewindow.monster.Equipment[i].getName().toLowerCase(),Tileset.TILE_SIZE + 5, (int)(Tileset.TILE_SIZE * (0.5 + (i))) + 10);
-						im = Toolkit.getDefaultToolkit().getImage("res/icons/icon_plus.png");
-						g.drawImage(im, ewindow.WINDOW_WIDTH - Tileset.TILE_SIZE - 5, (i)*Tileset.TILE_SIZE + 10 , this);
+						g.drawImage(ewindow.game.cursor, ewindow.WINDOW_WIDTH - Tileset.TILE_SIZE - 5, (i)*Tileset.TILE_SIZE + 10 , this);
 					}
 
 				}
 			else
 					{
-						im =  Toolkit.getDefaultToolkit().getImage("res/icons/empty_item.png");
+						im = ewindow.game.loader.getImage("res/icons/empty_item.png");
 					    g.drawImage(im, 0 , i*Tileset.TILE_SIZE + 10, this);
 					    g2.setPaint(Color.WHITE);
 						drawColorString(g,"<<<пустой слот>>>",Tileset.TILE_SIZE + 5, (int)(Tileset.TILE_SIZE * (0.5 + (i))) + 10);

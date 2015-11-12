@@ -14,6 +14,7 @@ class ItemSelectPanel extends JPanel {
 	public int current = 0;
 	public int MAX_ITEMS = 0;
 	public int icurrent = 0;
+	private Image im;
 
 	ItemSelectPanel(ItemSelectWindow iwindow){
 		super();
@@ -87,13 +88,12 @@ class ItemSelectPanel extends JPanel {
 			ix++;
 		    item = iter.next();
 		}
-		Image im = Toolkit.getDefaultToolkit().getImage("res/icons/texture_menu.png");
-		g.drawImage(im,0,0,this);
+		g.drawImage(iwindow.game.background, 0, 0, this);
 		for (int i=min; i<=max; i++){
 			if (item!=null){
 				if (item.getType()!=iwindow.type && iwindow.type != ItemSet.TYPE_ANY) i--;
 				else {
-					im =  Toolkit.getDefaultToolkit().getImage(ItemSet.getItem(item.getID()).getPath());
+					im =  iwindow.game.loader.getImage(ItemSet.getItem(item.getID()).getPath());
 				    g.drawImage(im, 0 , (i-min)*Tileset.TILE_SIZE + 10, this);
 				    g2.setPaint(Color.WHITE);
 					drawColorString(g, item.getName().toLowerCase(),Tileset.TILE_SIZE + 5, (int)(Tileset.TILE_SIZE * (0.5 + (i - min))) + 10);
@@ -102,8 +102,7 @@ class ItemSelectPanel extends JPanel {
 					if (i == current){
 						g2.setPaint(Color.YELLOW);
 						drawColorString(g, item.getName().toLowerCase(),Tileset.TILE_SIZE + 5, (int)(Tileset.TILE_SIZE * (0.5 + (i - min))) + 10);
-						im = Toolkit.getDefaultToolkit().getImage("res/icons/icon_plus.png");
-						g.drawImage(im, iwindow.WINDOW_WIDTH - Tileset.TILE_SIZE - 5, (i-min)*Tileset.TILE_SIZE + 10 , this);
+						g.drawImage(iwindow.game.cursor, iwindow.WINDOW_WIDTH - Tileset.TILE_SIZE - 5, (i-min)*Tileset.TILE_SIZE + 10 , this);
 					}
 				}
 			}
