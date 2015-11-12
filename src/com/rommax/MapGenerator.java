@@ -9,7 +9,7 @@ import java.util.*;
 public class MapGenerator {
 
     public Map map;
-    public static final int MAX_GENERATORS = 7; // должно соответствовать количеству типов карт
+    public static final int MAX_GENERATORS = 8; // должно соответствовать количеству типов карт
     private Random rand = new Random();
 
     public static final int ID_FOREST_1 = 0;
@@ -19,10 +19,11 @@ public class MapGenerator {
     public static final int ID_TOWER = 4;
     public static final int ID_VILLAGE = 5;
     public static final int ID_OLD_CASTLE = 6;
+    public static final int ID_FOREST_MARSH = 7;
 
     public void generateMap(Map map, int ID) {
         this.map = map;
-        ID = 6; // для теста
+        ID = 7; // для теста
 		switch (ID){
 			case ID_FOREST_1:
 				ForestCreate();
@@ -45,13 +46,17 @@ public class MapGenerator {
 			case ID_OLD_CASTLE:
 				OldCastleCreate();
 				break;
+			case ID_FOREST_MARSH:
+				forestMarshCreate();
+				break;
 		}
     }
 
     public void RiftCreate() {
         map.setName("#2#Пещеры ужаса#^#");
         for (int i = 0; i < (map.getHeight() * map.getWidth() / 10); i++)
-            ForestPartDraw(rand.nextInt(map.getHeight()), rand.nextInt(map.getWidth()));
+            PartDraw(rand.nextInt(map.getHeight()), rand.nextInt(map.getWidth()),
+				Tileset.TILE_GRASS, Tileset.TILE_TREE);
         for (int i = 0; i < map.getHeight(); i++)
             for (int j = 0; j < map.getWidth(); j++)
                 if (map.field[i][j].getID() == Tileset.TILE_TREE)
@@ -66,6 +71,39 @@ public class MapGenerator {
         return d;
     }
 
+	private void addTiles(int preTile, int tile){
+		PartDraw(new Random().nextInt(map.getHeight()),
+			new Random().nextInt(map.getWidth()), preTile, tile);
+	}
+	
+	private void forestMarshCreate(){
+		map.setName("#3#Мангровое болото#^#");
+		fill(Tileset.TILE_MARSH);
+		for (int i = 0; i < (int) map.getHeight() * map.getWidth() / 15; i++)
+			switch (new Random().nextInt(15)){
+				case 0:
+					addTiles(Tileset.TILE_MARSH, Tileset.TILE_DIRT);
+					break;
+				case 1:
+					addTiles(Tileset.TILE_MARSH, Tileset.TILE_MARSH_GRASS);
+					break;
+				case 2:
+					addTiles(Tileset.TILE_MARSH, Tileset.TILE_MARSH_GRASS2);
+					break;
+				case 3:
+					addTiles(Tileset.TILE_MARSH, Tileset.TILE_MARSH_GRASS3);
+					break;
+				case 4:
+					addTiles(Tileset.TILE_MARSH, Tileset.TILE_MARSH_GRASS4);
+					break;
+				case 5:
+					addTiles(Tileset.TILE_MARSH, Tileset.TILE_MARSH_TREE);
+					break;
+				default:
+					addTiles(Tileset.TILE_MARSH, Tileset.TILE_MARSH_TREE2);
+			}
+	}
+	
     public void TowerCreate() {
         int waterch = 20;
         int px, py, rad, k, i, j;
@@ -110,7 +148,7 @@ public class MapGenerator {
 
             case 2: // добавляет лес
                 for (i = 0; i < MapX * MapY / 25; i++)
-                    ForestPartDraw(rand.nextInt(MapX) + 1, rand.nextInt(MapY) + 1);
+                    PartDraw(rand.nextInt(MapX) + 1, rand.nextInt(MapY) + 1, Tileset.TILE_GRASS, Tileset.TILE_TREE);
                 break;
 
             case 3: // добавляет болото
@@ -309,7 +347,8 @@ public class MapGenerator {
 
     }
 
-    private void ForestPartDraw(int x1, int y1) {
+	// tile - тайл, на который будет заменен preTile
+    private void PartDraw(int x1, int y1, int preTile, int tile) {
         int i, j, e, s, w, n;
         Random random = new Random();
         i = x1;
@@ -323,26 +362,26 @@ public class MapGenerator {
             if (n == 1) {
                 i = i - 1;
                 if (!map.hasTileAt(i, j)) return;
-                if (map.field[i][j].getID() != Tileset.TILE_GRASS) return;
-                map.setTileAt(i, j, Tileset.TILE_TREE);
+                if (map.field[i][j].getID() != preTile) return;
+                map.setTileAt(i, j, tile);
             }
             if (n == 1) {
                 i = i + 1;
                 if (!map.hasTileAt(i, j)) return;
-                if (map.field[i][j].getID() != Tileset.TILE_GRASS) return;
-                map.setTileAt(i, j, Tileset.TILE_TREE);
+                if (map.field[i][j].getID() != preTile) return;
+                map.setTileAt(i, j, tile);
             }
             if (n == 1) {
                 j = j - 1;
                 if (!map.hasTileAt(i, j)) return;
-                if (map.field[i][j].getID() != Tileset.TILE_GRASS) return;
-                map.setTileAt(i, j, Tileset.TILE_TREE);
+                if (map.field[i][j].getID() != preTile) return;
+                map.setTileAt(i, j, tile);
             }
             if (n == 1) {
                 j = j + 1;
                 if (!map.hasTileAt(i, j)) return;
-                if (map.field[i][j].getID() != Tileset.TILE_GRASS) return;
-                map.setTileAt(i, j, Tileset.TILE_TREE);
+                if (map.field[i][j].getID() != preTile) return;
+                map.setTileAt(i, j, tile);
             }
         }
     }
@@ -398,28 +437,22 @@ public class MapGenerator {
 
     public void MazeCreate() {
         map.setName("#7#Канализация #^#");
-
-
-        for (int i = 0; i < map.getHeight(); i++)
-            for (int j = 0; j < map.getWidth(); j++)
-                map.setTileAt(i, j, Tileset.TILE_DUNGEON_WALL);
-
+        fill(Tileset.TILE_DUNGEON_WALL);
         int px = map.getHeight() / 2;
         int py = map.getWidth() / 2;
         for (int i = 0; i < map.getHeight() * map.getWidth() / 100; i++) {
-            px = rand.nextInt(map.getHeight());
-            py = rand.nextInt(map.getWidth());
+            px = new Random().nextInt(map.getHeight());
+            py = new Random().nextInt(map.getWidth());
             StartWave(px, py);
         }
-
     }
 
     public void ForestCreate() {
         map.setName("#3#Лес Древних #^#");
-
-        Random random = new Random();
         for (int i = 0; i < (map.getHeight() * map.getWidth() / 10); i++)
-            ForestPartDraw(random.nextInt(map.getHeight()), random.nextInt(map.getWidth()));
+            PartDraw(new Random().nextInt(map.getHeight()),
+				new Random().nextInt(map.getWidth()),
+					Tileset.TILE_GRASS, Tileset.TILE_TREE);
     }
 
 	// Заполняет всю карту указанным тайлом
@@ -436,6 +469,10 @@ public class MapGenerator {
 				map.setTileAt(i, j, tile);		
 	}
 	
+	private void addDoor(){
+		
+	}
+	
     public void OldCastleCreate() {
         map.setName("#7#Старый замок #^#");
         final int ROOM_MAX_SIZE = 5;
@@ -446,7 +483,7 @@ public class MapGenerator {
         int doorX, doorY;
         int sizeHall;
         int tempX, tempY;
-		fill(Tileset.TILE_OLD_CASTLE_WALL);//заполняем карту сплошыми стенами
+		fill(Tileset.TILE_OLD_CASTLE_WALL);//заполняем карту сплошными стенами
         while (true) {
             sizeX = new Random().nextInt(ROOM_MAX_SIZE) + ROOM_MIN_SIZE;
             sizeY = new Random().nextInt(ROOM_MAX_SIZE) + ROOM_MIN_SIZE;
@@ -457,7 +494,9 @@ public class MapGenerator {
                 continue;
             }
             if (pointY + sizeY > map.getHeight() - 1) break;
-			fill(pointY, pointX, sizeY, sizeX, Tileset.TILE_OLD_CASTLE_FLOOR);
+			fill(pointY, pointX, sizeY, sizeX, Tileset.TILE_OLD_CASTLE_FLOOR);// Ставим комнату
+			
+			 
             // вычисляем координаты для двери и перехода
             doorY = 1 + pointY + sizeY;
             doorX = (int) pointX + sizeX / 2;
@@ -492,9 +531,10 @@ public class MapGenerator {
                     map.setTileAt(doorY, doorX, Tileset.TILE_CLOSED_DOOR); // правая дверь в проходе
                     //System.exit(0);
                     break;
-
                 }
             }
+			
+			
             // координаты будущей новой комнаты
             pointX = pointX + ROOM_MAX_TOTAL_SIZE;
         }
