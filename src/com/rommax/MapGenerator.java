@@ -22,7 +22,7 @@ public class MapGenerator {
 
     public void generateMap(Map map, int ID) {
         this.map = map;
-        ID = 6; // для теста
+        //ID = 6; // для теста
         if (ID == ID_FOREST_1)
             ForestCreate();
         else if (ID == ID_MAZE_1)
@@ -472,7 +472,7 @@ public class MapGenerator {
             while (true){
                 doorX++;
                 if (doorX >= map.getWidth() - 1) break; // проверка на выход за границы карты
-                if (map.field[doorX][doorY].getPassable()) { // работает, только если инвертировать координаты
+                if (map.field[doorX][doorY].getID() == Tileset.TILE_OLD_CASTLE_FLOOR) { // работает, только если инвертировать координаты
                     for (int xx = tempX; xx < doorX; xx++) { // создаем проход между комнатами
                         map.setTileAt(doorY, xx, Tileset.TILE_OLD_CASTLE_FLOOR);
                     }
@@ -489,12 +489,5 @@ public class MapGenerator {
         }
 
     }
-
-    /*
-    private boolean checkTile (int y, int x, int id) {
-        if (map.field[x][y].getID() == id) return true;
-        return false;
-    }
-    */
 
 }
