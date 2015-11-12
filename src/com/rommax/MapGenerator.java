@@ -22,7 +22,7 @@ public class MapGenerator {
 
     public void generateMap(Map map, int ID) {
         this.map = map;
-        //ID = 6; // для теста
+        ID = 6; // для теста
         if (ID == ID_FOREST_1)
             ForestCreate();
         else if (ID == ID_MAZE_1)
@@ -423,22 +423,25 @@ public class MapGenerator {
 
     public void OldCastleCreate() {
         map.setName("#7#Старый замок #^#");
-        //заполняем карту сплошыми стенами
-        for (int y = 0; y < map.getHeight(); y++)
-            for (int x = 0; x < map.getWidth(); x++)
-            { map.setTileAt(y, x, Tileset.TILE_OLD_CASTLE_WALL); }
-        final int MAX_ROOM_SIZE = 16;
+        final int ROOM_MAX_SIZE = 5;
+        final int ROOM_MIN_SIZE = 3;
+        final int ROOM_MAX_TOTAL_SIZE = ROOM_MIN_SIZE + ROOM_MAX_SIZE + 1;
         int pointX = 1, pointY = 1;
         int sizeX, sizeY;
         int doorX, doorY;
         int sizeHall;
         int tempX, tempY;
+        //заполняем карту сплошыми стенами
+        for (int y = 0; y < map.getHeight(); y++)
+            for (int x = 0; x < map.getWidth(); x++)
+            { map.setTileAt(y, x, Tileset.TILE_OLD_CASTLE_WALL); }
+
         while (true) {
-            sizeX = new Random().nextInt(10) + 5; // максимальный размер комнаты 14х14, сумма чисел(10 + 5) + 1 должна быть присвоено MAX_ROOM_SIZE(16)
-            sizeY = new Random().nextInt(10) + 5;
+            sizeX = new Random().nextInt(ROOM_MAX_SIZE) + ROOM_MIN_SIZE;
+            sizeY = new Random().nextInt(ROOM_MAX_SIZE) + ROOM_MIN_SIZE;
             // проверка на выход за границы карты
             if (pointX + sizeX > map.getWidth() -1) {
-                pointY = pointY + MAX_ROOM_SIZE;
+                pointY = pointY + ROOM_MAX_TOTAL_SIZE;
                 pointX = 1;
                 continue;
             }
@@ -451,7 +454,7 @@ public class MapGenerator {
             doorY = 1 + pointY + sizeY;
             doorX = (int) pointX + sizeX / 2;
             // создаем переход
-            sizeHall = MAX_ROOM_SIZE - sizeY;
+            sizeHall = ROOM_MAX_TOTAL_SIZE - sizeY;
             if (doorY + sizeHall > map.getWidth() -1) {
                 break;
             }
@@ -463,7 +466,7 @@ public class MapGenerator {
             doorY = (int) pointY + sizeY / 2;
             doorX = 1 + pointX + sizeX;
             if (doorX + 1 > map.getWidth() - 1) {
-                pointY = pointY + MAX_ROOM_SIZE;
+                pointY = pointY + ROOM_MAX_TOTAL_SIZE;
                 pointX = 1;
                 continue;
             }
@@ -485,7 +488,7 @@ public class MapGenerator {
                 }
             }
             // координаты будущей новой комнаты
-            pointX = pointX + MAX_ROOM_SIZE;
+            pointX = pointX + ROOM_MAX_TOTAL_SIZE;
         }
 
     }
