@@ -23,40 +23,41 @@ public class MapGenerator {
     public void generateMap(Map map, int ID) {
         this.map = map;
         ID = 6; // для теста
-        if (ID == ID_FOREST_1)
-            ForestCreate();
-        else if (ID == ID_MAZE_1)
-            MazeCreate();
-        else if (ID == ID_FOREST_2)
-            LakesCreate(1);
-        else if (ID == ID_MAZE_2)
-            RiftCreate();
-        else if (ID == ID_TOWER)
-            TowerCreate();
-        else if (ID == ID_VILLAGE)
-            VillageCreate();
-        else if (ID == ID_OLD_CASTLE) {
-            OldCastleCreate();
-        }
-
+		switch (ID){
+			case ID_FOREST_1:
+				ForestCreate();
+				break;
+			case ID_MAZE_1:
+				MazeCreate();
+				break;
+			case ID_FOREST_2:
+				LakesCreate(1);
+				break;
+			case ID_MAZE_2:
+				RiftCreate();
+				break;
+			case ID_TOWER:
+				TowerCreate();
+				break;
+			case ID_VILLAGE:
+				VillageCreate();
+				break;
+			case ID_OLD_CASTLE:
+				OldCastleCreate();
+				break;
+		}
     }
 
-
     public void RiftCreate() {
-        int i, j;
         map.setName("#2#Пещеры ужаса#^#");
-
-        for (i = 0; i < (map.getHeight() * map.getWidth() / 10); i++)
+        for (int i = 0; i < (map.getHeight() * map.getWidth() / 10); i++)
             ForestPartDraw(rand.nextInt(map.getHeight()), rand.nextInt(map.getWidth()));
-
-        for (i = 0; i < map.getHeight(); i++)
-            for (j = 0; j < map.getWidth(); j++)
+        for (int i = 0; i < map.getHeight(); i++)
+            for (int j = 0; j < map.getWidth(); j++)
                 if (map.field[i][j].getID() == Tileset.TILE_TREE)
                     map.setTileAt(i, j, Tileset.TILE_DUNGEON_WALL);
                 else
                     map.setTileAt(i, j, Tileset.TILE_DUNGEON_FLOOR);
-
-
     }
 
 
@@ -237,13 +238,13 @@ public class MapGenerator {
         }
     }
 
-    public void CreateThreeTilesHorizontal(int x, int y, int tile) {
+    private void CreateThreeTilesHorizontal(int x, int y, int tile) {
         if (x + 1 < map.getWidth()) map.setTileAt(x + 1, y, tile);
         if (x - 1 > 0) map.setTileAt(x - 1, y, tile);
         map.setTileAt(x, y, tile);
     }
 
-    public void CreateThreeTilesVertical(int x, int y, int tile) {
+    private void CreateThreeTilesVertical(int x, int y, int tile) {
         if (y + 1 < map.getHeight()) map.setTileAt(x, y + 1, tile);
         if (y - 1 > 0) map.setTileAt(x, y - 1, tile);
         map.setTileAt(x, y, tile);
@@ -421,6 +422,20 @@ public class MapGenerator {
             ForestPartDraw(random.nextInt(map.getHeight()), random.nextInt(map.getWidth()));
     }
 
+	// Заполняет всю карту указанным тайлом
+	private void fill(int tile){
+        for (int y = 0; y < map.getHeight(); y++)
+            for (int x = 0; x < map.getWidth(); x++)
+				map.setTileAt(y, x, tile);
+	}
+	
+	// Заполняет область указанным тайлом (создает комнату)
+	private void fill(int y, int x, int height, int width, int tile){
+		for (int i = y; i <= y + height; i++)
+			for (int j = x; j <= x + width; j++)
+				map.setTileAt(i, j, tile);		
+	}
+	
     public void OldCastleCreate() {
         map.setName("#7#Старый замок #^#");
         final int ROOM_MAX_SIZE = 5;
@@ -431,11 +446,7 @@ public class MapGenerator {
         int doorX, doorY;
         int sizeHall;
         int tempX, tempY;
-        //заполняем карту сплошыми стенами
-        for (int y = 0; y < map.getHeight(); y++)
-            for (int x = 0; x < map.getWidth(); x++)
-            { map.setTileAt(y, x, Tileset.TILE_OLD_CASTLE_WALL); }
-
+		fill(Tileset.TILE_OLD_CASTLE_WALL);//заполняем карту сплошыми стенами
         while (true) {
             sizeX = new Random().nextInt(ROOM_MAX_SIZE) + ROOM_MIN_SIZE;
             sizeY = new Random().nextInt(ROOM_MAX_SIZE) + ROOM_MIN_SIZE;
@@ -446,10 +457,7 @@ public class MapGenerator {
                 continue;
             }
             if (pointY + sizeY > map.getHeight() - 1) break;
-            // создаем комнату
-            for (int y = pointY; y <= pointY + sizeY; y++)
-                for (int x = pointX; x <= pointX + sizeX; x++)
-                    map.setTileAt(y, x, Tileset.TILE_OLD_CASTLE_FLOOR);
+			fill(pointY, pointX, sizeY, sizeX, Tileset.TILE_OLD_CASTLE_FLOOR);
             // вычисляем координаты для двери и перехода
             doorY = 1 + pointY + sizeY;
             doorX = (int) pointX + sizeX / 2;
