@@ -13,6 +13,8 @@ class RacePanel extends JPanel
 	public int select =  1;
 	private int x, y;
 	private int z = 0;
+	Image background;
+	Image cursor;
 	
 	RacePanel(RaceWindow window){
 		super();
@@ -20,6 +22,8 @@ class RacePanel extends JPanel
 		listener = new RaceKeyHandler(this);
 		addKeyListener(listener);
 		setFocusable(true);
+		background = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/res/icons/texture_menu.png"));
+		cursor = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/res/icons/icon_plus.png"));
 	}
 	
 	private void addLine(Graphics g, String iconPath, String itemName, int X, int Y) {
@@ -35,8 +39,7 @@ class RacePanel extends JPanel
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		z = 0;
-		Image im =  Toolkit.getDefaultToolkit().getImage("res/icons/texture_menu.png");
-		g.drawImage(im, 0, 0, this);
+		g.drawImage(background, 0, 0, this);
 		Graphics2D g2 = (Graphics2D)g;
 		FontRenderContext context = g2.getFontRenderContext();
 		Font f1 = new Font("Serif", Font.PLAIN, 20);
@@ -75,9 +78,8 @@ class RacePanel extends JPanel
 					(Tileset.TILE_SIZE * (7 + 2)) + 5, Tileset.TILE_SIZE * (RaceSet.MAX_RACES + 4 + 1) + 40);
 			}
 		}
-		image = Toolkit.getDefaultToolkit().getImage("res/icons/icon_plus.png");
 		y = ((select - 1) * Tileset.TILE_SIZE);
 		x = (window.WINDOW_WIDTH - Tileset.TILE_SIZE - 5);
-		g.drawImage(image, x, y, this);
+		g.drawImage(cursor, x, y, this);
 	}
 }
