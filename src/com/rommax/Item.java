@@ -2,13 +2,7 @@ package com.rommax;
 
 import java.util.*;
 
-public class Item extends Entity{
-	private int slot;
-	private int size;
-	private int mass;
-	private int type;
-	private String script;
-	private int chanse;
+public class Item extends BaseItem{
 	private boolean identify;
 	private String real_name;
 
@@ -23,31 +17,18 @@ public class Item extends Entity{
 	public void swap_names(){setName(real_name);}
 	public boolean isIdentify(){return identify;};
 	public void setIdentify(boolean b){identify = b;};
-	public void setType(int type){this.type = type;}
-	public int getType(){return type;}
-	public int getSlot(){return slot;};
-	public void setSlot(int slot){this.slot = slot;};
-	public int getSize(){return size;};
-	public void setSize(int size){this.size = size;};
-	public int getMass(){return mass;};
-	public void setMass(int mass){this.mass = mass;};
-	public int getChanse(){return chanse;};
 	public String getRealName(){return real_name;}
-	public void setScript(String sc){script = sc;};
-	public String getScript(){return script;};
 
 	public Item(BaseItem bm, int y, int x, Map map, Game game){
-		super(bm.getID(), bm.getName(), y, x, 0, 0, map, game, bm.getLevel());
-		this.mass = bm.getMass();
-		this.size = bm.getSize();
-		this.slot = bm.getSlot();
-		this.chanse = bm.getChanse();
+		super(bm.getChanse(), bm.getID(), bm.getLevel(), bm.getSlot(), bm.getType(),
+			bm.getName(), bm.getPath(), bm.getSize(), bm.getMass(), bm.getScript());
+		this.setPosition(y, x);
+		this.setMap(map);
+		this.setGame(game);
 		this.getMap().placeItemAt(y, x, this);
-		this.type = bm.getType();
-		this.script = bm.getScript();
 		this.identify = true;
 		this.real_name = getName();
-		switch (type){
+		switch (getType()){
 			case ItemSet.TYPE_ARMOR:
 				generateArmor(this);
 				break;
@@ -74,7 +55,7 @@ public class Item extends Entity{
 	private static void add(Item item, String nam, String scr){
 		Random random = new Random();
 		item.real_name += " " + nam;
-		item.script += "#" + scr.trim() + " " + Integer.toString(random.nextInt(item.getLevel()) + 1) + "#";
+		item.setScript(item.getScript() + "#" + scr.trim() + " " + Integer.toString(random.nextInt(item.getLevel()) + 1) + "#");
 	}
 
 	private static void addDam(Item item, String nam, String scr){
@@ -86,7 +67,7 @@ public class Item extends Entity{
 			d2 = random.nextInt(item.getLevel() * 5) + 1;
 		}
 		item.real_name += " " + nam;
-		item.script += "#" + scr.trim() + " " + Integer.toString(d1) + "_" + Integer.toString(d2) + "#";
+		item.setScript(item.getScript() + "#" + scr.trim() + " " + Integer.toString(d1) + "_" + Integer.toString(d2) + "#");
 	}
 
 	private static void addStat(Item item){
