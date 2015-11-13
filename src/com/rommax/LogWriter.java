@@ -2,12 +2,20 @@ package com.rommax;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.logging.*;
 
 /**
  * Created by Maxim on 13.11.2015.
  */
 public class LogWriter {
+
+    public LogWriter()
+    {
+        Calendar calendar = Calendar.getInstance();
+        myMessage("Новая сессия: " + calendar.getTime());         
+    }
+
 
     public void toHTML(Class cl) {
 
@@ -53,14 +61,14 @@ public class LogWriter {
         */
     }
 
-    public void myMessage (String message)
+    public void myMessage (String message) {
 
             /* пример использования
             LogWriter logWriter = new LogWriter();
             logWriter.myMessage("doorY" + Integer.toString(doorY) + " doorX" + Integer.toString(doorX));
             logWriter.myMessage("tempY" + Integer.toString(tempY) + " tempX" + Integer.toString(tempX));
              */
-    {
+
         try {
             FileOutputStream fileOutputStream = new FileOutputStream("ARLG_my.log", true);
             message = message + "\r\n";
