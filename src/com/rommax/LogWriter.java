@@ -1,5 +1,6 @@
 package com.rommax;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.*;
 
@@ -26,12 +27,12 @@ public class LogWriter {
         // будет располагаться в папке с системными временными файлами.
         try {
             // Оставляем предыдущий handler (будет создаваться файл "LogApp")
-            FileHandler fh = new FileHandler("%tARLG.log");
+            FileHandler fh = new FileHandler("ARLG.log");
             logger.addHandler(fh);
 
             // Добавляем ещё файл "LogApp.htm".
             HtmlFormatter htmlformatter = new HtmlFormatter();
-            FileHandler htmlfile = new FileHandler("%tARLG_log.htm");
+            FileHandler htmlfile = new FileHandler("ARLG_log.htm");
             // Устанавливаем html форматирование с помощью класса HtmlFormatter.
             htmlfile.setFormatter(htmlformatter);
             logger.addHandler(htmlfile);
@@ -41,10 +42,34 @@ public class LogWriter {
             logger.log(Level.SEVERE, "Не удалось создать файл лога из-за ошибки ввода-вывода.", e);
         }
 
+        /* пример использования
         logger.log(Level.INFO, "Запись лога с уровнем INFO (информационная)");
         logger.log(Level.WARNING, "Запись лога с уровнем WARNING (Предупреждение)");
         logger.log(Level.SEVERE, "Запись лога с уровнем SEVERE (серъёзная ошибка)",
                 new Exception("Проверочное сообщение об ошибке"));
+
+        LogWriter logWriter = new LogWriter();
+        logWriter.toHTML(MapGenerator.class.getClass());
+        */
+    }
+
+    public void myMessage (String message)
+
+            /* пример использования
+            LogWriter logWriter = new LogWriter();
+            logWriter.myMessage("doorY" + Integer.toString(doorY) + " doorX" + Integer.toString(doorX));
+            logWriter.myMessage("tempY" + Integer.toString(tempY) + " tempX" + Integer.toString(tempX));
+             */
+    {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream("ARLG_my.log", true);
+            message = message + "\r\n";
+            fileOutputStream.write(message.getBytes());
+            fileOutputStream.close();
+        }
+        catch (IOException e) {
+            return;
+        }
     }
 
 }

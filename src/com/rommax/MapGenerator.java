@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 public class MapGenerator {
 
+    LogWriter logWriter = new LogWriter();
     public Map map;
     public static final int MAX_GENERATORS = 8; // должно соответствовать количеству типов карт
     private Random rand = new Random();
@@ -476,10 +477,6 @@ public class MapGenerator {
 	}
 	
     public void OldCastleCreate() {
-        LogWriter logWriter = new LogWriter();
-        logWriter.toHTML(MapGenerator.class.getClass());
-        new Exception("Проверочное сообщение об ошибке");
-        map.setName("#7#Старый замок #^#");
         final int ROOM_MAX_SIZE = 5;
         final int ROOM_MIN_SIZE = 3;
         final int ROOM_MAX_TOTAL_SIZE = ROOM_MIN_SIZE + ROOM_MAX_SIZE + 1;
@@ -528,6 +525,8 @@ public class MapGenerator {
                 doorX++;
                 if (doorX >= map.getWidth() - 1) break; // проверка на выход за границы карты
                 if (map.field[doorX][doorY].getID() == Tileset.TILE_OLD_CASTLE_FLOOR) { // работает, только если инвертировать координаты
+                    logWriter.myMessage("doorY" + Integer.toString(doorY) + " doorX" + Integer.toString(doorX));
+                    logWriter.myMessage("tempY" + Integer.toString(tempY) + " tempX" + Integer.toString(tempX));
                     for (int xx = tempX; xx < doorX; xx++) { // создаем проход между комнатами
                         map.setTileAt(doorY, xx, Tileset.TILE_OLD_CASTLE_FLOOR);
                     }
