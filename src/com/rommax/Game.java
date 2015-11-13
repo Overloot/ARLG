@@ -130,7 +130,7 @@ public class Game {
             int dy = random.nextInt(3) - 1;
             int dx = random.nextInt(3) - 1;
             // если монстр сдох или его почему то нет в массиве, но переходит к следующему индексу
-            if (monsterList[index] == null || monsterList[index].getparalyzecount() > 0) continue;
+            if (monsterList[index] == null || monsterList[index].getParalyzeCount() > 0) continue;
             // если у монстра хватает ActionPoints то он двигается
             while (monsterList[index].getAP().getCurrent() > 0) {
                 // если цель(игрок) находится в зоне видимости монстра, но монстр идет к нему
@@ -219,7 +219,7 @@ public class Game {
     void checkTimeEffects() {
         boolean x = false;
         // если у игрока хватает опыта для поднятия уровня, то поднимаем
-        while (player.getXP() >= Game.maxExperience) {
+        while (player.getExp() >= Game.maxExperience) {
             x = true;
             levelUp();
         }
@@ -254,8 +254,8 @@ public class Game {
                 monsterList[i].getHP().setCurrent((monsterList[i].getHP().getCurrent() - 1));
             }
             // если есть парализация - снимаем одно очко парализации
-            if (monsterList[i] != null && monsterList[i].getparalyzecount() > 0) {
-                monsterList[i].setparalyzecount(monsterList[i].getparalyzecount() - 1);
+            if (monsterList[i] != null && monsterList[i].getParalyzeCount() > 0) {
+                monsterList[i].setParalyzeCount(monsterList[i].getParalyzeCount() - 1);
             }
 
         }
@@ -662,12 +662,12 @@ public class Game {
     public void levelUp() {
         // если игрок достиг максимального уровня, то уровень не поднимаем
         if (player.getLevel() == Game.MAX_PLAYER_LEVEL) {
-            player.setXP(0);
+            player.setExp(0);
             return;
         }
         // иначе поднимаем уровень
         player.setLevel(player.getLevel() + 1);
-        player.setXP(player.getXP() - Game.maxExperience);
+        player.setExp(player.getExp() - Game.maxExperience);
         Game.maxExperience *= 2;
         logMessage("Вы достигли следующего уровня! ");
         statsFree += 5;
@@ -699,7 +699,7 @@ public class Game {
         else mod = 1;
         // высчитывает сколько же игрок получит опыта
         int Exp = getValueFrom((int) (0.75 * (mod * mod) * 10), (int) (1.5 * (mod * mod) * 10));
-        player.setXP(player.getXP() + Exp);
+        player.setExp(player.getExp() + Exp);
         logMessage("Вы получаете " + Integer.toString(Exp) + " опыта! ");
         // удаляем монстра
         monsterList[index] = null;
@@ -715,13 +715,12 @@ public class Game {
 		return STR * CARRYING_PER_STRENGTH;
 	}
 	
-	
 	// Даем игроку расу, которую он выбрал
 	public void setRace(int id) {
-		player.setSTR(RaceSet.getRace(id).getSTR());
-		player.setAGI(RaceSet.getRace(id).getAGI());
-		player.setEND(RaceSet.getRace(id).getEND());
-		player.setLUCK(RaceSet.getRace(id).getLUCK());
+		player.setSTR(RaceSet.getRace(id).getSTR(), RaceSet.getRace(id).getSTR());
+		player.setAGI(RaceSet.getRace(id).getAGI(), RaceSet.getRace(id).getAGI());
+		player.setEND(RaceSet.getRace(id).getEND(), RaceSet.getRace(id).getEND());
+		player.setLUCK(RaceSet.getRace(id).getLUCK(), RaceSet.getRace(id).getLUCK());
 		// Пересчитываем статы
 		player.getHP().setMax(calcHP(player.getSTR().getCurrent(), player.getEND().getCurrent())); 
 		player.getHP().setCurrent(calcHP(player.getSTR().getCurrent(), player.getEND().getCurrent())); 

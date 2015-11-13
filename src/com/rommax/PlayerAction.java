@@ -29,7 +29,7 @@ public class PlayerAction {
 				// Используем навык героя
 				map.getGame().logMessage("Вы #4#использовали#^# навык #8#" + 
 					SkillSet.getSkill(Skill.skill[n]).getName() + ".#^#");
-				Skill.setCooldown(n, SkillSet.getSkill(Skill.skill[n]).getСooldown());
+				Skill.setCooldown(n, SkillSet.getSkill(Skill.skill[n]).getCooldown());
 				map.getGame().player.setEffectFrom(ScriptParser.parseString(SkillSet.getSkill(Skill.skill[n]).getScript()), true);
 			}
 		} else map.getGame().logMessage("Вы #2#не владеете#^# таким навыком!");

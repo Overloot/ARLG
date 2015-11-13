@@ -51,9 +51,9 @@ public class KeyHandler implements KeyListener{
 			map.getGame().checkQuit();			
 			flag = false;
 		}
-		else if (map.getGame().player.getparalyzecount()>0 && !LOOK_MODE){
+		else if (map.getGame().player.getParalyzeCount()>0 && !LOOK_MODE){
 			map.getGame().logMessage("ВЫ #5#ПАРАЛИЗОВАНЫ!!!#^#/#");
-			if (map.getGame().player.getparalyzecount()>5) map.getGame().player.setparalyzecount(5);
+			if (map.getGame().player.getParalyzeCount()>5) map.getGame().player.setParalyzeCount(5);
 			flag = true;
 		}
 		// Look mode

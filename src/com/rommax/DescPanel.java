@@ -189,8 +189,8 @@ class DescPanel extends JPanel
 		drawColorString(g,str,leftX, 315);
 		str = "#1#УРОН ЭЛЕКТРИЧЕСТВОМ#^# : #5#  " + dwindow.monster.getDElec().getCurrent() + " - " + dwindow.monster.getDElec().getMax();
 		drawColorString(g,str,leftX, 330);
-		if (dwindow.monster.getparalyzecount() > 0){
-			str = "#8#ПАРАЛИЗОВАН! #^# : #5#  " + dwindow.monster.getparalyzecount();
+		if (dwindow.monster.getParalyzeCount() > 0){
+			str = "#8#ПАРАЛИЗОВАН! #^# : #5#  " + dwindow.monster.getParalyzeCount();
 			drawColorString(g,str,leftX, 400);
 		}
 		if (dwindow.monster.getPoisonCount() > 0){
@@ -200,7 +200,7 @@ class DescPanel extends JPanel
 		str = "#1#УРОВЕНЬ#^# : #8#  " + dwindow.monster.getLevel() + "#^#";
 		drawColorString(g,str,leftX, 435);
 		if (dwindow.monster == dwindow.game.player){
-		str = "ОПЫТА: " + dwindow.monster.getXP() + "/" + dwindow.game.maxExperience;
+		str = "ОПЫТА: " + dwindow.monster.getExp() + "/" + dwindow.game.maxExperience;
 			drawColorString(g,str,leftX, 450);
 
 		}

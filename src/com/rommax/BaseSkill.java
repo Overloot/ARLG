@@ -16,7 +16,7 @@ public class BaseSkill extends Entity{
 	}
 	
 	public String getDescr(){return descr;}
-	public int getСooldown(){return cooldown;}
+	public int getCooldown(){return cooldown;}
 	public String getScript(){return script;}
 	public boolean getActive(){return active;}
 }

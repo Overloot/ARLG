@@ -204,8 +204,8 @@ class MainPanel extends JPanel{
 		drawBar(DrawingMap.getGame().player.getHP().getCurrent(),
 			DrawingMap.getGame().player.getHP().getMax(), "res/icons/lifebar.png", g);	
 		// Experience
-		addLine(g, "#3#ОПЫТ#^#", DrawingMap.getGame().player.getXP(), DrawingMap.getGame().maxExperience);
-		drawBar(DrawingMap.getGame().player.getXP(),
+		addLine(g, "#3#ОПЫТ#^#", DrawingMap.getGame().player.getExp(), DrawingMap.getGame().maxExperience);
+		drawBar(DrawingMap.getGame().player.getExp(),
 			DrawingMap.getGame().maxExperience, "res/icons/expbar.png", g);	
 		// Attributes	
 		addLine(g, "#8#СИЛА#^#", DrawingMap.getGame().player.getSTR().getCurrent(), 0);
@@ -213,9 +213,9 @@ class MainPanel extends JPanel{
 		addLine(g, "#8#ВЫНОСЛИВОСТЬ#^#", DrawingMap.getGame().player.getEND().getCurrent(), 0);
 		addLine(g, "#8#УДАЧА#^#", DrawingMap.getGame().player.getLUCK().getCurrent(), 0);
 		// Effects
-		if (DrawingMap.getGame().player.getparalyzecount() > 0){
+		if (DrawingMap.getGame().player.getParalyzeCount() > 0){
 			top = 405;
-			addLine(g, "#8#ВЫ ПАРАЛИЗОВАНЫ!!!#^# : #5#  " + DrawingMap.getGame().player.getparalyzecount());
+			addLine(g, "#8#ВЫ ПАРАЛИЗОВАНЫ!!!#^# : #5#  " + DrawingMap.getGame().player.getParalyzeCount());
 		}
 		if (DrawingMap.getGame().player.getPoisonCount() > 0){
 			top = 420;
@@ -319,7 +319,7 @@ class MainPanel extends JPanel{
 								g2.setPaint(Color.RED);
 								g2.fill(rect);
 								g2.draw(rect);
-								if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster().getparalyzecount()!=0){
+								if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster().getParalyzeCount()!=0){
 									image = window.game.loader.getImage("res/icons/paralyzed.png");
 									g.drawImage(image,y,x,this);
 								}

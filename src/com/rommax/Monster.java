@@ -2,108 +2,73 @@ package com.rommax;
 
 import java.util.*;
 
-public class Monster extends Entity{
-	private Stat hp;
+public class Monster extends BaseMonster{
 	private Stat addHP;
-	private Stat AP;
-	private Stat fovrad;
 
 	private LinkedList<Item> Inventory;
 	public Item[] Equipment;
 
-	private Stat STR;
-	private Stat AGI;
-	private Stat END;
-	private Stat LUCK;
-
-	private Stat RFire;
-	private Stat RCold;
-	private Stat RElec;
-	private Stat RPoison;
-	private Stat RNormal;
-
-	private Stat DFire;
-	private Stat DCold;
-	private Stat DElec;
-	private Stat DPoison;
-	private Stat DNormal;
-	
 	private Stat currentWeight;
 	private Stat currentSize;
-	private int exp;
-	private int paralyzecount;
-	private int poisoncount;
+	private int paralyzeCount;
+	private int poisonCount;
+	
 	public LinkedList<Item> getInventory(){return Inventory;}
-	public Stat getHP(){return hp;}
-	public Stat getFOVRAD(){return fovrad;}
 	public Stat getCurrentWeight(){return currentWeight;}
 	public Stat getCurrentSize(){return currentSize;}
 	public void setCurrentWeight(Stat currentWeight){this.currentWeight = currentWeight;}
 	public void setCurrentSize(Stat currentSize){this.currentSize = currentSize;}
+
 	public void setAddHP(int HP){this.addHP = new Stat(HP, HP);}
 	public Stat getAddHP(){return addHP;}
-	public int getPoisonCount(){return poisoncount;}
-	public int getparalyzecount(){return paralyzecount;}
-	public void setparalyzecount(int pc){paralyzecount = pc;}
-	public void setPoisonCount(int pc){poisoncount = pc;}
-	
-	public Stat getRFire(){return RFire;}
-	public Stat getRCold(){return RCold;}
-	public Stat getRPoison(){return RPoison;}
-	public Stat getRElec(){return RElec;}
-	public Stat getRNormal(){return RNormal;}
-	
-	public Stat getDFire(){return DFire;}
-	public Stat getDCold(){return DCold;}
-	public Stat getDPoison(){return DPoison;}
-	public Stat getDElec(){return DElec;}
-	public Stat getDNormal(){return DNormal;}
-	
-	public Stat getSTR(){return STR;}
-	public Stat getAGI(){return AGI;}
-	public Stat getEND(){return END;}
-	public Stat getLUCK(){return LUCK;}
-	
-	public Stat getAP(){return AP;}
-	public void setXP(int amount){exp = amount;}
-	public int getXP(){return exp;}
-	
-	public void setSTR(int STR){this.STR = new Stat(STR, STR);}
-	public void setAGI(int AGI){this.AGI = new Stat(AGI, AGI);}
-	public void setEND(int END){this.END = new Stat(END, END);}
-	public void setLUCK(int LUCK){this.LUCK = new Stat(LUCK, LUCK);}
 
+	public int getPoisonCount(){return poisonCount;}
+	public void setPoisonCount(int pc){poisonCount = pc;}
+	public int getParalyzeCount(){return paralyzeCount;}
+	public void setParalyzeCount(int pc){paralyzeCount = pc;}
+	
 	public Monster(BaseMonster bm, int y, int x, Map map, Game game){
-		super(bm.getID(), bm.getName(), y, x, 0, 0, map, game, bm.getLevel());
-		this.exp = 0;
+		super(bm.getLevel(), bm.getID(), bm.getName(), bm.getPath(), bm.getHP().getMax(),
+		bm.getSTR().getMax(), bm.getAGI().getMax(), bm.getEND().getMax(), bm.getLUCK().getMax(),
+		bm.getDNormal().getCurrent(), bm.getDNormal().getMax(), bm.getRNormal().getMax(), 
+		bm.getDFire().getCurrent(), bm.getDFire().getMax(), bm.getRFire().getMax(), 
+		bm.getDCold().getCurrent(), bm.getDCold().getMax(), bm.getRCold().getMax(), 
+		bm.getDElec().getCurrent(), bm.getDElec().getMax(), bm.getRElec().getMax(), 
+		bm.getDPoison().getCurrent(), bm.getDPoison().getMax(), bm.getRPoison().getMax(), 
+		bm.getAP().getMax(), bm.getFOVRAD().getMax());
+		this.setPosition(y, x);
+		this.setMap(map);
+		this.setGame(game);
 		this.getMap().placeMonsterAt(y, x, this);
-		this.addHP = new Stat(0, 0);
-		this.hp = new Stat(bm.getHP().getCurrent(), bm.getHP().getMax());
-		this.fovrad = new Stat(bm.getFOVRAD().getCurrent(), bm.getFOVRAD().getMax());
 		
-		this.STR = new Stat(bm.getSTR().getCurrent(), bm.getSTR().getMax());
-		this.AGI = new Stat(bm.getAGI().getCurrent(), bm.getAGI().getMax());
-		this.END = new Stat(bm.getEND().getCurrent(), bm.getEND().getMax());
-		this.LUCK = new Stat(bm.getLUCK().getCurrent(), bm.getLUCK().getMax());
-
-		this.RFire = new Stat(bm.getRFire().getCurrent(), bm.getRFire().getMax());
-		this.RCold = new Stat(bm.getRCold().getCurrent(), bm.getRCold().getMax());
-		this.RElec = new Stat(bm.getRElec().getCurrent(), bm.getRElec().getMax());
-		this.RPoison = new Stat(bm.getRPoison().getCurrent(), bm.getRPoison().getMax());
-		this.RNormal = new Stat(bm.getRNormal().getCurrent(), bm.getRNormal().getMax());
-
-		this.DFire = new Stat(bm.getDFire().getCurrent(), bm.getDFire().getMax());
-		this.DCold = new Stat(bm.getDCold().getCurrent(), bm.getDCold().getMax());
-		this.DElec = new Stat(bm.getDElec().getCurrent(), bm.getDElec().getMax());
-		this.DPoison = new Stat(bm.getDPoison().getCurrent(), bm.getDPoison().getMax());
-		this.DNormal = new Stat(bm.getDNormal().getCurrent(), bm.getDNormal().getMax());
+		this.setHP(bm.getHP().getCurrent(), bm.getHP().getMax());
+		this.setFOVRAD(bm.getFOVRAD().getCurrent(), bm.getFOVRAD().getMax());
+		this.setAP(bm.getAP().getCurrent(), bm.getAP().getMax());
 		
-		this.AP = new Stat(bm.getAP().getCurrent(), bm.getAP().getMax());
-		this.currentWeight = new Stat(0, getGame().CARRYING_PER_STRENGTH * STR.getCurrent());
+		this.setSTR(bm.getSTR().getCurrent(), bm.getSTR().getMax());
+		this.setAGI(bm.getAGI().getCurrent(), bm.getAGI().getMax());
+		this.setEND(bm.getEND().getCurrent(), bm.getEND().getMax());
+		this.setLUCK(bm.getLUCK().getCurrent(), bm.getLUCK().getMax());
+
+		this.setRFire(bm.getRFire().getCurrent(), bm.getRFire().getMax());
+		this.setRCold(bm.getRCold().getCurrent(), bm.getRCold().getMax());
+		this.setRElec(bm.getRElec().getCurrent(), bm.getRElec().getMax());
+		this.setRPoison(bm.getRPoison().getCurrent(), bm.getRPoison().getMax());
+		this.setRNormal(bm.getRNormal().getCurrent(), bm.getRNormal().getMax());
+
+		this.setDFire(bm.getDFire().getCurrent(), bm.getDFire().getMax());
+		this.setDCold(bm.getDCold().getCurrent(), bm.getDCold().getMax());
+		this.setDElec(bm.getDElec().getCurrent(), bm.getDElec().getMax());
+		this.setDPoison(bm.getDPoison().getCurrent(), bm.getDPoison().getMax());
+		this.setDNormal(bm.getDNormal().getCurrent(), bm.getDNormal().getMax());
+		
+		this.currentWeight = new Stat(0, getGame().CARRYING_PER_STRENGTH * getSTR().getCurrent());
 		this.currentSize = new Stat(0, getGame().MIN_SIZE);
 
 		Equipment = new Item[ItemSet.MAX_SLOTS];
 		Inventory = new LinkedList<Item>();
+		
+		this.addHP = new Stat(0, 0);
 	}
 
 	public boolean move(int y, int x){
@@ -164,16 +129,16 @@ public class Monster extends Entity{
 		if (so.IDENTIFY) getGame().frame1.mainpanel.listener.ID_MODE = true;
 
 		checkChanges(b, so.STR_UP, "Вы почувствовали себя #3#сильнее!#^#", "Вы почувствовали себя #2#слабее!#^#");
-		STR.add(so.STR_UP);
+		getSTR().add(so.STR_UP);
 
 		checkChanges(b, so.AGI_UP, "Вы стали #3#более ловким!#^#", "Вы почувствовали себя #2#более неуклюже!#^#");
-		AGI.add(so.AGI_UP);
+		getAGI().add(so.AGI_UP);
 
 		checkChanges(b, so.END_UP, "Вы почувствовали, что стали #3#более выносливым!#^#", "Вы почувствовали, что стали #2#менее выносливым!#^#");
-		END.add(so.END_UP);
+		getEND().add(so.END_UP);
 
 		checkChanges(b, so.LUCK_UP, "Вы почувствовали себя #3#удачливее!#^#", "Вы почувствовали себя #2#менее удачливее!#^#");
-		LUCK.add(so.LUCK_UP);
+		getLUCK().add(so.LUCK_UP);
 
 		
 		
@@ -184,70 +149,70 @@ public class Monster extends Entity{
 		else
 		if (so.DFIRE.getCurrent()<0) getGame().logMessage("Вы стали хуже чувствовать силу #2#огня!#^#");
 
-		DFire.setCurrent(DFire.getCurrent() + so.DFIRE.getCurrent());
-		DFire.setMax(DFire.getMax() + so.DFIRE.getMax());
+		getDFire().setCurrent(getDFire().getCurrent() + so.DFIRE.getCurrent());
+		getDFire().setMax(getDFire().getMax() + so.DFIRE.getMax());
 
 		if (b)
 		if (so.DCOLD.getCurrent()>0) getGame().logMessage("Вы почувствовали силу #4#холода!#^#");
 		else
 		if (so.DCOLD.getCurrent()<0) getGame().logMessage("Вы стали хуже чувствовать силу #4#холода!#^#");
 
-		DCold.setCurrent(DCold.getCurrent() + so.DCOLD.getCurrent());
-		DCold.setMax(DCold.getMax() + so.DCOLD.getMax());
+		getDCold().setCurrent(getDCold().getCurrent() + so.DCOLD.getCurrent());
+		getDCold().setMax(getDCold().getMax() + so.DCOLD.getMax());
 
 		if (b)
 		if (so.DPOISON.getCurrent()>0) getGame().logMessage("Вы почувствовали силу #3#яда!#^#");
 		else
 		if (so.DPOISON.getCurrent()<0) getGame().logMessage("Вы стали хуже чувствовать силу #3#яда!#^#");
 
-		DPoison.setCurrent(DPoison.getCurrent() + so.DPOISON.getCurrent());
-		DPoison.setMax(DPoison.getMax() + so.DPOISON.getMax());
+		getDPoison().setCurrent(getDPoison().getCurrent() + so.DPOISON.getCurrent());
+		getDPoison().setMax(getDPoison().getMax() + so.DPOISON.getMax());
 
 		if (b)
 		if (so.DELEC.getCurrent()>0) getGame().logMessage("Вы почувствовали силу #5#электричества!#^#");
 		else
 		if (so.DELEC.getCurrent()<0) getGame().logMessage("Вы стали хуже чувствовать силу #5#электричества!#^#");
 
-		DElec.setCurrent(DElec.getCurrent() + so.DELEC.getCurrent());
-		DElec.setMax(DElec.getMax() + so.DELEC.getMax());
+		getDElec().setCurrent(getDElec().getCurrent() + so.DELEC.getCurrent());
+		getDElec().setMax(getDElec().getMax() + so.DELEC.getMax());
 		
-		DNormal.setCurrent(DNormal.getCurrent() + so.DNORMAL.getCurrent());
-		DNormal.setMax(DNormal.getMax() + so.DNORMAL.getMax());
+		getDNormal().setCurrent(getDNormal().getCurrent() + so.DNORMAL.getCurrent());
+		getDNormal().setMax(getDNormal().getMax() + so.DNORMAL.getMax());
 		
 		if (b)
 		if (so.RFIRE.getCurrent()>0) getGame().logMessage("Вы стали #8#менее#^# восприимчивы к #2#огню!#^#");
 		else
 		if (so.RFIRE.getCurrent()<0) getGame().logMessage("Вы стали #2#более#^# восприимчивы к #2#огню!#^#");
 
-		RFire.add(so.RFIRE);
+		getRFire().add(so.RFIRE);
 
 		if (b)
 		if (so.RCOLD.getCurrent()>0) getGame().logMessage("Вы стали #8#менее#^# восприимчивы к #4#холоду!#^#");
 		else
 		if (so.RCOLD.getCurrent()<0) getGame().logMessage("Вы стали #2#более#^# восприимчивы к #4#холоду!#^#");
 
-		RCold.add(so.RCOLD);
+		getRCold().add(so.RCOLD);
 
 		if (b)
 		if (so.RPOISON.getCurrent()>0) getGame().logMessage("Вы стали #8#менее#^# восприимчивы к #3#яду!#^#");
 		else
 		if (so.RPOISON.getCurrent()<0) getGame().logMessage("Вы стали #2#более#^# восприимчивы к #3#яду!#^#");
 
-		RPoison.add(so.RPOISON);
+		getRPoison().add(so.RPOISON);
 
 		if (b)
 		if (so.RNORMAL.getCurrent()>0) getGame().logMessage("Вы стали #8#менее#^# восприимчивы к #8#ударам!#^#");
 		else
 		if (so.RNORMAL.getCurrent()<0) getGame().logMessage("Вы стали #2#более#^# восприимчивы к #8#ударам!#^#");
 
-		RNormal.add(so.RNORMAL);
+		getRNormal().add(so.RNORMAL);
 
 		if (b)
 		if (so.RELEC.getCurrent()>0) getGame().logMessage("Вы стали #8#менее#^# восприимчивы к #5#электричеству!#^#");
 		else
 		if (so.RELEC.getCurrent()<0) getGame().logMessage("Вы стали #2#более#^# восприимчивы к #5#электричеству!#^#");
 
-		RElec.add(so.RELEC);
+		getRElec().add(so.RELEC);
 		
 		// Медленное исцеление
 		if (b) if (so.HEALTIME.getCurrent()>0) getGame().logMessage("Вы #3#исцеляетесь!#^#");
@@ -259,13 +224,13 @@ public class Monster extends Entity{
 		if (b) if (so.HEALSELF.getCurrent()>0) getGame().logMessage("Вы #3#исцеляетесь!#^#");
 			else if (so.HEALSELF.getCurrent()<0) getGame().logMessage("Вы #2#корчитесь от боли!#^#");
 		
-		hp.setCurrent(hp.getCurrent() + so.HEALSELF.getCurrent());
+		getHP().setCurrent(getHP().getCurrent() + so.HEALSELF.getCurrent());
 		
 		// Радиус обзора
 		if (b) if (so.FOVRAD.getCurrent()>0) getGame().logMessage("Вы стали #8#лучше#^# видеть!");
 			else if (so.FOVRAD.getCurrent()<0) getGame().logMessage("Вы стали #2#хуже#^# видеть!");
 		
-		fovrad.add(so.FOVRAD);
+		getFOVRAD().add(so.FOVRAD);
 
 		if (b)
 		if (so.SW_UP.getCurrent()>0) getGame().logMessage("Теперь вы можете нести #3#больше#^# вещей!");
@@ -300,7 +265,7 @@ public class Monster extends Entity{
 		setPoisonCount(getPoisonCount() + so.POISONCOUNT.getCurrent() + 1);
 		if (so.PARALYZECOUNT.getCurrent() != 0)
 
-		setparalyzecount(getparalyzecount() + so.PARALYZECOUNT.getCurrent() + 1);
+		setParalyzeCount(getParalyzeCount() + so.PARALYZECOUNT.getCurrent() + 1);
 		if (getPoisonCount()<0) setPoisonCount(0);
 	}
 
@@ -312,82 +277,82 @@ public class Monster extends Entity{
 		getCurrentWeight().setMax(getCurrentWeight().getMax() - getGame().CARRYING_PER_STRENGTH * so.STR_UP.getCurrent());
 
 		checkChanges(b, so.STR_UP, "Вы почувствовали себя #3#сильнее!#^#", "Вы почувствовали себя #2#слабее!#^#");
-		STR.sub(so.STR_UP);
+		getSTR().sub(so.STR_UP);
 
 		checkChanges(b, so.AGI_UP, "Вы стали #3#более ловким!#^#", "Вы почувствовали себя #2#более неуклюже!#^#");
-		AGI.sub(so.AGI_UP);
+		getAGI().sub(so.AGI_UP);
 
 		checkChanges(b, so.END_UP, "Вы почувствовали, что стали #3#более выносливым!#^#", "Вы почувствовали, что стали #2#менее выносливым!#^#");
-		END.sub(so.END_UP);
+		getEND().sub(so.END_UP);
 
 		checkChanges(b, so.LUCK_UP, "Вы почувствовали себя #3#удачливее!#^#", "Вы почувствовали себя #2#менее удачливее!#^#");
-		LUCK.sub(so.LUCK_UP);
+		getLUCK().sub(so.LUCK_UP);
 
 		checkChanges(b, so.DFIRE, "Вы почувствовали силу #2#огня!#^#", "Вы стали хуже чувствовать силу #2#огня!#^#");
-		DFire.setCurrent(DFire.getCurrent() - so.DFIRE.getCurrent());
-		DFire.setMax(DFire.getMax() - so.DFIRE.getMax());
+		getDFire().setCurrent(getDFire().getCurrent() - so.DFIRE.getCurrent());
+		getDFire().setMax(getDFire().getMax() - so.DFIRE.getMax());
 		
 		if (b)
 		if (so.DCOLD.getCurrent()<0) getGame().logMessage("Вы почувствовали силу #4#холода!#^#");
 		else
 		if (so.DCOLD.getCurrent()>0) getGame().logMessage("Вы стали хуже чувствовать силу #4#холода!#^#");
 
-		DCold.setCurrent(DCold.getCurrent() - so.DCOLD.getCurrent());
-		DCold.setMax(DCold.getMax() - so.DCOLD.getMax());
+		getDCold().setCurrent(getDCold().getCurrent() - so.DCOLD.getCurrent());
+		getDCold().setMax(getDCold().getMax() - so.DCOLD.getMax());
 		
 		if (b)
 		if (so.DCOLD.getCurrent()<0) getGame().logMessage("Вы почувствовали силу #3#яда!#^#");
 		else
 		if (so.DCOLD.getCurrent()>0) getGame().logMessage("Вы стали хуже чувствовать силу #3#яда!#^#");
 
-		DPoison.setCurrent(DPoison.getCurrent() - so.DPOISON.getCurrent());
-		DPoison.setMax(DPoison.getMax() - so.DPOISON.getMax());
+		getDPoison().setCurrent(getDPoison().getCurrent() - so.DPOISON.getCurrent());
+		getDPoison().setMax(getDPoison().getMax() - so.DPOISON.getMax());
 		
 		if (b)
 		if (so.DELEC.getCurrent()<0) getGame().logMessage("Вы почувствовали силу #5#электричества!#^#");
 		else
 		if (so.DELEC.getCurrent()>0) getGame().logMessage("Вы стали хуже чувствовать силу #5#электричества!#^#");
 
-		DElec.setCurrent(DElec.getCurrent() - so.DELEC.getCurrent());
-		DElec.setMax(DElec.getMax() - so.DELEC.getMax());
+		getDElec().setCurrent(getDElec().getCurrent() - so.DELEC.getCurrent());
+		getDElec().setMax(getDElec().getMax() - so.DELEC.getMax());
 		
-		DNormal.setCurrent(DNormal.getCurrent() - so.DNORMAL.getCurrent());
-		DNormal.setMax(DNormal.getMax() - so.DNORMAL.getMax());
+		getDNormal().setCurrent(getDNormal().getCurrent() - so.DNORMAL.getCurrent());
+		getDNormal().setMax(getDNormal().getMax() - so.DNORMAL.getMax());
 		
 		if (b)
 		if (so.RFIRE.getCurrent()<0) getGame().logMessage("Вы стали #8#менее#^# восприимчивы к #2#огню!#^#");
 		else
 		if (so.RFIRE.getCurrent()>0) getGame().logMessage("Вы стали #2#более#^# восприимчивы к #2#огню!#^#");
 
-		RFire.sub(so.RFIRE);
+		getRFire().sub(so.RFIRE);
 		
 		if (b)
 		if (so.RCOLD.getCurrent()<0) getGame().logMessage("Вы стали #8#менее#^# восприимчивы к #4#холоду!#^#");
 		else
 		if (so.RCOLD.getCurrent()>0) getGame().logMessage("Вы стали #2#более#^# восприимчивы к #4#холоду!#^#");
 
-		RCold.sub(so.RCOLD);
+		getRCold().sub(so.RCOLD);
 		
 		if (b)
 		if (so.RPOISON.getCurrent()<0) getGame().logMessage("Вы стали #8#менее#^# восприимчивы к #3#яду!#^#");
 		else
 		if (so.RPOISON.getCurrent()>0) getGame().logMessage("Вы стали #2#более#^# восприимчивы к #3#яду!#^#");
 
-		RPoison.sub(so.RPOISON);
+		getRPoison().sub(so.RPOISON);
 		
 		if (b)
 		if (so.RNORMAL.getCurrent()<0) getGame().logMessage("Вы стали #8#менее#^# восприимчивы к #8#ударам!#^#");
 		else
 		if (so.RNORMAL.getCurrent()>0) getGame().logMessage("Вы стали #2#более#^# восприимчивы к #8#ударам!#^#");
 
-		RNormal.sub(so.RNORMAL);
+		getRNormal().sub(so.RNORMAL);
 		
 		if (b)
 		if (so.RELEC.getCurrent()<0) getGame().logMessage("Вы стали #8#менее#^# восприимчивы к #5#электричеству!#^#");
 		else
 		if (so.RELEC.getCurrent()>0) getGame().logMessage("Вы стали #2#более#^# восприимчивы к #5#электричеству!#^#");
 		
-		RElec.sub(so.RELEC);
+		getRElec().sub(so.RELEC);
 
 		if (b) if (so.HEALTIME.getCurrent()>0) getGame().logMessage("Вы #3#исцеляетесь!#^#");
 			else if (so.HEALTIME.getCurrent()<0) getGame().logMessage("Вы #2#корчитесь от боли!#^#");
@@ -397,12 +362,12 @@ public class Monster extends Entity{
 		if (b) if (so.HEALSELF.getCurrent()<0) getGame().logMessage("Вы #3#исцеляетесь!#^#");
 			else if (so.HEALSELF.getCurrent()>0) getGame().logMessage("Вы #2#корчитесь от боли!#^#");
 		
-		hp.setCurrent(hp.getCurrent() - so.HEALSELF.getCurrent());
+		getHP().setCurrent(getHP().getCurrent() - so.HEALSELF.getCurrent());
 
 		if (b) if (so.FOVRAD.getCurrent()<0) getGame().logMessage("Вы стали #8#лучше#^# видеть!");
 			else if (so.FOVRAD.getCurrent()>0) getGame().logMessage("Вы стали #2#хуже#^# видеть!");
 		
-		fovrad.sub(so.FOVRAD);
+		getFOVRAD().sub(so.FOVRAD);
 
 		if (b)
 		if (so.SW_UP.getCurrent()<0) getGame().logMessage("Теперь вы можете нести #3#больше#^# вещей!");
@@ -419,24 +384,24 @@ public class Monster extends Entity{
 		if (this != getGame().player && enemy != getGame().player) return;
 		Random rand = new Random();
 
-		int ndamage = ((100 - enemy.RNormal.getCurrent()) * (getGame().getValueFrom(DNormal.getCurrent(), DNormal.getMax()) + getGame().rand(STR.getCurrent())) / 100 ) ;
+		int ndamage = ((100 - enemy.getRNormal().getCurrent()) * (getGame().getValueFrom(getDNormal().getCurrent(), getDNormal().getMax()) + getGame().rand(getSTR().getCurrent())) / 100 ) ;
 		
-		int fdamage = ((100 - enemy.RFire.getCurrent()) * getGame().getValueFrom(DFire.getCurrent(), DFire.getMax()) / 100) ;
-		int cdamage = ((100 - enemy.RCold.getCurrent()) * getGame().getValueFrom(DCold.getCurrent(), DCold.getMax()) / 100 );
-		int edamage = ((100 - enemy.RElec.getCurrent()) * getGame().getValueFrom(DElec.getCurrent(), DElec.getMax()) / 100 );
-		int pdamage = ((100 - enemy.RPoison.getCurrent()) * getGame().getValueFrom(DPoison.getCurrent(), DPoison.getMax()) / 100);
+		int fdamage = ((100 - enemy.getRFire().getCurrent()) * getGame().getValueFrom(getDFire().getCurrent(), getDFire().getMax()) / 100) ;
+		int cdamage = ((100 - enemy.getRCold().getCurrent()) * getGame().getValueFrom(getDCold().getCurrent(), getDCold().getMax()) / 100 );
+		int edamage = ((100 - enemy.getRElec().getCurrent()) * getGame().getValueFrom(getDElec().getCurrent(), getDElec().getMax()) / 100 );
+		int pdamage = ((100 - enemy.getRPoison().getCurrent()) * getGame().getValueFrom(getDPoison().getCurrent(), getDPoison().getMax()) / 100);
 		
 		int damage = (ndamage + fdamage + cdamage);
-		int pd = enemy.hp.getCurrent();
+		int pd = enemy.getHP().getCurrent();
 		//String dlog = "ловкость атакующего " + AGI.getCurrent() + "| ловкость жертвы" + enemy.AGI.getCurrent();
-		int min = rand.nextInt(AGI.getCurrent());
-		int max = rand.nextInt(enemy.AGI.getCurrent());
+		int min = rand.nextInt(getAGI().getCurrent());
+		int max = rand.nextInt(enemy.getAGI().getCurrent());
 		//dlog+=" выпало" + min + " против " + max;
 		//getGame().logMessage(dlog);
 
 		if (min>=max){
 			//if (getGame().dice(LUCK.getCurrent() * 100,100000)){
-			if (getGame().dice(LUCK.getCurrent(), 100)){
+			if (getGame().dice(getLUCK().getCurrent(), 100)){
 				damage += (rand.nextInt(ndamage) + 1);
 				if (enemy == getGame().player)
 					getGame().logMessage(this.getName().toLowerCase() + "  #8#критически#^# бьет вас!");
@@ -444,9 +409,9 @@ public class Monster extends Entity{
 							getGame().logMessage("Вы наносите #3#критический#^# удар!");
 			}
 					
-					enemy.hp.setCurrent(pd - damage);
-					if (pdamage>0) enemy.poisoncount += pdamage;
-					if (edamage>0) enemy.paralyzecount += edamage + 1;
+					enemy.getHP().setCurrent(pd - damage);
+					if (pdamage>0) enemy.poisonCount += pdamage;
+					if (edamage>0) enemy.paralyzeCount += edamage + 1;
 					if (pdamage<0) enemy.getHP().setCurrent(enemy.getHP().getCurrent() - pdamage);
 					if (edamage<0) enemy.getHP().setCurrent(enemy.getHP().getCurrent() - edamage);
 
@@ -467,7 +432,7 @@ public class Monster extends Entity{
 						getGame().logMessage(enemy.getName() + " получает удар от вас и внезапно #3#исцеляется!#^# (" + Integer.toString(-ndamage) + ") #/#");
 					}
 
-				if (DFire.getMax()>0)
+				if (getDFire().getMax()>0)
 				if (enemy==getGame().player){
 					    if (fdamage>0)
 						getGame().logMessage("Вас #2#обжигает#^# " + this.getName().toLowerCase() + "! (" + Integer.toString(fdamage) + ") #/#");
@@ -487,7 +452,7 @@ public class Monster extends Entity{
 					}
 
 
-				if (DCold.getMax()>0)
+				if (getDCold().getMax()>0)
 				if (enemy==getGame().player){
 					    if (cdamage>0)
 						getGame().logMessage("Вас #4#замораживает#^# " + this.getName().toLowerCase() + "! (" + Integer.toString(cdamage) + ") #/#");
@@ -506,7 +471,7 @@ public class Monster extends Entity{
 						getGame().logMessage(enemy.getName() + " #4#мерзнет#^# и внезапно #3#исцеляется!#^# (" + Integer.toString(-cdamage) + ") #/#");
 					}
 
-			if (DElec.getMax()>0)
+			if (getDElec().getMax()>0)
 			if (enemy==getGame().player){
 					    if (edamage>0)
 						getGame().logMessage("Вас #5#бьет током#^# " + this.getName().toLowerCase() + "! Вы #5#парализованы!#^# (" + Integer.toString(edamage) + ") #/#");
@@ -524,7 +489,7 @@ public class Monster extends Entity{
 						if (edamage<0)
 						getGame().logMessage(enemy.getName() + " #5#получает удар током#^# и внезапно #3#исцеляется!#^# (" + Integer.toString(-edamage) + ") #/#");
 					}
-			if (DPoison.getMax()>0)
+			if (getDPoison().getMax()>0)
 		    if (enemy==getGame().player){
 					    if (pdamage>0)
 						getGame().logMessage("Вас #3#отравляет#^# " + this.getName().toLowerCase() + "! (" + Integer.toString(pdamage) + ") #/#");
