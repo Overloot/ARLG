@@ -13,8 +13,8 @@ public class GameWindow extends JFrame{
 	static{
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension screenSize = kit.getScreenSize();
-		WINDOW_HEIGHT = screenSize.height;
-		WINDOW_WIDTH = screenSize.width;
+		WINDOW_HEIGHT = 600;//screenSize.height;
+		WINDOW_WIDTH = 800;//screenSize.width;
 	}
 
 	public void SwitchMap(Map map){
