@@ -480,6 +480,8 @@ public class MapGenerator {
         final int ROOM_MAX_SIZE = 5;
         final int ROOM_MIN_SIZE = 3;
         final int ROOM_MAX_TOTAL_SIZE = ROOM_MIN_SIZE + ROOM_MAX_SIZE + 1;
+
+        map.setName("#7#Старый замок #^#");
         int pointX = 1, pointY = 1;
         int sizeX, sizeY;
         int doorX, doorY;

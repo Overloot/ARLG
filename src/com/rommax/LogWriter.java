@@ -13,7 +13,7 @@ public class LogWriter {
     public LogWriter()
     {
         Calendar calendar = Calendar.getInstance();
-        myMessage("Новая сессия: " + calendar.getTime());         
+        myMessage("Новая сессия: " + calendar.getTime());
     }
 
 
