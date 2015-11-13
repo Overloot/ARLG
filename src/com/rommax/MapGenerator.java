@@ -5,6 +5,8 @@
 package com.rommax;
 
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MapGenerator {
 
@@ -23,7 +25,7 @@ public class MapGenerator {
 
     public void generateMap(Map map, int ID) {
         this.map = map;
-        ID = 7; // для теста
+        ID = 6; // для теста
 		switch (ID){
 			case ID_FOREST_1:
 				ForestCreate();
@@ -474,6 +476,9 @@ public class MapGenerator {
 	}
 	
     public void OldCastleCreate() {
+        LogWriter logWriter = new LogWriter();
+        logWriter.toHTML(MapGenerator.class.getClass());
+        new Exception("Проверочное сообщение об ошибке");
         map.setName("#7#Старый замок #^#");
         final int ROOM_MAX_SIZE = 5;
         final int ROOM_MIN_SIZE = 3;
