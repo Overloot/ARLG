@@ -189,7 +189,14 @@ class MainPanel extends JPanel{
 		drawColorString(g, s, left, top);
 		top += 15;		
 	}
-	
+
+	private void drawSpriteFrame(Image source, Graphics2D g2d, int x, int y, int columns, int frame){
+		int fx = (frame % columns) * Tileset.TILE_SIZE;
+		int fy = (frame / columns) * Tileset.TILE_SIZE;
+		g2d.drawImage(source, x, y, x + Tileset.TILE_SIZE, y + Tileset.TILE_SIZE,
+		fx, fy, fx + Tileset.TILE_SIZE, fy + Tileset.TILE_SIZE, this);
+	}
+
 	public void paintGUI(Graphics g){
 		Graphics2D g2 = (Graphics2D)g;
 		left = Tileset.TILE_SIZE * SCREEN_TILE_SIZE_X + 10;
@@ -272,8 +279,8 @@ class MainPanel extends JPanel{
 				// Кровь на тайле
 				int bloodID = DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getBlood();
 				if (bloodID > 0) {
-					image = window.game.loader.getImage("res/icons/blood.png");
-					g.drawImage(image,y,x,this);
+					image = window.game.loader.getImage("res/icons/bloods.png");
+					drawSpriteFrame(image, g2, y, x, 10, bloodID);
 				}
 
 				if (DrawingMap.hasTileAt(i + DrawingMap.getY(), j + DrawingMap.getX())){

@@ -3,7 +3,7 @@ package com.rommax;
 import java.util.*;
 
 public class Tile extends BaseTile{
-	final public static int BLOOD_AMOUNT = 1;
+	final public static int BLOOD_AMOUNT = 20;
 	
 	private boolean isVisible;
 	private boolean isSeen;
