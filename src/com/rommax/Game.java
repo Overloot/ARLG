@@ -686,7 +686,7 @@ public class Game {
         // присваиваем map параметры той карты, на которой расположен монстр
         Map map = monsterList[index].getMap();
         // ставим кровь на месте смерти монстра
-        map.field[monsterList[index].getY()][monsterList[index].getX()].setBlood(true);
+        map.placeBloodAt(monsterList[index].getY(), monsterList[index].getX());
 		// Шанс выкинуть на землю предмет(ы)
 		loot(index);
         // убираем монстра с карты

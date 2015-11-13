@@ -1,6 +1,6 @@
 package com.rommax;
 
-import java.util.Random;
+import java.util.*;
 
 public class Map extends Entity {
     public Tile[][] field;
@@ -21,6 +21,11 @@ public class Map extends Entity {
         field[y][x].AddItem(item);
     }
 
+	public void placeBloodAt(int y, int x){
+		if (field[y][x].getBlood() == 0)
+			field[y][x].setBlood(new Random().nextInt(Tile.BLOOD_AMOUNT) + 1);
+	}
+	
     public void deleteMonsterAt(int y, int x) {
         field[y][x].setMonster(null);
     }

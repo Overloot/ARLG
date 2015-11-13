@@ -256,7 +256,6 @@ class MainPanel extends JPanel{
 				int y = (j*Tileset.TILE_SIZE);
 				int x = (i*Tileset.TILE_SIZE) ;
 				g.drawImage(image,y,x,this);
-
 			}
 			else if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getSeen() &&  !DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getVisible()){
 				Image image = window.game.loader.getImage(Tileset.getTile(DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].lastseenID).getPath());
@@ -270,9 +269,12 @@ class MainPanel extends JPanel{
 				int y = (j*Tileset.TILE_SIZE);
 				int x = (i*Tileset.TILE_SIZE) ;
 				g.drawImage(image,y,x,this);
-				image = window.game.loader.getImage("res/icons/blood.png");
-				if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getBlood())
+				// Кровь на тайле
+				int bloodID = DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getBlood();
+				if (bloodID > 0) {
+					image = window.game.loader.getImage("res/icons/blood.png");
 					g.drawImage(image,y,x,this);
+				}
 
 				if (DrawingMap.hasTileAt(i + DrawingMap.getY(), j + DrawingMap.getX())){
 					if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getItemsQty()!=0){
