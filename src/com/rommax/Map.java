@@ -10,7 +10,7 @@ public class Map extends Entity {
         field = new Tile[height][width];
         for (int i = 0; i < getHeight(); i++)
             for (int j = 0; j < getWidth(); j++)
-                field[i][j] = new Tile(Tileset.TILE_EMPTY, "", "", false, false, false);
+                field[i][j] = new Tile(Tileset.TILE_EMPTY, "", "", false, false, false, false);
     }
 
     public void placeMonsterAt(int y, int x, Monster monster) {
@@ -22,7 +22,7 @@ public class Map extends Entity {
     }
 
 	public void placeBloodAt(int y, int x){
-		if (field[y][x].getBlood() == 0)
+		if (field[y][x].getBlood() == 0 && field[y][x].getBloodable())
 			field[y][x].setBlood(new Random().nextInt(Tile.BLOOD_AMOUNT) + 1);
 	}
 	
@@ -39,6 +39,7 @@ public class Map extends Entity {
         tile.setPassable(btile.getPassable());
         tile.setTransparent(btile.getTransparent());
         tile.setOpenable(btile.getOpenable());
+        tile.setBloodable(btile.getBloodable());
         if (btile.getID() == Tileset.TILE_OPENED_DOOR)
             tile.setOpened(true);
         else
