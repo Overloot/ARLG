@@ -42,22 +42,6 @@ public class Game {
     final int MAX_ITEMS = MAX_FLOORS * MAX_ITEM_PER_LEVEL + 1;
 
 	public Map getMap(){return map;}	
-	
-    public int rand(int value) {
-        Random random = new Random();
-        return random.nextInt(value) + 1;
-    }
-
-    public boolean dice(int value, int max) {
-        Random random = new Random();
-        int res = (random.nextInt(max) + 1);
-        return (res <= value);
-    }
-
-    public int getValueFrom(int min, int max) {
-        Random random = new Random();
-        return (min + random.nextInt(max - min + 1));
-    }
 
     // выводит различные сообщения в верхний-левый угол
     public void logMessage(String s) {
@@ -74,13 +58,6 @@ public class Game {
 		loader = new Loader();
 		background = loader.getImage("res/icons/texture_menu.png");
 		cursor = loader.getImage("res/icons/icon_plus.png");
-    }
-
-    // позволяет определить направление движения к цели, вызывается из Game.monsterIA
-    private int defineDirection(int x) {
-        if (x > 0) return 1;
-        if (x < 0) return -1;
-        return 0;
     }
 
     // попытка открыть или закрыть что-то, точно вызывается из класса KeyHandler
@@ -115,27 +92,23 @@ public class Game {
 
     }
 
-    // позволяет проверить расстояние
-    public int checkDistance(int y1, int x1, int y2, int x2) {
-        return (int) Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
-    }
-
 	// AI для мостра
     public void monstersAI() {
         turn++;
-        CheckMonsters(); // метод проверят не многовато ли у монстра HitPoints, а так же окончательно добивает убитых
         // пробегаемся по всем монстрам
         for (int index = 1; index < monstersQuantity; index++) {
             Random random = new Random();
             int dy = random.nextInt(3) - 1;
             int dx = random.nextInt(3) - 1;
             // если монстр сдох или его почему то нет в массиве, но переходит к следующему индексу
-            if (monsterList[index] == null || monsterList[index].getParalyzeCount() > 0) continue;
+            if (monsterList[index] == null) continue;
+			monsterList[index].getHP().setCurrent(Util.clamp(monsterList[index].getHP().getCurrent(), 0, monsterList[index].getHP().getMax()));
+			if (monsterList[index].getParalyzeCount() > 0) continue;
             // если у монстра хватает ActionPoints то он двигается
             while (monsterList[index].getAP().getCurrent() > 0) {
                 // если цель(игрок) находится в зоне видимости монстра, но монстр идет к нему
-                if (checkDistance(player.getY(), player.getX(), monsterList[index].getY(), monsterList[index].getX()) <= monsterList[index].getFOVRAD().getCurrent())
-                { monsterList[index].move(defineDirection(player.getY() - monsterList[index].getY()), defineDirection(player.getX() - monsterList[index].getX())); }
+                if (Util.checkDistance(player.getY(), player.getX(), monsterList[index].getY(), monsterList[index].getX()) <= monsterList[index].getFOVRAD().getCurrent())
+                { monsterList[index].move(Util.defineDirection(player.getY() - monsterList[index].getY()), Util.defineDirection(player.getX() - monsterList[index].getX())); }
                 // иначе монстр идет по случайнно заданным(выше) dx & dy, которые могут принимать значения -1,0,1
                 else { monsterList[index].move(dy, dx); }
                 monsterList[index].getAP().setCurrent(monsterList[index].getAP().getCurrent() - MOVE_COST_ActionPoints);
@@ -152,7 +125,12 @@ public class Game {
             }
 
         }
-        CheckMonsters();
+        // Проверяем, жив ли монстр
+		for (int i = 1; i < monstersQuantity; i++) {
+            if (monsterList[i] != null)
+                if (monsterList[i].getHP().getCurrent() <= 0)
+                    killMonster(i);
+        }
         checkTimeEffects(); // метод проверят не пора ли поднять уровень игроку, наносит урон ядом и т.д.
 
     }
@@ -389,7 +367,7 @@ public class Game {
                 continue;
             int chance = 90 - Math.abs(MonsterSet.getMonster(newID).getLevel() - currentMapNumber) * 20;                    // Math.abs возвращает модуль числа
             // не судьба
-            if (!dice(chance, 100)) continue; // см.ниже
+            if (!Util.dice(chance, 100)) continue; // см.ниже
             break;
         }
         BaseMonster baseMonster = MonsterSet.getMonster(newID);
@@ -615,8 +593,8 @@ public class Game {
             // шанс выпадения выбранного итема на текущем уровне карты
             int chance = 90 - Math.abs(ItemSet.getItem(newID).getLevel() - currentMapNumber) * 20;
             if (chance > 100) chance = 80;
-            if (!dice(chance, 100)) continue;                                                                               // метод dice описан в самом начале класса Game
-            if (!dice(ItemSet.getItem(newID).getChanse(), 100)) continue;
+            if (!Util.dice(chance, 100)) continue;                                                                               // метод dice описан в самом начале класса Game
+            if (!Util.dice(ItemSet.getItem(newID).getChanse(), 100)) continue;
             break;
         }
 		BaseItem baseItem = ItemSet.getItem(newID);
@@ -644,19 +622,6 @@ public class Game {
 //			if (this.dice(player.getLUCK().getCurrent(), 100))
 //				addRandomItem(monsterList[index].getY(), monsterList[index].getX());
 	}
-
-    // метод проверят не многовато ли у монстра HitPoints, а так же окончательно добивает убитых
-    public void CheckMonsters() {
-        for (int i = 0; i < monstersQuantity; i++) {
-            if (monsterList[i] != null && monsterList[i].getHP().getCurrent() > monsterList[i].getHP().getMax())
-                monsterList[i].getHP().setCurrent(monsterList[i].getHP().getMax());
-        }
-        for (int i = 1; i < monstersQuantity; i++) {
-            if (monsterList[i] != null)
-                if (monsterList[i].getHP().getCurrent() <= 0)
-                    killMonster(i);
-        }
-    }
 
     // подъем уровня игрока
     public void levelUp() {
@@ -698,7 +663,7 @@ public class Game {
         // иначе модификатор равен единице
         else mod = 1;
         // высчитывает сколько же игрок получит опыта
-        int Exp = getValueFrom((int) (0.75 * (mod * mod) * 10), (int) (1.5 * (mod * mod) * 10));
+        int Exp = Util.rand((int) (0.75 * (mod * mod) * 10), (int) (1.5 * (mod * mod) * 10));
         player.setExp(player.getExp() + Exp);
         logMessage("Вы получаете " + Integer.toString(Exp) + " опыта! ");
         // удаляем монстра

@@ -387,12 +387,12 @@ public class Monster extends BaseMonster{
 		if (this.getHP().getCurrent() <= 0) return; // Мертвый не может атаковать
 		Random rand = new Random();
 
-		int ndamage = ((100 - enemy.getRNormal().getCurrent()) * (getGame().getValueFrom(getDNormal().getCurrent(), getDNormal().getMax()) + getGame().rand(getSTR().getCurrent())) / 100 ) ;
+		int ndamage = ((100 - enemy.getRNormal().getCurrent()) * (Util.rand(getDNormal().getCurrent(), getDNormal().getMax()) + Util.rand(getSTR().getCurrent())) / 100 ) ;
 		
-		int fdamage = ((100 - enemy.getRFire().getCurrent()) * getGame().getValueFrom(getDFire().getCurrent(), getDFire().getMax()) / 100) ;
-		int cdamage = ((100 - enemy.getRCold().getCurrent()) * getGame().getValueFrom(getDCold().getCurrent(), getDCold().getMax()) / 100 );
-		int edamage = ((100 - enemy.getRElec().getCurrent()) * getGame().getValueFrom(getDElec().getCurrent(), getDElec().getMax()) / 100 );
-		int pdamage = ((100 - enemy.getRPoison().getCurrent()) * getGame().getValueFrom(getDPoison().getCurrent(), getDPoison().getMax()) / 100);
+		int fdamage = ((100 - enemy.getRFire().getCurrent()) * Util.rand(getDFire().getCurrent(), getDFire().getMax()) / 100) ;
+		int cdamage = ((100 - enemy.getRCold().getCurrent()) * Util.rand(getDCold().getCurrent(), getDCold().getMax()) / 100 );
+		int edamage = ((100 - enemy.getRElec().getCurrent()) * Util.rand(getDElec().getCurrent(), getDElec().getMax()) / 100 );
+		int pdamage = ((100 - enemy.getRPoison().getCurrent()) * Util.rand(getDPoison().getCurrent(), getDPoison().getMax()) / 100);
 		
 		int damage = (ndamage + fdamage + cdamage);
 		int pd = enemy.getHP().getCurrent();
@@ -404,7 +404,7 @@ public class Monster extends BaseMonster{
 
 		if (min>=max){
 			//if (getGame().dice(LUCK.getCurrent() * 100,100000)){
-			if (getGame().dice(getLUCK().getCurrent(), 100)){
+			if (Util.dice(getLUCK().getCurrent(), 100)){
 				damage += (rand.nextInt(ndamage) + 1);
 				if (enemy == getGame().player)
 					getGame().logMessage(this.getName().toLowerCase() + "  #8#критически#^# бьет вас!");
@@ -516,8 +516,8 @@ public class Monster extends BaseMonster{
 				else
 				if (enemy == getGame().player) getGame().logMessage(this.getName() + " #8#промахивается по вам!#^#/#");
 			
-		// Если жизней меньше ноля, то ставим в ноль, то убиваем монстра
-		if (enemy.getHP().getCurrent() <= 0) enemy.setHP(0, 0);
+		// Жизнь монстра может быть в диапазоне от 0 до max
+		enemy.getHP().setCurrent(Util.clamp(enemy.getHP().getCurrent(), 0, enemy.getHP().getMax()));
 	}
 
 

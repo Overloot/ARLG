@@ -128,15 +128,15 @@ public class Item extends BaseItem{
 	}
 	
 	public static void generateArmor(Item item){
-		if (!item.getGame().dice(chanse_to_have_suffixes_for_armor,100)) return;
-		if (item.getGame().dice(chanse_to_have_stats_for_armor,100)) addStat(item);
-		else if (item.getGame().dice(chanse_to_have_resists_for_armor,100)) addResist(item);
+		if (!Util.dice(chanse_to_have_suffixes_for_armor,100)) return;
+		if (Util.dice(chanse_to_have_stats_for_armor,100)) addStat(item);
+		else if (Util.dice(chanse_to_have_resists_for_armor,100)) addResist(item);
 	}
 
 	public static void generateWeapon(Item item){
-		if (!item.getGame().dice(chanse_to_have_suffixes_for_weapon,100)) return;
-		if (item.getGame().dice(chanse_to_have_damages_for_weapon,100)) addDamage(item);
-		else if (item.getGame().dice(chanse_to_have_stats_for_weapon,100)) addStat(item);
-		else if (item.getGame().dice(chanse_to_have_resists_for_weapon,100)) addResist(item);
+		if (!Util.dice(chanse_to_have_suffixes_for_weapon,100)) return;
+		if (Util.dice(chanse_to_have_damages_for_weapon,100)) addDamage(item);
+		else if (Util.dice(chanse_to_have_stats_for_weapon,100)) addStat(item);
+		else if (Util.dice(chanse_to_have_resists_for_weapon,100)) addResist(item);
 	}
 }
