@@ -571,6 +571,7 @@ public class MapGenerator {
         int diggerPointX = 15, diggerPointY = 15;
         int diggerMoveTo;
         int rnd;
+        int rndX, rndY;
         int[][] genMap = new int[map.getHeight()][map.getWidth()];
         for (int y = 1; y < map.getHeight(); y++)
             for (int x = 1; x < map.getWidth(); x++) {
@@ -607,6 +608,15 @@ public class MapGenerator {
             for (int x = 1; x < map.getWidth() - 1; x++) {
                 if (genMap[y][x] == 1) map.setTileAt(y, x, Tileset.TILE_CAVE_BLACK_ABYSS_FLOOR);
             }
+        for (int count = 1; count <= 100; count++) {
+            rndX = new Random().nextInt(map.getWidth());
+            rndY = new Random().nextInt(map.getHeight());
+            if (map.field[rndY][rndX].getID() == Tileset.TILE_CAVE_BLACK_ABYSS_FLOOR) {
+                if (new Random().nextInt(100) < 5) map.setTileAt(rndY, rndX, Tileset.TILE_CAVE_BLACK_ABYSS_SKELETON);
+                if (new Random().nextInt(100) > 94) map.setTileAt(rndY, rndX, Tileset.TILE_CAVE_BLACK_ABYSS_BONFIRE);
+            }
+        }
+
     }
 
     private int howMuchTilesOnMap(int tile) // метод считает сколько тайлов определенного типа на карте
