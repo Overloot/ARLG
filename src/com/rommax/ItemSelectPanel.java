@@ -117,7 +117,7 @@ class ItemSelectPanel extends JPanel {
 		if (max == -1) min = -1;
 		g.drawString("Всего предметов: " + Integer.toString(MAX_ITEMS) + ", показаны предметы с " + (min + 1) + " по " + (max + 1) + ".", 5, Tileset.TILE_SIZE * 10 + 35);
 		if (min == -1) min = 0;
-		g.drawString("Фильтры для меню: 1 - оружие, 2 - броня, 3 - зелья, 4 - свитки, 5 - контейнеры, 6 - все остальное", 5, Tileset.TILE_SIZE * 10 + 45);
+		g.drawString("Фильтры для меню: 1 - оружие, 2 - броня, 3 - зелья, 4 - свитки, 5 - контейнеры, 6 - еда, 7 - все остальное", 5, Tileset.TILE_SIZE * 10 + 45);
 		g.drawString("0 - показывать все.", 5, Tileset.TILE_SIZE * 10 + 55);
 	}
 }

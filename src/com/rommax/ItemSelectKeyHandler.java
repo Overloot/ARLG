@@ -49,6 +49,12 @@ public class ItemSelectKeyHandler implements KeyListener{
 				break;
 			case KeyEvent.VK_6:
 				if (ip.iwindow.isChangedFilter){
+					ip.iwindow.type = ItemSet.TYPE_FOOD;
+					ip.resetState();
+				}
+				break;
+			case KeyEvent.VK_7:
+				if (ip.iwindow.isChangedFilter){
 					ip.iwindow.type = ItemSet.TYPE_MISC;
 					ip.resetState();
 				}

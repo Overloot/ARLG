@@ -107,6 +107,7 @@ ITEMSET[51] = new BaseItem(25,51,1,SLOT_ANY,TYPE_FOOD,"Кровавый гриб
 		TypeName[4] = "Зелья";
 		TypeName[5] = "Свитки";
 		TypeName[6] = "Контейнеры";
+		TypeName[7] = "Еда";
 		SlotName[SLOT_HEAD] = "Вы можете надеть это #8#на голову.#^#";
 		SlotName[SLOT_BODY] = "Вы можете надеть это #8#на тело.#^#";
 		SlotName[SLOT_LEFT_ARM] = "Вы можете взять это #8#в левую руку.#^#";
