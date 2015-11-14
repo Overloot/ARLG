@@ -219,6 +219,7 @@ class MainPanel extends JPanel{
 		addLine(g, "#8#ЛОВКОСТЬ#^#", DrawingMap.getGame().player.getAGI().getCurrent(), 0);
 		addLine(g, "#8#ВЫНОСЛИВОСТЬ#^#", DrawingMap.getGame().player.getEND().getCurrent(), 0);
 		addLine(g, "#8#УДАЧА#^#", DrawingMap.getGame().player.getLUCK().getCurrent(), 0);
+		addLine(g, "#2#Debug: items: " + DrawingMap.getGame().itemsQuantity + "/" + DrawingMap.getGame().MAX_ITEMS + ", monsters: " + DrawingMap.getGame().monstersQuantity + "/" + DrawingMap.getGame().MAX_MONSTERS + "#^#");
 		// Effects
 		if (DrawingMap.getGame().player.getParalyzeCount() > 0){
 			top = 405;

@@ -403,7 +403,6 @@ public class Monster extends BaseMonster{
 		//getGame().logMessage(dlog);
 
 		if (min>=max){
-			//if (getGame().dice(LUCK.getCurrent() * 100,100000)){
 			if (Util.dice(getLUCK().getCurrent(), 100)){
 				damage += (rand.nextInt(ndamage) + 1);
 				if (enemy == getGame().player)

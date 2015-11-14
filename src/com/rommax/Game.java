@@ -14,8 +14,8 @@ public class Game {
     public Item[] itemList;
     public Map[] mapList;
     public GameWindow frame1;
-    private int monstersQuantity;
-    private int itemsQuantity;
+    public int monstersQuantity;
+    public int itemsQuantity;
     public int currentMapNumber = 0;
     public int turn = 0;
     public static int maxExperience = 200;
@@ -38,8 +38,8 @@ public class Game {
     public final int CARRYING_PER_STRENGTH = 7;
     public final int MIN_SIZE = 100;
     public final int HIT_POINTS_PER_ENDURANCE = 9;
-    final int MAX_MONSTERS = MAX_FLOORS * MAX_MONSTER_PER_LEVEL + 1;
-    final int MAX_ITEMS = MAX_FLOORS * MAX_ITEM_PER_LEVEL + 1;
+    public final int MAX_MONSTERS = MAX_FLOORS * MAX_MONSTER_PER_LEVEL + 1;
+    public final int MAX_ITEMS = MAX_FLOORS * MAX_ITEM_PER_LEVEL + 1;
 
 	public Map getMap(){return map;}	
 
@@ -584,6 +584,7 @@ public class Game {
 
     // Добавляем предмет на карту в указанные координаты
     public void addRandomItem(int y, int x) {
+		if (itemsQuantity >= MAX_ITEMS) return;
         Random random = new Random();
         int newID = 0;
 		while (true) {
@@ -602,7 +603,7 @@ public class Game {
         itemsQuantity++;
     }
 
-    // Добавляем предмет на карту
+    // Добавляем предмет на карту в случайном месте
     public void addRandomItem() {
         Random random = new Random();
         // выбираем место сброса итема, если оно непроходимо или на нем есть монстр, то ищем другое место
@@ -615,12 +616,12 @@ public class Game {
 		addRandomItem(y, x);
 	}
 	
-	// Ставим предмет(ы)
+	// Ставим предмет(ы) после смерти монстра (loot)
 	private void loot(int index) {
         Random r = new Random();
-//		for(int i = 0; i < 3; i++)
-//			if (this.dice(player.getLUCK().getCurrent(), 100))
-//				addRandomItem(monsterList[index].getY(), monsterList[index].getX());
+		for(int i = 0; i < 3; i++)
+			if (Util.dice(player.getLUCK().getCurrent(), 100))
+				addRandomItem(monsterList[index].getY(), monsterList[index].getX());
 	}
 
     // подъем уровня игрока
@@ -635,7 +636,7 @@ public class Game {
         player.setExp(player.getExp() - Game.maxExperience);
         Game.maxExperience *= 2;
         logMessage("Вы достигли следующего уровня! ");
-        statsFree += 5;
+        statsFree += 3;
     }
 
 	// Обновление экрана
