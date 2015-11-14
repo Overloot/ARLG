@@ -359,11 +359,13 @@ public class Game {
 	}
 	
     public void fillLevelByMonsters() {
+		monstersQuantity = 0;
         for (int i = 0; i < MAX_MONSTER_PER_LEVEL; i++)
             addRandomMonster();
     }
 
     public void fillLevelByItems() {
+		itemsQuantity = 0;
         for (int i = 0; i < MAX_ITEM_PER_LEVEL; i++)
             addRandomItem();
     }
