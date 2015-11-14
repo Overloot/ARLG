@@ -30,6 +30,9 @@ public class ItemSet {
 	public static final int TYPE_FOOD = 7;
 	public static final int MAX_TYPES = 8;
 
+	// ID Грибов
+	public static final int MIN_MUSH = 47;
+	public static final int MAX_MUSH = 51;
 
 	public static String getNameOfType(int id){
 		return TypeName[id];
@@ -92,12 +95,13 @@ ITEMSET[43] = new BaseItem(10,43,1,SLOT_ANY,TYPE_POTION,"Зелье удачи",
 ITEMSET[44] = new BaseItem(10,44,1,SLOT_ANY,TYPE_POTION,"Зелье сопротивления","res/items/potion1.png",5,5,"#RFIRE 20|10#RCOLD 20|10#RPOISON 20|10#RELEC 20|10#");
 ITEMSET[45] = new BaseItem(15,45,1,SLOT_ANY,TYPE_POTION,"Зелье каменной кожи","res/items/potion2.png",5,5,"#RNORMAL 20|15#");
 ITEMSET[46] = new BaseItem(90,46,1,SLOT_BACKPACK,TYPE_CONTAINER,"Рюкзак","res/items/backpack1.png",50,20,"#SW_UP 100#");
-ITEMSET[47] = new BaseItem(25,47,1,SLOT_ANY,TYPE_FOOD,"Черный гриб","res/items/mushroom1.png",3,3,"");
-ITEMSET[48] = new BaseItem(25,48,1,SLOT_ANY,TYPE_FOOD,"Меховая шляпка","res/items/mushroom2.png",3,3,"");
-ITEMSET[49] = new BaseItem(25,49,1,SLOT_ANY,TYPE_FOOD,"Солнечник","res/items/mushroom3.png",3,3,"");
-ITEMSET[50] = new BaseItem(25,50,1,SLOT_ANY,TYPE_FOOD,"Орочий гриб","res/items/mushroom4.png",3,3,"");
-ITEMSET[51] = new BaseItem(25,51,1,SLOT_ANY,TYPE_FOOD,"Кровавый гриб","res/items/mushroom5.png",3,3,"");
+ITEMSET[47] = new BaseItem(25,47,1,SLOT_ANY,TYPE_FOOD,"Черный гриб","res/items/mushroom1.png",3,3,"#PARALYZECOUNT 5#");
+ITEMSET[48] = new BaseItem(25,48,1,SLOT_ANY,TYPE_FOOD,"Меховая шляпка","res/items/mushroom2.png",3,3,"#HEALTIME 1|10#");
+ITEMSET[49] = new BaseItem(25,49,1,SLOT_ANY,TYPE_FOOD,"Солнечник","res/items/mushroom3.png",3,3,"#HEALSELF 5=10#");
+ITEMSET[50] = new BaseItem(25,50,1,SLOT_ANY,TYPE_FOOD,"Орочий гриб","res/items/mushroom4.png",3,3,"#FOVRAD -100|10#");
+ITEMSET[51] = new BaseItem(25,51,1,SLOT_ANY,TYPE_FOOD,"Кровавый гриб","res/items/mushroom5.png",3,3,"#POISONCOUNT 10=15#");
 //!!!
+	
 		TypeName = new String[MAX_TYPES];
 		SlotName = new String[MAX_SLOTS];
 		TypeName[0] = "Любые предметы";
