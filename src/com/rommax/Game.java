@@ -37,9 +37,10 @@ public class Game {
     public final int HIT_POINTS_PER_STRENGTH = 3;
     public final int CARRYING_PER_STRENGTH = 7;
     public final int MIN_SIZE = 100;
+	public final int MAX_LOOT = 3;
     public final int HIT_POINTS_PER_ENDURANCE = 9;
     public final int MAX_MONSTERS = MAX_FLOORS * MAX_MONSTER_PER_LEVEL + 1;
-    public final int MAX_ITEMS = MAX_FLOORS * MAX_ITEM_PER_LEVEL + 1;
+    public final int MAX_ITEMS = MAX_FLOORS * MAX_ITEM_PER_LEVEL + 1 + (MAX_MONSTERS * MAX_LOOT);
 
 	public Map getMap(){return map;}	
 
@@ -619,7 +620,7 @@ public class Game {
 	// Ставим предмет(ы) после смерти монстра (loot)
 	private void loot(int index) {
         Random r = new Random();
-		for(int i = 0; i < 3; i++)
+		for(int i = 0; i < MAX_LOOT; i++)
 			if (Util.dice(player.getLUCK().getCurrent(), 100))
 				addRandomItem(monsterList[index].getY(), monsterList[index].getX());
 	}
