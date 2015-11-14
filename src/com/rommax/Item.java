@@ -1,7 +1,5 @@
 package com.rommax;
 
-import java.util.*;
-
 public class Item extends BaseItem{
 	private boolean identify;
 	private String real_name;
@@ -53,36 +51,34 @@ public class Item extends BaseItem{
 	}
 	
 	private static void add(Item item, String nam, String scr){
-		Random random = new Random();
+		int d = Util.rand(item.getLevel());
 		item.real_name += " " + nam;
-		item.setScript(item.getScript() + "#" + scr.trim() + " " + Integer.toString(random.nextInt(item.getLevel()) + 1) + "#");
+		item.setScript(item.getScript() + "#" + scr.trim() + " " + Integer.toString(d) + "#");
 	}
 
 	private static void addDam(Item item, String nam, String scr){
-		Random random = new Random();
 		int d1 = 0;
 		int d2 = 0;
 		while (d1 >= d2){
-			d1 = random.nextInt(item.getLevel() * 5) + 1;
-			d2 = random.nextInt(item.getLevel() * 5) + 1;
+			d1 = Util.rand(item.getLevel() * 5);
+			d2 = Util.rand(item.getLevel() * 5);
 		}
 		item.real_name += " " + nam;
 		item.setScript(item.getScript() + "#" + scr.trim() + " " + Integer.toString(d1) + "_" + Integer.toString(d2) + "#");
 	}
 
 	private static void addStat(Item item){
-		Random random = new Random();
-		switch (random.nextInt(4)){
-			case 0:
+		switch (Util.rand(4)){
+			case 1:
 				add(item, "#8#силы#^#", "STR_UP");
 				break;
-			case 1:
+			case 2:
 				add(item, "#8#ловкости#^#", "AGI_UP");
 				break;
-			case 2:
+			case 3:
 				add(item, "#8#выносливости#^#", "END_UP");
 				break;
-			case 3:
+			case 4:
 				add(item, "#8#удачи#^#", "LUCK_UP");
 				break;
 		}
@@ -91,18 +87,17 @@ public class Item extends BaseItem{
 	}
 	
 	private static void addResist(Item item){
-		Random random = new Random();
-		switch (random.nextInt(4)){
-			case 0:
+		switch (Util.rand(4)){
+			case 1:
 				add(item, "#2#защиты от огня#^#", "RFIRE");
 				break;
-			case 1:
+			case 2:
 				add(item, "#4#защиты от холода#^#", "RCOLD");
 				break;
-			case 2:
+			case 3:
 				add(item, "#3#защиты от яда#^#", "RPOISON");
 				break;
-			case 3:
+			case 4:
 				add(item, "#5#защиты от электричества#^#", "RELEC");
 				break;
 		}
@@ -111,15 +106,14 @@ public class Item extends BaseItem{
 	}
 	
 	private static void addDamage(Item item){
-		Random random = new Random();
-		switch (random.nextInt(3)){
-			case 0:
+		switch (Util.rand(3)){
+			case 1:
 				addDam(item, "#2#пламени#^#", "DFIRE");
 				break;
-			case 1:
+			case 2:
 				addDam(item, "#4#холода#^#", "DCOLD");
 				break;
-			case 2:
+			case 3:
 				addDam(item, "#3#яда#^#", "DPOISON");
 				break;
 		}
