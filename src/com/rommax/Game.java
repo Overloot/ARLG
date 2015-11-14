@@ -8,6 +8,7 @@ import java.io.*;
 
 public class Game {
     public Monster player;
+	private Time time;
     private Map map;
     public KeyHandler keyHandler;
     public Monster[] monsterList;                           // игрок по индексу [0]
@@ -31,7 +32,7 @@ public class Game {
     public final int MAP_SIZE_Y = 30;
     public final int MAP_SIZE_X = 30;
     final int MAX_FLOORS = 3;
-    public static final int MAX_MONSTER_PER_LEVEL = 5;
+    public static final int MAX_MONSTER_PER_LEVEL = 7;
     public static final int MAX_ITEM_PER_LEVEL = 5;
     public static final int MAX_PLAYER_LEVEL = 30;
     public final int HIT_POINTS_PER_STRENGTH = 3;
@@ -43,7 +44,8 @@ public class Game {
     public final int MAX_ITEMS = MAX_FLOORS * MAX_ITEM_PER_LEVEL + 1 + (MAX_MONSTERS * MAX_LOOT);
 
 	public Map getMap(){return map;}	
-
+	public Time getTime(){return time;}
+	
     // выводит различные сообщения в верхний-левый угол
     public void logMessage(String s) {
         frame1.mainpanel.LogMessage(s);
@@ -57,6 +59,7 @@ public class Game {
         itemList = new Item[MAX_ITEMS];
         mapList = new Map[MAX_FLOORS];
 		loader = new Loader();
+		time = new Time(this);
 		background = loader.getImage("res/icons/texture_menu.png");
 		cursor = loader.getImage("res/icons/icon_plus.png");
     }
@@ -133,7 +136,7 @@ public class Game {
                     killMonster(i);
         }
         checkTimeEffects(); // метод проверят не пора ли поднять уровень игроку, наносит урон ядом и т.д.
-
+		getTime().update();
     }
 
 	// Диалог закрытия игры
@@ -606,6 +609,7 @@ public class Game {
 
     // Добавляем предмет на карту в случайном месте
     public void addRandomItem() {
+		if (itemsQuantity >= MAX_ITEMS) return;
         Random random = new Random();
         // выбираем место сброса итема, если оно непроходимо или на нем есть монстр, то ищем другое место
         int y = random.nextInt(map.getHeight());
