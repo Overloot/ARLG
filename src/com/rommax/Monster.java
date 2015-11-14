@@ -80,6 +80,8 @@ public class Monster extends BaseMonster{
 			getGame().logMessage("Вы несете #2#слишком много вещей!#^#");
 			return false;
 		}
+		if (this.getHP().getCurrent() <= 0) return false;
+		
 		if (this == getGame().player) Skill.update();
 		int ny = (getY() + y);
 		int nx = (getX() + x);
@@ -382,6 +384,7 @@ public class Monster extends BaseMonster{
 	private void AttackMonster(Monster enemy){
 		if (this == enemy) return;
 		if (this != getGame().player && enemy != getGame().player) return;
+		if (this.getHP().getCurrent() <= 0) return; // Мертвый не может атаковать
 		Random rand = new Random();
 
 		int ndamage = ((100 - enemy.getRNormal().getCurrent()) * (getGame().getValueFrom(getDNormal().getCurrent(), getDNormal().getMax()) + getGame().rand(getSTR().getCurrent())) / 100 ) ;
@@ -507,15 +510,14 @@ public class Monster extends BaseMonster{
 						if (pdamage<0)
 						getGame().logMessage(enemy.getName() + " #3#поглощает ваш яд#^# и внезапно #3#исцеляется!#^# (" + Integer.toString(-pdamage) + ") #/#");
 					}
-
-
-
 		}
 				else
 				if (this==getGame().player) getGame().logMessage("Вы промахнулись! #/#");
 				else
 				if (enemy == getGame().player) getGame().logMessage(this.getName() + " #8#промахивается по вам!#^#/#");
-
+			
+		// Если жизней меньше ноля, то ставим в ноль, то убиваем монстра
+		if (enemy.getHP().getCurrent() <= 0) enemy.setHP(0, 0);
 	}
 
 
