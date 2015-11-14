@@ -17,6 +17,7 @@ public class Game {
     public GameWindow frame1;
     public int monstersQuantity;
     public int itemsQuantity;
+    public int mapsQuantity;
     public int currentMapNumber = 0;
     public int turn = 0;
     public static int maxExperience = 200;
@@ -55,6 +56,7 @@ public class Game {
     public void init() {
         monstersQuantity = 0;
         itemsQuantity = 0;
+		mapsQuantity = 0;
         monsterList = new Monster[MAX_MONSTERS];
         itemList = new Item[MAX_ITEMS];
         mapList = new Map[MAX_FLOORS];
@@ -247,6 +249,16 @@ public class Game {
         if (hitPointsRegeneration > 100) hitPointsRegeneration = 0;
     }
 
+	private void addPlayerOnMap(int newMapLevel){
+		map.field[player.getY()][player.getX()].setMonster(null);
+        map = mapList[newMapLevel];
+        map.setGame(this);
+        frame1.SwitchMap(map);
+        currentMapNumber = newMapLevel;
+        map.placeMonsterAt(player.getY(), player.getX(), player);
+        player.setMap(map);
+	}
+	
     // смена карты/переход на другой этаж, метод вызывается из класса KeyHandler
     // changeMapLevel может иметь значения -1 или 1
     public void switchMap(int changeMapLevel) {
@@ -256,32 +268,16 @@ public class Game {
         // если карты, на которую осуществляется переход, не существует, то создаем ее
         if (mapList[newMapLevel] == null) {
             mapList[newMapLevel] = new Map(MAP_SIZE_Y, MAP_SIZE_X, this);
-		
-			map.field[player.getY()][player.getX()].setMonster(null);
-            map = mapList[newMapLevel];
-            map.setGame(this);
-            frame1.SwitchMap(map);
-            currentMapNumber = newMapLevel;
-            map.placeMonsterAt(player.getY(), player.getX(), player);
-            player.setMap(map);
-
+			mapsQuantity++;
+			addPlayerOnMap(newMapLevel);
             while (!map.field[player.getY()][player.getX()].getPassable()) map.generate();
             fillLevelByMonsters();
             fillLevelByItems();
 			finish();
         }
         // а если карта уже существует, то переносим на нее игрока
-        else {
-
-			map.field[player.getY()][player.getX()].setMonster(null);
-            map = mapList[newMapLevel];
-            map.setGame(this);
-            frame1.SwitchMap(map);
-            currentMapNumber = newMapLevel;
-            map.placeMonsterAt(player.getY(), player.getX(), player);
-            player.setMap(map);
-
-		}
+        else addPlayerOnMap(newMapLevel);
+		// добавляем лестницы
 		if (changeMapLevel == 1)
 			for (int i=0; i<map.getHeight(); i++)
 				for (int j=0; j<map.getWidth(); j++){
@@ -306,6 +302,7 @@ public class Game {
                                                                             // mapList нужен только для хранения карт
         currentMapNumber = 0;                                               // номер текущей карты в массиве
         map.generate();
+		mapsQuantity++;
 	
         frame1 = new GameWindow(map, this);
         frame1.setVisible(true);
@@ -586,6 +583,14 @@ public class Game {
         player.Equipment[num] = null;
     }
 
+	// Добавляем предмет на указанную карту в указанные координаты
+	public void addItem(int y, int x, int id, Map map){
+		if (itemsQuantity >= MAX_ITEMS) return;
+		BaseItem baseItem = ItemSet.getItem(id);
+        itemList[itemsQuantity] = new Item(baseItem, y, x, map, this);
+        itemsQuantity++;
+	}
+	
     // Добавляем предмет на карту в указанные координаты
     public void addRandomItem(int y, int x) {
 		if (itemsQuantity >= MAX_ITEMS) return;
@@ -602,9 +607,7 @@ public class Game {
             if (!Util.dice(ItemSet.getItem(newID).getChanse(), 100)) continue;
             break;
         }
-		BaseItem baseItem = ItemSet.getItem(newID);
-        itemList[itemsQuantity] = new Item(baseItem, y, x, map, this);
-        itemsQuantity++;
+		addItem(y, x, newID, map);
     }
 
     // Добавляем предмет на карту в случайном месте
