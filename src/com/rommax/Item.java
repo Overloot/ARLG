@@ -39,6 +39,12 @@ public class Item extends BaseItem{
 			case ItemSet.TYPE_SCROLL:
 				generateConsumable("Непонятный свиток");
 				break;
+			case ItemSet.TYPE_FOOD:
+				if(bm.getID() >= ItemSet.MIN_MUSH && bm.getID() <= ItemSet.MAX_MUSH){
+					generateConsumable("Непонятный гриб");
+					return;
+				}
+				break;
 		}
 	}
 
