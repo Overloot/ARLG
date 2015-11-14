@@ -5,8 +5,6 @@
 package com.rommax;
 
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class MapGenerator {
 
@@ -47,7 +45,7 @@ public class MapGenerator {
 				VillageCreate();
 				break;
 			case ID_OLD_CASTLE:
-				OldCastleCreate();
+				createOldCastle();
 				break;
 			case ID_FOREST_MARSH:
 				forestMarshCreate();
@@ -471,12 +469,8 @@ public class MapGenerator {
 			for (int j = x; j <= x + width; j++)
 				map.setTileAt(i, j, tile);		
 	}
-	
-	private void addDoor(){
-		
-	}
-	
-    public void OldCastleCreate() {
+
+    public void createOldCastle() {
         final int ROOM_MAX_SIZE = 5;
         final int ROOM_MIN_SIZE = 3;
         final int ROOM_MAX_TOTAL_SIZE = ROOM_MIN_SIZE + ROOM_MAX_SIZE + 1;
@@ -484,9 +478,9 @@ public class MapGenerator {
         map.setName("#7#Старый замок #^#");
         int pointX = 1, pointY = 1;
         int sizeX, sizeY;
-        int doorX, doorY;
+        int firstX, firstY;
         int sizeHall;
-        int tempX, tempY;
+        int secondX, secondY;
 		fill(Tileset.TILE_OLD_CASTLE_WALL);//заполняем карту сплошными стенами
         while (true) {
             sizeX = new Random().nextInt(ROOM_MAX_SIZE) + ROOM_MIN_SIZE;
@@ -502,52 +496,65 @@ public class MapGenerator {
 			
 			 
             // вычисляем координаты для двери и перехода
-            doorY = 1 + pointY + sizeY;
-            doorX = (int) pointX + sizeX / 2;
-            // создаем переход
-            sizeHall = ROOM_MAX_TOTAL_SIZE - sizeY;
-            if (doorY + ROOM_MAX_TOTAL_SIZE < map.getHeight() -1) {
-                for (int y = doorY; y <= doorY + sizeHall; y++)
-                    map.setTileAt(y, doorX, Tileset.TILE_OLD_CASTLE_FLOOR);
-                // ставим дверь
-                map.setTileAt(doorY, doorX, Tileset.TILE_CLOSED_DOOR);
-            }
+            // высота
+            firstY = pointY;
+            firstX = (int) pointX + sizeX / 2;
+            secondX = firstX;
+            secondY = firstY;
+            secondX--;
+            createPassage(firstY, firstX, secondY, secondX, false, true); // ставим проход и двери по высоте
+            // ширина
+            firstY = (int) pointY + sizeY / 2;
+            firstX = pointX;
+            secondX = firstX;
+            secondY = firstY;
+            secondX--;
+            createPassage(firstY, firstX, secondY, secondX, true, true); // ставим проход и двери по высоте
 
+            pointX = pointX + ROOM_MAX_TOTAL_SIZE; // координаты будущей новой комнаты
+        }
 
-            // ставим опцианальную дверь, если есть возможность
-            // дверь ставится по горизонтале, справа налево.
-            // в первый проход основного while двери создаваться не должны, на следующих они создадутся
-            doorX = pointX;
-            doorY = (int) pointY + sizeY / 2;
+    }
 
-            if (doorY > map.getHeight() -  1) {
-                pointX = pointX + ROOM_MAX_TOTAL_SIZE;
-                pointY = 1;
-                logWriter.myMessage("условие верно 523 строка");
-                continue;
-            }
+    private void createDoor(int y, int x, boolean isWidth)
+    {
+        if (isWidth) map.setTileAt(y, x, Tileset.TILE_CLOSED_DOOR); // правай дверь в проходе
+        if (!isWidth) map.setTileAt(x, y, Tileset.TILE_CLOSED_DOOR); // правай дверь в проходе
+    }
 
-            tempX = doorX;
-            tempY = doorY;
-            tempX--;
-            while (true){
-                doorX--;
-                if (doorX - 1 <= 1) break; // проверка на выход за границы карты
-                if (map.field[doorY][doorX].getID() == Tileset.TILE_OLD_CASTLE_FLOOR) { // если за стеной есть свободное пространство,
-                    for (int xx = doorX; xx <= tempX; xx++) { // то прокладываем туда проход
-                        map.setTileAt(doorY, xx, Tileset.TILE_OLD_CASTLE_FLOOR);
+    private void createPassage(int firstY, int firstX, int secondY, int secondX, boolean isWidth, boolean needDoors)
+    {
+        if (isWidth) { // по ширине
+            while (true) {
+                firstX--;
+                if (firstX - 1 <= 1) break; // проверка на выход за границы карты
+                if (map.field[firstY][firstX].getID() == Tileset.TILE_OLD_CASTLE_FLOOR) { // если за стеной есть свободное пространство,
+                    for (int xx = firstX; xx <= secondX; xx++) { // то прокладываем туда проход
+                        map.setTileAt(firstY, xx, Tileset.TILE_OLD_CASTLE_FLOOR);
                     }
-                    doorX++;
-                    map.setTileAt(tempY, tempX, Tileset.TILE_CLOSED_DOOR); // правай дверь в проходе
-                    map.setTileAt(doorY, doorX, Tileset.TILE_CLOSED_DOOR); // левая дверь в проходе
-                    //System.exit(0);
+                    firstX++;
+                    if (needDoors) createDoor(secondY, secondX, true); // левая дверь
+                    if (needDoors) createDoor(firstY, firstX, true); // правая дверь
                     break;
                 }
             }
-			
-			
-            // координаты будущей новой комнаты
-            pointX = pointX + ROOM_MAX_TOTAL_SIZE;
+        }
+
+        if (!isWidth) { // по высоте
+            while (true) {
+                firstY--;
+                if (firstY - 1 <= 1) break; // проверка на выход за границы карты
+                if (map.field[firstY][firstX].getID() == Tileset.TILE_OLD_CASTLE_FLOOR) { // если за стеной есть свободное пространство,
+                    for (int yy = firstY; yy <= secondY; yy++) { // то прокладываем туда проход
+                        map.setTileAt(yy, firstX, Tileset.TILE_OLD_CASTLE_FLOOR);
+                    }
+                    firstY++;
+                    secondY--;
+                    if (needDoors) createDoor(secondY, secondX + 1, true); // нижняя дверь
+                    if (needDoors) createDoor(firstY, firstX, true); // верхняя дверь
+                    break;
+                }
+            }
         }
 
     }
