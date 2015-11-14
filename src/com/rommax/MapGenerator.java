@@ -513,26 +513,42 @@ public class MapGenerator {
                     map.setTileAt(y, doorX, Tileset.TILE_OLD_CASTLE_FLOOR);
             // ставим дверь
             map.setTileAt(doorY, doorX, Tileset.TILE_CLOSED_DOOR);
+
             // ставим опцианальную дверь, если есть возможность
+            // дверь ставится по горизонтале, справа налево.
+            // в первый проход основного while двери создаваться не должны, на следующих они создадутся
+            doorX = pointX;
             doorY = (int) pointY + sizeY / 2;
-            doorX = 1 + pointX + sizeX;
-            if (doorX + 1 > map.getWidth() - 1) {
-                pointY = pointY + ROOM_MAX_TOTAL_SIZE;
-                pointX = 1;
+
+            if (doorY > map.getHeight() -  1) {
+                pointX = pointX + ROOM_MAX_TOTAL_SIZE;
+                pointY = 1;
+                logWriter.myMessage("условие верно 523 строка");
                 continue;
             }
+
             tempX = doorX;
             tempY = doorY;
+            tempX--;
             while (true){
-                doorX++;
-                if (doorX >= map.getWidth() - 1) break; // проверка на выход за границы карты
-                if (map.field[doorX][doorY].getID() == Tileset.TILE_OLD_CASTLE_FLOOR) { // работает, только если инвертировать координаты
+                doorX--;
+                if (doorX - 1 <= 1) break; // проверка на выход за границы карты
+
+                logWriter.myMessage("Поиск места под дверь");
+                logWriter.myMessage("doorY" + Integer.toString(doorY) + " doorX" + Integer.toString(doorX));
+                logWriter.myMessage("tempY" + Integer.toString(tempY) + " tempX" + Integer.toString(tempX));
+
+                if (map.field[doorY][doorX].getID() == Tileset.TILE_OLD_CASTLE_FLOOR) { // работает, только если инвертировать координаты
+
+                    logWriter.myMessage("Создание дверей");
+                    logWriter.myMessage(Integer.toString(map.field[doorX][doorY].getID()));
                     logWriter.myMessage("doorY" + Integer.toString(doorY) + " doorX" + Integer.toString(doorX));
                     logWriter.myMessage("tempY" + Integer.toString(tempY) + " tempX" + Integer.toString(tempX));
-                    for (int xx = tempX; xx < doorX; xx++) { // создаем проход между комнатами
+
+                    for (int xx = doorX; xx <= tempX; xx++) { // создаем проход между комнатами
                         map.setTileAt(doorY, xx, Tileset.TILE_OLD_CASTLE_FLOOR);
                     }
-                    doorX--;
+                    doorX++;
                     map.setTileAt(tempY, tempX, Tileset.TILE_CLOSED_DOOR); // левая дверь в проходе
                     map.setTileAt(doorY, doorX, Tileset.TILE_CLOSED_DOOR); // правая дверь в проходе
                     //System.exit(0);
