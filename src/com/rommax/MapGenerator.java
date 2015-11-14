@@ -506,13 +506,13 @@ public class MapGenerator {
             doorX = (int) pointX + sizeX / 2;
             // создаем переход
             sizeHall = ROOM_MAX_TOTAL_SIZE - sizeY;
-            if (doorY + sizeHall > map.getWidth() -1) {
-                break;
-            }
-            for (int y = doorY; y <= doorY + sizeHall; y++)
+            if (doorY + ROOM_MAX_TOTAL_SIZE < map.getHeight() -1) {
+                for (int y = doorY; y <= doorY + sizeHall; y++)
                     map.setTileAt(y, doorX, Tileset.TILE_OLD_CASTLE_FLOOR);
-            // ставим дверь
-            map.setTileAt(doorY, doorX, Tileset.TILE_CLOSED_DOOR);
+                // ставим дверь
+                map.setTileAt(doorY, doorX, Tileset.TILE_CLOSED_DOOR);
+            }
+
 
             // ставим опцианальную дверь, если есть возможность
             // дверь ставится по горизонтале, справа налево.
@@ -533,24 +533,13 @@ public class MapGenerator {
             while (true){
                 doorX--;
                 if (doorX - 1 <= 1) break; // проверка на выход за границы карты
-
-                logWriter.myMessage("Поиск места под дверь");
-                logWriter.myMessage("doorY" + Integer.toString(doorY) + " doorX" + Integer.toString(doorX));
-                logWriter.myMessage("tempY" + Integer.toString(tempY) + " tempX" + Integer.toString(tempX));
-
-                if (map.field[doorY][doorX].getID() == Tileset.TILE_OLD_CASTLE_FLOOR) { // работает, только если инвертировать координаты
-
-                    logWriter.myMessage("Создание дверей");
-                    logWriter.myMessage(Integer.toString(map.field[doorX][doorY].getID()));
-                    logWriter.myMessage("doorY" + Integer.toString(doorY) + " doorX" + Integer.toString(doorX));
-                    logWriter.myMessage("tempY" + Integer.toString(tempY) + " tempX" + Integer.toString(tempX));
-
-                    for (int xx = doorX; xx <= tempX; xx++) { // создаем проход между комнатами
+                if (map.field[doorY][doorX].getID() == Tileset.TILE_OLD_CASTLE_FLOOR) { // если за стеной есть свободное пространство,
+                    for (int xx = doorX; xx <= tempX; xx++) { // то прокладываем туда проход
                         map.setTileAt(doorY, xx, Tileset.TILE_OLD_CASTLE_FLOOR);
                     }
                     doorX++;
-                    map.setTileAt(tempY, tempX, Tileset.TILE_CLOSED_DOOR); // левая дверь в проходе
-                    map.setTileAt(doorY, doorX, Tileset.TILE_CLOSED_DOOR); // правая дверь в проходе
+                    map.setTileAt(tempY, tempX, Tileset.TILE_CLOSED_DOOR); // правай дверь в проходе
+                    map.setTileAt(doorY, doorX, Tileset.TILE_CLOSED_DOOR); // левая дверь в проходе
                     //System.exit(0);
                     break;
                 }
