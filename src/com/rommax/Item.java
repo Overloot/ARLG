@@ -44,6 +44,10 @@ public class Item extends BaseItem{
 					generateConsumable("Непонятный гриб");
 					return;
 				}
+				if(bm.getID() >= ItemSet.MIN_PLANT && bm.getID() <= ItemSet.MAX_PLANT){
+					generateConsumable("Непонятное растение");
+					return;
+				}
 				break;
 		}
 	}

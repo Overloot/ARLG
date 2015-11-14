@@ -28,7 +28,14 @@ public class Time {
         int y = new Random().nextInt(map.getHeight());
         int x = new Random().nextInt(map.getWidth());
 		if (map.field[y][x].getPassable()&&map.field[y][x].getBloodable())
-			getGame().addItem(y, x, Util.rand(ItemSet.MIN_MUSH, ItemSet.MAX_MUSH), map);
+			switch(Util.rand(2)){
+				case 1: // Гриб
+					getGame().addItem(y, x, Util.rand(ItemSet.MIN_MUSH, ItemSet.MAX_MUSH), map);
+					break;
+				case 2: // Растение
+					getGame().addItem(y, x, Util.rand(ItemSet.MIN_PLANT, ItemSet.MAX_PLANT), map);
+					break;
+			}
 	}
 	
 	// Время бежит
