@@ -10,7 +10,7 @@ public class MapGenerator {
 
     LogWriter logWriter = new LogWriter();
     public Map map;
-    public static final int MAX_GENERATORS = 8; // должно соответствовать количеству типов карт
+    public static final int MAX_GENERATORS = 9; // должно соответствовать количеству типов карт
     private Random rand = new Random();
 
     public static final int ID_FOREST_1 = 0;
@@ -21,10 +21,11 @@ public class MapGenerator {
     public static final int ID_VILLAGE = 5;
     public static final int ID_OLD_CASTLE = 6;
     public static final int ID_FOREST_MARSH = 7;
+    public static final int ID_CAVE_BLACK_ABYSS = 8;
 
     public void generateMap(Map map, int ID) {
         this.map = map;
-        ID = 6; // для теста
+        //ID = 8; // для теста
 		switch (ID){
 			case ID_FOREST_1:
 				ForestCreate();
@@ -50,6 +51,9 @@ public class MapGenerator {
 			case ID_FOREST_MARSH:
 				forestMarshCreate();
 				break;
+            case ID_CAVE_BLACK_ABYSS:
+                createCaveBlackAbyss();
+                break;
 		}
     }
 
@@ -72,6 +76,7 @@ public class MapGenerator {
         return d;
     }
 
+    //TODO: суть метода соответствует методу addModOnMap, возможно следует объединить в один?
 	private void addTiles(int preTile, int tile){
 		PartDraw(new Random().nextInt(map.getHeight()),
 			new Random().nextInt(map.getWidth()), preTile, tile);
@@ -557,6 +562,60 @@ public class MapGenerator {
             }
         }
 
+    }
+
+    public void createCaveBlackAbyss()
+    {
+        map.setName("#2#Пещера ''Черная бездна''#^#");
+        fill(Tileset.TILE_CAVE_BLACK_ABYSS_WALL);
+        int diggerPointX = 15, diggerPointY = 15;
+        int diggerMoveTo;
+        int rnd;
+        int[][] genMap = new int[map.getHeight()][map.getWidth()];
+        for (int y = 1; y < map.getHeight(); y++)
+            for (int x = 1; x < map.getWidth(); x++) {
+                genMap[y][x] = 0;
+            }
+        for (int repeat = 1; repeat <= 5; repeat++) {
+            for (int count = 1; count <= 250; count++) {
+                rnd = new Random().nextInt(4);
+                switch (rnd) {
+                    case 0:
+                        diggerPointX--; // диггер идет влево
+                        break;
+                    case 1:
+                        diggerPointX++; // диггер идет вправо
+                        break;
+                    case 2:
+                        diggerPointY--; // диггер идет вверх
+                        break;
+                    case 3:
+                        diggerPointY++; // диггер идет вниз
+                        break;
+                    default:
+                        break;
+                }
+                if ((diggerPointX < 1) || (diggerPointX > map.getHeight() - 1)) continue;
+                if ((diggerPointY < 1) || (diggerPointY > map.getWidth() - 1)) continue;
+                genMap[diggerPointY][diggerPointX] = 1;
+            }
+            diggerPointX = 15;
+            diggerPointY = 15;
+        }
+
+        for (int y = 1; y < map.getHeight() - 1; y++)
+            for (int x = 1; x < map.getWidth() - 1; x++) {
+                if (genMap[y][x] == 1) map.setTileAt(y, x, Tileset.TILE_CAVE_BLACK_ABYSS_FLOOR);
+            }
+    }
+
+    private int howMuchTilesOnMap(int tile) // метод считает сколько тайлов определенного типа на карте
+    {
+        int count = 0;
+        for (int y = 0; y < map.getHeight(); y++)
+            for (int x = 0; x < map.getWidth(); x++)
+                if (map.field[y][x].getID() == tile) count++;
+        return count;
     }
 
 }

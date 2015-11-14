@@ -29,8 +29,10 @@ public class Tileset{
 	public static final int TILE_MARSH_GRASS2 = 24;
 	public static final int TILE_MARSH_GRASS3 = 25;
 	public static final int TILE_MARSH_GRASS4 = 26;
+	public static final int TILE_CAVE_BLACK_ABYSS_FLOOR = 27;
+	public static final int TILE_CAVE_BLACK_ABYSS_WALL = 28;
 
-	public static final int MAX_TILES = 27;
+	public static final int MAX_TILES = 29;
 
     public static final int TILE_SIZE = 32;
 
@@ -65,6 +67,8 @@ public class Tileset{
 		TILESET[TILE_MARSH_GRASS2] = new BaseTile(TILE_MARSH_GRASS2, "Остролист", "res/dungeons/marsh_grass2.png", true, true, false, false);
 		TILESET[TILE_MARSH_GRASS3] = new BaseTile(TILE_MARSH_GRASS3, "Остролист", "res/dungeons/marsh_grass3.png", true, true, false, false);
 		TILESET[TILE_MARSH_GRASS4] = new BaseTile(TILE_MARSH_GRASS4, "Нитевик", "res/dungeons/marsh_grass4.png", true, true, false, false);
+		TILESET[TILE_CAVE_BLACK_ABYSS_FLOOR] = new BaseTile(TILE_CAVE_BLACK_ABYSS_FLOOR, "Пол пещеры", "res/dungeons/cave_black_abyss_floor.png", true, true, false, true);
+		TILESET[TILE_CAVE_BLACK_ABYSS_WALL] = new BaseTile(TILE_CAVE_BLACK_ABYSS_WALL, "Стена пещеры", "res/dungeons/cave_black_abyss_wall.png", false, false, false, false);
 
 	}
 
