@@ -274,6 +274,27 @@ public class PlayerAction {
 		}
 	}
 	
+	// Едим
+	public boolean eatIt() {
+		if (map.getGame().player.getInventory().size() == 0) {
+			map.getGame().logMessage("У вас пусто в инвентаре, нечего скушать!");
+			mp.repaint();
+			return false;
+		} else {
+			map.getGame().frame1.setFocusable(false);
+			map.getGame().frame1.setFocusableWindowState(false);
+			message = new ItemSelectMessage();
+			message.command = 'e';
+			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_FOOD, map.getGame().player.getInventory(), message);
+			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			frame2.setTitle("Что вы хотите съесть?");
+			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
+			frame2.toFront();
+			frame2.setVisible(true);
+			return false;
+		}
+	}
+	
 	// Одеваем персонажа
 	public boolean wearIt() {
 		if (map.getGame().player.getInventory().size() == 0) {

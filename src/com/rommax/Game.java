@@ -460,6 +460,23 @@ public class Game {
         player.getInventory().remove(number);
     }
 
+	// Едим еду
+    public void tryToEatItem(LinkedList<Item> list, int number) {
+        if (number == -1) return;
+
+        if (player.getInventory().get(number).getType() != ItemSet.TYPE_FOOD) {
+            logMessage(player.getInventory().get(number).getName() + "#^# - это нельзя съесть!");
+            return;
+        }
+
+        logMessage("#8#Съедено!#^# (" + player.getInventory().get(number).getName().toLowerCase() + "#^#)");
+        tryToIdentifyItem(player.getInventory().get(number));
+        player.setEffectFrom(ScriptParser.parseString(player.getInventory().get(number).getScript()), player.getInventory().get(number).isIdentify());
+        player.getCurrentWeight().setCurrent(player.getCurrentWeight().getCurrent() - player.getInventory().get(number).getMass());
+        player.getCurrentSize().setCurrent(player.getCurrentSize().getCurrent() - player.getInventory().get(number).getSize());
+        player.getInventory().remove(number);
+    }
+
     // идентифицирует неопознанные предметы: зелья, свитки и т.д.
     // по номеру, ниже по классу есть еще метод идентификации по Item item
     public void tryToIdentifyItem(int number) {

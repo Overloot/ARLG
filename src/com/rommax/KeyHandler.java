@@ -66,6 +66,8 @@ public class KeyHandler implements KeyListener{
 		else if (keycode == KeyEvent.VK_Q && event.isShiftDown()) flag = playerAction.quaffIt();
 		// Прочитать свиток
 		else if (keycode == KeyEvent.VK_R && !event.isShiftDown()) flag = playerAction.readIt();
+		// Съесть еду
+		else if (keycode == KeyEvent.VK_F && !event.isShiftDown()) flag = playerAction.eatIt();
 		// Одеть экипировку
 		else if (keycode == KeyEvent.VK_W && event.isShiftDown()) flag =  playerAction.wearIt();
 		// Осмотреть инвентарь

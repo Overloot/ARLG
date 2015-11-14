@@ -105,6 +105,12 @@ public class ItemSelectKeyHandler implements KeyListener{
 						ip.iwindow.stop();
 						ip.repaint();
 						break;
+					case 'e': // Съесть еду
+						ip.iwindow.game.tryToEatItem(ip.iwindow.game.player.getInventory(), ip.iwindow.message.number);
+						ip.iwindow.stop();
+						ip.repaint();
+						ip.iwindow.game.refresh();
+						break;
 					case 'r': // Прочитать свиток
 						ip.iwindow.game.tryToReadItem(ip.iwindow.game.player.getInventory(), ip.iwindow.message.number);
 						ip.iwindow.stop();
