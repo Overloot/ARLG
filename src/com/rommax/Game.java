@@ -359,13 +359,11 @@ public class Game {
 	}
 	
     public void fillLevelByMonsters() {
-		monstersQuantity = 0;
         for (int i = 0; i < MAX_MONSTER_PER_LEVEL; i++)
             addRandomMonster();
     }
 
     public void fillLevelByItems() {
-		itemsQuantity = 0;
         for (int i = 0; i < MAX_ITEM_PER_LEVEL; i++)
             addRandomItem();
     }
@@ -642,9 +640,9 @@ public class Game {
 	// Ставим предмет(ы)
 	private void loot(int index) {
         Random r = new Random();
-		for(int i = 0; i < 3; i++)
-			if (this.dice(player.getLUCK().getCurrent(), 100))
-				addRandomItem(monsterList[index].getY(), monsterList[index].getX());
+//		for(int i = 0; i < 3; i++)
+//			if (this.dice(player.getLUCK().getCurrent(), 100))
+//				addRandomItem(monsterList[index].getY(), monsterList[index].getX());
 	}
 
     // метод проверят не многовато ли у монстра HitPoints, а так же окончательно добивает убитых
