@@ -4,13 +4,13 @@
 
 package com.rommax;
 
-import java.util.*;
+import java.util.Random;
 
 public class MapGenerator {
 
     LogWriter logWriter = new LogWriter();
     public Map map;
-    public static final int MAX_GENERATORS = 9; // должно соответствовать количеству типов карт
+    public static final int MAX_GENERATORS = 11; // должно соответствовать количеству типов карт
     private Random rand = new Random();
 
     public static final int ID_FOREST_1 = 0;
@@ -22,46 +22,55 @@ public class MapGenerator {
     public static final int ID_OLD_CASTLE = 6;
     public static final int ID_FOREST_MARSH = 7;
     public static final int ID_CAVE_BLACK_ABYSS = 8;
+    public static final int ID_SIBERIA = 9;
+    public static final int ID_OLD_CASTLE_UNDERGROUND = 10;
 
     public void generateMap(Map map, int ID) {
         this.map = map;
-        ID = 8; // для теста
-		switch (ID){
-			case ID_FOREST_1:
-				ForestCreate();
-				break;
-			case ID_MAZE_1:
-				MazeCreate();
-				break;
-			case ID_FOREST_2:
-				LakesCreate(1);
-				break;
-			case ID_MAZE_2:
-				RiftCreate();
-				break;
-			case ID_TOWER:
-				TowerCreate();
-				break;
-			case ID_VILLAGE:
-				VillageCreate();
-				break;
-			case ID_OLD_CASTLE:
-				createOldCastle();
-				break;
-			case ID_FOREST_MARSH:
-				forestMarshCreate();
-				break;
+        ID = 10; // для теста
+        switch (ID) {
+            case ID_FOREST_1:
+                ForestCreate();
+                break;
+            case ID_MAZE_1:
+                MazeCreate();
+                break;
+            case ID_FOREST_2:
+                LakesCreate(1);
+                break;
+            case ID_MAZE_2:
+                RiftCreate();
+                break;
+            case ID_TOWER:
+                TowerCreate();
+                break;
+            case ID_VILLAGE:
+                VillageCreate();
+                break;
+            case ID_OLD_CASTLE:
+                createOldCastle();
+                break;
+            case ID_FOREST_MARSH:
+                forestMarshCreate();
+                break;
             case ID_CAVE_BLACK_ABYSS:
                 createCaveBlackAbyss();
                 break;
-		}
+            case ID_SIBERIA:
+                createSiberia();
+                break;
+            case ID_OLD_CASTLE_UNDERGROUND:
+                createOldCastleUnderground();
+                break;
+
+        }
     }
 
-    public void RiftCreate() {
+    private void RiftCreate() {
         map.setName("#2#Пещеры ужаса#^#");
         for (int i = 0; i < (map.getHeight() * map.getWidth() / 10); i++)
             PartDraw(rand.nextInt(map.getHeight()), rand.nextInt(map.getWidth()),
-				Tileset.TILE_GRASS, Tileset.TILE_TREE);
+                    Tileset.TILE_GRASS, Tileset.TILE_TREE);
         for (int i = 0; i < map.getHeight(); i++)
             for (int j = 0; j < map.getWidth(); j++)
                 if (map.field[i][j].getID() == Tileset.TILE_TREE)
@@ -71,46 +80,46 @@ public class MapGenerator {
     }
 
 
-    public int dist(int y1, int x1, int y2, int x2) {
+    private int dist(int y1, int x1, int y2, int x2) {
         int d = (int) Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
         return d;
     }
 
     //TODO: суть метода соответствует методу addModOnMap, возможно следует объединить в один?
-	private void addTiles(int preTile, int tile){
-		PartDraw(new Random().nextInt(map.getHeight()),
-			new Random().nextInt(map.getWidth()), preTile, tile);
-	}
-	
-	private void forestMarshCreate(){
-		map.setName("#3#Мангровое болото#^#");
-		fill(Tileset.TILE_MARSH);
-		for (int i = 0; i < (int) map.getHeight() * map.getWidth() / 15; i++)
-			switch (new Random().nextInt(15)){
-				case 0:
-					addTiles(Tileset.TILE_MARSH, Tileset.TILE_DIRT);
-					break;
-				case 1:
-					addTiles(Tileset.TILE_MARSH, Tileset.TILE_MARSH_GRASS);
-					break;
-				case 2:
-					addTiles(Tileset.TILE_MARSH, Tileset.TILE_MARSH_GRASS2);
-					break;
-				case 3:
-					addTiles(Tileset.TILE_MARSH, Tileset.TILE_MARSH_GRASS3);
-					break;
-				case 4:
-					addTiles(Tileset.TILE_MARSH, Tileset.TILE_MARSH_GRASS4);
-					break;
-				case 5:
-					addTiles(Tileset.TILE_MARSH, Tileset.TILE_MARSH_TREE);
-					break;
-				default:
-					addTiles(Tileset.TILE_MARSH, Tileset.TILE_MARSH_TREE2);
-			}
-	}
-	
-    public void TowerCreate() {
+    private void addTiles(int preTile, int tile) {
+        PartDraw(new Random().nextInt(map.getHeight()),
+                new Random().nextInt(map.getWidth()), preTile, tile);
+    }
+
+    private void forestMarshCreate() {
+        map.setName("#3#Мангровое болото#^#");
+        fill(Tileset.TILE_MARSH);
+        for (int i = 0; i < (int) map.getHeight() * map.getWidth() / 15; i++)
+            switch (new Random().nextInt(15)) {
+                case 0:
+                    addTiles(Tileset.TILE_MARSH, Tileset.TILE_DIRT);
+                    break;
+                case 1:
+                    addTiles(Tileset.TILE_MARSH, Tileset.TILE_MARSH_GRASS);
+                    break;
+                case 2:
+                    addTiles(Tileset.TILE_MARSH, Tileset.TILE_MARSH_GRASS2);
+                    break;
+                case 3:
+                    addTiles(Tileset.TILE_MARSH, Tileset.TILE_MARSH_GRASS3);
+                    break;
+                case 4:
+                    addTiles(Tileset.TILE_MARSH, Tileset.TILE_MARSH_GRASS4);
+                    break;
+                case 5:
+                    addTiles(Tileset.TILE_MARSH, Tileset.TILE_MARSH_TREE);
+                    break;
+                default:
+                    addTiles(Tileset.TILE_MARSH, Tileset.TILE_MARSH_TREE2);
+            }
+    }
+
+    private void TowerCreate() {
         int waterch = 20;
         int px, py, rad, k, i, j;
         map.setName("#7#Затонувшая башня#^#");
@@ -137,7 +146,7 @@ public class MapGenerator {
     }
 
     // добавляет различные элементу на карту
-    public void AddModOnMap(int modtype) {
+    private void AddModOnMap(int modtype) {
         int i, j, x, y;
         int MapY = map.getHeight();
         int MapX = map.getWidth();
@@ -167,7 +176,7 @@ public class MapGenerator {
         }
     }
 
-    public void VillageCreate() {
+    private void VillageCreate() {
 
         // ************************************************************************
         // код полностью соответствует ForestCreate, кроме отмеченного комментариями
@@ -297,7 +306,7 @@ public class MapGenerator {
     // метод смещения в сторону от заданной точки
     // принимает начальную точку, и значение в приделах которого следует отступить
     // возвращается точная координата которая отличчается минимум на 1, но не меньше 1 и не больше range - 2,
-    public int CalcOffset(int startPoint, int max_scatter, int range, int min_scatter) {
+    private int CalcOffset(int startPoint, int max_scatter, int range, int min_scatter) {
         if (new Random().nextInt(2) == 0) startPoint = startPoint - new Random().nextInt(max_scatter) - min_scatter;
         else startPoint = startPoint + new Random().nextInt(max_scatter) + min_scatter;
         if (startPoint < 1) startPoint = 1;
@@ -305,7 +314,7 @@ public class MapGenerator {
         return startPoint;
     }
 
-    public void LakesCreate(int typ) {
+    private void LakesCreate(int typ) {
         map.setName("#5#Старый лес#^#");
 
         double density = 0.9F;
@@ -353,7 +362,7 @@ public class MapGenerator {
 
     }
 
-	// tile - тайл, на который будет заменен preTile
+    // tile - тайл, на который будет заменен preTile
     private void PartDraw(int x1, int y1, int preTile, int tile) {
         int i, j, e, s, w, n;
         Random random = new Random();
@@ -393,7 +402,7 @@ public class MapGenerator {
     }
 
 
-    public int countnearby(int x, int y, int id) {
+    private int countnearby(int x, int y, int id) {
         int res = 0;
         if (map.hasTileAt(x - 1, y) && map.field[x - 1][y].getID() == id) res++;
         if (map.hasTileAt(x + 1, y) && map.field[x + 1][y].getID() == id) res++;
@@ -406,7 +415,7 @@ public class MapGenerator {
         return res;
     }
 
-    public void StartWave(int px, int py) {
+    private void StartWave(int px, int py) {
         int MAX_DEPTH = 5;
         int x, y, dx, dy, d, i, j;
         if ((px < 5) || (px > map.getHeight() - 5) || (py < 5) || (py > map.getWidth() - 5)) return;
@@ -441,7 +450,7 @@ public class MapGenerator {
     }
 
 
-    public void MazeCreate() {
+    private void MazeCreate() {
         map.setName("#7#Канализация #^#");
         fill(Tileset.TILE_DUNGEON_WALL);
         int px = map.getHeight() / 2;
@@ -453,29 +462,29 @@ public class MapGenerator {
         }
     }
 
-    public void ForestCreate() {
+    private void ForestCreate() {
         map.setName("#3#Лес Древних #^#");
         for (int i = 0; i < (map.getHeight() * map.getWidth() / 10); i++)
             PartDraw(new Random().nextInt(map.getHeight()),
-				new Random().nextInt(map.getWidth()),
-					Tileset.TILE_GRASS, Tileset.TILE_TREE);
+                    new Random().nextInt(map.getWidth()),
+                    Tileset.TILE_GRASS, Tileset.TILE_TREE);
     }
 
-	// Заполняет всю карту указанным тайлом
-	private void fill(int tile){
+    // Заполняет всю карту указанным тайлом
+    private void fill(int tile) {
         for (int y = 0; y < map.getHeight(); y++)
             for (int x = 0; x < map.getWidth(); x++)
-				map.setTileAt(y, x, tile);
-	}
-	
-	// Заполняет область указанным тайлом (создает комнату)
-	private void fill(int y, int x, int height, int width, int tile){
-		for (int i = y; i <= y + height; i++)
-			for (int j = x; j <= x + width; j++)
-				map.setTileAt(i, j, tile);		
-	}
+                map.setTileAt(y, x, tile);
+    }
 
-    public void createOldCastle() {
+    // Заполняет область указанным тайлом (создает комнату)
+    private void fill(int y, int x, int height, int width, int tile) {
+        for (int i = y; i <= y + height; i++)
+            for (int j = x; j <= x + width; j++)
+                map.setTileAt(i, j, tile);
+    }
+
+    private void createOldCastle() {
         final int ROOM_MAX_SIZE = 5;
         final int ROOM_MIN_SIZE = 3;
         final int ROOM_MAX_TOTAL_SIZE = ROOM_MIN_SIZE + ROOM_MAX_SIZE + 1;
@@ -486,20 +495,20 @@ public class MapGenerator {
         int firstX, firstY;
         int sizeHall;
         int secondX, secondY;
-		fill(Tileset.TILE_OLD_CASTLE_WALL);//заполняем карту сплошными стенами
+        fill(Tileset.TILE_OLD_CASTLE_WALL);//заполняем карту сплошными стенами
         while (true) {
             sizeX = new Random().nextInt(ROOM_MAX_SIZE) + ROOM_MIN_SIZE;
             sizeY = new Random().nextInt(ROOM_MAX_SIZE) + ROOM_MIN_SIZE;
             // проверка на выход за границы карты
-            if (pointX + sizeX > map.getWidth() -1) {
+            if (pointX + sizeX > map.getWidth() - 1) {
                 pointY = pointY + ROOM_MAX_TOTAL_SIZE;
                 pointX = 1;
                 continue;
             }
             if (pointY + sizeY > map.getHeight() - 1) break;
-			fill(pointY, pointX, sizeY, sizeX, Tileset.TILE_OLD_CASTLE_FLOOR);// Ставим комнату
-			
-			 
+            fill(pointY, pointX, sizeY, sizeX, Tileset.TILE_OLD_CASTLE_FLOOR);// Ставим комнату
+
+
             // вычисляем координаты для двери и перехода
             // высота
             firstY = pointY;
@@ -521,14 +530,12 @@ public class MapGenerator {
 
     }
 
-    private void createDoor(int y, int x, boolean isWidth)
-    {
+    private void createDoor(int y, int x, boolean isWidth) {
         if (isWidth) map.setTileAt(y, x, Tileset.TILE_CLOSED_DOOR); // правай дверь в проходе
         if (!isWidth) map.setTileAt(x, y, Tileset.TILE_CLOSED_DOOR); // правай дверь в проходе
     }
 
-    private void createPassage(int firstY, int firstX, int secondY, int secondX, boolean isWidth, boolean needDoors)
-    {
+    private void createPassage(int firstY, int firstX, int secondY, int secondX, boolean isWidth, boolean needDoors) {
         if (isWidth) { // по ширине
             while (true) {
                 firstX--;
@@ -564,12 +571,10 @@ public class MapGenerator {
 
     }
 
-    public void createCaveBlackAbyss()
-    {
+    private void createCaveBlackAbyss() {
         map.setName("#2#Пещера ''Черная бездна''#^#");
         fill(Tileset.TILE_CAVE_BLACK_ABYSS_WALL);
         int diggerPointX = 15, diggerPointY = 15;
-        int diggerMoveTo;
         int rnd;
         int rndX, rndY;
         int[][] genMap = new int[map.getHeight()][map.getWidth()];
@@ -627,5 +632,76 @@ public class MapGenerator {
                 if (map.field[y][x].getID() == tile) count++;
         return count;
     }
+
+    private void createSiberia() {
+        map.setName("#3#Сибирские просторы#^#");
+        fill(Tileset.TILE_WINTER_FOREST_FLOOR);
+        for (int i = 0; i < (int) map.getHeight() * map.getWidth() / 15; i++)
+            switch (new Random().nextInt(8)) {
+                case 0:
+                    addTiles(Tileset.TILE_WINTER_FOREST_FLOOR, Tileset.TILE_WINTER_FOREST_FLOOR2);
+                    break;
+                case 1:
+                    addTiles(Tileset.TILE_WINTER_FOREST_FLOOR, Tileset.TILE_WINTER_FOREST_FLOOR3);
+                    break;
+                case 2:
+                    addTiles(Tileset.TILE_WINTER_FOREST_FLOOR, Tileset.TILE_WINTER_FOREST_FLOOR2);
+                    break;
+                case 3:
+                    addTiles(Tileset.TILE_WINTER_FOREST_FLOOR, Tileset.TILE_WINTER_FOREST_FLOOR3);
+                    break;
+                case 4:
+                    addTiles(Tileset.TILE_WINTER_FOREST_FLOOR, Tileset.TILE_WINTER_FOREST_TREE);
+                    break;
+                default:
+                    addTiles(Tileset.TILE_WINTER_FOREST_FLOOR, Tileset.TILE_WINTER_FOREST_TREE2);
+            }
+    }
+
+    private void createOldCastleUnderground() {
+        map.setName("#3#Подземелье старого замка#^#");
+        final int ROOM_COUNT = 10;
+        final int COORD_Y = 0;
+        final int COORD_X = 1;
+        int[][] roomNumber = new int[ROOM_COUNT][2];
+        int sizeX, sizeY;
+        int pointX, pointY;
+        fill(Tileset.TILE_OLD_CASTLE_UNDERGROUND_WALL);
+        for (int room = 0; room < ROOM_COUNT; room++) {
+            sizeX = new Random().nextInt(4) + 2;
+            sizeY = new Random().nextInt(4) + 2;
+            pointX = 1 + new Random().nextInt(map.getWidth() - 1);
+            pointY = 1 + new Random().nextInt(map.getHeight() - 1);
+            if (pointX + sizeX > map.getWidth() - 1) pointX = pointX - (sizeX + 2);
+            if (pointY + sizeY > map.getHeight() - 1) pointY = pointY - (sizeY + 2);
+            fill(pointY, pointX, sizeY, sizeX, Tileset.TILE_OLD_CASTLE_UNDERGROUND_FLOOR);
+            roomNumber[room][COORD_Y] = pointY;
+            roomNumber[room][COORD_X] = pointX;
+        }
+
+        for (int room = 0; room < ROOM_COUNT -                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 1; room++) {
+            pointY = roomNumber[room][COORD_Y];
+            pointX = roomNumber[room][COORD_X];
+            while (true) {
+                if (pointY == roomNumber[room + 1][COORD_Y]) break;
+                if (roomNumber[room + 1][COORD_Y] > pointY) pointY++;
+                if (roomNumber[room + 1][COORD_Y] < pointY) pointY--;
+                map.setTileAt(pointY, pointX, Tileset.TILE_OLD_CASTLE_UNDERGROUND_FLOOR);
+                logWriter.myMessage("PY " + Integer.toString(pointY) + "CY " + Integer.toString(roomNumber[room + 1][COORD_Y]));
+            }
+
+            while (true) {
+                if (pointX == roomNumber[room + 1][COORD_X]) break;
+                if (roomNumber[room + 1][COORD_X] > pointX) pointX++;
+                if (roomNumber[room + 1][COORD_X] < pointX) pointX--;
+                map.setTileAt(pointY, pointX, Tileset.TILE_OLD_CASTLE_UNDERGROUND_FLOOR);
+                logWriter.myMessage("PX " + Integer.toString(pointX) + "CX " + Integer.toString(roomNumber[room + 1][COORD_X]));
+
+            }
+
+        }
+
+    }
+
 
 }

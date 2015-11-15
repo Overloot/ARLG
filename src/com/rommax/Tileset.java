@@ -33,8 +33,15 @@ public class Tileset{
 	public static final int TILE_CAVE_BLACK_ABYSS_WALL = 28;
 	public static final int TILE_CAVE_BLACK_ABYSS_BONFIRE = 29;
 	public static final int TILE_CAVE_BLACK_ABYSS_SKELETON = 30;
+	public static final int TILE_WINTER_FOREST_FLOOR = 31;
+	public static final int TILE_WINTER_FOREST_FLOOR2 = 32;
+	public static final int TILE_WINTER_FOREST_FLOOR3 = 33;
+	public static final int TILE_WINTER_FOREST_TREE = 34;
+	public static final int TILE_WINTER_FOREST_TREE2 = 35;
+	public static final int TILE_OLD_CASTLE_UNDERGROUND_WALL = 36;
+	public static final int TILE_OLD_CASTLE_UNDERGROUND_FLOOR = 37;
 
-	public static final int MAX_TILES = 31;
+	public static final int MAX_TILES = 38;
 
     public static final int TILE_SIZE = 32;
 
@@ -73,6 +80,13 @@ public class Tileset{
 		TILESET[TILE_CAVE_BLACK_ABYSS_WALL] = new BaseTile(TILE_CAVE_BLACK_ABYSS_WALL, "Стена пещеры", "res/dungeons/cave_black_abyss_wall.png", false, false, false, false);
 		TILESET[TILE_CAVE_BLACK_ABYSS_BONFIRE] = new BaseTile(TILE_CAVE_BLACK_ABYSS_BONFIRE, "Костер", "res/dungeons/cave_black_abyss_bonfire.png", true, true, false, true);
 		TILESET[TILE_CAVE_BLACK_ABYSS_SKELETON] = new BaseTile(TILE_CAVE_BLACK_ABYSS_SKELETON, "Скелет", "res/dungeons/cave_black_abyss_skeleton.png", true, true, false, true);
+		TILESET[TILE_WINTER_FOREST_FLOOR] = new BaseTile(TILE_WINTER_FOREST_FLOOR, "Снег", "res/dungeons/winter_forest_floor.png", true, true, false, true);
+		TILESET[TILE_WINTER_FOREST_FLOOR2] = new BaseTile(TILE_WINTER_FOREST_FLOOR2, "Снег", "res/dungeons/winter_forest_floor2.png", true, true, false, true);
+		TILESET[TILE_WINTER_FOREST_FLOOR3] = new BaseTile(TILE_WINTER_FOREST_FLOOR3, "Снег", "res/dungeons/winter_forest_floor3.png", true, true, false, true);
+		TILESET[TILE_WINTER_FOREST_TREE] = new BaseTile(TILE_WINTER_FOREST_TREE, "Елка в снегу", "res/dungeons/winter_forest_tree.png", false, false, false, false);
+		TILESET[TILE_WINTER_FOREST_TREE2] = new BaseTile(TILE_WINTER_FOREST_TREE2, "Елка в снегу", "res/dungeons/winter_forest_tree2.png", false, false, false, false);
+		TILESET[TILE_OLD_CASTLE_UNDERGROUND_FLOOR] = new BaseTile(TILE_OLD_CASTLE_UNDERGROUND_FLOOR, "Пол подземелья старого замка", "res/dungeons/old_castle_underground_floor.png", true, true, false, true);
+		TILESET[TILE_OLD_CASTLE_UNDERGROUND_WALL] = new BaseTile(TILE_OLD_CASTLE_UNDERGROUND_WALL, "Стена стена старого замка", "res/dungeons/old_castle_underground_wall.png", false, false, false, false);
 
 	}
 
