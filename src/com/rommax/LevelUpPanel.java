@@ -22,10 +22,6 @@ class LevelUpPanel extends JPanel
 		setFocusable(true);
 	}
 
-
-
-
-
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.drawImage(lwindow.game.background, 0, 0, this);
@@ -50,7 +46,7 @@ class LevelUpPanel extends JPanel
 		g.drawString("Ловкость: влияет на шанс уворота и попадания в бою ",Tileset.TILE_SIZE + 5, (int)(Tileset.TILE_SIZE * 1.5));
 		g.drawString("Выносливость: влияет на величину здоровья ",Tileset.TILE_SIZE + 5, (int)(Tileset.TILE_SIZE * 2.5));
 		g2.setPaint(Color.WHITE);
-		g.drawString("Очков осталось : " + Integer.toString(lwindow.game.statsFree), 5, Tileset.TILE_SIZE * 3 + 10);
+		g.drawString("Очков осталось : " + Integer.toString(lwindow.game.player.statsFree), 5, Tileset.TILE_SIZE * 3 + 10);
 
 		x = (lwindow.WINDOW_WIDTH - (Tileset.TILE_SIZE*2) - 5);
 

@@ -23,7 +23,7 @@ public class LevelUpKeyHandler implements KeyListener{
 				if (panel.select == 4) panel.select = 1;
 				break;
 			case KeyEvent.VK_ENTER:
-				panel.lwindow.game.statsFree--;
+				panel.lwindow.game.player.statsFree--;
 				switch (panel.select){
 					case 1:
 						panel.lwindow.game.player.getSTR().setCurrent(panel.lwindow.game.player.getSTR().getCurrent() + 1);
@@ -46,7 +46,7 @@ public class LevelUpKeyHandler implements KeyListener{
 						panel.lwindow.game.player.getHP().setCurrent(panel.lwindow.game.player.getHP().getCurrent() + panel.lwindow.game.HIT_POINTS_PER_ENDURANCE);
 						break;
 				}
-				if (panel.lwindow.game.statsFree == 0){
+				if (panel.lwindow.game.player.statsFree == 0){
 					panel.lwindow.stop();
 					return;
 				}

@@ -93,38 +93,38 @@ public class ItemSelectKeyHandler implements KeyListener{
 						else ip.iwindow.message.number = ip.current;
 				switch (ip.iwindow.message.command) {
 					case 'b': // Идентификация предмета свитком
-						ip.iwindow.game.tryToIdentifyItem(ip.iwindow.message.number);
+						ip.iwindow.game.player.identifyItem(ip.iwindow.message.number);
 						ip.iwindow.stop();
 						break;
 					case 'i': // Осмотр предмета в инвентаре
-						ip.iwindow.game.tryToExamineItem(ip.iwindow.game.player.getInventory(), ip.iwindow.message.number);
+						ip.iwindow.game.player.examineItem(ip.iwindow.game.player.getInventory(), ip.iwindow.message.number);
 						ip.repaint();
 						break;
 					case 'w': // Одеть экипировку
-						ip.iwindow.game.tryToEquipItem(ip.iwindow.game.player.getInventory(), ip.iwindow.message.number);
+						ip.iwindow.game.player.equipItem(ip.iwindow.game.player.getInventory(), ip.iwindow.message.number);
 						ip.iwindow.stop();
 						ip.repaint();
 						break;
 					case 'e': // Съесть еду
-						ip.iwindow.game.tryToEatItem(ip.iwindow.game.player.getInventory(), ip.iwindow.message.number);
+						ip.iwindow.game.player.eatItem(ip.iwindow.game.player.getInventory(), ip.iwindow.message.number);
 						ip.iwindow.stop();
 						ip.repaint();
 						ip.iwindow.game.refresh();
 						break;
 					case 'r': // Прочитать свиток
-						ip.iwindow.game.tryToReadItem(ip.iwindow.game.player.getInventory(), ip.iwindow.message.number);
+						ip.iwindow.game.player.readItem(ip.iwindow.game.player.getInventory(), ip.iwindow.message.number);
 						ip.iwindow.stop();
 						ip.repaint();
 						ip.iwindow.game.refresh();
 						break;
 					case 'q': // Выпить зелье
-						ip.iwindow.game.tryToQuaffItem(ip.iwindow.game.player.getInventory(), ip.iwindow.message.number);
+						ip.iwindow.game.player.quaffItem(ip.iwindow.game.player.getInventory(), ip.iwindow.message.number);
 						ip.iwindow.stop();
 						ip.repaint();
 						ip.iwindow.game.refresh();
 						break;
 					case 'd': // Бросить предмет
-						ip.iwindow.game.tryToDropItem(ip.iwindow.game.player.getMap().field[ip.iwindow.game.player.getY()][ip.iwindow.game.player.getX()].getItemList(), ip.iwindow.message.number);
+						ip.iwindow.game.player.dropItem(ip.iwindow.game.player.getMap().field[ip.iwindow.game.player.getY()][ip.iwindow.game.player.getX()].getItemList(), ip.iwindow.message.number);
 						if (ip.iwindow.list.size() == 0){
 							ip.iwindow.message.command = '/';
 							ip.iwindow.stop();
@@ -134,7 +134,7 @@ public class ItemSelectKeyHandler implements KeyListener{
 						ip.repaint();
 						break;
 					case 'g': // Поднять предмет
-						ip.iwindow.game.tryToPickupItem(ip.iwindow.game.player.getMap().field[ip.iwindow.game.player.getY()][ip.iwindow.game.player.getX()].getItemList(), ip.iwindow.message.number);
+						ip.iwindow.game.player.pickupItem(ip.iwindow.game.player.getMap().field[ip.iwindow.game.player.getY()][ip.iwindow.game.player.getX()].getItemList(), ip.iwindow.message.number);
 						if (ip.iwindow.list.size() == 0){
 							ip.iwindow.message.command = '/';
 							ip.iwindow.stop();

@@ -181,7 +181,7 @@ public class PlayerAction {
 		if (map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList().size() == 1){
 			message = new ItemSelectMessage();
 			map.getGame().keyHandler.keyPressed(null);
-			map.getGame().tryToPickupItem(map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message.number);
+			map.getGame().player.pickupItem(map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message.number);
 			return true;
 		} else {
 			map.getGame().frame1.setFocusable(false);
@@ -228,6 +228,18 @@ public class PlayerAction {
 		frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
 		frame2.toFront();
 		frame2.setTitle("Информация об игроке");
+		frame2.setVisible(true);
+		return false;
+	}
+
+	// Достижения игрокa
+	public boolean achievements() {
+		map.getGame().frame1.setFocusable(false);
+		map.getGame().frame1.setFocusableWindowState(false);
+		AchievementWindow frame2 = new AchievementWindow(map.getGame());
+		frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
+		frame2.toFront();
 		frame2.setVisible(true);
 		return false;
 	}

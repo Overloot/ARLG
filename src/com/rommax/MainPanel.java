@@ -201,9 +201,9 @@ class MainPanel extends JPanel{
 		Graphics2D g2 = (Graphics2D)g;
 		left = Tileset.TILE_SIZE * SCREEN_TILE_SIZE_X + 10;
 		g2.setPaint(Color.WHITE);
-		top = 50;
+		top = 20;
 		addLine(g, "#7#" + RaceSet.getRace(RaceSet.getCurrentRaceID).getName() + "#^#");
-		top = 85;
+		top = 50;
 		// Level
 		addLine(g, "#8#УРОВЕНЬ#^#", DrawingMap.getGame().player.getLevel(), 0);
 		// Life
@@ -211,9 +211,9 @@ class MainPanel extends JPanel{
 		drawBar(DrawingMap.getGame().player.getHP().getCurrent(),
 			DrawingMap.getGame().player.getHP().getMax(), "res/icons/lifebar.png", g);	
 		// Experience
-		addLine(g, "#3#ОПЫТ#^#", DrawingMap.getGame().player.getExp(), DrawingMap.getGame().maxExperience);
+		addLine(g, "#3#ОПЫТ#^#", DrawingMap.getGame().player.getExp(), DrawingMap.getGame().player.maxExperience);
 		drawBar(DrawingMap.getGame().player.getExp(),
-			DrawingMap.getGame().maxExperience, "res/icons/expbar.png", g);	
+			DrawingMap.getGame().player.maxExperience, "res/icons/expbar.png", g);	
 		// Attributes	
 		addLine(g, "#8#СИЛА#^#", DrawingMap.getGame().player.getSTR().getCurrent(), 0);
 		addLine(g, "#8#ЛОВКОСТЬ#^#", DrawingMap.getGame().player.getAGI().getCurrent(), 0);
@@ -221,6 +221,10 @@ class MainPanel extends JPanel{
 		addLine(g, "#8#УДАЧА#^#", DrawingMap.getGame().player.getLUCK().getCurrent(), 0);
 		addLine(g, "#2#Debug: items: " + DrawingMap.getGame().itemsQuantity + "/" + DrawingMap.getGame().MAX_ITEMS + ", monsters: " + DrawingMap.getGame().monstersQuantity + "/" + DrawingMap.getGame().MAX_MONSTERS + ", day: " + DrawingMap.getGame().getTime().getDay() + "#^#");
 		// Effects
+		if (DrawingMap.getGame().player.getElecCount() > 0){
+			top = 390;
+			addLine(g, "#8#ВЫ В ШОКЕ!!!#^# : #5#  " + DrawingMap.getGame().player.getElecCount());
+		}
 		if (DrawingMap.getGame().player.getParalyzeCount() > 0){
 			top = 405;
 			addLine(g, "#8#ВЫ ПАРАЛИЗОВАНЫ!!!#^# : #5#  " + DrawingMap.getGame().player.getParalyzeCount());
@@ -246,7 +250,7 @@ class MainPanel extends JPanel{
 
 		// Map
 		top = 520;
-		addLine(g, DrawingMap.getName());
+		addLine(g, DrawingMap.getName() + " (" + DrawingMap.getLevel() + ")");
 	}
 
 	public void paintComponent(Graphics g){
@@ -259,37 +263,39 @@ class MainPanel extends JPanel{
 		if (hasNewGame) return; // Чтобы не прорисовывалась панель, пока игрок в меню
 		for (int i=0; i<SCREEN_TILE_SIZE_Y; i++)
 		for (int j=0; j<SCREEN_TILE_SIZE_X; j++){
-			if (!DrawingMap.hasTileAt(i + DrawingMap.getY(), j + DrawingMap.getX()) || (!DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getVisible() && !DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getSeen()) ){
+			int xx = j + DrawingMap.getX();
+			int yy = i + DrawingMap.getY();
+			if (!DrawingMap.hasTileAt(yy, xx) || (!DrawingMap.field[yy][xx].getVisible() && !DrawingMap.field[yy][xx].getSeen()) ){
 			Image image = window.game.loader.getImage("res/dungeons/empty.png");
 				int y = (j*Tileset.TILE_SIZE);
 				int x = (i*Tileset.TILE_SIZE) ;
 				g.drawImage(image,y,x,this);
 			}
-			else if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getSeen() &&  !DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getVisible()){
-				Image image = window.game.loader.getImage(Tileset.getTile(DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].lastseenID).getPath());
+			else if (DrawingMap.field[yy][xx].getSeen() &&  !DrawingMap.field[yy][xx].getVisible()){
+				Image image = window.game.loader.getImage(Tileset.getTile(DrawingMap.field[yy][xx].lastseenID).getPath());
 				int y = (j*Tileset.TILE_SIZE);
 				int x = (i*Tileset.TILE_SIZE) ;
 				g.drawImage(image,y,x,this);
 				image = window.game.loader.getImage("res/icons/transparent.png");
 				g.drawImage(image,y,x,this);
 			}else{
-				Image image = window.game.loader.getImage(Tileset.getTile(DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getID()).getPath());
+				Image image = window.game.loader.getImage(Tileset.getTile(DrawingMap.field[yy][xx].getID()).getPath());
 				int y = (j*Tileset.TILE_SIZE);
 				int x = (i*Tileset.TILE_SIZE) ;
 				g.drawImage(image,y,x,this);
 				// Кровь на тайле
-				int bloodID = DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getBlood();
+				int bloodID = DrawingMap.field[yy][xx].getBlood();
 				if (bloodID > 0) {
 					image = window.game.loader.getImage("res/icons/bloods.png");
 					drawSpriteFrame(image, g2, y, x, 10, bloodID);
 				}
 
-				if (DrawingMap.hasTileAt(i + DrawingMap.getY(), j + DrawingMap.getX())){
-					if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getItemsQty()!=0){
-						if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getItemsQty() > 1)
+				if (DrawingMap.hasTileAt(yy, xx)){
+					if (DrawingMap.field[yy][xx].getItemsQty()!=0){
+						if (DrawingMap.field[yy][xx].getItemsQty() > 1)
 							image = window.game.loader.getImage("res/icons/manyitems.png");
 								else{
-									LinkedList<Item> itemlist = DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getItemList();
+									LinkedList<Item> itemlist = DrawingMap.field[yy][xx].getItemList();
 								    image = window.game.loader.getImage(ItemSet.getItem(itemlist.getFirst().getID()).getPath());
 								}
 							g.drawImage(image,y,x,this);
@@ -298,18 +304,18 @@ class MainPanel extends JPanel{
 
 
 							// Рисуем монстров
-							if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster()!=null){
-								if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster() == DrawingMap.getGame().player) {
+							if (DrawingMap.field[yy][xx].getMonster()!=null){
+								if (DrawingMap.field[yy][xx].getMonster() == DrawingMap.getGame().player) {
 									image = window.game.loader.getImage(RaceSet.getRace(RaceSet.getCurrentRaceID).getPath());
-								} else image = window.game.loader.getImage(MonsterSet.getMonster(DrawingMap.field[i + DrawingMap.getY()][j + DrawingMap.getX()].getMonster().getID()).getPath());
-								int px = DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster().getX();
-								int py = DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster().getY();
+								} else image = window.game.loader.getImage(MonsterSet.getMonster(DrawingMap.field[yy][xx].getMonster().getID()).getPath());
+								int px = DrawingMap.field[yy][xx].getMonster().getX();
+								int py = DrawingMap.field[yy][xx].getMonster().getY();
 								y = (j*Tileset.TILE_SIZE);
 								x = (i*Tileset.TILE_SIZE);
 								double leftX = (double)y;
 								double topY = (double)x;
-								double curHP = (double)(DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster().getHP().getCurrent());
-								double maxHP = (double)(DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster().getHP().getMax());
+								double curHP = (double)(DrawingMap.field[yy][xx].getMonster().getHP().getCurrent());
+								double maxHP = (double)(DrawingMap.field[yy][xx].getMonster().getHP().getMax());
 								double width = (double)(curHP/maxHP*32-1);
 								double height = 2;
 								Rectangle2D rect = new Rectangle2D.Double(leftX, topY, width, height);
@@ -327,18 +333,18 @@ class MainPanel extends JPanel{
 								g2.setPaint(Color.RED);
 								g2.fill(rect);
 								g2.draw(rect);
-								if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster().getParalyzeCount()!=0){
+								if (DrawingMap.field[yy][xx].getMonster().getParalyzeCount()!=0||DrawingMap.field[yy][xx].getMonster().getElecCount()!=0){
 									image = window.game.loader.getImage("res/icons/paralyzed.png");
 									g.drawImage(image,y,x,this);
 								}
-								if (DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].getMonster().getPoisonCount()!=0){
+								if (DrawingMap.field[yy][xx].getMonster().getPoisonCount()!=0){
 									image = window.game.loader.getImage("res/icons/poisoned.png");
 									g.drawImage(image,y,x,this);
 								}
 							}
 				}
 			}
-			if (DrawingMap.hasTileAt(i + DrawingMap.getY(), j + DrawingMap.getX()) && DrawingMap.field[i+DrawingMap.getY()][j+DrawingMap.getX()].isSelected()){
+			if (DrawingMap.hasTileAt(yy, xx) && DrawingMap.field[yy][xx].isSelected()){
 				Image image = window.game.loader.getImage("res/icons/selected.png");
 				int y = (j*Tileset.TILE_SIZE);
 				int x = (i*Tileset.TILE_SIZE) ;

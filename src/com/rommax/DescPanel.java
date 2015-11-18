@@ -6,9 +6,7 @@ import java.awt.geom.*;
 import java.awt.font.*;
 import java.util.*;
 
-
-class DescPanel extends JPanel
-{
+class DescPanel extends JPanel{
 	public DescWindow dwindow;
 	public DescKeyHandler listener;
 	public int strY = 0;
@@ -48,7 +46,6 @@ class DescPanel extends JPanel
 			}
 	}
 
-
 	public void DrawItemDesc(Graphics g){
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setPaint(Color.WHITE);
@@ -57,7 +54,7 @@ class DescPanel extends JPanel
 		ScriptObject so = ScriptParser.parseString(dwindow.item.getScript());
 		int leftX = 10;
 		strY = 15;
-		String str = dwindow.item.getName() + " (предмет " + dwindow.item.getLevel() + " уровня)";
+		String str = "#8#" + dwindow.item.getName() + "#^# (предмет " + dwindow.item.getLevel() + " уровня)";
 		drawColorString(g, str, leftX, strY);
 		if (dwindow.item.getSlot()!= ItemSet.SLOT_ANY){
 			str = ItemSet.getSlotName(dwindow.item.getSlot());
@@ -191,6 +188,10 @@ class DescPanel extends JPanel
 		drawColorString(g,str,leftX, 330);
 		if (dwindow.monster.getParalyzeCount() > 0){
 			str = "#8#ПАРАЛИЗОВАН! #^# : #5#  " + dwindow.monster.getParalyzeCount();
+			drawColorString(g,str,leftX, 380);
+		}
+		if (dwindow.monster.getElecCount() > 0){
+			str = "#8#В ШОКЕ! #^# : #3#  " + dwindow.monster.getElecCount();
 			drawColorString(g,str,leftX, 400);
 		}
 		if (dwindow.monster.getPoisonCount() > 0){
@@ -200,7 +201,7 @@ class DescPanel extends JPanel
 		str = "#1#УРОВЕНЬ#^# : #8#  " + dwindow.monster.getLevel() + "#^#";
 		drawColorString(g,str,leftX, 435);
 		if (dwindow.monster == dwindow.game.player){
-		str = "ОПЫТА: " + dwindow.monster.getExp() + "/" + dwindow.game.maxExperience;
+		str = "ОПЫТА: " + dwindow.monster.getExp() + "/" + dwindow.game.player.maxExperience;
 			drawColorString(g,str,leftX, 450);
 
 		}

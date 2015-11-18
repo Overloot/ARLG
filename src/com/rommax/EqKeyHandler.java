@@ -19,7 +19,7 @@ public class EqKeyHandler implements KeyListener{
 				break;
 			case KeyEvent.VK_T:
 				if (panel.current!=-1) {
-					panel.ewindow.game.TryToTakeOffItem(panel.current);
+					panel.ewindow.game.player.takeOffItem(panel.current);
 					boolean b = false;
 					for (int i=0; i< ItemSet.MAX_SLOTS; i++)
 						if (panel.ewindow.monster.Equipment[i] != null) b = true;
@@ -50,7 +50,7 @@ public class EqKeyHandler implements KeyListener{
 				break;
 			case KeyEvent.VK_ENTER:
 				if (panel.current!=-1)
-					panel.ewindow.game.tryToExamineItem(panel.ewindow.game.player.Equipment[panel.current]);
+					panel.ewindow.game.player.examineItem(panel.ewindow.game.player.Equipment[panel.current]);
 				break;
 		}
 		panel.repaint();

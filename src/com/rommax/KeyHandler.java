@@ -92,6 +92,8 @@ public class KeyHandler implements KeyListener{
 		else if (isRightDownKey(event, keycode)) playerAction.moveRightDown();
 		// Игрок пропускает ход и отдыхает
 		else if (isRestKey(event, keycode)) playerAction.rest();
+		// Достижения игрока
+		else if (keycode == KeyEvent.VK_A && event.isShiftDown()) flag = playerAction.achievements();
 		// Игрок пытается что-то открыть
 		else if (keycode==KeyEvent.VK_O && event.isShiftDown()) flag = playerAction.openIt();
 		// Игрок пытается что-то закрыть
@@ -143,7 +145,7 @@ public class KeyHandler implements KeyListener{
 		else if (isRightUpKey(event, keycode)) playerAction.lookTo(+1, -1);
 		else if (isRightDownKey(event, keycode)) playerAction.lookTo(+1, +1);
 		else if (keycode == KeyEvent.VK_ENTER) {
-			map.getGame().TryToLookAtMonster(ly, lx);
+			map.getGame().player.lookAtMonster(ly, lx);
 			flag = false;
 		}
 		else if (keycode == KeyEvent.VK_ESCAPE) {

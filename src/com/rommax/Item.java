@@ -116,7 +116,7 @@ public class Item extends BaseItem{
 	}
 	
 	private static void addDamage(Item item){
-		switch (Util.rand(3)){
+		switch (Util.rand(4)){
 			case 1:
 				addDam(item, "#2#пламени#^#", "DFIRE");
 				break;
@@ -125,6 +125,9 @@ public class Item extends BaseItem{
 				break;
 			case 3:
 				addDam(item, "#3#яда#^#", "DPOISON");
+				break;
+			case 4:
+				addDam(item, "#3#молний#^#", "DELEC");
 				break;
 		}
 		item.identify = false;

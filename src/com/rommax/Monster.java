@@ -11,6 +11,7 @@ public class Monster extends BaseMonster{
 	private Stat currentWeight;
 	private Stat currentSize;
 	private int paralyzeCount;
+	private int elecCount;
 	private int poisonCount;
 	
 	public LinkedList<Item> getInventory(){return Inventory;}
@@ -26,6 +27,8 @@ public class Monster extends BaseMonster{
 	public void setPoisonCount(int pc){poisonCount = pc;}
 	public int getParalyzeCount(){return paralyzeCount;}
 	public void setParalyzeCount(int pc){paralyzeCount = pc;}
+	public int getElecCount(){return elecCount;}
+	public void setElecCount(int ec){elecCount = ec;}
 	
 	public Monster(BaseMonster bm, int y, int x, Map map, Game game){
 		super(bm.getLevel(), bm.getID(), bm.getName(), bm.getPath(), bm.getHP().getMax(),
@@ -388,14 +391,13 @@ public class Monster extends BaseMonster{
 		Random rand = new Random();
 
 		int ndamage = ((100 - enemy.getRNormal().getCurrent()) * (Util.rand(getDNormal().getCurrent(), getDNormal().getMax()) + Util.rand(getSTR().getCurrent())) / 100 ) ;
-		
 		int fdamage = ((100 - enemy.getRFire().getCurrent()) * Util.rand(getDFire().getCurrent(), getDFire().getMax()) / 100) ;
 		int cdamage = ((100 - enemy.getRCold().getCurrent()) * Util.rand(getDCold().getCurrent(), getDCold().getMax()) / 100 );
 		int edamage = ((100 - enemy.getRElec().getCurrent()) * Util.rand(getDElec().getCurrent(), getDElec().getMax()) / 100 );
 		int pdamage = ((100 - enemy.getRPoison().getCurrent()) * Util.rand(getDPoison().getCurrent(), getDPoison().getMax()) / 100);
 		
-		int damage = (ndamage + fdamage + cdamage);
-		int pd = enemy.getHP().getCurrent();
+		int damage = (ndamage + fdamage + cdamage + edamage);
+		int life = enemy.getHP().getCurrent();
 		//String dlog = "ловкость атакующего " + AGI.getCurrent() + "| ловкость жертвы" + enemy.AGI.getCurrent();
 		int min = rand.nextInt(getAGI().getCurrent());
 		int max = rand.nextInt(enemy.getAGI().getCurrent());
@@ -411,9 +413,10 @@ public class Monster extends BaseMonster{
 							getGame().logMessage("Вы наносите #3#критический#^# удар!");
 			}
 					
-					enemy.getHP().setCurrent(pd - damage);
+					enemy.getHP().setCurrent(life - damage);
 					if (pdamage>0) enemy.poisonCount += pdamage;
-					if (edamage>0) enemy.paralyzeCount += edamage + 1;
+					if (edamage>0) enemy.elecCount += edamage;
+					if (edamage>0) enemy.paralyzeCount += Util.rand(1, 3);
 					if (pdamage<0) enemy.getHP().setCurrent(enemy.getHP().getCurrent() - pdamage);
 					if (edamage<0) enemy.getHP().setCurrent(enemy.getHP().getCurrent() - edamage);
 
