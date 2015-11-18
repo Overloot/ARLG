@@ -65,4 +65,7 @@ public class Entity{
 		this.level = 0;
 		this.path = path;
 	}
+
+	public Entity() {} //дефолтовый конструктор
+
 }

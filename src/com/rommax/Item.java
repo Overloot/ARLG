@@ -18,7 +18,7 @@ public class Item extends BaseItem{
 	public String getRealName(){return real_name;}
 
 	public Item(BaseItem bm, int y, int x, Map map, Game game){
-		super(bm.getChanse(), bm.getID(), bm.getLevel(), bm.getSlot(), bm.getType(),
+		super(bm.getChance(), bm.getID(), bm.getLevel(), bm.getSlot(), bm.getType(),
 			bm.getName(), bm.getPath(), bm.getSize(), bm.getMass(), bm.getScript());
 		this.setPosition(y, x);
 		this.setMap(map);

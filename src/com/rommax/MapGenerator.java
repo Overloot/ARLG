@@ -27,7 +27,7 @@ public class MapGenerator {
 
     public void generateMap(Map map, int ID) {
         this.map = map;
-        ID = 10; // для теста
+        //ID = 10; // для теста
         switch (ID) {
             case ID_FOREST_1:
                 ForestCreate();

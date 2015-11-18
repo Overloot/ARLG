@@ -370,7 +370,7 @@ public class Game {
             int chance = 90 - Math.abs(ItemSet.getItem(newID).getLevel() - currentMapNumber) * 20;
             if (chance > 100) chance = 80;
             if (!Util.dice(chance, 100)) continue;
-            if (!Util.dice(ItemSet.getItem(newID).getChanse(), 100)) continue;
+            if (!Util.dice(ItemSet.getItem(newID).getChance(), 100)) continue;
             break;
         }
 		addItem(y, x, newID, map);

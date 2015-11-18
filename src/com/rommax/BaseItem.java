@@ -1,16 +1,16 @@
 package com.rommax;
 
 
-public class BaseItem extends Entity{
+public class BaseItem extends GameObject{
 
 	private int slot;
 	private int size;
 	private int mass;
 	private int type;
-	private int chanse;
+	private int chance;
 	private String script;
 
-	public BaseItem(int chanse, int id, int level, int slot, int type, String name, String path, int size, int mass, String script)
+	public BaseItem(int chance, int id, int level, int slot, int type, String name, String path, int size, int mass, String script)
 	{
 		super(id, name, path, level);
 		this.size = size;
@@ -18,7 +18,7 @@ public class BaseItem extends Entity{
 		this.slot = slot;
 		this.type = type;
 		this.script = script;
-		this.chanse = chanse;
+		this.chance = chance;
 	}
 
 	public void setType(int type){this.type = type;}
@@ -31,7 +31,7 @@ public class BaseItem extends Entity{
 	public void setMass(int mass){this.mass = mass;};
 	public void setScript(String sc){script = sc;};
 	public String getScript(){return script;};
-	public int getChanse(){return chanse;};
-	public void setChanse(int chanse){this.chanse = chanse;};
+	public int getChance(){return chance;};
+	public void setChance(int chance){this.chance = chance;};
 
 }
