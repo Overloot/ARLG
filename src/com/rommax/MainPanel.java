@@ -68,7 +68,7 @@ class MainPanel extends JPanel{
 			drawColorString(g, "#3#" + SkillSet.getSkill(Skill.skill[i]).getName() + str + "#^#", 
 				left + 40, top + (i * 35) + 10);
 			drawColorString(g, "#1#" + SkillSet.getSkill(Skill.skill[i]).getDescr() + "#^#", 
-				left + 40, top + (i * 35) + 30);
+				left + 40, top + (i * 35) + 28);
 		}
 	}
 	

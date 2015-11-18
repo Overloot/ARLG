@@ -25,7 +25,7 @@ public class AchievementSet {
 		ACHIEVEMENTSET = new BaseAchievement[MAX_ACHIEVEMENTS];
 		
 		add("В глубину!", "Достигнут 3-й уровень подземелья", "res/skills/heal.png", TYPE_FIND_LEVEL, 2);
-		add("Охотник", "Победить 5 врагов", "res/skills/heal.png", TYPE_KILL_ENEMY, 3);
+		add("Охотник", "Победил 5 врагов", "res/skills/heal.png", TYPE_KILL_ENEMY, 3);
 	}
 
 	public static BaseAchievement getAchievement(int id){

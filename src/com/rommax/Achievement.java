@@ -17,6 +17,10 @@ public class Achievement{
 		}
 	}
 
+	public static boolean isLock(int i){
+		return !unlock[i];
+	}
+	
 	// Проверка
 	public static void check(Game game, int id, int value){
 		
@@ -42,7 +46,6 @@ public class Achievement{
 		}
 		if(flag){
 			game.logMessage("#5#Новое достижение: " + AchievementSet.getAchievement(id).getName().toLowerCase() + "#^#/#");
-			game.logMessage("#5#" + AchievementSet.getAchievement(id).getDescr() + "#^#/#");
 		}
 	}
 	
