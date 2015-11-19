@@ -100,9 +100,9 @@ public class KeyHandler implements KeyListener{
 		// Игрок пытается что-то закрыть
 		else if (keycode ==KeyEvent.VK_C && event.isShiftDown()) flag = playerAction.closeIt();
 		// Вниз по лестнице
-		else if (keycode==KeyEvent.VK_B && event.isShiftDown()) flag = playerAction.downStair();
+		else if (keycode==KeyEvent.VK_PERIOD) flag = playerAction.downStair(); // "."
 		// Вверх по лестнице
-		else if (keycode==KeyEvent.VK_G && event.isShiftDown()) flag = playerAction.upStair();
+		else if (keycode==KeyEvent.VK_COMMA) flag = playerAction.upStair(); // ","
 		// Look mode
 		else if (keycode == KeyEvent.VK_L) flag = playerAction.startLookMode();
 		// Используем навыки
@@ -114,7 +114,7 @@ public class KeyHandler implements KeyListener{
 		else if (keycode == KeyEvent.VK_F12){
 			map.getGame().player.getHP().setCurrent(map.getGame().player.getHP().getMax());
 		}
-		else if (keycode == KeyEvent.VK_F1) flag = playerAction.gatheringIt();
+		else if ((keycode == KeyEvent.VK_G) && event.isShiftDown()) flag = playerAction.gatheringIt();
 		else flag = false;
 
 		mp.repaint();
