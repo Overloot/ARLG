@@ -53,4 +53,10 @@ public class Util {
         return (res <= value);
     }
 
+	// Дистанция
+    public static int dist(int y1, int x1, int y2, int x2) {
+        int d = (int) Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
+        return d;
+    }
+
 }

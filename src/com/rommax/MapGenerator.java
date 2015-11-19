@@ -10,56 +10,43 @@ public class MapGenerator {
 
     LogWriter logWriter = new LogWriter();
     public Map map;
-    public static final int MAX_GENERATORS = 11; // должно соответствовать количеству типов карт
     private Random rand = new Random();
-
-    public static final int ID_FOREST_1 = 0;
-    public static final int ID_MAZE_1 = 1;
-    public static final int ID_FOREST_2 = 2;
-    public static final int ID_MAZE_2 = 3;
-    public static final int ID_TOWER = 4;
-    public static final int ID_VILLAGE = 5;
-    public static final int ID_OLD_CASTLE = 6;
-    public static final int ID_FOREST_MARSH = 7;
-    public static final int ID_CAVE_BLACK_ABYSS = 8;
-    public static final int ID_SIBERIA = 9;
-    public static final int ID_OLD_CASTLE_UNDERGROUND = 10;
 
     public void generateMap(Map map, int ID) {
         this.map = map;
         //ID = 10; // для теста
         switch (ID) {
-            case ID_FOREST_1:
+            case MapSet.ID_FOREST_1:
                 ForestCreate();
                 break;
-            case ID_MAZE_1:
+            case MapSet.ID_MAZE_1:
                 MazeCreate();
                 break;
-            case ID_FOREST_2:
+            case MapSet.ID_FOREST_2:
                 LakesCreate(1);
                 break;
-            case ID_MAZE_2:
+            case MapSet.ID_MAZE_2:
                 RiftCreate();
                 break;
-            case ID_TOWER:
+            case MapSet.ID_TOWER:
                 TowerCreate();
                 break;
-            case ID_VILLAGE:
+            case MapSet.ID_VILLAGE:
                 VillageCreate();
                 break;
-            case ID_OLD_CASTLE:
+            case MapSet.ID_OLD_CASTLE:
                 createOldCastle();
                 break;
-            case ID_FOREST_MARSH:
+            case MapSet.ID_FOREST_MARSH:
                 forestMarshCreate();
                 break;
-            case ID_CAVE_BLACK_ABYSS:
+            case MapSet.ID_CAVE_BLACK_ABYSS:
                 createCaveBlackAbyss();
                 break;
-            case ID_SIBERIA:
+            case MapSet.ID_SIBERIA:
                 createSiberia();
                 break;
-            case ID_OLD_CASTLE_UNDERGROUND:
+            case MapSet.ID_OLD_CASTLE_UNDERGROUND:
                 createOldCastleUnderground();
                 break;
 
@@ -77,12 +64,6 @@ public class MapGenerator {
                     map.setTileAt(i, j, Tileset.TILE_DUNGEON_WALL);
                 else
                     map.setTileAt(i, j, Tileset.TILE_DUNGEON_FLOOR);
-    }
-
-
-    private int dist(int y1, int x1, int y2, int x2) {
-        int d = (int) Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
-        return d;
     }
 
     //TODO: суть метода соответствует методу addModOnMap, возможно следует объединить в один?
@@ -135,7 +116,7 @@ public class MapGenerator {
         while (k > 0) {
             for (i = 0; i < x; i++)
                 for (j = 0; j < y; j++)
-                    if (dist(i, j, px, py) == k) {
+                    if (Util.dist(i, j, px, py) == k) {
                         map.setTileAt(i, j, Tileset.TILE_TOWER_WALL);
                     }
             k -= 2;
@@ -471,7 +452,7 @@ public class MapGenerator {
     }
 
     // Заполняет всю карту указанным тайлом
-    private void fill(int tile) {
+    public void fill(int tile) {
         for (int y = 0; y < map.getHeight(); y++)
             for (int x = 0; x < map.getWidth(); x++)
                 map.setTileAt(y, x, tile);

@@ -2,12 +2,13 @@ package com.rommax;
 
 import java.util.*;
 
-public class Map extends Entity {
+public class Map extends BaseMap {
     public Tile[][] field;
 
-    public Map(int height, int width, Game game) {
-		super(0, "UNKNOWN MAP!", 0, 0, height, width, null, game, 0);
-        field = new Tile[height][width];
+    public Map(Game game) {
+		super("UNKNOWN MAP!");
+		setGame(game);
+        field = new Tile[getHeight()][getWidth()];
         for (int i = 0; i < getHeight(); i++)
             for (int j = 0; j < getWidth(); j++)
                 field[i][j] = new Tile(Tileset.TILE_EMPTY, "", "", false, false, false, false);
@@ -52,21 +53,30 @@ public class Map extends Entity {
     }
 
     //карта заполняется травой, затем запускается генератор карты, затем расставляются лесенки
-    public void generate() {
-        Random random = new Random();
+    public boolean generate() {
+
+		Random random = new Random();
         for (int i = 0; i < getHeight(); i++)
             for (int j = 0; j < getWidth(); j++) {
                 BaseTile baseTile = Tileset.getTile(Tileset.TILE_GRASS);
                 setTileAs(field[i][j], baseTile);
             }
-        MapGenerator mt = new MapGenerator();
-        mt.generateMap(this, random.nextInt(MapGenerator.MAX_GENERATORS));
+		//random.nextInt(MapSet.MAX_MAPS));// Просто рандомная карта
+		// Карта по списку из MapSet
+		new MapGenerator().generateMap(this, MapSet.getMap(getGame().currentMapNumber).getGenID());
+		BaseMap m = MapSet.getMap(getGame().currentMapNumber);
+		setName(m.getName());
+		setLevel(m.getLevel());
         AddRandomStairs();
+		return true;
     }
 
     public void AddRandomStairs() {
-        if (getGame().currentMapNumber >= getGame().MAX_FLOORS - 1) return;		
-        Random random = new Random();
+		// Ограничение на кол-во карт в MapSet или общее кол-во карт для мира
+		int min = Math.min(MapSet.mapsCount(), getGame().MAX_FLOORS) - 1;
+        if (getGame().currentMapNumber >= min) return;		
+        // Добавляем лестницы вниз в случайных местах
+		Random random = new Random();
         int y = 0;
         int x = 0;
         for (int i = 0; i < 9; i++) {

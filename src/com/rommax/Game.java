@@ -28,8 +28,8 @@ public class Game {
     // FINAL'изированные
     final int minFovRad = 4;
     final int MOVE_COST_ActionPoints = 10;
-    public final int MAP_SIZE_Y = 30;
-    public final int MAP_SIZE_X = 30;
+    public static final int MAP_SIZE_Y = 30;
+    public static final int MAP_SIZE_X = 30;
     final int MAX_FLOORS = 5;
     public static final int MAX_MONSTER_PER_LEVEL = 7;
     public static final int MAX_ITEM_PER_LEVEL = 5;
@@ -244,10 +244,10 @@ public class Game {
         if (newMapLevel < 0 || newMapLevel >= MAX_FLOORS) return;
         // Если карты, на которую осуществляется переход, не существует, то создаем ее
         if (mapList[newMapLevel] == null) {
-            mapList[newMapLevel] = new Map(MAP_SIZE_Y, MAP_SIZE_X, this);
+            mapList[newMapLevel] = new Map(this);
 			mapsQuantity++;
 			map = player.getMap(newMapLevel);
-            while (!map.field[player.getY()][player.getX()].getPassable()) map.generate();
+            while (!map.field[player.getY()][player.getX()].getPassable()) if(!map.generate())return;
             fillLevelByMonsters();
             fillLevelByItems();
 			finish();
@@ -276,11 +276,11 @@ public class Game {
 	
     // этот метод вызывается из main вторым, сразу после Game.init()
     public void run() {
-        mapList[0] = new Map(MAP_SIZE_Y, MAP_SIZE_X, this);                 // mapList класса Map
+        mapList[0] = new Map(this);                 						// mapList класса Map
         map = mapList[0];                                                   // map это текущая карта, над ней происходят все операции
                                                                             // mapList нужен только для хранения карт
         currentMapNumber = 0;                                               // номер текущей карты в массиве
-        map.generate();
+        if(!map.generate())return;
 		mapsQuantity++;
 	
         frame1 = new GameWindow(map, this);
