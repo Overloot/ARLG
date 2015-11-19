@@ -19,7 +19,7 @@ public class Item extends BaseItem{
 
 	public Item(BaseItem bm, int y, int x, Map map, Game game){
 		super(bm.getChance(), bm.getID(), bm.getLevel(), bm.getSlot(), bm.getType(),
-			bm.getName(), bm.getPath(), bm.getSize(), bm.getMass(), bm.getScript());
+			bm.getName(), bm.getPath(), bm.getSize(), bm.getMass(), bm.getScript(), bm.getDestroyable(), bm.getLife(), bm.getLoot());
 		this.setPosition(y, x);
 		this.setMap(map);
 		this.setGame(game);

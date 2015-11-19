@@ -380,4 +380,11 @@ public class PlayerAction {
 
 	}
 
+	// Добыть что-то
+	public boolean gatheringIt() {
+		map.getGame().keyHandler.GATHERING_MODE = true;
+		map.getGame().logMessage("В каком направлении вы хотите #8#добывать#^# что-то?#/#");
+		return false;
+	}
+
 }

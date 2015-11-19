@@ -1,8 +1,6 @@
 package com.rommax;
 
 import java.awt.event.*;
-import java.util.*;
-import javax.swing.*;
 
 
 public class KeyHandler implements KeyListener{
@@ -11,6 +9,7 @@ public class KeyHandler implements KeyListener{
 	MainPanel mp;
 	boolean OPEN_MODE = false;
 	boolean CLOSE_MODE = false;
+	boolean GATHERING_MODE = false;
 	public static boolean LOOK_MODE = false;
 	public boolean ID_MODE = false;
 	boolean re;
@@ -56,6 +55,8 @@ public class KeyHandler implements KeyListener{
 			if (map.getGame().player.getParalyzeCount()>5) map.getGame().player.setParalyzeCount(5);
 			flag = true;
 		}
+		// добыча ресурсов
+		else if (GATHERING_MODE) flag = gatheringMode(event, keycode);
 		// Look mode
 		else if (LOOK_MODE) flag = lookMode(event, keycode);
 		// Поднимаем предмет(ы)
@@ -113,6 +114,7 @@ public class KeyHandler implements KeyListener{
 		else if (keycode == KeyEvent.VK_F12){
 			map.getGame().player.getHP().setCurrent(map.getGame().player.getHP().getMax());
 		}
+		else if (keycode == KeyEvent.VK_F1) flag = playerAction.gatheringIt();
 		else flag = false;
 
 		mp.repaint();
@@ -220,5 +222,23 @@ public class KeyHandler implements KeyListener{
 	
 	public static int lx;
 	public static int ly;
+
+	// режим добычи ресурсов
+	private boolean gatheringMode(KeyEvent event, int keycode) {
+		boolean flag = false;
+		if (isRightKey(event, keycode)) GATHERING_MODE = map.getGame().tryToGatheringSomething(map.getGame().player.getY() + 0, map.getGame().player.getX() + 1);
+		else if (isLeftKey(event, keycode)) GATHERING_MODE = map.getGame().tryToGatheringSomething(map.getGame().player.getY() + 0, map.getGame().player.getX() - 1);
+		else if (isUpKey(event, keycode)) GATHERING_MODE = map.getGame().tryToGatheringSomething(map.getGame().player.getY() - 1, map.getGame().player.getX() + 0);
+		else if (isDownKey(event, keycode)) GATHERING_MODE = map.getGame().tryToGatheringSomething(map.getGame().player.getY() + 1, map.getGame().player.getX() + 0);
+		else if (isLeftUpKey(event, keycode)) GATHERING_MODE = map.getGame().tryToGatheringSomething(map.getGame().player.getY() - 1, map.getGame().player.getX() - 1);
+		else if (isLeftDownKey(event, keycode)) GATHERING_MODE = map.getGame().tryToGatheringSomething(map.getGame().player.getY() + 1, map.getGame().player.getX() - 1);
+		else if (isRightUpKey(event, keycode)) GATHERING_MODE = map.getGame().tryToGatheringSomething(map.getGame().player.getY() - 1, map.getGame().player.getX() + 1);
+		else if (isRightDownKey(event, keycode)) GATHERING_MODE = map.getGame().tryToGatheringSomething(map.getGame().player.getY() + 1, map.getGame().player.getX() + 1);
+		else {
+			map.getGame().logMessage("#2#НЕВЕРНОЕ#^# НАПРАВЛЕНИЕ! #/#");
+		}
+		flag = GATHERING_MODE;
+		return flag;
+	}
 
 }

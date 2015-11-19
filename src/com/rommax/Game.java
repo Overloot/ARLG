@@ -59,7 +59,7 @@ public class Game {
 		cursor = loader.getImage("res/icons/icon_plus.png");
     }
 
-    // Попытка открыть или закрыть что-то, точно вызывается из класса KeyHandler
+    // Попытка открыть или закрыть что-то, вызывается из класса KeyHandler
     public void tryToOpenSomething(boolean isPlayer, int ny, int nx, boolean mode) {
 		if (!map.hasTileAt(ny, nx) || !map.field[ny][nx].getOpenable()) {
 			if (isPlayer)
@@ -77,6 +77,28 @@ public class Game {
 		if (isPlayer)
 			if (mode) map.getGame().logMessage("Вы открыли это. #/#");
 				else map.getGame().logMessage("Вы закрыли это. #/#");
+    }
+
+    // Попытка добыть что-то, вызывается из класса KeyHandler
+    public boolean tryToGatheringSomething(int ny, int nx) {
+        boolean flag = false;
+        int newItem;
+        try {
+            if (!map.field[ny][nx].getItemList().getFirst().getDestroyable()) {
+                map.getGame().logMessage("Это нельзя добывать");
+                return true;
+            }
+            if (!map.field[ny][nx].getItemList().getFirst().gathering(map, ny, nx))
+            {
+                newItem = map.field[ny][nx].getItemList().getFirst().getLoot();
+                map.field[ny][nx].getItemList().removeFirst();
+                addItem(ny, nx, newItem, map);
+                map.getGame().logMessage("Ресурс добыт");
+                flag = true;
+            }
+        }
+        catch (NoSuchElementException e) {}
+        return flag;
     }
 
 	// AI для мостра

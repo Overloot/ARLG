@@ -10,9 +10,9 @@ public class BaseItem extends GameObject{
 	private int chance;
 	private String script;
 
-	public BaseItem(int chance, int id, int level, int slot, int type, String name, String path, int size, int mass, String script)
+	public BaseItem(int chance, int id, int level, int slot, int type, String name, String path, int size, int mass, String script, boolean destroyable, int maxHP, int loot)
 	{
-		super(id, name, path, level);
+		super(id, name, path, level, destroyable, maxHP, loot);
 		this.size = size;
 		this.mass = mass;
 		this.slot = slot;
