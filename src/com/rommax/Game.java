@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.util.*;
 import java.awt.*;
 import java.io.*;
+import java.awt.font.*;
 
 
 public class Game {
@@ -44,11 +45,6 @@ public class Game {
 	public Map getMap(){return map;}	
 	public Time getTime(){return time;}
 	
-    // выводит различные сообщения в верхний-левый угол
-    public void logMessage(String s) {
-        frame1.mainpanel.LogMessage(s);
-    }
-
     // инициализация вызывается перед запуском метода run из main
     public void init() {
         monstersQuantity = 0;
@@ -456,6 +452,25 @@ public class Game {
 		Skill.add(RaceSet.getRace(id).getSkill());
 	}
 
+    // выводит различные сообщения в верхний-левый угол
+    public void logMessage(String s) {
+        frame1.mainpanel.LogMessage(s);
+    }
+
+	// Рисует иконку навыка или ачивки с названием и кратким описанием
+	public void renderIcon(Graphics g, JPanel panel, int y, int x, int col, 
+			String imagePath, String name, String descr){
+		Graphics2D g2 = (Graphics2D)g;
+		g2.setColor(ColorSet.COLORSET[col]);
+		FontRenderContext context = g2.getFontRenderContext();
+		Font font = new Font("Serif", Font.PLAIN, 12);
+		g2.setFont(font);
+		Image image = loader.getImage(imagePath);
+		g.drawImage(image, x, y, panel);
+		g.drawString(name.toUpperCase(), x + 40, y + 10);
+		g.drawString(descr, x + 40, y + 30);
+	}
+	
     // для удобства =)
     public void done() {
     }

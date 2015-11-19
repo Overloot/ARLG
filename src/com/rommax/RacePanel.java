@@ -67,11 +67,10 @@ class RacePanel extends JPanel
 				
 				// Расовый навык
 				addLine(g, "Расовый навык:", 6, 3); z = -10;
-				addLine(g, SkillSet.getSkill(RaceSet.getRace(i).getSkill()).getPath(), 
-					SkillSet.getSkill(RaceSet.getRace(i).getSkill()).getName(), 7, 4);
-				g2.setFont(f2);
-				g.drawString(SkillSet.getSkill(RaceSet.getRace(i).getSkill()).getDescr(),
-					(Tileset.TILE_SIZE * (7 + 2)) + 5, Tileset.TILE_SIZE * (RaceSet.MAX_RACES + 4 + 1) + 40);
+				window.game.renderIcon(g, this, Tileset.TILE_SIZE * (RaceSet.MAX_RACES + 5) + 15,
+					260, 7, SkillSet.getSkill(RaceSet.getRace(i).getSkill()).getPath(),
+					SkillSet.getSkill(RaceSet.getRace(i).getSkill()).getName(),
+					SkillSet.getSkill(RaceSet.getRace(i).getSkill()).getDescr());
 			}
 		}
 		y = ((select - 1) * Tileset.TILE_SIZE);

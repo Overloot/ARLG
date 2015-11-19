@@ -58,17 +58,11 @@ class MainPanel extends JPanel{
 		int top = 200;
 		int left = Tileset.TILE_SIZE * SCREEN_TILE_SIZE_X + 10;
 		for(int i = 0; i < Skill.getAmount(); i++){
-			image = window.game.loader.getImage(SkillSet.getSkill(Skill.skill[i]).getPath());
-			g.drawImage(image, left, top + (i * 35), this);
 			String str = " (F" + (i + 5) + ")"; // Клавиши F5-F8
-			if (Skill.getCooldown(i) > 0){
-				g.drawImage(fog, left, top + (i * 35), this);
-				str = " (" + Skill.getCooldown(i) + ")";
-			}
-			drawColorString(g, "#3#" + SkillSet.getSkill(Skill.skill[i]).getName() + str + "#^#", 
-				left + 40, top + (i * 35) + 10);
-			drawColorString(g, "#1#" + SkillSet.getSkill(Skill.skill[i]).getDescr() + "#^#", 
-				left + 40, top + (i * 35) + 28);
+			if (Skill.getCooldown(i) > 0) str = " (" + Skill.getCooldown(i) + ")";
+			window.game.renderIcon(g, this, top + (i * 35), left, 7, SkillSet.getSkill(Skill.skill[i]).getPath(), 
+				SkillSet.getSkill(Skill.skill[i]).getName() + str, SkillSet.getSkill(Skill.skill[i]).getDescr());
+			if (Skill.getCooldown(i) > 0) g.drawImage(fog, left, top + (i * 35), this);
 		}
 	}
 	
