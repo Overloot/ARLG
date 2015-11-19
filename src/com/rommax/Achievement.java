@@ -50,6 +50,11 @@ public class Achievement{
 					// По счетчику
 					case AchievementSet.TYPE_KILL_ENEMY:
 					case AchievementSet.TYPE_FIND_ITEM:
+					case AchievementSet.TYPE_FIND_PLANT:
+					case AchievementSet.TYPE_FIND_MUSH:
+					case AchievementSet.TYPE_FIND_POTION:
+					case AchievementSet.TYPE_FIND_SCROLL:
+					case AchievementSet.TYPE_DAMAGE_ENEMY:
 						counter[i] = counter[i] + value;
 						if(AchievementSet.getAchievement(i).getValue() <= counter[i]){
 							done(game, i);

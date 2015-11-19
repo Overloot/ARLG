@@ -420,6 +420,9 @@ public class Monster extends BaseMonster{
 					if (pdamage<0) enemy.getHP().setCurrent(enemy.getHP().getCurrent() - pdamage);
 					if (edamage<0) enemy.getHP().setCurrent(enemy.getHP().getCurrent() - edamage);
 
+					// Проверка ачивок
+					if (enemy == getGame().player) Achievement.check(getGame(), AchievementSet.TYPE_DAMAGE_ENEMY, damage);
+					
 					if (enemy==getGame().player){
 					    if (ndamage>0)
 						getGame().logMessage("Вас #8#бьет#^# " + this.getName().toLowerCase() + "!#^# (" + Integer.toString(ndamage) + ") #/#");

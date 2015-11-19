@@ -99,7 +99,28 @@ public class Player extends Monster{
         getGame().logMessage("#8#Взято!#^# (" + list.get(number).getName().toLowerCase() + "#1#)");
         getCurrentWeight().setCurrent(getCurrentWeight().getCurrent() + list.get(number).getMass());
         getCurrentSize().setCurrent(getCurrentSize().getCurrent() + list.get(number).getSize());
-		// Проверка достижения
+		// Проверка достижения на сбор предметов по типу
+		switch(list.get(number).getType()){
+			case ItemSet.TYPE_FOOD:
+				int id = list.get(number).getID();
+				// Грибы
+				if(id >= ItemSet.MIN_MUSH && id <= ItemSet.MAX_MUSH){
+					Achievement.check(getGame(), AchievementSet.TYPE_FIND_MUSH, 1);
+				}
+				// Растения
+				if(id >= ItemSet.MIN_PLANT && id <= ItemSet.MAX_PLANT){
+					Achievement.check(getGame(), AchievementSet.TYPE_FIND_PLANT, 1);
+				}
+				break;
+			case ItemSet.TYPE_SCROLL:
+				// Свитки
+				Achievement.check(getGame(), AchievementSet.TYPE_FIND_SCROLL, 1);
+				break;
+			case ItemSet.TYPE_POTION:
+				// Зелья
+				Achievement.check(getGame(), AchievementSet.TYPE_FIND_POTION, 1);
+				break;
+		}
 		Achievement.check(getGame(), AchievementSet.TYPE_FIND_ITEM, 1);
         list.remove(number);
     }
