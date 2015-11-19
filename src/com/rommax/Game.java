@@ -405,7 +405,7 @@ public class Game {
     public void killMonster(int index) {
        logMessage(monsterList[index].getName() + " #2#УМИРАЕТ В МУКАХ#^#!!!#/#");
  		// Проверка достижения
-		Achievement.check(this, AchievementSet.ACHIEVEMENT_KILL_ENEMY, 1);
+		Achievement.check(this, AchievementSet.TYPE_KILL_ENEMY, 1);
         // Присваиваем map параметры той карты, на которой расположен монстр
         Map map = monsterList[index].getMap();
         // Cтавим кровь на месте смерти монстра
@@ -465,9 +465,12 @@ public class Game {
 		FontRenderContext context = g2.getFontRenderContext();
 		Font font = new Font("Serif", Font.PLAIN, 12);
 		g2.setFont(font);
+		// Иконка
 		Image image = loader.getImage(imagePath);
 		g.drawImage(image, x, y, panel);
+		// Название
 		g.drawString(name.toUpperCase(), x + 40, y + 10);
+		// Краткое описание
 		g.drawString(descr, x + 40, y + 30);
 	}
 	

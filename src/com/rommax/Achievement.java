@@ -22,30 +22,36 @@ public class Achievement{
 	}
 	
 	// Проверка
-	public static void check(Game game, int id, int value){
+	public static void check(Game game, int type, int value){
 		
-		if(unlock[id])return;
 		boolean flag = false;
+		for(int i = 0; i <= AchievementSet.MAX_ACHIEVEMENTS - 1; i++){
+
+			if(unlock[i])continue;
+			flag = false;
 		
-		switch(AchievementSet.getAchievement(id).getType()){
-			case AchievementSet.TYPE_NONE:
-				break;
-			case AchievementSet.TYPE_FIND_LEVEL:
-				if(AchievementSet.getAchievement(id).getValue() == value){
-					flag = true;
-					unlock[id] = true;
+			if (AchievementSet.getAchievement(i).getType() == type){
+				switch(type){
+					case AchievementSet.TYPE_NONE:
+						break;
+					case AchievementSet.TYPE_FIND_LEVEL:
+						if(AchievementSet.getAchievement(i).getValue() == value){
+							flag = true;
+							unlock[i] = true;
+						}
+						break;
+					case AchievementSet.TYPE_KILL_ENEMY:
+						counter[i] = counter[i] + value;
+						if(AchievementSet.getAchievement(i).getValue() <= counter[i]){
+							flag = true;
+							unlock[i] = true;
+						}
+						break;
 				}
-				break;
-			case AchievementSet.TYPE_KILL_ENEMY:
-				counter[id] = counter[id] + value;
-				if(AchievementSet.getAchievement(id).getValue() <= counter[id]){
-					flag = true;
-					unlock[id] = true;
-				}
-				break;
-		}
-		if(flag){
-			game.logMessage("#5#Новое достижение: " + AchievementSet.getAchievement(id).getName().toLowerCase() + "#^#/#");
+				if (flag)
+					game.logMessage("#5#Новое достижение: " + 
+						AchievementSet.getAchievement(i).getName().toUpperCase() + "#^#/#");
+			}
 		}
 	}
 	
