@@ -61,7 +61,8 @@ class MainPanel extends JPanel{
 			String str = " (F" + (i + 5) + ")"; // Клавиши F5-F8
 			if (Skill.getCooldown(i) > 0) str = " (" + Skill.getCooldown(i) + ")";
 			window.game.renderIcon(g, this, top + (i * 35), left, 7, SkillSet.getSkill(Skill.skill[i]).getPath(), 
-				SkillSet.getSkill(Skill.skill[i]).getName() + str, SkillSet.getSkill(Skill.skill[i]).getDescr());
+				SkillSet.getSkill(Skill.skill[i]).getName() + str, SkillSet.getSkill(Skill.skill[i]).getDescr(),
+				SkillSet.getSkill(Skill.skill[i]).getLevel());
 			if (Skill.getCooldown(i) > 0) g.drawImage(fog, left, top + (i * 35), this);
 		}
 	}

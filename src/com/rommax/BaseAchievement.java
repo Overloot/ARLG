@@ -6,8 +6,8 @@ public class BaseAchievement extends Entity{
 	private int value;
 	private int type;
 	
-	public BaseAchievement(int id, String name, String descr, String path, int type, int value){
-		super(id, name, path);
+	public BaseAchievement(int id, String name, String descr, String path, int type, int value, int level){
+		super(id, name, path, level);
 		this.descr = descr;
 		this.value = value;
 		this.type = type;

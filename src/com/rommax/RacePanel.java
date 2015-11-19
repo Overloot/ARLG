@@ -70,7 +70,8 @@ class RacePanel extends JPanel
 				window.game.renderIcon(g, this, Tileset.TILE_SIZE * (RaceSet.MAX_RACES + 5) + 15,
 					260, 7, SkillSet.getSkill(RaceSet.getRace(i).getSkill()).getPath(),
 					SkillSet.getSkill(RaceSet.getRace(i).getSkill()).getName(),
-					SkillSet.getSkill(RaceSet.getRace(i).getSkill()).getDescr());
+					SkillSet.getSkill(RaceSet.getRace(i).getSkill()).getDescr(),
+					SkillSet.getSkill(RaceSet.getRace(i).getSkill()).getLevel());
 			}
 		}
 		y = ((select - 1) * Tileset.TILE_SIZE);

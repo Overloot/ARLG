@@ -11,8 +11,8 @@ public class AchievementWindow extends JFrame{
     public Game game;
 
 	static{
-		WINDOW_HEIGHT = 300;
-		WINDOW_WIDTH = 400;
+		WINDOW_HEIGHT = 500;
+		WINDOW_WIDTH = 500;
 	}
 
 	public void stop(){

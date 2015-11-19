@@ -99,6 +99,8 @@ public class Player extends Monster{
         getGame().logMessage("#8#Взято!#^# (" + list.get(number).getName().toLowerCase() + "#1#)");
         getCurrentWeight().setCurrent(getCurrentWeight().getCurrent() + list.get(number).getMass());
         getCurrentSize().setCurrent(getCurrentSize().getCurrent() + list.get(number).getSize());
+		// Проверка достижения
+		Achievement.check(getGame(), AchievementSet.TYPE_FIND_ITEM, 1);
         list.remove(number);
     }
 

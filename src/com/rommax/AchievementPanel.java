@@ -29,13 +29,20 @@ class AchievementPanel extends JPanel
 		g2.setFont(f1);
 		g2.setPaint(Color.YELLOW);
 		int y = 0;
+		int x = 0;
 		int top = 4;
 		int left = 4;
+		int level;
+		boolean flag = false;
 		for(int i = 0; i < AchievementSet.MAX_ACHIEVEMENTS; i++){
-			if (Achievement.isLock(i))continue;
-			window.game.renderIcon(g, this, (y * 35) + 4, 4, 7, AchievementSet.getAchievement(i).getPath(),
-			AchievementSet.getAchievement(i).getName(), AchievementSet.getAchievement(i).getDescr());
-			y++;
+			if (Achievement.isLock(i)) continue;
+			level = AchievementSet.getAchievement(i).getLevel();
+			window.game.renderIcon(g, this, (y * 35) + top, x + left, 7, AchievementSet.getAchievement(i).getPath(),
+					AchievementSet.getAchievement(i).getName(),
+					AchievementSet.getAchievement(i).getDescr(),
+					AchievementSet.getAchievement(i).getLevel());
+				x = x + 250;
+				if (x >= 500) { x = 0; y++; }
 		}
 	}
 }

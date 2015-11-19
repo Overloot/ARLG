@@ -283,7 +283,7 @@ public class Game {
 					}
 				}
 		// Проверка достижения
-		Achievement.check(this, AchievementSet.ACHIEVEMENT_FIND_LEVEL, newMapLevel);
+		Achievement.check(this, AchievementSet.TYPE_FIND_LEVEL, newMapLevel);
     }
 
 	//TODO: конец игры слишком уныл
@@ -481,7 +481,7 @@ public class Game {
 
 	// Рисует иконку навыка или ачивки с названием и кратким описанием
 	public void renderIcon(Graphics g, JPanel panel, int y, int x, int col, 
-			String imagePath, String name, String descr){
+			String imagePath, String name, String descr, int level){
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setColor(ColorSet.COLORSET[col]);
 		FontRenderContext context = g2.getFontRenderContext();
@@ -491,9 +491,14 @@ public class Game {
 		Image image = loader.getImage(imagePath);
 		g.drawImage(image, x, y, panel);
 		// Название
-		g.drawString(name.toUpperCase(), x + 40, y + 10);
+		g.drawString(name.toUpperCase(), x + 38, y + 10);
 		// Краткое описание
-		g.drawString(descr, x + 40, y + 30);
+		g.drawString(descr, x + 38, y + 30);
+		// Уровень
+		if (level > 0) {
+			Image lev = loader.getImage("res/icons/level" + level + ".png");
+			g.drawImage(lev, x, y, panel);
+		}
 	}
 	
     // для удобства =)
