@@ -63,20 +63,20 @@ public class Game {
     public void tryToOpenSomething(boolean isPlayer, int ny, int nx, boolean mode) {
 		if (!map.hasTileAt(ny, nx) || !map.field[ny][nx].getOpenable()) {
 			if (isPlayer)
-				if (mode) map.getGame().logMessage("Там нечего открыть!#/#");
-					else map.getGame().logMessage("Там нечего закрыть!#/#");
+				if (mode) this.logMessage("Там нечего открыть!#/#");
+					else this.logMessage("Там нечего закрыть!#/#");
 			return;
         } else if (map.field[ny][nx].getOpened() == mode) {
 			if (isPlayer)
-				if (mode) map.getGame().logMessage("Это уже открыто!#/#");
-					else map.getGame().logMessage("Это уже закрыто!#/#");
+				if (mode) this.logMessage("Это уже открыто!#/#");
+					else this.logMessage("Это уже закрыто!#/#");
 			return;
         }
         if (mode) map.setTileAt(ny, nx, Tileset.TILE_OPENED_DOOR);
 			else map.setTileAt(ny, nx, Tileset.TILE_CLOSED_DOOR);
 		if (isPlayer)
-			if (mode) map.getGame().logMessage("Вы открыли это. #/#");
-				else map.getGame().logMessage("Вы закрыли это. #/#");
+			if (mode) this.logMessage("Вы открыли это. #/#");
+				else this.logMessage("Вы закрыли это. #/#");
     }
 
     // Попытка добыть что-то, вызывается из класса KeyHandler
@@ -85,7 +85,7 @@ public class Game {
         int newItem;
         try {
             if (!map.field[ny][nx].getItemList().getFirst().getDestroyable()) {
-                map.getGame().logMessage("Это нельзя добывать");
+                this.logMessage("Это нельзя добывать");
                 return true;
             }
             if (!map.field[ny][nx].getItemList().getFirst().gathering(map, ny, nx))
@@ -93,7 +93,7 @@ public class Game {
                 newItem = map.field[ny][nx].getItemList().getFirst().getLoot();
                 map.field[ny][nx].getItemList().removeFirst();
                 addItem(ny, nx, newItem, map);
-                map.getGame().logMessage("Ресурс добыт");
+                this.logMessage("Ресурс добыт");
                 flag = true;
             }
         }
@@ -147,9 +147,20 @@ public class Game {
 	void checkQuit() {
 		frame1.setFocusable(false);
 		frame1.setFocusableWindowState(false);
-        QuitWindow frame1 = new QuitWindow(map.getGame());
+        QuitWindow frame1 = new QuitWindow(this);
         frame1.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frame1.setLocation(map.getGame().frame1.WINDOW_WIDTH / 2 - frame1.WINDOW_WIDTH / 2, map.getGame().frame1.WINDOW_HEIGHT / 2 - frame1.WINDOW_HEIGHT / 2);
+        frame1.setLocation(this.frame1.WINDOW_WIDTH / 2 - frame1.WINDOW_WIDTH / 2, this.frame1.WINDOW_HEIGHT / 2 - frame1.WINDOW_HEIGHT / 2);
+        frame1.toFront();
+        frame1.setVisible(true);		
+	}
+	
+	// Help
+	void help() {
+		frame1.setFocusable(false);
+		frame1.setFocusableWindowState(false);
+        HelpWindow frame1 = new HelpWindow(this);
+        frame1.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame1.setLocation(this.frame1.WINDOW_WIDTH / 2 - frame1.WINDOW_WIDTH / 2, this.frame1.WINDOW_HEIGHT / 2 - frame1.WINDOW_HEIGHT / 2);
         frame1.toFront();
         frame1.setVisible(true);		
 	}
@@ -213,9 +224,9 @@ public class Game {
         if (x) {
             frame1.setFocusable(false);
             frame1.setFocusableWindowState(false);
-            LevelUpWindow frame1 = new LevelUpWindow(map.getGame());
+            LevelUpWindow frame1 = new LevelUpWindow(this);
             frame1.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-            frame1.setLocation(map.getGame().frame1.WINDOW_WIDTH / 2 - frame1.WINDOW_WIDTH / 2, map.getGame().frame1.WINDOW_HEIGHT / 2 - frame1.WINDOW_HEIGHT / 2);
+            frame1.setLocation(this.frame1.WINDOW_WIDTH / 2 - frame1.WINDOW_WIDTH / 2, this.frame1.WINDOW_HEIGHT / 2 - frame1.WINDOW_HEIGHT / 2);
             frame1.toFront();
             frame1.setVisible(true);
 

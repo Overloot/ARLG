@@ -50,6 +50,10 @@ public class KeyHandler implements KeyListener{
 			map.getGame().checkQuit();			
 			flag = false;
 		}
+		else if (keycode==KeyEvent.VK_F4) {
+			map.getGame().help();			
+			flag = false;
+		}
 		else if (map.getGame().player.getParalyzeCount()>0 && !LOOK_MODE){
 			map.getGame().logMessage("ВЫ #5#ПАРАЛИЗОВАНЫ!!!#^#/#");
 			if (map.getGame().player.getParalyzeCount()>5) map.getGame().player.setParalyzeCount(5);

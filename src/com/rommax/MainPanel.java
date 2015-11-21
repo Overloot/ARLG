@@ -135,7 +135,7 @@ class MainPanel extends JPanel{
 			if (linenumber > 15) LogString = "";
 	}
 
-	void drawColorString(Graphics g, String str, int lastX, int lastY){
+	public static void drawColorString(Graphics g, String str, int lastX, int lastY){
 		Graphics2D g2 = (Graphics2D)g;
 		FontRenderContext context = g2.getFontRenderContext();
 		Font f = new Font("Serif", Font.PLAIN, 12);
