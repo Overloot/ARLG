@@ -118,7 +118,10 @@ public class KeyHandler implements KeyListener{
 		else if (keycode == KeyEvent.VK_F12){
 			map.getGame().player.getHP().setCurrent(map.getGame().player.getHP().getMax());
 		}
-		else if ((keycode == KeyEvent.VK_G) && event.isShiftDown()) flag = playerAction.gatheringIt();
+		// добываем ресурсы на местности
+		else if ((keycode == KeyEvent.VK_G) && !event.isShiftDown()) flag = playerAction.gatheringIt();
+		// разбираем предметы
+		else if (keycode == KeyEvent.VK_G && event.isShiftDown()) flag = playerAction.disassembledItem();
 		else flag = false;
 
 		mp.repaint();
@@ -241,7 +244,7 @@ public class KeyHandler implements KeyListener{
 		else {
 			map.getGame().logMessage("#2#НЕВЕРНОЕ#^# НАПРАВЛЕНИЕ! #/#");
 		}
-		flag = GATHERING_MODE;
+		flag = true;
 		return flag;
 	}
 

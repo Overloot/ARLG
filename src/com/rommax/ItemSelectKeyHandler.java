@@ -6,11 +6,11 @@ import java.util.*;
 
 public class ItemSelectKeyHandler implements KeyListener{
 
-	ItemSelectPanel ip;
+	ItemSelectPanel itemSP;
 
-	public ItemSelectKeyHandler(ItemSelectPanel ip){
+	public ItemSelectKeyHandler(ItemSelectPanel itemSelectPanel){
 		super();
-		this.ip = ip;
+		this.itemSP = itemSelectPanel;
 	}
 
 	public synchronized void keyPressed(KeyEvent event){
@@ -18,142 +18,148 @@ public class ItemSelectKeyHandler implements KeyListener{
 
 		switch (keycode) {
 			case KeyEvent.VK_1:
-				if (ip.iwindow.isChangedFilter){
-					ip.iwindow.type = ItemSet.TYPE_MELEE_WEAPON;
-					ip.resetState();
+				if (itemSP.iwindow.isChangedFilter){
+					itemSP.iwindow.type = ItemSet.TYPE_MELEE_WEAPON;
+					itemSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_2:
-				if (ip.iwindow.isChangedFilter){
-					ip.iwindow.type = ItemSet.TYPE_ARMOR;
-					ip.resetState();
+				if (itemSP.iwindow.isChangedFilter){
+					itemSP.iwindow.type = ItemSet.TYPE_ARMOR;
+					itemSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_3:
-				if (ip.iwindow.isChangedFilter){
-					ip.iwindow.type = ItemSet.TYPE_POTION;
-					ip.resetState();
+				if (itemSP.iwindow.isChangedFilter){
+					itemSP.iwindow.type = ItemSet.TYPE_POTION;
+					itemSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_4:
-				if (ip.iwindow.isChangedFilter){
-					ip.iwindow.type = ItemSet.TYPE_SCROLL;
-					ip.resetState();
+				if (itemSP.iwindow.isChangedFilter){
+					itemSP.iwindow.type = ItemSet.TYPE_SCROLL;
+					itemSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_5:
-				if (ip.iwindow.isChangedFilter){
-					ip.iwindow.type = ItemSet.TYPE_CONTAINER;
-					ip.resetState();
+				if (itemSP.iwindow.isChangedFilter){
+					itemSP.iwindow.type = ItemSet.TYPE_CONTAINER;
+					itemSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_6:
-				if (ip.iwindow.isChangedFilter){
-					ip.iwindow.type = ItemSet.TYPE_FOOD;
-					ip.resetState();
+				if (itemSP.iwindow.isChangedFilter){
+					itemSP.iwindow.type = ItemSet.TYPE_FOOD;
+					itemSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_7:
-				if (ip.iwindow.isChangedFilter){
-					ip.iwindow.type = ItemSet.TYPE_MISC;
-					ip.resetState();
+				if (itemSP.iwindow.isChangedFilter){
+					itemSP.iwindow.type = ItemSet.TYPE_MISC;
+					itemSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_0:
-				if (ip.iwindow.isChangedFilter){
-					ip.iwindow.type = ItemSet.TYPE_ANY;
-					ip.resetState();
+				if (itemSP.iwindow.isChangedFilter){
+					itemSP.iwindow.type = ItemSet.TYPE_ANY;
+					itemSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_ESCAPE:
-				ip.iwindow.message.command = '/';
-				ip.iwindow.stop();
+				itemSP.iwindow.message.command = '/';
+				itemSP.iwindow.stop();
 				break;
 			case KeyEvent.VK_UP:
-				if (ip.current > 0){
-					ip.current--;
-					if (ip.current < ip.min){
-						ip.min--;
-						ip.max--;
+				if (itemSP.current > 0){
+					itemSP.current--;
+					if (itemSP.current < itemSP.min){
+						itemSP.min--;
+						itemSP.max--;
 					}
 				}
 				break;
 			case KeyEvent.VK_DOWN:
-				if (ip.current < ip.MAX_ITEMS - 1){
-					ip.current++;
-					if (ip.current > ip.max){
-						ip.min++;
-						ip.max++;
+				if (itemSP.current < itemSP.MAX_ITEMS - 1){
+					itemSP.current++;
+					if (itemSP.current > itemSP.max){
+						itemSP.min++;
+						itemSP.max++;
 					}
 				}
 				break;
 			case KeyEvent.VK_ENTER:
-				if (ip.iwindow.type != ItemSet.TYPE_ANY)
-					ip.iwindow.message.number = (getItemNumber(ip.current, ip.iwindow.type));
-						else ip.iwindow.message.number = ip.current;
-				switch (ip.iwindow.message.command) {
+				if (itemSP.iwindow.type != ItemSet.TYPE_ANY)
+					itemSP.iwindow.message.number = (getItemNumber(itemSP.current, itemSP.iwindow.type));
+						else itemSP.iwindow.message.number = itemSP.current;
+				switch (itemSP.iwindow.message.command) {
 					case 'b': // Идентификация предмета свитком
-						ip.iwindow.game.player.identifyItem(ip.iwindow.message.number);
-						ip.iwindow.stop();
+						itemSP.iwindow.game.player.identifyItem(itemSP.iwindow.message.number);
+						itemSP.iwindow.stop();
 						break;
 					case 'i': // Осмотр предмета в инвентаре
-						ip.iwindow.game.player.examineItem(ip.iwindow.game.player.getInventory(), ip.iwindow.message.number);
-						ip.repaint();
+						itemSP.iwindow.game.player.examineItem(itemSP.iwindow.game.player.getInventory(), itemSP.iwindow.message.number);
+						itemSP.repaint();
 						break;
 					case 'w': // Одеть экипировку
-						ip.iwindow.game.player.equipItem(ip.iwindow.game.player.getInventory(), ip.iwindow.message.number);
-						ip.iwindow.stop();
-						ip.repaint();
+						itemSP.iwindow.game.player.equipItem(itemSP.iwindow.game.player.getInventory(), itemSP.iwindow.message.number);
+						itemSP.iwindow.stop();
+						itemSP.repaint();
 						break;
 					case 'e': // Съесть еду
-						ip.iwindow.game.player.eatItem(ip.iwindow.game.player.getInventory(), ip.iwindow.message.number);
-						ip.iwindow.stop();
-						ip.repaint();
-						ip.iwindow.game.refresh();
+						itemSP.iwindow.game.player.eatItem(itemSP.iwindow.game.player.getInventory(), itemSP.iwindow.message.number);
+						itemSP.iwindow.stop();
+						itemSP.repaint();
+						itemSP.iwindow.game.refresh();
 						break;
 					case 'r': // Прочитать свиток
-						ip.iwindow.game.player.readItem(ip.iwindow.game.player.getInventory(), ip.iwindow.message.number);
-						ip.iwindow.stop();
-						ip.repaint();
-						ip.iwindow.game.refresh();
+						itemSP.iwindow.game.player.readItem(itemSP.iwindow.game.player.getInventory(), itemSP.iwindow.message.number);
+						itemSP.iwindow.stop();
+						itemSP.repaint();
+						itemSP.iwindow.game.refresh();
 						break;
 					case 'q': // Выпить зелье
-						ip.iwindow.game.player.quaffItem(ip.iwindow.game.player.getInventory(), ip.iwindow.message.number);
-						ip.iwindow.stop();
-						ip.repaint();
-						ip.iwindow.game.refresh();
+						itemSP.iwindow.game.player.quaffItem(itemSP.iwindow.game.player.getInventory(), itemSP.iwindow.message.number);
+						itemSP.iwindow.stop();
+						itemSP.repaint();
+						itemSP.iwindow.game.refresh();
 						break;
 					case 'd': // Бросить предмет
-						ip.iwindow.game.player.dropItem(ip.iwindow.game.player.getMap().field[ip.iwindow.game.player.getY()][ip.iwindow.game.player.getX()].getItemList(), ip.iwindow.message.number);
-						if (ip.iwindow.list.size() == 0){
-							ip.iwindow.message.command = '/';
-							ip.iwindow.stop();
+						itemSP.iwindow.game.player.dropItem(itemSP.iwindow.game.player.getMap().field[itemSP.iwindow.game.player.getY()][itemSP.iwindow.game.player.getX()].getItemList(), itemSP.iwindow.message.number);
+						if (itemSP.iwindow.list.size() == 0){
+							itemSP.iwindow.message.command = '/';
+							itemSP.iwindow.stop();
 							return;
 						}
-						ip.resetState();
-						ip.repaint();
+						itemSP.resetState();
+						itemSP.repaint();
 						break;
-					case 'g': // Поднять предмет
-						ip.iwindow.game.player.pickupItem(ip.iwindow.game.player.getMap().field[ip.iwindow.game.player.getY()][ip.iwindow.game.player.getX()].getItemList(), ip.iwindow.message.number);
-						if (ip.iwindow.list.size() == 0){
-							ip.iwindow.message.command = '/';
-							ip.iwindow.stop();
+					case 't': // Поднять предмет
+						itemSP.iwindow.game.player.pickupItem(itemSP.iwindow.game.player.getMap().field[itemSP.iwindow.game.player.getY()][itemSP.iwindow.game.player.getX()].getItemList(), itemSP.iwindow.message.number);
+						if (itemSP.iwindow.list.size() == 0){
+							itemSP.iwindow.message.command = '/';
+							itemSP.iwindow.stop();
 							return;
 						}
-						ip.resetState();
-						ip.repaint();
+						itemSP.resetState();
+						itemSP.repaint();
+						break;
+					case 'g': // разбираем предмет
+						itemSP.iwindow.game.player.disassembledItem(itemSP.iwindow.game.player.getInventory(), itemSP.iwindow.message.number);
+						itemSP.iwindow.stop();
+						itemSP.repaint();
+						itemSP.iwindow.game.refresh();
 						break;
 					default:
-						ip.iwindow.stop();
+						itemSP.iwindow.stop();
 						break;
 				}
 				break;
 		}
-		ip.repaint();
+		itemSP.repaint();
 	}
 
 	public int getItemNumber(int number, int type){
-		LinkedList<Item> x = ip.iwindow.list;
+		LinkedList<Item> x = itemSP.iwindow.list;
 		ListIterator<Item> iter = x.listIterator();
 		int cx = -1;
 		int ix = -1;

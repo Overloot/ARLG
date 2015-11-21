@@ -4,13 +4,13 @@ public class Item extends BaseItem{
 	private boolean identify;
 	private String real_name;
 
-	private static final int chanse_to_have_suffixes_for_armor = 10;
-	private static final int chanse_to_have_resists_for_armor = 90;
-	private static final int chanse_to_have_stats_for_armor = 70;
-	private static final int chanse_to_have_suffixes_for_weapon = 10;
-	private static final int chanse_to_have_damages_for_weapon = 90;
-	private static final int chanse_to_have_resists_for_weapon = 50;
-	private static final int chanse_to_have_stats_for_weapon = 70;
+	private static final int chance_to_have_suffixes_for_armor = 10;
+	private static final int chance_to_have_resists_for_armor = 90;
+	private static final int chance_to_have_stats_for_armor = 70;
+	private static final int chance_to_have_suffixes_for_weapon = 10;
+	private static final int chance_to_have_damages_for_weapon = 90;
+	private static final int chance_to_have_resists_for_weapon = 50;
+	private static final int chance_to_have_stats_for_weapon = 70;
 
 	public void swap_names(){setName(real_name);}
 	public boolean isIdentify(){return identify;};
@@ -135,15 +135,15 @@ public class Item extends BaseItem{
 	}
 	
 	public static void generateArmor(Item item){
-		if (!Util.dice(chanse_to_have_suffixes_for_armor,100)) return;
-		if (Util.dice(chanse_to_have_stats_for_armor,100)) addStat(item);
-		else if (Util.dice(chanse_to_have_resists_for_armor,100)) addResist(item);
+		if (!Util.dice(chance_to_have_suffixes_for_armor,100)) return;
+		if (Util.dice(chance_to_have_stats_for_armor,100)) addStat(item);
+		else if (Util.dice(chance_to_have_resists_for_armor,100)) addResist(item);
 	}
 
 	public static void generateWeapon(Item item){
-		if (!Util.dice(chanse_to_have_suffixes_for_weapon,100)) return;
-		if (Util.dice(chanse_to_have_damages_for_weapon,100)) addDamage(item);
-		else if (Util.dice(chanse_to_have_stats_for_weapon,100)) addStat(item);
-		else if (Util.dice(chanse_to_have_resists_for_weapon,100)) addResist(item);
+		if (!Util.dice(chance_to_have_suffixes_for_weapon,100)) return;
+		if (Util.dice(chance_to_have_damages_for_weapon,100)) addDamage(item);
+		else if (Util.dice(chance_to_have_stats_for_weapon,100)) addStat(item);
+		else if (Util.dice(chance_to_have_resists_for_weapon,100)) addResist(item);
 	}
 }

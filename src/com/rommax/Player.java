@@ -286,5 +286,24 @@ public class Player extends Monster{
         frame2.setVisible(true);
     }
 
+    public void disassembledItem(LinkedList<Item> list, int number)
+    {
+        if (number == -1) return;
+
+        if (!getInventory().get(number).getDestroyable()) {
+            getGame().logMessage(getInventory().get(number).getName() + "#^# - это нельзя разобрать!");
+            return;
+        }
+
+        getGame().logMessage("#8#Разобрано!#^# (" + getInventory().get(number).getName().toLowerCase() + "#^#)");
+        getCurrentWeight().setCurrent(getCurrentWeight().getCurrent() - getInventory().get(number).getMass());
+        getCurrentSize().setCurrent(getCurrentSize().getCurrent() - getInventory().get(number).getSize());
+        BaseItem newItem = ItemSet.getItem(getInventory().get(number).getLoot());
+        new Item(newItem, this.getY(), this.getX(), this.getMap(), this.getGame()); //TODO: добавить конструктор Item, который не будет бросать вещь на землю
+        //TODO: добавлять лут сразу в инвентарь
+        getInventory().remove(number);
+        return;
+    }
+
 
 }

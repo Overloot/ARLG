@@ -80,25 +80,24 @@ public class Game {
     }
 
     // Попытка добыть что-то, вызывается из класса KeyHandler
+    // метод прендазначен для разбора объектов типа tile - деревья, стены, камни и т.д.
     public boolean tryToGatheringSomething(int ny, int nx) {
-        boolean flag = false;
-        int newItem;
         try {
             if (!map.field[ny][nx].getItemList().getFirst().getDestroyable()) {
                 this.logMessage("Это нельзя добывать");
-                return true;
+                return false;
             }
-            if (!map.field[ny][nx].getItemList().getFirst().gathering(map, ny, nx))
+            if (map.field[ny][nx].getItemList().getFirst().gathering(map, ny, nx))
             {
-                newItem = map.field[ny][nx].getItemList().getFirst().getLoot();
-                map.field[ny][nx].getItemList().removeFirst();
-                addItem(ny, nx, newItem, map);
                 this.logMessage("Ресурс добыт");
-                flag = true;
+                return false;
             }
         }
-        catch (NoSuchElementException e) {}
-        return flag;
+        catch (NoSuchElementException e) {
+            this.logMessage("Это нельзя добывать");
+            return false;
+        }
+        return true;
     }
 
 	// AI для мостра

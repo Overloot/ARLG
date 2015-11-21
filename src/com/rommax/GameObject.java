@@ -71,11 +71,16 @@ public class GameObject extends Entity {
     public boolean gathering(Map map, int ny, int nx)
     {
         map.getGame().logMessage("Добываем ресурс");
+        /*
         this.life.setCurrent(this.life.getCurrent() - map.getGame().player.getDNormal().getCurrent());
         if (this.life.getCurrent() <= 0) {
-            return false;
+            Item newItem = map.field[ny][nx].getItemList().getFirst().getLoot();
+            map.field[ny][nx].getItemList().removeFirst();
+            map.getGame().addItem(ny, nx, newItem, map);
+            return true;
         }
-        return true;
+        */
+        return false;
     }
 
 }

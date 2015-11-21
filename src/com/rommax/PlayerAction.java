@@ -187,7 +187,7 @@ public class PlayerAction {
 			map.getGame().frame1.setFocusable(false);
 			map.getGame().frame1.setFocusableWindowState(false);
 			message = new ItemSelectMessage();
-			message.command = 'g';
+			message.command = 't';
 			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message);
 			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			frame2.setTitle("Что вы хотите поднять?");
@@ -355,6 +355,27 @@ public class PlayerAction {
 			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.getGame().player.getInventory(), message);
 			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			frame2.setTitle("Что вы хотите осмотреть?");
+			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
+			frame2.toFront();
+			frame2.setVisible(true);
+			return false;
+		}
+	}
+
+	// Разбираем предмет
+	public boolean disassembledItem() {
+		if (map.getGame().player.getInventory().size() == 0) {
+			map.getGame().logMessage("У вас пусто в инвентаре, нечего разобрать!");
+			mp.repaint();
+			return false;
+		} else {
+			map.getGame().frame1.setFocusable(false);
+			map.getGame().frame1.setFocusableWindowState(false);
+			message = new ItemSelectMessage();
+			message.command = 'g';
+			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.getGame().player.getInventory(), message);
+			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			frame2.setTitle("Что вы хотите разобрать?");
 			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
 			frame2.toFront();
 			frame2.setVisible(true);
