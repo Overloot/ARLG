@@ -93,6 +93,7 @@ public class GameObject extends Entity {
             int newItem = Tileset.getTile(map.field[ny][nx].getID()).getLoot();
             map.setTileAt(ny, nx, Tileset.getTile(map.field[ny][nx].getID()).getDefaultTile());
             map.getGame().addItem(ny, nx, newItem, map);
+            this.life.setCurrent(100); //TODO: временое решение. Необходимо, чтоб следующий объект этого типа не разрушался с первого раза.
             return true;
         }
         return false;
