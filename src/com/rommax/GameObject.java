@@ -15,6 +15,7 @@ public class GameObject extends Entity {
     private Stat life;
 
     private int loot;
+    private int defaultTile;
     //TODO: планируется как параметр, в котором будет перечислен возможный лут.
     // Примерное содержимое: wood|95|ENTS|5
     // означает, что с вероятность 95% выпадет древесина, а в 5% случаях дерево станет Энтом.
@@ -55,12 +56,13 @@ public class GameObject extends Entity {
     }
 
     // BaseTile
-    public GameObject(int id, String name, String path, boolean destroyable, int maxHP, int loot)
+    public GameObject(int id, String name, String path, boolean destroyable, int maxHP, int loot, int defaultTile)
     {
         super(id, name, path);
         this.destroyable = destroyable;
         this.life = new Stat(maxHP, maxHP);
         this.loot = loot;
+        this.defaultTile = defaultTile;
     }
 
     public boolean getDestroyable()
@@ -78,13 +80,18 @@ public class GameObject extends Entity {
         return this.loot;
     }
 
+    public int getDefaultTile()
+    {
+        return this.defaultTile;
+    }
+
     public boolean gathering(Map map, int ny, int nx)
     {
         map.getGame().logMessage("Добываем ресурс");
         this.life.setCurrent(this.life.getCurrent() - map.getGame().player.getDNormal().getCurrent());
         if (this.life.getCurrent() <= 0) {
             int newItem = Tileset.getTile(map.field[ny][nx].getID()).getLoot();
-            map.setTileAt(ny, nx, Tileset.TILE_GRASS); //временно
+            map.setTileAt(ny, nx, Tileset.getTile(map.field[ny][nx].getID()).getDefaultTile());
             map.getGame().addItem(ny, nx, newItem, map);
             return true;
         }

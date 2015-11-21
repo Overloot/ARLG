@@ -7,8 +7,8 @@ public class BaseTile extends GameObject{
 	private boolean isOpenable;
 	private boolean isBloodable;
 
-	public BaseTile(int id, String name, String path, boolean isPassable, boolean isTransparent, boolean isOpenable, boolean isBloodable, boolean destroyable, int maxHP, int loot){
-		super(id, name, path, destroyable, maxHP, loot);
+	public BaseTile(int id, String name, String path, boolean isPassable, boolean isTransparent, boolean isOpenable, boolean isBloodable, boolean destroyable, int maxHP, int loot, int defaultTile){
+		super(id, name, path, destroyable, maxHP, loot, defaultTile);
 		this.isPassable = isPassable;		// проходимый или нет
 		this.isTransparent = isTransparent; // видно сквозь или нет
 		this.isOpenable = isOpenable;		// можно открыть или нет

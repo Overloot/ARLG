@@ -3,7 +3,7 @@ package com.rommax;
 public class ItemSet {
 
 
-	/*>>>*/public static final int MAX_ITEMS =54;
+	/*>>>*/public static final int MAX_ITEMS =56;
 
 
 	private static BaseItem[] ITEMSET;
@@ -41,6 +41,8 @@ public class ItemSet {
 
 	// ID ресурсов
 	public static final int EMPTY_JAR = 53; // пустая баночка
+	public static final int METALS = 54; // металлы
+	public static final int WOOD = 55; // древесина
 
 	
 	public static String getNameOfType(int id){
@@ -60,28 +62,28 @@ public class ItemSet {
 ITEMSET[0] = new BaseItem(90,0,1,SLOT_BODY,TYPE_ARMOR,"Рубаха","res/items/body1.png",25,5,"#RNORMAL 3#", true, 100, EMPTY_JAR);
 ITEMSET[1] = new BaseItem(80,1,4,SLOT_BODY,TYPE_ARMOR,"Кожанка","res/items/body2.png",30,10,"#RNORMAL 5#", true, 100, EMPTY_JAR);
 ITEMSET[2] = new BaseItem(70,2,7,SLOT_BODY,TYPE_ARMOR,"Кожаная броня","res/items/body3.png",35,15,"#RNORMAL 7#", true, 100, EMPTY_JAR);
-ITEMSET[3] = new BaseItem(60,3,10,SLOT_BODY,TYPE_ARMOR,"Железная броня","res/items/body4.png",40,20,"#RNORMAL 9#", true, 100, EMPTY_JAR);
-ITEMSET[4] = new BaseItem(50,4,13,SLOT_BODY,TYPE_ARMOR,"Стальной доспех","res/items/body5.png",50,30,"#RNORMAL 11#", true, 100, EMPTY_JAR);
+ITEMSET[3] = new BaseItem(60,3,10,SLOT_BODY,TYPE_ARMOR,"Железная броня","res/items/body4.png",40,20,"#RNORMAL 9#", true, 100, METALS);
+ITEMSET[4] = new BaseItem(50,4,13,SLOT_BODY,TYPE_ARMOR,"Стальной доспех","res/items/body5.png",50,30,"#RNORMAL 11#", true, 100, METALS);
 ITEMSET[5] = new BaseItem(90,5,1,SLOT_LEGS,TYPE_ARMOR,"Кожаные ботинки","res/items/boot1.png",10,5,"#RNORMAL 3#", true, 100, EMPTY_JAR);
 ITEMSET[6] = new BaseItem(80,6,4,SLOT_LEGS,TYPE_ARMOR,"Укрепленные ботинки","res/items/boot5.png",10,5,"#RNORMAL 5#", true, 100, EMPTY_JAR);
-ITEMSET[7] = new BaseItem(70,7,7,SLOT_LEGS,TYPE_ARMOR,"Железные сапоги","res/items/boot2.png",10,10,"#RNORMAL 7#", true, 100, EMPTY_JAR);
-ITEMSET[8] = new BaseItem(60,8,10,SLOT_LEGS,TYPE_ARMOR,"Стальные сапоги","res/items/boot3.png",10,10,"#RNORMAL 9#", true, 100, EMPTY_JAR);
-ITEMSET[9] = new BaseItem(50,9,13,SLOT_LEGS,TYPE_ARMOR,"Крепкие стальные сапоги","res/items/boot4.png",15,15,"#RNORMAL 11#", true, 100, EMPTY_JAR);
+ITEMSET[7] = new BaseItem(70,7,7,SLOT_LEGS,TYPE_ARMOR,"Железные сапоги","res/items/boot2.png",10,10,"#RNORMAL 7#", true, 100, METALS);
+ITEMSET[8] = new BaseItem(60,8,10,SLOT_LEGS,TYPE_ARMOR,"Стальные сапоги","res/items/boot3.png",10,10,"#RNORMAL 9#", true, 100, METALS);
+ITEMSET[9] = new BaseItem(50,9,13,SLOT_LEGS,TYPE_ARMOR,"Крепкие стальные сапоги","res/items/boot4.png",15,15,"#RNORMAL 11#", true, 100, METALS);
 ITEMSET[10] = new BaseItem(90,10,1,SLOT_HEAD,TYPE_ARMOR,"Шапка","res/items/helmet5.png",10,10,"#RNORMAL 3#", true, 100, EMPTY_JAR);
 ITEMSET[11] = new BaseItem(80,11,4,SLOT_HEAD,TYPE_ARMOR,"Кожаный шлем","res/items/helmet2.png",10,10,"#RNORMAL 5#", true, 100, EMPTY_JAR);
-ITEMSET[12] = new BaseItem(70,12,7,SLOT_HEAD,TYPE_ARMOR,"Железный шлем","res/items/helmet1.png",10,10,"#RNORMAL 7#", true, 100, EMPTY_JAR);
-ITEMSET[13] = new BaseItem(60,13,10,SLOT_HEAD,TYPE_ARMOR,"Стальной шлем","res/items/helmet3.png",20,20,"#RNORMAL 9#", true, 100, EMPTY_JAR);
-ITEMSET[14] = new BaseItem(50,14,13,SLOT_HEAD,TYPE_ARMOR,"Рыцарский шлем","res/items/helmet4.png",25,25,"#RNORMAL 11#", true, 100, EMPTY_JAR);
-ITEMSET[15] = new BaseItem(90,15,1,SLOT_RIGHT_ARM,TYPE_ARMOR,"Изношенный щит","res/items/shield1.png",20,20,"#RNORMAL 3#", true, 100, EMPTY_JAR);
-ITEMSET[16] = new BaseItem(80,16,4,SLOT_RIGHT_ARM,TYPE_ARMOR,"Железный щит","res/items/shield2.png",20,20,"#RNORMAL 5#", true, 100, EMPTY_JAR);
-ITEMSET[17] = new BaseItem(70,17,7,SLOT_RIGHT_ARM,TYPE_ARMOR,"Стальной щит","res/items/shield5.png",50,40,"#RNORMAL 7#", true, 100, EMPTY_JAR);
-ITEMSET[18] = new BaseItem(60,18,10,SLOT_RIGHT_ARM,TYPE_ARMOR,"Башенный щит","res/items/shield3.png",50,40,"#RNORMAL 9#", true, 100, EMPTY_JAR);
-ITEMSET[19] = new BaseItem(35,19,13,SLOT_RIGHT_ARM,TYPE_ARMOR,"Темный щит","res/items/shield4.png",50,50,"#RNORMAL 11#RCOLD 30#RFIRE -30#", true, 100, EMPTY_JAR);
-ITEMSET[20] = new BaseItem(90,20,1,SLOT_LEFT_ARM,TYPE_MELEE_WEAPON,"Изношенный меч","res/items/sword2.png",20,10,"#DNORMAL 3_5#", true, 100, EMPTY_JAR);
-ITEMSET[21] = new BaseItem(80,21,4,SLOT_LEFT_ARM,TYPE_MELEE_WEAPON,"Старый меч","res/items/sword1.png",20,15,"#DNORMAL 5_7#", true, 100, EMPTY_JAR);
-ITEMSET[22] = new BaseItem(70,22,7,SLOT_LEFT_ARM,TYPE_MELEE_WEAPON,"Длинный меч","res/items/sword4.png",25,20,"#DNORMAL 7_10#", true, 100, EMPTY_JAR);
-ITEMSET[23] = new BaseItem(60,23,10,SLOT_LEFT_ARM,TYPE_MELEE_WEAPON,"Зазубренный меч","res/items/sword3.png",25,25,"#DNORMAL 12_15#", true, 100, EMPTY_JAR);
-ITEMSET[24] = new BaseItem(50,24,13,SLOT_LEFT_ARM,TYPE_MELEE_WEAPON,"Золотой меч","res/items/sword5.png",30,30,"#DNORMAL 15_20#", true, 100, EMPTY_JAR);
+ITEMSET[12] = new BaseItem(70,12,7,SLOT_HEAD,TYPE_ARMOR,"Железный шлем","res/items/helmet1.png",10,10,"#RNORMAL 7#", true, 100, METALS);
+ITEMSET[13] = new BaseItem(60,13,10,SLOT_HEAD,TYPE_ARMOR,"Стальной шлем","res/items/helmet3.png",20,20,"#RNORMAL 9#", true, 100, METALS);
+ITEMSET[14] = new BaseItem(50,14,13,SLOT_HEAD,TYPE_ARMOR,"Рыцарский шлем","res/items/helmet4.png",25,25,"#RNORMAL 11#", true, 100, METALS);
+ITEMSET[15] = new BaseItem(90,15,1,SLOT_RIGHT_ARM,TYPE_ARMOR,"Изношенный щит","res/items/shield1.png",20,20,"#RNORMAL 3#", true, 100, METALS);
+ITEMSET[16] = new BaseItem(80,16,4,SLOT_RIGHT_ARM,TYPE_ARMOR,"Железный щит","res/items/shield2.png",20,20,"#RNORMAL 5#", true, 100, METALS);
+ITEMSET[17] = new BaseItem(70,17,7,SLOT_RIGHT_ARM,TYPE_ARMOR,"Стальной щит","res/items/shield5.png",50,40,"#RNORMAL 7#", true, 100, METALS);
+ITEMSET[18] = new BaseItem(60,18,10,SLOT_RIGHT_ARM,TYPE_ARMOR,"Башенный щит","res/items/shield3.png",50,40,"#RNORMAL 9#", true, 100, METALS);
+ITEMSET[19] = new BaseItem(35,19,13,SLOT_RIGHT_ARM,TYPE_ARMOR,"Темный щит","res/items/shield4.png",50,50,"#RNORMAL 11#RCOLD 30#RFIRE -30#", true, 100, METALS);
+ITEMSET[20] = new BaseItem(90,20,1,SLOT_LEFT_ARM,TYPE_MELEE_WEAPON,"Изношенный меч","res/items/sword2.png",20,10,"#DNORMAL 3_5#", true, 100, METALS);
+ITEMSET[21] = new BaseItem(80,21,4,SLOT_LEFT_ARM,TYPE_MELEE_WEAPON,"Старый меч","res/items/sword1.png",20,15,"#DNORMAL 5_7#", true, 100, METALS);
+ITEMSET[22] = new BaseItem(70,22,7,SLOT_LEFT_ARM,TYPE_MELEE_WEAPON,"Длинный меч","res/items/sword4.png",25,20,"#DNORMAL 7_10#", true, 100, METALS);
+ITEMSET[23] = new BaseItem(60,23,10,SLOT_LEFT_ARM,TYPE_MELEE_WEAPON,"Зазубренный меч","res/items/sword3.png",25,25,"#DNORMAL 12_15#", true, 100, METALS);
+ITEMSET[24] = new BaseItem(50,24,13,SLOT_LEFT_ARM,TYPE_MELEE_WEAPON,"Золотой меч","res/items/sword5.png",30,30,"#DNORMAL 15_20#", true, 100, METALS);
 ITEMSET[25] = new BaseItem(30,25,1,SLOT_ANY,TYPE_SCROLL,"Свиток телепортации","res/items/scroll1.png",2,1,"#TELEPORT#", true, 100, EMPTY_JAR);
 ITEMSET[26] = new BaseItem(35,26,1,SLOT_ANY,TYPE_SCROLL,"Свиток идентификации","res/items/scroll1.png",2,1,"#IDENTIFY#", true, 100, EMPTY_JAR);
 ITEMSET[27] = new BaseItem(50,27,1,SLOT_ANY,TYPE_SCROLL,"Свиток последней надежды","res/items/scroll1.png",2,1,"#TELEPORT#PARALYZECOUNT 5#HEALSELF 0=20#", true, 100, EMPTY_JAR);
@@ -110,7 +112,11 @@ ITEMSET[49] = new BaseItem(20,49,1,SLOT_ANY,TYPE_FOOD,"Солнечник","res/
 ITEMSET[50] = new BaseItem(20,50,1,SLOT_ANY,TYPE_FOOD,"Орочий гриб","res/items/mushroom4.png",3,2,"#FOVRAD -100|10#", true, 100, EMPTY_JAR);
 ITEMSET[51] = new BaseItem(20,51,1,SLOT_ANY,TYPE_FOOD,"Кровавый гриб","res/items/mushroom5.png",3,2,"#POISONCOUNT 10=15#", true, 100, EMPTY_JAR);
 ITEMSET[52] = new BaseItem(25,52,1,SLOT_ANY,TYPE_FOOD,"Эльфийская крапива","res/items/plant1.png",3,3,"#HEALTIME 1|15#", true, 100, EMPTY_JAR);
-ITEMSET[53] = new BaseItem(0,53,1,SLOT_ANY,TYPE_RESOUSRCE,"Пустая баночка","res/items/empty_jar.png",5,1,"", false, 100, EMPTY_JAR);
+
+// ресурсы
+ITEMSET[53] = new BaseItem(0,53,1,SLOT_ANY,TYPE_RESOUSRCE,"Пустая баночка","res/items/res_empty_jar.png",5,1,"", false, 100, EMPTY_JAR);
+ITEMSET[54] = new BaseItem(0,54,1,SLOT_ANY,TYPE_RESOUSRCE,"Металлы","res/items/res_metal.png",5,20,"", false, 100, EMPTY_JAR);
+ITEMSET[55] = new BaseItem(0,55,1,SLOT_ANY,TYPE_RESOUSRCE,"Древесина","res/items/res_wood.png",5,20,"", false, 100, EMPTY_JAR);
 //!!!
 	
 		TypeName = new String[MAX_TYPES];
