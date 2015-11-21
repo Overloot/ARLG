@@ -50,7 +50,7 @@ public class KeyHandler implements KeyListener{
 			map.getGame().checkQuit();			
 			flag = false;
 		}
-		else if (keycode==KeyEvent.VK_F4) {
+		else if (keycode==KeyEvent.VK_F1) {
 			map.getGame().help();			
 			flag = false;
 		}
@@ -64,7 +64,7 @@ public class KeyHandler implements KeyListener{
 		// Look mode
 		else if (LOOK_MODE) flag = lookMode(event, keycode);
 		// Поднимаем предмет(ы)
-		else if (keycode == KeyEvent.VK_G && !event.isShiftDown()) flag = playerAction.pickupIt();
+		else if (keycode == KeyEvent.VK_T && !event.isShiftDown()) flag = playerAction.pickupIt();
 		// Бросаем предмет(ы)
 		else if (keycode == KeyEvent.VK_D && event.isShiftDown()) flag = playerAction.dropIt();
 		// Выпить зелье
@@ -72,13 +72,13 @@ public class KeyHandler implements KeyListener{
 		// Прочитать свиток
 		else if (keycode == KeyEvent.VK_R && !event.isShiftDown()) flag = playerAction.readIt();
 		// Съесть еду
-		else if (keycode == KeyEvent.VK_F && !event.isShiftDown()) flag = playerAction.eatIt();
+		else if (keycode == KeyEvent.VK_E && event.isShiftDown()) flag = playerAction.eatIt();
 		// Одеть экипировку
 		else if (keycode == KeyEvent.VK_W && event.isShiftDown()) flag =  playerAction.wearIt();
 		// Осмотреть инвентарь
 		else if (keycode == KeyEvent.VK_I && !event.isShiftDown()) flag = playerAction.inventory();
 		// Осмотр экипировки
-		else if (keycode == KeyEvent.VK_E && event.isShiftDown()) flag = playerAction.showEq();
+		else if (keycode == KeyEvent.VK_I && event.isShiftDown()) flag = playerAction.showEq();
 		// Информация об игроке
 		else if (keycode == KeyEvent.VK_H && !event.isShiftDown()) flag = playerAction.info();
 		// Open mode
