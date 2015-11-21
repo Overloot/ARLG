@@ -83,11 +83,11 @@ public class Game {
     // метод прендазначен для разбора объектов типа tile - деревья, стены, камни и т.д.
     public boolean tryToGatheringSomething(int ny, int nx) {
         try {
-            if (!map.field[ny][nx].getItemList().getFirst().getDestroyable()) {
+            if (!Tileset.getTile(map.field[ny][nx].getID()).getDestroyable()) {
                 this.logMessage("Это нельзя добывать");
                 return false;
             }
-            if (map.field[ny][nx].getItemList().getFirst().gathering(map, ny, nx))
+            if (Tileset.getTile(map.field[ny][nx].getID()).gathering(map, ny, nx))
             {
                 this.logMessage("Ресурс добыт");
                 return false;

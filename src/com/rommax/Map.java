@@ -11,7 +11,7 @@ public class Map extends BaseMap {
         field = new Tile[getHeight()][getWidth()];
         for (int i = 0; i < getHeight(); i++)
             for (int j = 0; j < getWidth(); j++)
-                field[i][j] = new Tile(Tileset.TILE_EMPTY, "", "", false, false, false, false);
+                field[i][j] = new Tile(Tileset.TILE_EMPTY, "", "", false, false, false, false, false, 100, ItemSet.EMPTY_JAR);
     }
 
     public void placeMonsterAt(int y, int x, Monster monster) {

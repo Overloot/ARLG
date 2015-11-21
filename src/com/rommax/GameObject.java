@@ -46,8 +46,18 @@ public class GameObject extends Entity {
 
     }
     */
+    // BaseItem
     public GameObject(int id, String name, String path, int level, boolean destroyable, int maxHP, int loot) {
         super(id, name, path, level);
+        this.destroyable = destroyable;
+        this.life = new Stat(maxHP, maxHP);
+        this.loot = loot;
+    }
+
+    // BaseTile
+    public GameObject(int id, String name, String path, boolean destroyable, int maxHP, int loot)
+    {
+        super(id, name, path);
         this.destroyable = destroyable;
         this.life = new Stat(maxHP, maxHP);
         this.loot = loot;
@@ -71,15 +81,13 @@ public class GameObject extends Entity {
     public boolean gathering(Map map, int ny, int nx)
     {
         map.getGame().logMessage("Добываем ресурс");
-        /*
         this.life.setCurrent(this.life.getCurrent() - map.getGame().player.getDNormal().getCurrent());
         if (this.life.getCurrent() <= 0) {
-            Item newItem = map.field[ny][nx].getItemList().getFirst().getLoot();
-            map.field[ny][nx].getItemList().removeFirst();
+            int newItem = Tileset.getTile(map.field[ny][nx].getID()).getLoot();
+            map.setTileAt(ny, nx, Tileset.TILE_GRASS); //временно
             map.getGame().addItem(ny, nx, newItem, map);
             return true;
         }
-        */
         return false;
     }
 

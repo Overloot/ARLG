@@ -1,14 +1,14 @@
 package com.rommax;
 
-public class BaseTile extends Entity{
+public class BaseTile extends GameObject{
 
 	private boolean isPassable;
 	private boolean isTransparent;
 	private boolean isOpenable;
 	private boolean isBloodable;
 
-	public BaseTile(int id, String name, String path, boolean isPassable, boolean isTransparent, boolean isOpenable, boolean isBloodable){
-		super(id, name, path);
+	public BaseTile(int id, String name, String path, boolean isPassable, boolean isTransparent, boolean isOpenable, boolean isBloodable, boolean destroyable, int maxHP, int loot){
+		super(id, name, path, destroyable, maxHP, loot);
 		this.isPassable = isPassable;		// проходимый или нет
 		this.isTransparent = isTransparent; // видно сквозь или нет
 		this.isOpenable = isOpenable;		// можно открыть или нет

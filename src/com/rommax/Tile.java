@@ -30,8 +30,8 @@ public class Tile extends BaseTile{
 	public int getItemsQty(){return itemlist.size();}
 	public LinkedList<Item> getItemList(){return itemlist;}
 
-	public Tile(int id, String name, String path, boolean isPassable, boolean isTransparent, boolean isOpenable, boolean isBloodable){
-		super(id, name, path, isPassable, isTransparent, isOpenable, isBloodable);
+	public Tile(int id, String name, String path, boolean isPassable, boolean isTransparent, boolean isOpenable, boolean isBloodable, boolean destroyable, int maxHP, int loot){
+		super(id, name, path, isPassable, isTransparent, isOpenable, isBloodable, destroyable, maxHP, loot);
 		this.isVisible = false;
 		this.isSeen = false;
 		this.blood = 0;
