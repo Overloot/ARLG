@@ -3,7 +3,7 @@ package com.rommax;
 public class ItemSet {
 
 
-	/*>>>*/public static final int MAX_ITEMS =58;
+	/*>>>*/public static final int MAX_ITEMS = 59;
 
 
 	private static BaseItem[] ITEMSET;
@@ -115,24 +115,29 @@ ITEMSET[50] = new BaseItem(20,50,1,SLOT_ANY,TYPE_FOOD,"Орочий гриб","r
 ITEMSET[51] = new BaseItem(20,51,1,SLOT_ANY,TYPE_FOOD,"Кровавый гриб","res/items/mushroom5.png",3,2,"#POISONCOUNT 10=15#", false, 100, null);
 ITEMSET[52] = new BaseItem(25,52,1,SLOT_ANY,TYPE_FOOD,"Эльфийская крапива","res/items/plant1.png",3,3,"#HEALTIME 1|15#", false, 100, null);
 
-// ресурсы
+// Ресурсы
 ITEMSET[53] = new BaseItem(0,53,1,SLOT_ANY,TYPE_RESOUSRCE,"Пустая баночка","res/items/res_empty_jar.png",5,1,"", false, 100, null);
 ITEMSET[54] = new BaseItem(0,54,1,SLOT_ANY,TYPE_RESOUSRCE,"Металлы","res/items/res_metal.png",5,20,"", false, 100, null);
 ITEMSET[55] = new BaseItem(0,55,1,SLOT_ANY,TYPE_RESOUSRCE,"Древесина","res/items/res_wood.png",5,20,"", false, 100, null);
 ITEMSET[56] = new BaseItem(0,56,1,SLOT_ANY,TYPE_RESOUSRCE,"Кожа","res/items/res_leather.png",5,5,"", false, 100, null);
 ITEMSET[57] = new BaseItem(0,57,1,SLOT_ANY,TYPE_RESOUSRCE,"Пустой свиток","res/items/scroll1.png",2,1,"", false, 100, null);
+
+// 
+ITEMSET[58] = new BaseItem(20,58,1,SLOT_ANY,TYPE_ANY,"Ключ","res/items/key.png",1,1,"", false, 1, null);
 //!!!
-	
+
 		TypeName = new String[MAX_TYPES];
+		TypeName[TYPE_ANY] = "Любые предметы";
+		TypeName[TYPE_MISC] = "Бесполезные предметы";
+		TypeName[TYPE_ARMOR] = "Броня";
+		TypeName[TYPE_MELEE_WEAPON] = "Оружие";
+		TypeName[TYPE_POTION] = "Зелья";
+		TypeName[TYPE_SCROLL] = "Свитки";
+		TypeName[TYPE_CONTAINER] = "Контейнеры";
+		TypeName[TYPE_FOOD] = "Еда";
+		TypeName[TYPE_RESOUSRCE] = "Ресурсы";
+		
 		SlotName = new String[MAX_SLOTS];
-		TypeName[0] = "Любые предметы";
-		TypeName[1] = "Бесполезные предметы";
-		TypeName[2] = "Броня";
-		TypeName[3] = "Оружие";
-		TypeName[4] = "Зелья";
-		TypeName[5] = "Свитки";
-		TypeName[6] = "Контейнеры";
-		TypeName[7] = "Еда";
 		SlotName[SLOT_HEAD] = "Вы можете надеть это #8#на голову.#^#";
 		SlotName[SLOT_BODY] = "Вы можете надеть это #8#на тело.#^#";
 		SlotName[SLOT_LEFT_ARM] = "Вы можете взять это #8#в левую руку.#^#";
