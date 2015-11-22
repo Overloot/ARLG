@@ -19,7 +19,7 @@ public class ItemSelectKeyHandler implements KeyListener{
 		switch (keycode) {
 			case KeyEvent.VK_1:
 				if (itemSP.iwindow.isChangedFilter){
-					itemSP.iwindow.type = ItemSet.TYPE_MELEE_WEAPON;
+					itemSP.iwindow.type = ItemSet.TYPE_MELEE_WEAPON_SWORD;
 					itemSP.resetState();
 				}
 				break;

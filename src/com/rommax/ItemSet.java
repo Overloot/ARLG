@@ -3,7 +3,7 @@ package com.rommax;
 public class ItemSet {
 
 
-	/*>>>*/public static final int MAX_ITEMS = 59;
+	/*>>>*/public static final int MAX_ITEMS = 60;
 
 
 	private static BaseItem[] ITEMSET;
@@ -23,13 +23,14 @@ public class ItemSet {
 	public static final int TYPE_ANY = 0;
 	public static final int TYPE_MISC = 1;
 	public static final int TYPE_ARMOR = 2;
-	public static final int TYPE_MELEE_WEAPON = 3;
+	public static final int TYPE_MELEE_WEAPON_SWORD = 3;
 	public static final int TYPE_POTION = 4;
 	public static final int TYPE_SCROLL = 5;
 	public static final int TYPE_CONTAINER = 6;
 	public static final int TYPE_FOOD = 7;
-	public static final int TYPE_RESOUSRCE = 8;
-	public static final int MAX_TYPES = 9;
+	public static final int TYPE_RESOURCE = 8;
+	public static final int TYPE_MELEE_WEAPON_AXE = 9;
+	public static final int MAX_TYPES = 10;
 
 	// ID Грибов
 	public static final int MIN_MUSH = 47;
@@ -81,11 +82,11 @@ ITEMSET[16] = new BaseItem(80,16,4,SLOT_RIGHT_ARM,TYPE_ARMOR,"Железный �
 ITEMSET[17] = new BaseItem(70,17,7,SLOT_RIGHT_ARM,TYPE_ARMOR,"Стальной щит","res/items/shield5.png",50,40,"#RNORMAL 7#", true, 100, "#I_METALS|100#");
 ITEMSET[18] = new BaseItem(60,18,10,SLOT_RIGHT_ARM,TYPE_ARMOR,"Башенный щит","res/items/shield3.png",50,40,"#RNORMAL 9#", true, 100, "#I_METALS|100#");
 ITEMSET[19] = new BaseItem(35,19,13,SLOT_RIGHT_ARM,TYPE_ARMOR,"Темный щит","res/items/shield4.png",50,50,"#RNORMAL 11#RCOLD 30#RFIRE -30#", true, 100, "#I_METALS|100#");
-ITEMSET[20] = new BaseItem(90,20,1,SLOT_LEFT_ARM,TYPE_MELEE_WEAPON,"Изношенный меч","res/items/sword2.png",20,10,"#DNORMAL 3_5#", true, 100, "#I_METALS|100#");
-ITEMSET[21] = new BaseItem(80,21,4,SLOT_LEFT_ARM,TYPE_MELEE_WEAPON,"Старый меч","res/items/sword1.png",20,15,"#DNORMAL 5_7#", true, 100, "#I_METALS|100#");
-ITEMSET[22] = new BaseItem(70,22,7,SLOT_LEFT_ARM,TYPE_MELEE_WEAPON,"Длинный меч","res/items/sword4.png",25,20,"#DNORMAL 7_10#", true, 100, "#I_METALS|100#");
-ITEMSET[23] = new BaseItem(60,23,10,SLOT_LEFT_ARM,TYPE_MELEE_WEAPON,"Зазубренный меч","res/items/sword3.png",25,25,"#DNORMAL 12_15#", true, 100, "#I_METALS|100#");
-ITEMSET[24] = new BaseItem(50,24,13,SLOT_LEFT_ARM,TYPE_MELEE_WEAPON,"Золотой меч","res/items/sword5.png",30,30,"#DNORMAL 15_20#", true, 100, "#I_METALS|100#");
+ITEMSET[20] = new BaseItem(90,20,1,SLOT_LEFT_ARM, TYPE_MELEE_WEAPON_SWORD,"Изношенный меч","res/items/sword2.png",20,10,"#DNORMAL 3_5#", true, 100, "#I_METALS|100#");
+ITEMSET[21] = new BaseItem(80,21,4,SLOT_LEFT_ARM, TYPE_MELEE_WEAPON_SWORD,"Старый меч","res/items/sword1.png",20,15,"#DNORMAL 5_7#", true, 100, "#I_METALS|100#");
+ITEMSET[22] = new BaseItem(70,22,7,SLOT_LEFT_ARM, TYPE_MELEE_WEAPON_SWORD,"Длинный меч","res/items/sword4.png",25,20,"#DNORMAL 7_10#", true, 100, "#I_METALS|100#");
+ITEMSET[23] = new BaseItem(60,23,10,SLOT_LEFT_ARM, TYPE_MELEE_WEAPON_SWORD,"Зазубренный меч","res/items/sword3.png",25,25,"#DNORMAL 12_15#", true, 100, "#I_METALS|100#");
+ITEMSET[24] = new BaseItem(50,24,13,SLOT_LEFT_ARM, TYPE_MELEE_WEAPON_SWORD,"Золотой меч","res/items/sword5.png",30,30,"#DNORMAL 15_20#", true, 100, "#I_METALS|100#");
 ITEMSET[25] = new BaseItem(30,25,1,SLOT_ANY,TYPE_SCROLL,"Свиток телепортации","res/items/scroll1.png",2,1,"#TELEPORT#", true, 100, "#I_EMPTY_SCROOL|100#");
 ITEMSET[26] = new BaseItem(35,26,1,SLOT_ANY,TYPE_SCROLL,"Свиток идентификации","res/items/scroll1.png",2,1,"#IDENTIFY#", true, 100, "#I_EMPTY_SCROOL|100#");
 ITEMSET[27] = new BaseItem(50,27,1,SLOT_ANY,TYPE_SCROLL,"Свиток последней надежды","res/items/scroll1.png",2,1,"#TELEPORT#PARALYZECOUNT 5#HEALSELF 0=20#", true, 100, "#I_EMPTY_SCROOL|100#");
@@ -114,13 +115,14 @@ ITEMSET[49] = new BaseItem(20,49,1,SLOT_ANY,TYPE_FOOD,"Солнечник","res/
 ITEMSET[50] = new BaseItem(20,50,1,SLOT_ANY,TYPE_FOOD,"Орочий гриб","res/items/mushroom4.png",3,2,"#FOVRAD -100|10#", false, 100, null);
 ITEMSET[51] = new BaseItem(20,51,1,SLOT_ANY,TYPE_FOOD,"Кровавый гриб","res/items/mushroom5.png",3,2,"#POISONCOUNT 10=15#", false, 100, null);
 ITEMSET[52] = new BaseItem(25,52,1,SLOT_ANY,TYPE_FOOD,"Эльфийская крапива","res/items/plant1.png",3,3,"#HEALTIME 1|15#", false, 100, null);
+ITEMSET[58] = new BaseItem(90,59,1,SLOT_LEFT_ARM, TYPE_MELEE_WEAPON_AXE,"Изношенный топор","res/items/axe.png",20,10,"#DNORMAL 3_5#", true, 100, "#I_METALS|100#I_WOOD|100#");
 
 // Ресурсы
-ITEMSET[53] = new BaseItem(0,53,1,SLOT_ANY,TYPE_RESOUSRCE,"Пустая баночка","res/items/res_empty_jar.png",5,1,"", false, 100, null);
-ITEMSET[54] = new BaseItem(0,54,1,SLOT_ANY,TYPE_RESOUSRCE,"Металлы","res/items/res_metal.png",5,20,"", false, 100, null);
-ITEMSET[55] = new BaseItem(0,55,1,SLOT_ANY,TYPE_RESOUSRCE,"Древесина","res/items/res_wood.png",5,20,"", false, 100, null);
-ITEMSET[56] = new BaseItem(0,56,1,SLOT_ANY,TYPE_RESOUSRCE,"Кожа","res/items/res_leather.png",5,5,"", false, 100, null);
-ITEMSET[57] = new BaseItem(0,57,1,SLOT_ANY,TYPE_RESOUSRCE,"Пустой свиток","res/items/scroll1.png",2,1,"", false, 100, null);
+ITEMSET[53] = new BaseItem(0,53,1,SLOT_ANY, TYPE_RESOURCE,"Пустая баночка","res/items/res_empty_jar.png",5,1,"", false, 100, null);
+ITEMSET[54] = new BaseItem(0,54,1,SLOT_ANY, TYPE_RESOURCE,"Металлы","res/items/res_metal.png",5,20,"", false, 100, null);
+ITEMSET[55] = new BaseItem(0,55,1,SLOT_ANY, TYPE_RESOURCE,"Древесина","res/items/res_wood.png",5,20,"", false, 100, null);
+ITEMSET[56] = new BaseItem(0,56,1,SLOT_ANY, TYPE_RESOURCE,"Кожа","res/items/res_leather.png",5,5,"", false, 100, null);
+ITEMSET[57] = new BaseItem(0,57,1,SLOT_ANY, TYPE_RESOURCE,"Пустой свиток","res/items/scroll1.png",2,1,"", false, 100, null);
 
 // 
 ITEMSET[58] = new BaseItem(20,58,1,SLOT_ANY,TYPE_ANY,"Ключ","res/items/key.png",1,1,"", false, 1, null);
@@ -130,12 +132,12 @@ ITEMSET[58] = new BaseItem(20,58,1,SLOT_ANY,TYPE_ANY,"Ключ","res/items/key.p
 		TypeName[TYPE_ANY] = "Любые предметы";
 		TypeName[TYPE_MISC] = "Бесполезные предметы";
 		TypeName[TYPE_ARMOR] = "Броня";
-		TypeName[TYPE_MELEE_WEAPON] = "Оружие";
+		TypeName[TYPE_MELEE_WEAPON_SWORD] = "Оружие";
 		TypeName[TYPE_POTION] = "Зелья";
 		TypeName[TYPE_SCROLL] = "Свитки";
 		TypeName[TYPE_CONTAINER] = "Контейнеры";
 		TypeName[TYPE_FOOD] = "Еда";
-		TypeName[TYPE_RESOUSRCE] = "Ресурсы";
+		TypeName[TYPE_RESOURCE] = "Ресурсы";
 		
 		SlotName = new String[MAX_SLOTS];
 		SlotName[SLOT_HEAD] = "Вы можете надеть это #8#на голову.#^#";

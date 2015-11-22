@@ -23,15 +23,15 @@ public class BaseItem extends GameObject{
 
 	public void setType(int type){this.type = type;}
 	public int getType(){return type;}
-	public int getSlot(){return slot;};
-	public void setSlot(int slot){this.slot = slot;};
-	public int getSize(){return size;};
-	public void setSize(int size){this.size = size;};
-	public int getMass(){return mass;};
-	public void setMass(int mass){this.mass = mass;};
-	public void setScript(String sc){script = sc;};
-	public String getScript(){return script;};
-	public int getChance(){return chance;};
-	public void setChance(int chance){this.chance = chance;};
+	public int getSlot(){return slot;}
+	public void setSlot(int slot){this.slot = slot;}
+	public int getSize(){return size;}
+	public void setSize(int size){this.size = size;}
+	public int getMass(){return mass;}
+	public void setMass(int mass){this.mass = mass;}
+	public void setScript(String sc){script = sc;}
+	public String getScript(){return script;}
+	public int getChance(){return chance;}
+	public void setChance(int chance){this.chance = chance;}
 
 }

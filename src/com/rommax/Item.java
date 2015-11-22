@@ -30,7 +30,7 @@ public class Item extends BaseItem{
 			case ItemSet.TYPE_ARMOR:
 				generateArmor(this);
 				break;
-			case ItemSet.TYPE_MELEE_WEAPON:
+			case ItemSet.TYPE_MELEE_WEAPON_SWORD:
 				generateWeapon(this);
 				break;
 			case ItemSet.TYPE_POTION:
