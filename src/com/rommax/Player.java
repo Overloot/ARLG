@@ -298,8 +298,7 @@ public class Player extends Monster{
         getGame().logMessage("#8#Разобрано!#^# (" + getInventory().get(number).getName().toLowerCase() + "#^#)");
         getCurrentWeight().setCurrent(getCurrentWeight().getCurrent() - getInventory().get(number).getMass());
         getCurrentSize().setCurrent(getCurrentSize().getCurrent() - getInventory().get(number).getSize());
-        BaseItem newItem = ItemSet.getItem(getInventory().get(number).getLoot());
-        new Item(newItem, this.getY(), this.getX(), this.getMap(), this.getGame()); //TODO: добавить конструктор Item, который не будет бросать вещь на землю
+        getInventory().get(number).makeLoot(getMap(), getInventory().get(number).getLoot());
         //TODO: добавлять лут сразу в инвентарь
         getInventory().remove(number);
         return;

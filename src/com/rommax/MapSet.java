@@ -23,14 +23,14 @@ public class MapSet {
 	static{
 		MAPSET = new BaseMap[MAX_MAPS];
 		
-		add(ID_FOREST_1,	3, "Старый Лес", 1);
-		add(ID_FOREST_1, 	3, "Лес Энтов", 2);
-		add(ID_MAZE_1, 		7, "Канализация", 2);
+		add(ID_FOREST_1,	3, "Старый Лес", 1, Tileset.TILE_GRASS);
+		add(ID_FOREST_1, 	3, "Лес Энтов", 2, Tileset.TILE_GRASS);
+		add(ID_MAZE_1, 		7, "Канализация", 2, Tileset.TILE_DUNGEON_FLOOR);
 		
 	}
 
-	private static void add(int genID, int color, String name, int level){
-		MAPSET[count] = new BaseMap(count, genID, "#" + color + "#" + name + "#^#", level);
+	private static void add(int genID, int color, String name, int level, int defaultTile){
+		MAPSET[count] = new BaseMap(count, genID, "#" + color + "#" + name + "#^#", level, defaultTile);
 		count++;
 	}
 

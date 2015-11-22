@@ -1,5 +1,7 @@
 package com.rommax;
 
+import java.util.Random;
+
 /**
  * Created by Maxim on 18.11.2015.
  */
@@ -12,23 +14,20 @@ public class GameObject extends Entity {
     private Stat RPoison;
     private Stat RNormal;
 
-    private Stat life;
+    private Stat life; // очки жизни объекта
 
-    private int loot;
-    private int defaultTile;
+    private String loot;
     //TODO: планируется как параметр, в котором будет перечислен возможный лут.
-    // Примерное содержимое: wood|95|ENTS|5
-    // означает, что с вероятность 95% выпадет древесина, а в 5% случаях дерево станет Энтом.
+    // Примерное содержимое: #I_WOOD|95#M_ENTS|5#T_GRASS#
+    // означает, что с вероятность 95% выпадет итем древесина, а в 5% случаях дерево станет монстром Энтом и тайл изменится на grass
 
-    private String behavior; //TODO: поведение объекта. Будет ли он нападать первым, враг или друг и т.д.
-    // Monster.AttackMonster не должен вызываться в случае, если объект имеет дружественные намерения
+    private int defaultTile; //TODO временное решение. Хранит в себе тайл, который будет установлен на место предыдущего. Эту задачу должен выполнять loot
 
-    private boolean destroyable; //TODO: разрушаемый объект или нет.
-    // Планируется, что все объекты разрушаемые, но как разрушить портал или радугу?
+    private boolean destroyable; // разрушаемый объект или нет.
 
     private String weaknessFor; //TODO: лучше всего реализовать на манер loot, примерное содержимое:
     // SWORD|50|AXE|100|ARROW|0|MLIGHT|100
-    // значает, что, к примеру скелет, получает 50% повреждений от удара мечом, 100% от удара топором,
+    // означает, что, к примеру скелет, получает 50% повреждений от удара мечом, 100% от удара топором,
     // 0% от удара стрелой и 100% от удара магией света
     // крайне важный параметр. Он убережет деревья от вырубки ножом для намазывания масла =)
 
@@ -36,19 +35,8 @@ public class GameObject extends Entity {
     // файрболлом по дереву древесина не выпадет, при ударе топором будет древесина, а при использовании
     // кинжала можно будет наковырять коры, но не древесины =)
 
-    /*
-    public GameObject(int maxHP, int RNormal, int RFire, int RCold, int RElec, int RPoison, boolean destroyable) {
-        //резисты
-        this.RFire = new Stat(RFire, RFire);
-        this.RCold = new Stat(RCold, RCold);
-        this.RPoison = new Stat(RPoison, RPoison);
-        this.RElec = new Stat(RElec, RElec);
-        this.RNormal = new Stat(RNormal, RNormal);
-
-    }
-    */
     // BaseItem
-    public GameObject(int id, String name, String path, int level, boolean destroyable, int maxHP, int loot) {
+    public GameObject(int id, String name, String path, int level, boolean destroyable, int maxHP, String loot) {
         super(id, name, path, level);
         this.destroyable = destroyable;
         this.life = new Stat(maxHP, maxHP);
@@ -56,13 +44,12 @@ public class GameObject extends Entity {
     }
 
     // BaseTile
-    public GameObject(int id, String name, String path, boolean destroyable, int maxHP, int loot, int defaultTile)
+    public GameObject(int id, String name, String path, boolean destroyable, int maxHP, String loot)
     {
         super(id, name, path);
         this.destroyable = destroyable;
         this.life = new Stat(maxHP, maxHP);
         this.loot = loot;
-        this.defaultTile = defaultTile;
     }
 
     public boolean getDestroyable()
@@ -75,7 +62,7 @@ public class GameObject extends Entity {
         return this.life.getMax();
     }
 
-    public int getLoot()
+    public String getLoot()
     {
         return this.loot;
     }
@@ -90,13 +77,68 @@ public class GameObject extends Entity {
         map.getGame().logMessage("Добываем ресурс");
         this.life.setCurrent(this.life.getCurrent() - map.getGame().player.getDNormal().getCurrent());
         if (this.life.getCurrent() <= 0) {
-            int newItem = Tileset.getTile(map.field[ny][nx].getID()).getLoot();
-            map.setTileAt(ny, nx, Tileset.getTile(map.field[ny][nx].getID()).getDefaultTile());
-            map.getGame().addItem(ny, nx, newItem, map);
-            this.life.setCurrent(100); //TODO: временое решение. Необходимо, чтоб следующий объект этого типа не разрушался с первого раза.
+            makeLoot(map, Tileset.getTile(map.field[ny][nx].getID()).getLoot());
+            map.setTileAt(ny, nx, map.getDefaultTile());
+            this.life.setCurrent(100); //TODO: костыль. Необходимо, чтоб следующий объект этого типа не разрушался с первого раза.
             return true;
         }
         return false;
+    }
+
+    private void lootScriptParser(Map map, String loot)
+    {
+        String script = "";
+        String param = "";
+
+        int startCell = -1;
+
+        for (int i = 0; i < loot.length(); i++) {
+            char c = loot.charAt(i);
+
+            if (c == '#') {
+                startCell = i + 1;
+            }
+            if (i == startCell) {
+                while (true) {
+                    if ((!Character.isDigit(c)) && (c != '#') && (c != '|')) script = script + c;
+                    if (Character.isDigit(c)) param = param + c;
+                    i++;
+                    c = loot.charAt(i);
+                    if (c == '#') {
+                        i--;
+                        //getGame().logMessage(script + " " + param);
+                        dropLoot(map, script, param);
+                        script = "";
+                        param = "";
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private void dropLoot(Map map, String script, String param)
+    {
+        switch (script){
+            case "I_EMPTY_JAR" :
+                if (Integer.valueOf(param) > new Random().nextInt(100)) { map.getGame().addItem(map.getGame().player.getY(), map.getGame().player.getX(), ItemSet.EMPTY_JAR, map); }
+                break;
+            case "I_LEATHER" :
+                if (Integer.valueOf(param) > new Random().nextInt(100)) { map.getGame().addItem(map.getGame().player.getY(), map.getGame().player.getX(), ItemSet.LEATHER, map); }
+                break;
+            case "I_METALS" :
+                if (Integer.valueOf(param) > new Random().nextInt(100)) { map.getGame().addItem(map.getGame().player.getY(), map.getGame().player.getX(), ItemSet.METALS, map); }
+                break;
+            case "I_EMPTY_SCROOL" :
+                if (Integer.valueOf(param) > new Random().nextInt(100)) { map.getGame().addItem(map.getGame().player.getY(), map.getGame().player.getX(), ItemSet.EMPTY_SCROOL, map); }
+                break;
+            default: break;
+        }
+    }
+
+    public void makeLoot(Map map, String loot)
+    {
+        lootScriptParser(map, loot);
     }
 
 }

@@ -385,7 +385,7 @@ public class Game {
         itemsQuantity++;
 	}
 	
-    // Добавляем предмет на карту в указанные координаты
+    // Добавляем случайный предмет на карту в указанные координаты
     public void addRandomItem(int y, int x) {
 		if (itemsQuantity >= MAX_ITEMS) return;
         Random random = new Random();
