@@ -115,7 +115,7 @@ ITEMSET[49] = new BaseItem(20,49,1,SLOT_ANY,TYPE_FOOD,"Солнечник","res/
 ITEMSET[50] = new BaseItem(20,50,1,SLOT_ANY,TYPE_FOOD,"Орочий гриб","res/items/mushroom4.png",3,2,"#FOVRAD -100|10#", false, 100, null);
 ITEMSET[51] = new BaseItem(20,51,1,SLOT_ANY,TYPE_FOOD,"Кровавый гриб","res/items/mushroom5.png",3,2,"#POISONCOUNT 10=15#", false, 100, null);
 ITEMSET[52] = new BaseItem(25,52,1,SLOT_ANY,TYPE_FOOD,"Эльфийская крапива","res/items/plant1.png",3,3,"#HEALTIME 1|15#", false, 100, null);
-ITEMSET[58] = new BaseItem(90,59,1,SLOT_LEFT_ARM, TYPE_MELEE_WEAPON_AXE,"Изношенный топор","res/items/axe.png",20,10,"#DNORMAL 3_5#", true, 100, "#I_METALS|100#I_WOOD|100#");
+ITEMSET[59] = new BaseItem(90,59,1,SLOT_LEFT_ARM, TYPE_MELEE_WEAPON_AXE,"Изношенный топор","res/items/axe.png",20,10,"#DNORMAL 3_5#", true, 100, "#I_METALS|100#I_WOOD|100#");
 
 // Ресурсы
 ITEMSET[53] = new BaseItem(0,53,1,SLOT_ANY, TYPE_RESOURCE,"Пустая баночка","res/items/res_empty_jar.png",5,1,"", false, 100, null);
