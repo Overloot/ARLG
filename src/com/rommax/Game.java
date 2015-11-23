@@ -417,14 +417,6 @@ public class Game {
         }
 		addRandomItem(y, x);
 	}
-	
-	// Ставим предмет(ы) после смерти монстра (loot)
-	private void loot(int index) {
-        Random r = new Random();
-		for(int i = 0; i < MAX_LOOT; i++)
-			if (Util.dice(player.getLUCK().getCurrent(), 100))
-				addRandomItem(monsterList[index].getY(), monsterList[index].getX());
-	}
 
 	// Обновление экрана
 	public void refresh() {
@@ -442,8 +434,8 @@ public class Game {
         Map map = monsterList[index].getMap();
         // Cтавим кровь на месте смерти монстра
         map.placeBloodAt(monsterList[index].getY(), monsterList[index].getX());
-		// Шанс выкинуть на землю предмет(ы)
-		loot(index);
+		// Кидаем лут на землю
+        monsterList[index].makeLoot(player.getMap(), monsterList[index].getLoot());
         // Yбираем монстра с карты
         map.deleteMonsterAt(monsterList[index].getY(), monsterList[index].getX());
         // Mодификатор получаемого количества опыта за убитого монстра

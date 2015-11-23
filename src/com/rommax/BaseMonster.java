@@ -1,6 +1,6 @@
 package com.rommax;
 
-public class BaseMonster extends Entity{
+public class BaseMonster extends GameObject{
 
 	private Stat STR;
 	private Stat AGI;
@@ -31,9 +31,9 @@ public class BaseMonster extends Entity{
 	        int DCold1, int DCold2, int RCold,
 	        int DElec1, int DElec2, int RElec,
 	        int DPoison1, int DPoison2, int RPoison,
-	        int AP, int rad)
+	        int AP, int rad, String loot)
 	{
-		super(id, name, path, level);
+		super(id, name, path, level, loot);
 		
 		//статы
 		this.STR = new Stat(STR, STR);

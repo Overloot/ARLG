@@ -32,6 +32,8 @@ public class ItemSet {
 	public static final int TYPE_MELEE_WEAPON_AXE = 9;
 	public static final int MAX_TYPES = 10;
 
+	// ID экипировки
+	public static final int CRUDE_SWORD = 20;
 	// ID Грибов
 	public static final int MIN_MUSH = 47;
 	public static final int MAX_MUSH = 51;
@@ -82,7 +84,7 @@ ITEMSET[16] = new BaseItem(80,16,4,SLOT_RIGHT_ARM,TYPE_ARMOR,"Железный �
 ITEMSET[17] = new BaseItem(70,17,7,SLOT_RIGHT_ARM,TYPE_ARMOR,"Стальной щит","res/items/shield5.png",50,40,"#RNORMAL 7#", true, 100, "#I_METALS|100#");
 ITEMSET[18] = new BaseItem(60,18,10,SLOT_RIGHT_ARM,TYPE_ARMOR,"Башенный щит","res/items/shield3.png",50,40,"#RNORMAL 9#", true, 100, "#I_METALS|100#");
 ITEMSET[19] = new BaseItem(35,19,13,SLOT_RIGHT_ARM,TYPE_ARMOR,"Темный щит","res/items/shield4.png",50,50,"#RNORMAL 11#RCOLD 30#RFIRE -30#", true, 100, "#I_METALS|100#");
-ITEMSET[20] = new BaseItem(90,20,1,SLOT_LEFT_ARM, TYPE_MELEE_WEAPON_SWORD,"Изношенный меч","res/items/sword2.png",20,10,"#DNORMAL 3_5#", true, 100, "#I_METALS|100#");
+ITEMSET[CRUDE_SWORD] = new BaseItem(90,CRUDE_SWORD,1,SLOT_LEFT_ARM, TYPE_MELEE_WEAPON_SWORD,"Изношенный меч","res/items/sword2.png",20,10,"#DNORMAL 3_5#", true, 100, "#I_METALS|100#");
 ITEMSET[21] = new BaseItem(80,21,4,SLOT_LEFT_ARM, TYPE_MELEE_WEAPON_SWORD,"Старый меч","res/items/sword1.png",20,15,"#DNORMAL 5_7#", true, 100, "#I_METALS|100#");
 ITEMSET[22] = new BaseItem(70,22,7,SLOT_LEFT_ARM, TYPE_MELEE_WEAPON_SWORD,"Длинный меч","res/items/sword4.png",25,20,"#DNORMAL 7_10#", true, 100, "#I_METALS|100#");
 ITEMSET[23] = new BaseItem(60,23,10,SLOT_LEFT_ARM, TYPE_MELEE_WEAPON_SWORD,"Зазубренный меч","res/items/sword3.png",25,25,"#DNORMAL 12_15#", true, 100, "#I_METALS|100#");
@@ -118,11 +120,11 @@ ITEMSET[52] = new BaseItem(25,52,1,SLOT_ANY,TYPE_FOOD,"Эльфийская кр
 ITEMSET[59] = new BaseItem(90,59,1,SLOT_LEFT_ARM, TYPE_MELEE_WEAPON_AXE,"Изношенный топор","res/items/axe.png",20,10,"#DNORMAL 3_5#", true, 100, "#I_METALS|100#I_WOOD|100#");
 
 // Ресурсы
-ITEMSET[53] = new BaseItem(0,53,1,SLOT_ANY, TYPE_RESOURCE,"Пустая баночка","res/items/res_empty_jar.png",5,1,"", false, 100, null);
-ITEMSET[54] = new BaseItem(0,54,1,SLOT_ANY, TYPE_RESOURCE,"Металлы","res/items/res_metal.png",5,20,"", false, 100, null);
-ITEMSET[55] = new BaseItem(0,55,1,SLOT_ANY, TYPE_RESOURCE,"Древесина","res/items/res_wood.png",5,20,"", false, 100, null);
-ITEMSET[56] = new BaseItem(0,56,1,SLOT_ANY, TYPE_RESOURCE,"Кожа","res/items/res_leather.png",5,5,"", false, 100, null);
-ITEMSET[57] = new BaseItem(0,57,1,SLOT_ANY, TYPE_RESOURCE,"Пустой свиток","res/items/scroll1.png",2,1,"", false, 100, null);
+ITEMSET[EMPTY_JAR] = new BaseItem(0,EMPTY_JAR,1,SLOT_ANY, TYPE_RESOURCE,"Пустая баночка","res/items/res_empty_jar.png",5,1,"", false, 100, null);
+ITEMSET[METALS] = new BaseItem(0,METALS,1,SLOT_ANY, TYPE_RESOURCE,"Металлы","res/items/res_metal.png",5,20,"", false, 100, null);
+ITEMSET[WOOD] = new BaseItem(0,WOOD,1,1, TYPE_RESOURCE,"Древесина","res/items/res_wood.png",5,20,"", false, 100, null);
+ITEMSET[LEATHER] = new BaseItem(0,LEATHER,1,SLOT_ANY, TYPE_RESOURCE,"Кожа","res/items/res_leather.png",5,5,"", false, 100, null);
+ITEMSET[EMPTY_SCROOL] = new BaseItem(0,EMPTY_SCROOL,1,SLOT_ANY, TYPE_RESOURCE,"Пустой свиток","res/items/scroll1.png",2,1,"", false, 100, null);
 
 // 
 ITEMSET[58] = new BaseItem(20,58,1,SLOT_ANY,TYPE_ANY,"Ключ","res/items/key.png",1,1,"", false, 1, null);

@@ -40,24 +40,11 @@ public class GameObject extends Entity {
         this.weaknessFor = weaknessFor;
     }
 
-    public boolean getDestroyable()
+    // BaseMonster
+    public GameObject(int id, String name, String path, int level, String loot)
     {
-        return this.destroyable;
-    }
-
-    public int getLife()
-    {
-        return this.life.getMax();
-    }
-
-    public String getLoot()
-    {
-        return this.loot;
-    }
-
-    public String getWeaknessFor()
-    {
-        return this.weaknessFor;
+        super(id, name, path, level);
+        this.loot = loot;
     }
 
     public boolean gathering(Map map, int ny, int nx)
@@ -122,6 +109,9 @@ public class GameObject extends Entity {
                 break;
             case "I_WOOD" :
                 if (Integer.valueOf(param) > new Random().nextInt(100)) { map.getGame().addItem(map.getGame().player.getY(), map.getGame().player.getX(), ItemSet.WOOD, map); }
+                break;
+            case "I_CRUDE_SWORD" :
+                if (Integer.valueOf(param) > new Random().nextInt(100)) { map.getGame().addItem(this.getY(), this.getX(), ItemSet.CRUDE_SWORD, map); }
                 break;
             default: break;
         }
@@ -197,4 +187,23 @@ public class GameObject extends Entity {
         weaknessScriptParser(map, weaknessFor);
     }
 
+    public boolean getDestroyable()
+    {
+        return this.destroyable;
+    }
+
+    public int getLife()
+    {
+        return this.life.getMax();
+    }
+
+    public String getLoot()
+    {
+        return this.loot;
+    }
+
+    public String getWeaknessFor()
+    {
+        return this.weaknessFor;
+    }
 }
