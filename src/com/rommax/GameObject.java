@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * Created by Maxim on 18.11.2015.
  */
-public class GameObject extends Entity {
+public abstract class GameObject extends Entity {
 
     // резисты
     private Stat RFire;
@@ -41,10 +41,12 @@ public class GameObject extends Entity {
     }
 
     // BaseMonster
-    public GameObject(int id, String name, String path, int level, String loot)
+    public GameObject(int id, String name, String path, int level, String loot, boolean destroyable, String weaknessFor)
     {
         super(id, name, path, level);
         this.loot = loot;
+        this.destroyable = destroyable;
+        this.weaknessFor = weaknessFor;
     }
 
     public boolean gathering(Map map, int ny, int nx)
@@ -58,6 +60,11 @@ public class GameObject extends Entity {
             return true;
         }
         return false;
+    }
+
+    public void makeLoot(Map map, String loot)
+    {
+        lootScriptParser(map, loot);
     }
 
     private void lootScriptParser(Map map, String loot)
@@ -81,7 +88,6 @@ public class GameObject extends Entity {
                     c = loot.charAt(i);
                     if (c == '#') {
                         i--;
-                        //getGame().logMessage(script + " " + param);
                         dropLoot(map, script, param);
                         script = "";
                         param = "";
@@ -117,6 +123,11 @@ public class GameObject extends Entity {
         }
     }
 
+    public void makeDamage(Map map, String weaknessFor)
+    {
+        weaknessScriptParser(map, weaknessFor);
+    }
+
     private void weaknessScriptParser(Map map, String weaknessFor)
     {
         String script = "";
@@ -138,7 +149,6 @@ public class GameObject extends Entity {
                     c = weaknessFor.charAt(i);
                     if (c == '#') {
                         i--;
-                        //getGame().logMessage(script + " " + param);
                         doDamage(map, script, param);
                         script = "";
                         param = "";
@@ -151,7 +161,7 @@ public class GameObject extends Entity {
 
     private void doDamage(Map map, String script, String param)
     {
-        int damage = 0;
+        int damage;
         try {
             switch (script) {
                 case "W_SWORD":
@@ -175,16 +185,6 @@ public class GameObject extends Entity {
             damage = 1;
             this.life.setCurrent(this.life.getCurrent() - damage);
         }
-    }
-
-    public void makeLoot(Map map, String loot)
-    {
-        lootScriptParser(map, loot);
-    }
-
-    public void makeDamage(Map map, String weaknessFor)
-    {
-        weaknessScriptParser(map, weaknessFor);
     }
 
     public boolean getDestroyable()

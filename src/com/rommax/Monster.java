@@ -38,7 +38,7 @@ public class Monster extends BaseMonster{
 		bm.getDCold().getCurrent(), bm.getDCold().getMax(), bm.getRCold().getMax(), 
 		bm.getDElec().getCurrent(), bm.getDElec().getMax(), bm.getRElec().getMax(), 
 		bm.getDPoison().getCurrent(), bm.getDPoison().getMax(), bm.getRPoison().getMax(), 
-		bm.getAP().getMax(), bm.getFOVRAD().getMax(), bm.getLoot());
+		bm.getAP().getMax(), bm.getFOVRAD().getMax(), bm.getLoot(), bm.getDestroyable(), bm.getWeaknessFor());
 		this.setPosition(y, x);
 		this.setMap(map);
 		this.setGame(game);

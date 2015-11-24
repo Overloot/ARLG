@@ -1,6 +1,6 @@
 package com.rommax;
 
-public class Entity{
+public abstract class Entity{
 	private int id;
 	private int y;
 	private int x;

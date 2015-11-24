@@ -31,9 +31,9 @@ public class BaseMonster extends GameObject{
 	        int DCold1, int DCold2, int RCold,
 	        int DElec1, int DElec2, int RElec,
 	        int DPoison1, int DPoison2, int RPoison,
-	        int AP, int rad, String loot)
+	        int AP, int rad, String loot, boolean destroyable, String weaknessFor)
 	{
-		super(id, name, path, level, loot);
+		super(id, name, path, level, loot, destroyable, weaknessFor);
 		
 		//статы
 		this.STR = new Stat(STR, STR);
