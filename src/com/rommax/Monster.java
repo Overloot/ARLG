@@ -93,7 +93,7 @@ public class Monster extends BaseMonster{
 				AttackMonster(getMap().field[ny][nx].getMonster());
 				}
 			else
-			if (!getMap().field[ny][nx].getPassable() && getMap().field[ny][nx].getOpenable() && !getMap().field[ny][nx].getOpened()){
+			if (!getMap().field[ny][nx].getPassable() && getMap().field[ny][nx].getOpenable()&& !getMap().field[ny][nx].getOpened()){
 				boolean m = false;
 				if (this==getGame().player) m = true;
 				getGame().tryToOpenSomething(m, ny, nx, true);
@@ -104,6 +104,15 @@ public class Monster extends BaseMonster{
 				setY(ny);
 				setX(nx);
 				getMap().placeMonsterAt(ny, nx, this);
+				int trapID = getMap().field[ny][nx].getTrap();
+				if (trapID > TrapSet.NONE){
+					//if (this == getGame().player)
+						
+						getGame().logMessage("Вы угодили в ловушку (#7#" +
+							TrapSet.getTrap(trapID).getName().toLowerCase() + "#^#)!");
+					setEffectFrom(ScriptParser.parseString(TrapSet.getTrap(trapID).getScript()), true);
+					getMap().field[ny][nx].setTraped(true);
+				}
 				if (this == getGame().player){
 				if (getMap().field[ny][nx].getItemList().size()>0)
 					if (getMap().field[ny][nx].getItemList().size()>=2)

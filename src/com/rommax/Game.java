@@ -34,6 +34,7 @@ public class Game {
     final int MAX_FLOORS = 5;
     public static final int MAX_MONSTER_PER_LEVEL = 7;
     public static final int MAX_ITEM_PER_LEVEL = 5;
+    public static final int MAX_TRAP_PER_LEVEL = 25;
     public final int HIT_POINTS_PER_STRENGTH = 3;
     public final int CARRYING_PER_STRENGTH = 7;
     public final int MIN_SIZE = 100;
@@ -99,6 +100,15 @@ public class Game {
         }
         return true;
     }
+	
+	// AI для обхода видимых опасных препятствий
+	private void moveAI(int index, int y, int x){
+		if (monsterList[index] == null) return;
+		int ny = (monsterList[index].getY() + y);
+		int nx = (monsterList[index].getX() + x);
+		if (!getMap().field[ny][nx].getTraped())
+			monsterList[index].move(y, x);
+	}
 
 	// AI для мостра
     public void monstersAI() {
@@ -116,9 +126,9 @@ public class Game {
             while (monsterList[index].getAP().getCurrent() > 0) {
                 // если цель(игрок) находится в зоне видимости монстра, но монстр идет к нему
                 if (Util.checkDistance(player.getY(), player.getX(), monsterList[index].getY(), monsterList[index].getX()) <= monsterList[index].getFOVRAD().getCurrent())
-                { monsterList[index].move(Util.defineDirection(player.getY() - monsterList[index].getY()), Util.defineDirection(player.getX() - monsterList[index].getX())); }
+                { moveAI(index, Util.defineDirection(player.getY() - monsterList[index].getY()), Util.defineDirection(player.getX() - monsterList[index].getX())); }
                 // иначе монстр идет по случайнно заданным(выше) dx & dy, которые могут принимать значения -1,0,1
-                else { monsterList[index].move(dy, dx); }
+                else { moveAI(index, dy, dx); }
                 monsterList[index].getAP().setCurrent(monsterList[index].getAP().getCurrent() - MOVE_COST_ActionPoints);
             }
 
@@ -278,6 +288,7 @@ public class Game {
             while (!map.field[player.getY()][player.getX()].getPassable()) if(!map.generate())return;
             fillLevelByMonsters();
             fillLevelByItems();
+            fillLevelByTraps();
 			finish();
         }
         // а если карта уже существует, то переносим на нее игрока
@@ -321,7 +332,8 @@ public class Game {
 		
         fillLevelByMonsters();      // добавляет столько монстров, сколько положено на уровень ( MAX_MONSTER_PER_LEVEL )
         fillLevelByItems();         // добавляет столько итемов, сколько положено на уровень ( MAX_ITEM_PER_LEVEL )
-        frame1.mainpanel.repaint();
+        fillLevelByTraps(); // Доб. ловушки
+		frame1.mainpanel.repaint();
 		this.selectRace();
 	}
 
@@ -376,7 +388,23 @@ public class Game {
         for (int i = 0; i < MAX_ITEM_PER_LEVEL; i++)
             addRandomItem();
     }
+	
+	// Ставим на карту ловушки
+	private void fillLevelByTraps(){
+		Random random = new Random();
+        for (int i = 0; i < MAX_TRAP_PER_LEVEL; i++){
+			int y = random.nextInt(map.getHeight());
+			int x = random.nextInt(map.getWidth());
+			while (map.field[y][x].getPassable() == false || map.field[y][x].getMonster() != null || map.field[y][x].getTrap() != TrapSet.NONE) {
+				y = random.nextInt(map.getHeight());
+				x = random.nextInt(map.getWidth());
+			}
+			map.placeTrapAt(y, x);
+		}
+	}
 
+	
+	
 	// Добавляем предмет на указанную карту в указанные координаты
 	public void addItem(int y, int x, int id, Map map){
 		if (itemsQuantity >= MAX_ITEMS) return;

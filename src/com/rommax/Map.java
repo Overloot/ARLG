@@ -27,6 +27,11 @@ public class Map extends BaseMap {
 			field[y][x].setBlood(new Random().nextInt(Tile.BLOOD_AMOUNT) + 1);
 	}
 	
+	public void placeTrapAt(int y, int x){
+		if (field[y][x].getBloodable())
+			field[y][x].setTrap(new Random().nextInt(TrapSet.MAX_TRAPS));
+	}
+	
     public void deleteMonsterAt(int y, int x) {
         field[y][x].setMonster(null);
     }

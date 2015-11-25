@@ -8,19 +8,25 @@ public class Tile extends BaseTile{
 	private boolean isVisible;
 	private boolean isSeen;
 	private int blood;
+	private int trap;
+	private boolean isTraped;
 	private boolean isOpened;
 	public int lastseenID;
 	private boolean isSelected;
 	private Monster monster;
 	private LinkedList<Item> itemlist;
 
+	public void setTraped(boolean tr){isTraped = tr;}
+	public boolean getTraped(){return isTraped;}
 	public void setVisible(boolean isVisible){this.isVisible = isVisible;}
 	public void setCursor(boolean b){isSelected = b;}
 	public boolean isSelected(){return isSelected;}
-	public void setOpened(boolean op){isOpened = op;}
 	public void setSeen(boolean isSeen){this.isSeen = isSeen;}
 	public void setBlood(int blood){this.blood = blood;}
 	public int getBlood(){return blood;}
+	public void setTrap(int trap){this.trap = trap;}
+	public int getTrap(){return trap;}
+	public void setOpened(boolean op){isOpened = op;}
 	public boolean getOpened(){return isOpened;}
 	public void setMonster(Monster monster){this.monster = monster;}
 	public boolean getVisible(){return isVisible;}
@@ -34,7 +40,9 @@ public class Tile extends BaseTile{
 		super(id, name, path, isPassable, isTransparent, isOpenable, isBloodable, destroyable, maxHP, loot, weaknessFor);
 		this.isVisible = false;
 		this.isSeen = false;
+		this.isTraped = false;		
 		this.blood = 0;
+		this.trap = TrapSet.NONE;
 		if (id==Tileset.TILE_OPENED_DOOR)
 			this.isOpened = true;
 		else
