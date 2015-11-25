@@ -122,7 +122,7 @@ ITEMSET[59] = new BaseItem(90,59,1,SLOT_LEFT_ARM, TYPE_MELEE_WEAPON_AXE,"Изн�
 // Ресурсы
 ITEMSET[EMPTY_JAR] = new BaseItem(0,EMPTY_JAR,1,SLOT_ANY, TYPE_RESOURCE,"Пустая баночка","res/items/res_empty_jar.png",5,1,"", false, 100, null);
 ITEMSET[METALS] = new BaseItem(0,METALS,1,SLOT_ANY, TYPE_RESOURCE,"Металлы","res/items/res_metal.png",5,20,"", false, 100, null);
-ITEMSET[WOOD] = new BaseItem(0,WOOD,1,1, TYPE_RESOURCE,"Древесина","res/items/res_wood.png",5,20,"", false, 100, null);
+ITEMSET[WOOD] = new BaseItem(0,WOOD,1,SLOT_ANY, TYPE_RESOURCE,"Древесина","res/items/res_wood.png",5,20,"", false, 100, null);
 ITEMSET[LEATHER] = new BaseItem(0,LEATHER,1,SLOT_ANY, TYPE_RESOURCE,"Кожа","res/items/res_leather.png",5,5,"", false, 100, null);
 ITEMSET[EMPTY_SCROOL] = new BaseItem(0,EMPTY_SCROOL,1,SLOT_ANY, TYPE_RESOURCE,"Пустой свиток","res/items/scroll1.png",2,1,"", false, 100, null);
 

@@ -51,7 +51,7 @@ public class Tileset{
 		TILESET = new BaseTile[MAX_TILES];
 		TILESET[TILE_EMPTY] = new BaseTile(TILE_EMPTY, "Пустой тайл", "res/dungeons/empty.png", false, false, false, false, false, 100, null, null);
 		TILESET[TILE_GRASS] = new BaseTile(TILE_GRASS, "Трава", "res/dungeons/grass.png", true, true, false, true, false, 100, null, null);
-		TILESET[TILE_TREE] = new BaseTile(TILE_TREE, "Дерево", "res/dungeons/tree.png", false, false, false, false, true, 100, "#I_WOOD|100#", "#W_SWORD|20#W_AXE|100#");
+		TILESET[TILE_TREE] = new BaseTile(TILE_TREE, "Дерево", "res/dungeons/tree.png", false, false, false, false, true, 100, "#I_WOOD|100|C5#", "#W_SWORD|20#W_AXE|100#");
 		TILESET[TILE_CLOSED_DOOR] = new BaseTile(TILE_CLOSED_DOOR, "Закрытая дверь", "res/dungeons/closed_door.png", false, false, true, false, true, 100, "#I_WOOD|100#", "#W_SWORD|20#W_AXE|100#");
 		TILESET[TILE_OPENED_DOOR] = new BaseTile(TILE_OPENED_DOOR, "Открытая дверь", "res/dungeons/opened_door.png", true, true, true, false, false, 100, null, null);
 		TILESET[TILE_STAIR_UP] = new BaseTile(TILE_STAIR_UP, "Лестница вверх", "res/dungeons/stair_up.png", true, true, false, false, false, 100, null, null);

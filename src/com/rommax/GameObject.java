@@ -1,5 +1,6 @@
 package com.rommax;
 
+import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -71,6 +72,7 @@ public abstract class GameObject extends Entity {
     {
         String script = "";
         String param = "";
+        String count = "";
 
         int startCell = -1;
 
@@ -86,11 +88,22 @@ public abstract class GameObject extends Entity {
                     if (Character.isDigit(c)) param = param + c;
                     i++;
                     c = loot.charAt(i);
+                    if ((c == 'C') && (Character.isDigit(loot.charAt(i + 1)))) {
+                        i++;
+                        c = loot.charAt(i);
+                        while (true) {
+                            if (!Character.isDigit(c)) break;
+                            count = count + c;
+                            i++;
+                            c = loot.charAt(i);
+                        }
+                    }
                     if (c == '#') {
                         i--;
-                        dropLoot(map, script, param);
+                        dropLoot(map, script, param, count);
                         script = "";
                         param = "";
+                        count = "";
                         break;
                     }
                 }
@@ -98,29 +111,37 @@ public abstract class GameObject extends Entity {
         }
     }
 
-    private void dropLoot(Map map, String script, String param)
+    private void dropLoot(Map map, String script, String param, String count)
     {
+        int loot = 100500;
+        map.getGame().logMessage("!!!!!" + count);
+        if (count == "") count = "1";
         switch (script){
             case "I_EMPTY_JAR" :
-                if (Integer.valueOf(param) > new Random().nextInt(100)) { map.getGame().addItem(map.getGame().player.getY(), map.getGame().player.getX(), ItemSet.EMPTY_JAR, map); }
+                if (Integer.valueOf(param) > new Random().nextInt(100)) { loot = ItemSet.EMPTY_JAR; }
                 break;
             case "I_LEATHER" :
-                if (Integer.valueOf(param) > new Random().nextInt(100)) { map.getGame().addItem(map.getGame().player.getY(), map.getGame().player.getX(), ItemSet.LEATHER, map); }
+                if (Integer.valueOf(param) > new Random().nextInt(100)) { loot = ItemSet.LEATHER; }
                 break;
             case "I_METALS" :
-                if (Integer.valueOf(param) > new Random().nextInt(100)) { map.getGame().addItem(map.getGame().player.getY(), map.getGame().player.getX(), ItemSet.METALS, map); }
+                if (Integer.valueOf(param) > new Random().nextInt(100)) { loot = ItemSet.METALS; }
                 break;
             case "I_EMPTY_SCROOL" :
-                if (Integer.valueOf(param) > new Random().nextInt(100)) { map.getGame().addItem(map.getGame().player.getY(), map.getGame().player.getX(), ItemSet.EMPTY_SCROOL, map); }
+                if (Integer.valueOf(param) > new Random().nextInt(100)) { loot = ItemSet.EMPTY_SCROOL; }
                 break;
             case "I_WOOD" :
-                if (Integer.valueOf(param) > new Random().nextInt(100)) { map.getGame().addItem(map.getGame().player.getY(), map.getGame().player.getX(), ItemSet.WOOD, map); }
+                if (Integer.valueOf(param) > new Random().nextInt(100)) { loot = ItemSet.WOOD; }
                 break;
             case "I_CRUDE_SWORD" :
-                if (Integer.valueOf(param) > new Random().nextInt(100)) { map.getGame().addItem(this.getY(), this.getX(), ItemSet.CRUDE_SWORD, map); }
+                if (Integer.valueOf(param) > new Random().nextInt(100)) { loot = ItemSet.CRUDE_SWORD; }
                 break;
             default: break;
         }
+        if (loot != 100500) {
+            for (int howMuchItems = 0; howMuchItems < Integer.valueOf(count); howMuchItems++)
+                map.getGame().addItem(map.getGame().player.getY(), map.getGame().player.getX(), loot, map);
+        }
+
     }
 
     public void makeDamage(Map map, String weaknessFor)
