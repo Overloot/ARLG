@@ -75,6 +75,10 @@ public class Game {
 					else this.logMessage("Это уже закрыто!#/#");
 			return;
         }
+		if(mode && map.field[ny][nx].getLock()){
+			this.logMessage("#2#Это не возможно открыть без ключа! #^#");
+			return;
+		}
 		if (map.field[ny][nx].getChest() > Tile.NONE){
 			map.field[ny][nx].setOpened(mode);
 		} else {
@@ -384,7 +388,6 @@ public class Game {
             for (int i = 0; i < MAX_MONSTER_PER_LEVEL; i++)
                 addRandomMonster();
         }
-
     }
 
     public void fillLevelByItems() {

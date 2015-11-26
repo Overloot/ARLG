@@ -36,6 +36,7 @@ public class Map extends BaseMap {
 		if (field[y][x].getBloodable()){
 			field[y][x].setChest(0);
 			field[y][x].setOpenable(true);
+			field[y][x].setLock(true);
 		}
 	}
 	

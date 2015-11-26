@@ -14,6 +14,7 @@ public class Tile extends BaseTile{
 	private int trap;
 	private boolean isTraped;
 	private boolean isOpened;
+	private boolean lock;
 	private int chest;
 	public int lastseenID;
 	private boolean isSelected;
@@ -24,6 +25,8 @@ public class Tile extends BaseTile{
 	public int getChest(){return chest;}
 	public void setTraped(boolean tr){isTraped = tr;}
 	public boolean getTraped(){return isTraped;}
+	public void setLock(boolean l){lock = l;}
+	public boolean getLock(){return lock;}
 	public void setVisible(boolean isVisible){this.isVisible = isVisible;}
 	public void setCursor(boolean b){isSelected = b;}
 	public boolean isSelected(){return isSelected;}
@@ -46,8 +49,9 @@ public class Tile extends BaseTile{
 		super(id, name, path, isPassable, isTransparent, isOpenable, isBloodable, destroyable, maxHP, loot, weaknessFor);
 		this.isVisible = false;
 		this.isSeen = false;
-		this.isTraped = false;		
-		this.chest = NONE;		
+		this.lock = false;
+		this.isTraped = false;
+		this.chest = NONE;
 		this.trap = NONE;
 		this.blood = 0;
 		if (id==Tileset.TILE_OPENED_DOOR)
