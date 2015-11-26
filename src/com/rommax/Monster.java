@@ -100,12 +100,17 @@ public class Monster extends BaseMonster{
 			}
 			else
 			if (getMap().field[ny][nx].getPassable()){
-				getMap().placeMonsterAt(getY(), getX(), null);
-				setY(ny);
-				setX(nx);
-				getMap().placeMonsterAt(ny, nx, this);
 				int trapID = getMap().field[ny][nx].getTrap();
-				if (trapID > TrapSet.NONE){
+				if (trapID > TrapSet.NONE && getMap().field[ny][nx].getTraped() && this != getGame().player){
+					getGame().frame1.mainpanel.repaint();
+					return false;
+				}else{
+					getMap().placeMonsterAt(getY(), getX(), null);
+					setY(ny);
+					setX(nx);
+					getMap().placeMonsterAt(ny, nx, this);
+				}
+				if (trapID > TrapSet.NONE && getMap().field[ny][nx].getVisible()){
 					//if (this == getGame().player)
 						
 						getGame().logMessage("Вы угодили в ловушку (#7#" +

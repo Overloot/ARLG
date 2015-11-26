@@ -101,15 +101,6 @@ public class Game {
         return true;
     }
 	
-	// AI для обхода видимых опасных препятствий
-	private void moveAI(int index, int y, int x){
-		if (monsterList[index] == null) return;
-		int ny = (monsterList[index].getY() + y);
-		int nx = (monsterList[index].getX() + x);
-		if (!getMap().field[ny][nx].getTraped())
-			monsterList[index].move(y, x);
-	}
-
 	// AI для мостра
     public void monstersAI() {
         turn++;
@@ -126,9 +117,9 @@ public class Game {
             while (monsterList[index].getAP().getCurrent() > 0) {
                 // если цель(игрок) находится в зоне видимости монстра, но монстр идет к нему
                 if (Util.checkDistance(player.getY(), player.getX(), monsterList[index].getY(), monsterList[index].getX()) <= monsterList[index].getFOVRAD().getCurrent())
-                { moveAI(index, Util.defineDirection(player.getY() - monsterList[index].getY()), Util.defineDirection(player.getX() - monsterList[index].getX())); }
+                { monsterList[index].move(Util.defineDirection(player.getY() - monsterList[index].getY()), Util.defineDirection(player.getX() - monsterList[index].getX())); }
                 // иначе монстр идет по случайнно заданным(выше) dx & dy, которые могут принимать значения -1,0,1
-                else { moveAI(index, dy, dx); }
+                else { monsterList[index].move(dy, dx); }
                 monsterList[index].getAP().setCurrent(monsterList[index].getAP().getCurrent() - MOVE_COST_ActionPoints);
             }
 
