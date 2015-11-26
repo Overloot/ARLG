@@ -84,6 +84,8 @@ public class Map extends BaseMap {
 		BaseMap m = MapSet.getMap(getGame().currentMapNumber);
 		setName(m.getName());
 		setLevel(m.getLevel());
+        setDefaultTile(m.getDefaultTile());
+        setFauna(m.getFauna());
         AddRandomStairs();
 		return true;
     }
@@ -177,5 +179,88 @@ public class Map extends BaseMap {
             delta += 2 * (x - y);
             --y;
         }
+    }
+
+    public void makeFauna(Map map, String fauna)
+    {
+        faunaScriptParser(map, fauna);
+    }
+
+    private void faunaScriptParser(Map map, String fauna)
+    {
+        String newMob = "";
+        String chance = "";
+        String count = "";
+
+        int startCell = -1;
+
+        for (int i = 0; i < fauna.length(); i++) {
+            char c = fauna.charAt(i);
+
+            if (c == '#') {
+                startCell = i + 1;
+            }
+            if (i == startCell) {
+                while (true) {
+                    if ((!Character.isDigit(c)) && (c != '#') && (c != '|')) newMob = newMob + c;
+                    if (Character.isDigit(c)) chance = chance + c;
+                    i++;
+                    c = fauna.charAt(i);
+                    if ((c == 'C') && (Character.isDigit(fauna.charAt(i + 1)))) {
+                        i++;
+                        c = fauna.charAt(i);
+                        while (true) {
+                            if (!Character.isDigit(c)) break;
+                            count = count + c;
+                            i++;
+                            c = fauna.charAt(i);
+                        }
+                    }
+                    if (c == '#') {
+                        i--;
+                        crateFauna(map, newMob, chance, count);
+                        newMob = "";
+                        chance = "";
+                        count = "";
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private void crateFauna(Map map, String newMob, String chance, String count)
+    {
+        int fauna = -1;
+        if (count == "") count = "1";
+        switch (newMob){
+            case "SNAKE" :
+                if (Integer.valueOf(chance) > new Random().nextInt(100)) { fauna = MonsterSet.SNAKE; }
+                break;
+            case "BEAR" :
+                if (Integer.valueOf(chance) > new Random().nextInt(100)) { fauna = MonsterSet.BEAR; }
+                break;
+            case "WOLF" :
+                if (Integer.valueOf(chance) > new Random().nextInt(100)) { fauna = MonsterSet.WOLF; }
+                break;
+            default: break;
+        }
+
+        if (fauna >= 0) {
+            for (int howMuchMobs = 0; howMuchMobs < Integer.valueOf(count); howMuchMobs++) {
+                BaseMonster baseMonster = MonsterSet.getMonster(fauna);
+                int y = 0;
+                int x = 0;
+                // ищем подходящее место для высадки монстра
+                while (map.field[y][x].getPassable() == false || map.field[y][x].getMonster() != null) {
+                    y = new Random().nextInt(map.getHeight());
+                    x = new Random().nextInt(map.getWidth());
+                }
+                // высадка
+                getGame().monsterList[getGame().monstersQuantity] = new Monster(baseMonster, y, x, map, getGame());
+                getGame().monstersQuantity++;
+            }
+        }
+
     }
 }

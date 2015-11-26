@@ -113,8 +113,7 @@ public abstract class GameObject extends Entity {
 
     private void dropLoot(Map map, String script, String param, String count)
     {
-        int loot = 100500;
-        map.getGame().logMessage("!!!!!" + count);
+        int loot = -1;
         if (count == "") count = "1";
         switch (script){
             case "I_EMPTY_JAR" :
@@ -137,7 +136,7 @@ public abstract class GameObject extends Entity {
                 break;
             default: break;
         }
-        if (loot != 100500) {
+        if (loot >= 0) {
             for (int howMuchItems = 0; howMuchItems < Integer.valueOf(count); howMuchItems++)
                 map.getGame().addItem(map.getGame().player.getY(), map.getGame().player.getX(), loot, map);
         }

@@ -364,10 +364,9 @@ public class Game {
         // высадка
         monsterList[monstersQuantity] = new Monster(baseMonster, y, x, map, this);
         monstersQuantity++;
-
     }
 
-	public void selectRace() {
+    public void selectRace() {
 		//frame1.setFocusable(false);
 		//frame1.setFocusableWindowState(false);
 		RaceWindow frame2 = new RaceWindow(this);
@@ -379,8 +378,13 @@ public class Game {
 	}
 	
     public void fillLevelByMonsters() {
-        for (int i = 0; i < MAX_MONSTER_PER_LEVEL; i++)
-            addRandomMonster();
+        if (map.getFauna() != null) map.makeFauna(map, map.getFauna());
+        else {
+            logMessage("СЛУЧАЙНЫЕ МОБЫ");
+            for (int i = 0; i < MAX_MONSTER_PER_LEVEL; i++)
+                addRandomMonster();
+        }
+
     }
 
     public void fillLevelByItems() {
