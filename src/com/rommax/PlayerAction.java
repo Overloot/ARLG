@@ -40,7 +40,7 @@ public class PlayerAction {
 	public void lookTo(int dx, int dy) {
 		if (!map.hasTileAt(KeyHandler.ly + dy, KeyHandler.lx + dx)) return;
 		if (!mp.HasTileAtScreen(KeyHandler.ly + dy, KeyHandler.lx + dx)) return;
-
+		boolean flag = true;
 		map.field[KeyHandler.ly][KeyHandler.lx].setCursor(false);
 		KeyHandler.ly += dy;
 		KeyHandler.lx += dx;
@@ -52,12 +52,19 @@ public class PlayerAction {
 		if (map.field[KeyHandler.ly][KeyHandler.lx].getMonster() != null)
 		textLine += "#^#Здесь стоит " + map.field[KeyHandler.ly][KeyHandler.lx].getMonster().getName().toLowerCase() + ".";
 		LinkedList<Item> ilist = map.field[KeyHandler.ly][KeyHandler.lx].getItemList();
-		if (ilist.size() != 0){
-			if (ilist.size() > 1 )
+		if (map.field[KeyHandler.ly][KeyHandler.lx].getChest() > Tile.NONE && !map.field[KeyHandler.ly][KeyHandler.lx].getOpened()) {
+			textLine += "#^# Сундук. ";
+			flag = false;
+		}
+		if (map.field[KeyHandler.ly][KeyHandler.lx].getTrap() > Tile.NONE && map.field[KeyHandler.ly][KeyHandler.lx].getTraped()) {
+			textLine += "#^# " + TrapSet.getTrap(map.field[KeyHandler.ly][KeyHandler.lx].getTrap()).getName() + ". ";
+			flag = false;
+		}
+		if (ilist.size() != 0 && flag){
+			if (ilist.size() > 1)
 			textLine += "#^# Здесь лежит много вещей. ";
-			else
-			textLine += "#^#" + ilist.getFirst().getName() + " лежит здесь. ";
-	  	}
+				else textLine += "#^#" + ilist.getFirst().getName() + " лежит здесь. ";
+		}
 		mp.descStr = textLine;
 		}
 		else
@@ -173,25 +180,33 @@ public class PlayerAction {
 	
 	// Поднимаем что-то с земли
 	public boolean pickupIt() {
+		if (map.field[map.getGame().player.getY()][map.getGame().player.getX()].getChest() > Tile.NONE 
+				&& !map.field[map.getGame().player.getY()][map.getGame().player.getX()].getOpened()) {
+			map.getGame().logMessage("#2#Сундук закрыт!#^#");
+			return false;
+		}
 		if (map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList().size() == 0) {
-			map.getGame().logMessage("На земле пусто, нечего взять!");
+			map.getGame().logMessage("#2#Здесь пусто, нечего взять!#^#");
 			mp.repaint();
 			return false;
 		}
 		if (map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList().size() == 1){
 			message = new ItemSelectMessage();
 			map.getGame().keyHandler.keyPressed(null);
-			map.getGame().player.pickupItem(map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message.number);
+			map.getGame().player.pickupItem(map.field[map.getGame().player.getY()]
+				[map.getGame().player.getX()].getItemList(), message.number);
 			return true;
 		} else {
 			map.getGame().frame1.setFocusable(false);
 			map.getGame().frame1.setFocusableWindowState(false);
 			message = new ItemSelectMessage();
 			message.command = 't';
-			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message);
+			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY,
+				map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message);
 			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			frame2.setTitle("Что вы хотите поднять?");
-			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
+			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2,
+				map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
 			frame2.toFront();
 			frame2.setVisible(true);
 			return false;

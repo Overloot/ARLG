@@ -95,7 +95,7 @@ public class Monster extends BaseMonster{
 			// AI обходит препятствия (монстр иногда мечется, это нужно исправить)
 			if ((this != getGame().player)
 				&& ((getMap().field[ny][nx].getMonster() != null && getMap().field[ny][nx].getMonster()!=getGame().player)
-				|| (getMap().field[ny][nx].getTrap() > TrapSet.NONE && getMap().field[ny][nx].getTraped()))){
+				|| (getMap().field[ny][nx].getTrap() > Tile.NONE && getMap().field[ny][nx].getTraped()))){
 				if (y > 0 || y < 0) x = new Random().nextInt(3) - 1;
 				if (x > 0 || x < 0) y = new Random().nextInt(3) - 1;
 				ny = (getY() + y);
@@ -119,7 +119,7 @@ public class Monster extends BaseMonster{
 			if (getMap().field[ny][nx].getPassable()){
 				// Если видимая ловушка, AI ее видит
 				int trapID = getMap().field[ny][nx].getTrap();
-				if (trapID > TrapSet.NONE && getMap().field[ny][nx].getTraped() && this != getGame().player){
+				if (trapID > Tile.NONE && getMap().field[ny][nx].getTraped() && this != getGame().player){
 					getGame().frame1.mainpanel.repaint();
 					return false;
 				}else{
@@ -130,7 +130,7 @@ public class Monster extends BaseMonster{
 					getMap().placeMonsterAt(ny, nx, this);
 				}
 				// Если угодили в ловушку
-				if (trapID > TrapSet.NONE && getMap().field[ny][nx].getVisible()){
+				if (trapID > Tile.NONE && getMap().field[ny][nx].getVisible()){
 					if (this == getGame().player)
 						getGame().logMessage("Вы угодили в ловушку (#7#" +
 							TrapSet.getTrap(trapID).getName().toLowerCase() + "#^#)!");
@@ -139,11 +139,15 @@ public class Monster extends BaseMonster{
 				}
 				// Вещи представляют интерес только для игрока
 				if (this == getGame().player){
-				if (getMap().field[ny][nx].getItemList().size()>0)
-					if (getMap().field[ny][nx].getItemList().size()>=2)
-					getGame().logMessage("Здесь лежит #7#много вещей!#^#");
-					else
-					getGame().logMessage("Здесь лежит #7#" + getMap().field[ny][nx].getItemList().get(0).getName().toLowerCase() + ".#^#");
+					if (getMap().field[ny][nx].getItemList().size() > 0){
+						if (getMap().field[ny][nx].getChest() > Tile.NONE && !getMap().field[ny][nx].getOpened()) {
+							getGame().logMessage("Здесь находится #8#сундук!#^#");
+						} else {
+							if (getMap().field[ny][nx].getItemList().size() >= 2)
+								getGame().logMessage("Здесь лежит #7#много вещей!#^#");
+									else getGame().logMessage("Здесь лежит #7#" + getMap().field[ny][nx].getItemList().get(0).getName().toLowerCase() + ".#^#");
+						}
+					}
 				}
 				getGame().frame1.mainpanel.repaint();
 				return true;

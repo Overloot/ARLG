@@ -250,6 +250,7 @@ class MainPanel extends JPanel{
 
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
+		int cc = 0;
 		Graphics2D g2 = (Graphics2D)g;
 		Rectangle2D canvas = new Rectangle2D.Double(0, 0 , window.WINDOW_WIDTH, window.WINDOW_WIDTH);
 		g2.setPaint(Color.BLACK);
@@ -297,11 +298,18 @@ class MainPanel extends JPanel{
 					}
 
 				// Ловушки видно только те, которые уже сработали
-				if (DrawingMap.field[yy][xx].getTrap() > TrapSet.NONE && DrawingMap.field[yy][xx].getTraped()) {
+				if (DrawingMap.field[yy][xx].getTrap() > Tile.NONE && DrawingMap.field[yy][xx].getTraped()) {
 					image = window.game.loader.getImage("res/icons/traps.png");
 					drawSpriteFrame(image, g2, y, x, 10, DrawingMap.field[yy][xx].getTrap());
 				}
 
+				// Сундуки с сокровищами
+				if (DrawingMap.field[yy][xx].getChest() > Tile.NONE) {
+					image = window.game.loader.getImage("res/icons/chests.png");
+					if (DrawingMap.field[yy][xx].getOpened()) cc = 1; else cc = 0;
+					drawSpriteFrame(image, g2, y, x, 10, cc);
+				}
+				
 
 							// Рисуем монстров
 							if (DrawingMap.field[yy][xx].getMonster()!=null){

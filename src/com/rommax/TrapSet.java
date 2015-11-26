@@ -2,7 +2,6 @@ package com.rommax;
 
 public class TrapSet{
 	
-	public static final int NONE = -1;
 	public static final int TRAP_POISON  = 0;
 	public static final int TRAP_PIT  = 1;
 	public static final int TRAP_ICE  = 2;

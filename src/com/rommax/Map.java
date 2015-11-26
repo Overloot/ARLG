@@ -32,10 +32,22 @@ public class Map extends BaseMap {
 			field[y][x].setTrap(new Random().nextInt(TrapSet.MAX_TRAPS));
 	}
 	
+	public void placeChestAt(int y, int x){
+		if (field[y][x].getBloodable()){
+			field[y][x].setChest(0);
+			field[y][x].setOpenable(true);
+		}
+	}
+	
     public void deleteMonsterAt(int y, int x) {
         field[y][x].setMonster(null);
     }
 
+	public boolean isEmptyAt(int y, int x){
+		return field[y][x].getPassable() == false || field[y][x].getMonster() != null 
+				|| field[y][x].getTrap() != Tile.NONE || field[y][x].getChest() != Tile.NONE;
+	}
+	
     public boolean hasTileAt(int y, int x) {
         return (y >= 0 && y < getHeight() && x >= 0 && x < getWidth());
     }

@@ -36,13 +36,14 @@ public class Game {
     public static final int MAX_MONSTER_PER_LEVEL = 7;
     public static final int MAX_ITEM_PER_LEVEL = 5;
     public static final int MAX_TRAP_PER_LEVEL = 25;
+    public static final int MAX_CHEST_PER_LEVEL = 25;
     public final int HIT_POINTS_PER_STRENGTH = 3;
     public final int CARRYING_PER_STRENGTH = 7;
     public final int MIN_SIZE = 100;
 	public final int MAX_LOOT = 3;
     public final int HIT_POINTS_PER_ENDURANCE = 9;
     public final int MAX_MONSTERS = MAX_FLOORS * MAX_MONSTER_PER_LEVEL + 1;
-    public final int MAX_ITEMS = MAX_FLOORS * MAX_ITEM_PER_LEVEL + 1 + (MAX_MONSTERS * MAX_LOOT);
+    public final int MAX_ITEMS = MAX_FLOORS * MAX_ITEM_PER_LEVEL + (MAX_CHEST_PER_LEVEL * MAX_LOOT) + 1 + (MAX_MONSTERS * MAX_LOOT);
 
 	public Map getMap(){return map;}	
 	public Time getTime(){return time;}
@@ -74,8 +75,12 @@ public class Game {
 					else this.logMessage("Это уже закрыто!#/#");
 			return;
         }
-        if (mode) map.setTileAt(ny, nx, Tileset.TILE_OPENED_DOOR);
-			else map.setTileAt(ny, nx, Tileset.TILE_CLOSED_DOOR);
+		if (map.field[ny][nx].getChest() > Tile.NONE){
+			map.field[ny][nx].setOpened(mode);
+		} else {
+			if (mode) map.setTileAt(ny, nx, Tileset.TILE_OPENED_DOOR);
+				else map.setTileAt(ny, nx, Tileset.TILE_CLOSED_DOOR);
+		}
 		if (isPlayer)
 			if (mode) this.logMessage("Вы открыли это. #/#");
 				else this.logMessage("Вы закрыли это. #/#");
@@ -278,6 +283,7 @@ public class Game {
 			mapsQuantity++;
 			map = player.getMap(newMapLevel);
             while (!map.field[player.getY()][player.getX()].getPassable()) if(!map.generate())return;
+			fillLevelByChests();
             fillLevelByMonsters();
             fillLevelByItems();
             fillLevelByTraps();
@@ -322,6 +328,7 @@ public class Game {
         player = (Player)monsterList[0];
 		map.updatePlayer();
 		
+		fillLevelByChests();
         fillLevelByMonsters();      // добавляет столько монстров, сколько положено на уровень ( MAX_MONSTER_PER_LEVEL )
         fillLevelByItems();         // добавляет столько итемов, сколько положено на уровень ( MAX_ITEM_PER_LEVEL )
         fillLevelByTraps(); // Доб. ловушки
@@ -387,7 +394,7 @@ public class Game {
         for (int i = 0; i < MAX_TRAP_PER_LEVEL; i++){
 			int y = random.nextInt(map.getHeight());
 			int x = random.nextInt(map.getWidth());
-			while (map.field[y][x].getPassable() == false || map.field[y][x].getMonster() != null || map.field[y][x].getTrap() != TrapSet.NONE) {
+			while (map.isEmptyAt(y, x)) {
 				y = random.nextInt(map.getHeight());
 				x = random.nextInt(map.getWidth());
 			}
@@ -395,7 +402,19 @@ public class Game {
 		}
 	}
 
-	
+	// Добавляем сундуки на карту
+	private void fillLevelByChests(){
+		Random random = new Random();
+        for (int i = 0; i < MAX_CHEST_PER_LEVEL; i++){
+			int y = random.nextInt(map.getHeight());
+			int x = random.nextInt(map.getWidth());
+			while (map.isEmptyAt(y, x)) {
+				y = random.nextInt(map.getHeight());
+				x = random.nextInt(map.getWidth());
+			}
+			map.placeChestAt(y, x);
+		}
+	}
 	
 	// Добавляем предмет на указанную карту в указанные координаты
 	public void addItem(int y, int x, int id, Map map){

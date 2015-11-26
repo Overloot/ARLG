@@ -95,6 +95,11 @@ public class Player extends Monster{
     // Поднимаем предмет
     public void pickupItem(LinkedList<Item> list, int number) {
         if (number == -1) return;                                                                                               
+		if (getMap().field[getY()][getX()].getChest() > Tile.NONE && !getMap().field[getY()][getX()].getOpened()) {
+			getGame().logMessage("#2#Вы не можете взять это из закрытого сундука!#^#");
+			getGame().refresh();
+			return;
+		}
         getInventory().addLast(list.get(number));                                                                        
         getGame().logMessage("#8#Взято!#^# (" + list.get(number).getName().toLowerCase() + "#1#)");
         getCurrentWeight().setCurrent(getCurrentWeight().getCurrent() + list.get(number).getMass());
@@ -128,6 +133,11 @@ public class Player extends Monster{
     // Выбрасываем предмет
     public void dropItem(LinkedList<Item> list, int number) {
         if (number == -1) return;
+		if (getMap().field[getY()][getX()].getChest() > Tile.NONE && !getMap().field[getY()][getX()].getOpened()) {
+			getGame().logMessage("#2#Вы не можете положить это в закрытый сундук!#^#");
+			getGame().refresh();
+			return;
+		}
         list.addLast(getInventory().get(number));
         getGame().logMessage("#8#Выброшено!#^# (" + getInventory().get(number).getName().toLowerCase() + "#1#)");
         getCurrentWeight().setCurrent(getCurrentWeight().getCurrent() - getInventory().get(number).getMass());

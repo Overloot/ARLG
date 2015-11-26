@@ -3,6 +3,9 @@ package com.rommax;
 import java.util.*;
 
 public class Tile extends BaseTile{
+
+	public static final int NONE = -1;
+
 	final public static int BLOOD_AMOUNT = 20;
 	
 	private boolean isVisible;
@@ -11,11 +14,14 @@ public class Tile extends BaseTile{
 	private int trap;
 	private boolean isTraped;
 	private boolean isOpened;
+	private int chest;
 	public int lastseenID;
 	private boolean isSelected;
 	private Monster monster;
 	private LinkedList<Item> itemlist;
 
+	public void setChest(int ch){chest = ch;}
+	public int getChest(){return chest;}
 	public void setTraped(boolean tr){isTraped = tr;}
 	public boolean getTraped(){return isTraped;}
 	public void setVisible(boolean isVisible){this.isVisible = isVisible;}
@@ -41,8 +47,9 @@ public class Tile extends BaseTile{
 		this.isVisible = false;
 		this.isSeen = false;
 		this.isTraped = false;		
+		this.chest = NONE;		
+		this.trap = NONE;
 		this.blood = 0;
-		this.trap = TrapSet.NONE;
 		if (id==Tileset.TILE_OPENED_DOOR)
 			this.isOpened = true;
 		else
