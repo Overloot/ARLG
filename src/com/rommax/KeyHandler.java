@@ -56,7 +56,8 @@ public class KeyHandler implements KeyListener{
 		}
 		else if (map.getGame().player.getParalyzeCount()>0 && !LOOK_MODE){
 			map.getGame().logMessage("ВЫ #5#ПАРАЛИЗОВАНЫ!!!#^#/#");
-			if (map.getGame().player.getParalyzeCount()>5) map.getGame().player.setParalyzeCount(5);
+			if (map.getGame().player.getParalyzeCount() > Game.MAX_PARALYZE_COUNT)
+				map.getGame().player.setParalyzeCount(Game.MAX_PARALYZE_COUNT);
 			flag = true;
 		}
 		// добыча ресурсов

@@ -32,6 +32,7 @@ public class Game {
     public static final int MAP_SIZE_Y = 30;
     public static final int MAP_SIZE_X = 30;
     final int MAX_FLOORS = 5;
+	public static final int MAX_PARALYZE_COUNT = 20;
     public static final int MAX_MONSTER_PER_LEVEL = 7;
     public static final int MAX_ITEM_PER_LEVEL = 5;
     public static final int MAX_TRAP_PER_LEVEL = 25;
