@@ -17,6 +17,7 @@ public class HelpKeyHandler implements KeyListener{
 		int keycode = event.getKeyCode();
 		switch (keycode) {
 			case KeyEvent.VK_ESCAPE:
+			case KeyEvent.VK_ENTER:
 				panel.window.stop();
 				break;
 		}

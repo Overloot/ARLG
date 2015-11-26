@@ -94,7 +94,8 @@ public class Monster extends BaseMonster{
 		if (getMap().hasTileAt(ny, nx)){
 			// AI обходит препятствия (монстр иногда мечется, это нужно исправить)
 			if ((this != getGame().player)
-				&& (getMap().field[ny][nx].getMonster() != null && getMap().field[ny][nx].getMonster()!=getGame().player)){
+				&& ((getMap().field[ny][nx].getMonster() != null && getMap().field[ny][nx].getMonster()!=getGame().player)
+				|| (getMap().field[ny][nx].getTrap() > TrapSet.NONE && getMap().field[ny][nx].getTraped()))){
 				if (y > 0 || y < 0) x = new Random().nextInt(3) - 1;
 				if (x > 0 || x < 0) y = new Random().nextInt(3) - 1;
 				ny = (getY() + y);
@@ -130,8 +131,7 @@ public class Monster extends BaseMonster{
 				}
 				// Если угодили в ловушку
 				if (trapID > TrapSet.NONE && getMap().field[ny][nx].getVisible()){
-					//if (this == getGame().player)
-						
+					if (this == getGame().player)
 						getGame().logMessage("Вы угодили в ловушку (#7#" +
 							TrapSet.getTrap(trapID).getName().toLowerCase() + "#^#)!");
 					setEffectFrom(ScriptParser.parseString(TrapSet.getTrap(trapID).getScript()), true);
