@@ -74,6 +74,7 @@ public class Monster extends BaseMonster{
 		this.addHP = new Stat(0, 0);
 	}
 
+	// Движение
 	public boolean move(int y, int x){
 		if (currentWeight.getCurrent() > currentWeight.getMax()){
 			getGame().logMessage("Вы #2#перегружены!#^#");
@@ -86,30 +87,48 @@ public class Monster extends BaseMonster{
 		if (this.getHP().getCurrent() <= 0) return false;
 		
 		if (this == getGame().player) Skill.update();
+		
+		// Новые координаты
 		int ny = (getY() + y);
 		int nx = (getX() + x);
 		if (getMap().hasTileAt(ny, nx)){
+			// AI обходит препятствия (монстр иногда мечется, это нужно исправить)
+			if ((this != getGame().player)
+				&& (getMap().field[ny][nx].getMonster() != null && getMap().field[ny][nx].getMonster()!=getGame().player)){
+				if (y > 0 || y < 0) x = new Random().nextInt(3) - 1;
+				if (x > 0 || x < 0) y = new Random().nextInt(3) - 1;
+				ny = (getY() + y);
+				nx = (getX() + x);
+				if(!getMap().hasTileAt(ny, nx))return false;
+			}
+			
+			// Атакуем
 			if (getMap().field[ny][nx].getMonster()!=null){
 				AttackMonster(getMap().field[ny][nx].getMonster());
 				}
 			else
+			// Открываем что-то
 			if (!getMap().field[ny][nx].getPassable() && getMap().field[ny][nx].getOpenable()&& !getMap().field[ny][nx].getOpened()){
 				boolean m = false;
 				if (this==getGame().player) m = true;
 				getGame().tryToOpenSomething(m, ny, nx, true);
 			}
 			else
+			// Движемся
 			if (getMap().field[ny][nx].getPassable()){
+				// Если видимая ловушка, AI ее видит
 				int trapID = getMap().field[ny][nx].getTrap();
 				if (trapID > TrapSet.NONE && getMap().field[ny][nx].getTraped() && this != getGame().player){
 					getGame().frame1.mainpanel.repaint();
 					return false;
 				}else{
+					// Идем в этот тайл
 					getMap().placeMonsterAt(getY(), getX(), null);
 					setY(ny);
 					setX(nx);
 					getMap().placeMonsterAt(ny, nx, this);
 				}
+				// Если угодили в ловушку
 				if (trapID > TrapSet.NONE && getMap().field[ny][nx].getVisible()){
 					//if (this == getGame().player)
 						
@@ -118,6 +137,7 @@ public class Monster extends BaseMonster{
 					setEffectFrom(ScriptParser.parseString(TrapSet.getTrap(trapID).getScript()), true);
 					getMap().field[ny][nx].setTraped(true);
 				}
+				// Вещи представляют интерес только для игрока
 				if (this == getGame().player){
 				if (getMap().field[ny][nx].getItemList().size()>0)
 					if (getMap().field[ny][nx].getItemList().size()>=2)

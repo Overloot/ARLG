@@ -12,7 +12,7 @@ public class TrapSet{
 	static{
 		TRAPSET = new BaseTrap[MAX_TRAPS];
 		
-		TRAPSET[TRAP_POISON] = new BaseTrap(TRAP_POISON, "Ядовитое Облако", "#POISONCOUNT 5=25#");
+		TRAPSET[TRAP_POISON] = new BaseTrap(TRAP_POISON, "Яма с ядовитой тиной", "#POISONCOUNT 5=25#");
 	}
 	
 	public static BaseTrap getTrap(int id){

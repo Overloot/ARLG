@@ -296,11 +296,10 @@ class MainPanel extends JPanel{
 							g.drawImage(image,y,x,this);
 					}
 
-				// Ловушки
-				int trapID = DrawingMap.field[yy][xx].getTrap();
-				if (trapID > TrapSet.NONE && DrawingMap.field[yy][xx].getTraped()) {
+				// Ловушки видно только те, которые уже сработали
+				if (DrawingMap.field[yy][xx].getTrap() > TrapSet.NONE && DrawingMap.field[yy][xx].getTraped()) {
 					image = window.game.loader.getImage("res/icons/traps.png");
-					drawSpriteFrame(image, g2, y, x, 10, trapID);
+					drawSpriteFrame(image, g2, y, x, 10, DrawingMap.field[yy][xx].getTrap());
 				}
 
 

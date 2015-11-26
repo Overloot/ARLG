@@ -115,11 +115,11 @@ public class Game {
 			if (monsterList[index].getParalyzeCount() > 0) continue;
             // если у монстра хватает ActionPoints то он двигается
             while (monsterList[index].getAP().getCurrent() > 0) {
-                // если цель(игрок) находится в зоне видимости монстра, но монстр идет к нему
-                if (Util.checkDistance(player.getY(), player.getX(), monsterList[index].getY(), monsterList[index].getX()) <= monsterList[index].getFOVRAD().getCurrent())
-                { monsterList[index].move(Util.defineDirection(player.getY() - monsterList[index].getY()), Util.defineDirection(player.getX() - monsterList[index].getX())); }
-                // иначе монстр идет по случайнно заданным(выше) dx & dy, которые могут принимать значения -1,0,1
-                else { monsterList[index].move(dy, dx); }
+                // если цель (игрок) находится в зоне видимости монстра, но монстр идет к нему
+                if (Util.checkDistance(player.getY(), player.getX(), monsterList[index].getY(), monsterList[index].getX()) <= monsterList[index].getFOVRAD().getCurrent()){
+					monsterList[index].move(Util.defineDirection(player.getY() - monsterList[index].getY()), Util.defineDirection(player.getX() - monsterList[index].getX()));
+                // иначе монстр просто бродит
+                } else { monsterList[index].move(dy, dx); }
                 monsterList[index].getAP().setCurrent(monsterList[index].getAP().getCurrent() - MOVE_COST_ActionPoints);
             }
 

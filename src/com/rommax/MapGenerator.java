@@ -116,7 +116,7 @@ public class MapGenerator {
         while (k > 0) {
             for (i = 0; i < x; i++)
                 for (j = 0; j < y; j++)
-                    if (Util.dist(i, j, px, py) == k) {
+                    if (Util.checkDistance(i, j, px, py) == k) {
                         map.setTileAt(i, j, Tileset.TILE_TOWER_WALL);
                     }
             k -= 2;
