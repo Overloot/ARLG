@@ -43,7 +43,7 @@ class RacePanel extends JPanel
 		Font f3 = new Font("Serif", Font.PLAIN, 16);
 		Image image;
 		for(int i = 0; i < RaceSet.MAX_RACES; i++) {
-			image = window.game.loader.getImage(RaceSet.getRace(i).getPath());
+			image = window.game.loader.getImage(window.game.getPlayerPath(i, ClassSet.getCurrentClassID));
 			y = i * Tileset.TILE_SIZE;
 			g.drawImage(image, Tileset.TILE_SIZE, y, this);
 			if (i == select - 1) g2.setPaint(Color.YELLOW); else g2.setPaint(Color.WHITE);

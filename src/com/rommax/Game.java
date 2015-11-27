@@ -163,7 +163,7 @@ public class Game {
         frame1.toFront();
         frame1.setVisible(true);		
 	}
-	
+        
 	// Help
 	void help() {
 		frame1.setFocusable(false);
@@ -174,8 +174,8 @@ public class Game {
         frame1.toFront();
         frame1.setVisible(true);		
 	}
-	
-    // проверить изменялся ли Stat в худшую сторону, если так то вывести первую строку, иначе вторую
+
+// проверить изменялся ли Stat в худшую сторону, если так то вывести первую строку, иначе вторую
     void checkStatChanges(Stat s, String s1, String s2) {
         if (s.getTimer() > 0) {
             s.subTimer();
@@ -379,7 +379,19 @@ public class Game {
         frame2.toFront();
         frame2.setTitle("Выбор расы");
         frame2.setVisible(true);
-	}
+    }
+	
+	// Специальность (Класс)
+    public void selectClass() {
+	frame1.setFocusable(false);
+	frame1.setFocusableWindowState(false);
+        ClassWindow frame2 = new ClassWindow(this);
+        frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame2.setLocation(this.frame1.WINDOW_WIDTH / 2 - frame2.WINDOW_WIDTH / 2, this.frame1.WINDOW_HEIGHT / 2 - frame2.WINDOW_HEIGHT / 2);
+        frame2.toFront();
+        frame2.setTitle("Выбор класса");
+        frame2.setVisible(true);		
+    }
 	
     public void fillLevelByMonsters() {
         if (map.getFauna() != null) map.makeFauna(map, map.getFauna());
@@ -521,7 +533,17 @@ public class Game {
 		// Даем расовый навык
 		Skill.add(RaceSet.getRace(id).getSkill());
 	}
+    
+    // Теперь игрок будет этой специализации
+    public void setClass(int id) {
+        
+    }
 
+    public String getPlayerPath(int raceID, int classID){
+        //return "res/monsters/races/";
+        return RaceSet.getRace(raceID).getPath();
+    }
+    
     // выводит различные сообщения в верхний-левый угол
     public void logMessage(String s) {
         frame1.mainpanel.LogMessage(s);

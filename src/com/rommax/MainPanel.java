@@ -314,7 +314,7 @@ class MainPanel extends JPanel{
 							// Рисуем монстров
 							if (DrawingMap.field[yy][xx].getMonster()!=null){
 								if (DrawingMap.field[yy][xx].getMonster() == DrawingMap.getGame().player) {
-									image = window.game.loader.getImage(RaceSet.getRace(RaceSet.getCurrentRaceID).getPath());
+									image = window.game.loader.getImage(window.game.getPlayerPath(RaceSet.getCurrentRaceID, ClassSet.getCurrentClassID));
 								} else image = window.game.loader.getImage(MonsterSet.getMonster(DrawingMap.field[yy][xx].getMonster().getID()).getPath());
 								int px = DrawingMap.field[yy][xx].getMonster().getX();
 								int py = DrawingMap.field[yy][xx].getMonster().getY();

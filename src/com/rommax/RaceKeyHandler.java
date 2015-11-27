@@ -32,7 +32,7 @@ public class RaceKeyHandler implements KeyListener{
 				panel.window.game.setRace(curRace);
 				MainPanel.hasNewGame = false;					
 				panel.window.stop();
-				panel.window.game.help();
+				panel.window.game.selectClass();
 				break;
 		}
 		panel.repaint();
