@@ -540,8 +540,10 @@ public class Game {
     }
 
     public String getPlayerPath(int raceID, int classID){
-        //return "res/monsters/races/";
-        return RaceSet.getRace(raceID).getPath();
+		String path = "res/heroes/" + RaceSet.getRace(raceID).getPath() + "/" + ClassSet.getClass(classID).getPath() + ".png";
+		if (new File(path).exists())
+			return path;
+				else return "res/heroes/unknown.png";
     }
     
     // выводит различные сообщения в верхний-левый угол

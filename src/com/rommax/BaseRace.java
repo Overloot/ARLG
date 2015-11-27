@@ -9,10 +9,10 @@ public class BaseRace extends Entity{
 	private int LUCK;
 	private int skill; // Расовый скилл
 
-	public BaseRace(int id, String name, String path, String descr1, 
+	public BaseRace(int id, String name, String folder_name, String descr1, 
 	String descr2, String descr3, int STR, int AGI, int END, int LUCK, 
 	int skill){
-		super(id, name, path);
+		super(id, name, folder_name);
 		this.descr1 = descr1;
 		this.descr2 = descr2;
 		this.descr3 = descr3;
