@@ -45,10 +45,10 @@ class RacePanel extends JPanel
 		for(int i = 0; i < RaceSet.MAX_RACES; i++) {
 			image = window.game.loader.getImage(RaceSet.getRace(i).getPath());
 			y = i * Tileset.TILE_SIZE;
-			g.drawImage(image, 0, y, this);
+			g.drawImage(image, Tileset.TILE_SIZE, y, this);
 			if (i == select - 1) g2.setPaint(Color.YELLOW); else g2.setPaint(Color.WHITE);
 			g2.setFont(f1);
-			g.drawString(RaceSet.getRace(i).getName(), Tileset.TILE_SIZE + 5, y + 24);
+			g.drawString(RaceSet.getRace(i).getName(), (Tileset.TILE_SIZE * 2) + 5, y + 24);
 			if (i == select - 1) {
 				g2.setFont(f2);
 				g.drawString(RaceSet.getRace(i).getDescr1(), Tileset.TILE_SIZE + 5, Tileset.TILE_SIZE * RaceSet.MAX_RACES + 25);
