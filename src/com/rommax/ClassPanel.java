@@ -50,11 +50,11 @@ class ClassPanel extends JPanel
 			g2.setFont(f1);
 			g.drawString(ClassSet.getClass(i).getName(), (Tileset.TILE_SIZE * 2) + 5, y + 24);
 			if (i == select - 1) {
-				g2.setFont(f2);
+				//g2.setFont(f2);
 				//g.drawString(ClassSet.getClass(i).getDescr1(), Tileset.TILE_SIZE + 5, Tileset.TILE_SIZE * ClassSet.MAX_CLASSES + 25);
 				//g.drawString(ClassSet.getClass(i).getDescr2(), Tileset.TILE_SIZE + 5, Tileset.TILE_SIZE * ClassSet.MAX_CLASSES + 37);
 				//g.drawString(ClassSet.getClass(i).getDescr3(), Tileset.TILE_SIZE + 5, Tileset.TILE_SIZE * ClassSet.MAX_CLASSES + 49);
-				g2.setFont(f3);
+				//g2.setFont(f3);
 				
 				//addLine(g, "res/icons/str_icon.png", "Сила: " + ClassSet.getClass(i).getSTR(), 0, 1);
 				//addLine(g, "res/icons/agi_icon.png", "Ловкость: " + ClassSet.getClass(i).getAGI(), 0, 2);
@@ -62,11 +62,11 @@ class ClassPanel extends JPanel
 				//addLine(g, "res/icons/icon_luck.png", "Удача: " + ClassSet.getClass(i).getLUCK(), 0, 4);
 				
 				//y = window.game.calcHP(ClassSet.getClass(i).getSTR(), ClassSet.getClass(i).getEND());
-				addLine(g, "res/icons/icon_life.png", "Жизнь: " + y + "/" + y, 7, 1);
+				//addLine(g, "res/icons/icon_life.png", "Жизнь: " + y + "/" + y, 7, 1);
 				//addLine(g, "res/items/backpack1.png", "Нагрузка: " + window.game.calcCarrying(ClassSet.getClass(i).getSTR()), 7, 2);
 				
 				// Расовый навык
-				addLine(g, "Расовый навык:", 6, 3); z = -10;
+				//addLine(g, "Расовый навык:", 6, 3); z = -10;
 				/*window.game.renderIcon(g, this, Tileset.TILE_SIZE * (ClassSet.MAX_CLASSES + 5) + 15,
 					260, 7, SkillSet.getSkill(ClassSet.getClass(i).getSkill()).getPath(),
 					SkillSet.getSkill(ClassSet.getClass(i).getSkill()).getName(),
