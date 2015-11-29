@@ -355,7 +355,8 @@ public class PlayerAction {
 		frame2.setVisible(true);
 		return false;
 	}
-	
+
+
 	// Открываем инвентарь
 	public boolean inventory() {
 		if (map.getGame().player.getInventory().size() == 0) {
@@ -375,6 +376,24 @@ public class PlayerAction {
 			frame2.setVisible(true);
 			return false;
 		}
+	}
+
+	// Открываем инвентарь
+	public boolean showCraftingWindow() {
+		//TODO: надо вынести куда-то
+		LinkedList<Item> itemList = new LinkedList<>();
+		for (int item = 0; item < ItemSet.MAX_ITEMS; item++)
+			itemList.add(new Item(ItemSet.getItem(item)));
+		//TODO: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+			map.getGame().frame1.setFocusable(false);
+			map.getGame().frame1.setFocusableWindowState(false);
+			CraftingSelectWindow frame2 = new CraftingSelectWindow(map.getGame(), ItemSet.TYPE_ANY, itemList);
+			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			frame2.setTitle("Что вы хотите крафтить?");
+			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
+			frame2.toFront();
+			frame2.setVisible(true);
+			return false;
 	}
 
 	// Разбираем предмет

@@ -123,6 +123,8 @@ public class KeyHandler implements KeyListener{
 		else if ((keycode == KeyEvent.VK_G) && !event.isShiftDown()) flag = playerAction.gatheringIt();
 		// разбираем предметы
 		else if (keycode == KeyEvent.VK_G && event.isShiftDown()) flag = playerAction.disassembledItem();
+		// Крафтинг
+		else if (keycode == KeyEvent.VK_K && !event.isShiftDown()) flag = playerAction.showCraftingWindow();
 		else flag = false;
 
 		mp.repaint();

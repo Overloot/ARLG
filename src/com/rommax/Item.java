@@ -52,6 +52,13 @@ public class Item extends BaseItem{
 		}
 	}
 
+	public Item(BaseItem bm){
+		super(bm.getChance(), bm.getID(), bm.getLevel(), bm.getSlot(), bm.getType(),
+				bm.getName(), bm.getPath(), bm.getSize(), bm.getMass(), bm.getScript(), bm.getDestroyable(), bm.getLife(), bm.getLoot());
+		this.identify = true;
+		this.real_name = getName();
+	}
+
 	private void generateConsumable(String str){
 		if (ItemSet.ID_ITEMS[getID()] == 0){
 			real_name = getName();
