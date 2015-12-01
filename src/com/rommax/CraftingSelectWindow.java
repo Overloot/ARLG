@@ -36,7 +36,7 @@ public class CraftingSelectWindow extends JFrame{
 		this.game = game;
 		this.list = list;
 		this.type = type;
-		WINDOW_WIDTH = 500;
+		WINDOW_WIDTH = 700;
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		setResizable(false);
 		craftSP = new CraftingSelectPanel(this);

@@ -97,8 +97,8 @@ class CraftingSelectPanel extends JPanel {
 				    g2.setPaint(Color.WHITE);
 					drawColorString(g, item.getName().toLowerCase(),Tileset.TILE_SIZE + 5, (int)(Tileset.TILE_SIZE * (0.5 + (i - min))) + 10);
 					if (i == current){
-						g2.setPaint(Color.YELLOW);
 						drawColorString(g, item.getName().toLowerCase(),Tileset.TILE_SIZE + 5, (int)(Tileset.TILE_SIZE * (0.5 + (i - min))) + 10);
+						g2.setPaint(Color.YELLOW);
 						g.drawImage(cWindow.game.cursor, cWindow.WINDOW_WIDTH - Tileset.TILE_SIZE - 5, (i-min)*Tileset.TILE_SIZE + 10 , this);
 						g.drawString(item.craftResource(item.getLoot()), 300, (int)(Tileset.TILE_SIZE * (0.5 + (i - min))) + 10);
 					}

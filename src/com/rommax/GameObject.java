@@ -246,7 +246,8 @@ public abstract class GameObject extends Entity {
                     }
                     if (c == '#') {
                         i--;
-                        needResource = needResource + "\n" + craftNeedResource(script, param, count);
+                        if (needResource != "") needResource = needResource + " & ";
+                        needResource = needResource + craftNeedResource(script, param, count);
                         script = "";
                         param = "";
                         count = "";
@@ -268,19 +269,19 @@ public abstract class GameObject extends Entity {
         String needResource = "";
         switch (script){
             case "I_EMPTY_JAR" :
-                needResource = needResource + "Пустая банка     " + resCount + "шт.";
+                needResource = needResource + "Пустая банка (" + resCount + ")";
                 loot = 1;
                 break;
             case "I_LEATHER" :
-                needResource = needResource + "Кожа             " + resCount + "шт.";
+                needResource = needResource + "Кожа (" + resCount + ")";
                 loot = 1;
                 break;
             case "I_METALS" :
-                needResource = needResource + "Металл           " + resCount + "шт.";
+                needResource = needResource + "Металл (" + resCount + ")";
                 loot = 1;
                 break;
             case "I_EMPTY_SCROOL" :
-                needResource = needResource + "Пустой свиток    " + resCount + "шт.";
+                needResource = needResource + "Пустой свиток (" + resCount + ")";
                 loot = 1;
                 break;
             default: break;
