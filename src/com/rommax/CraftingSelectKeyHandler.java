@@ -19,55 +19,55 @@ public class CraftingSelectKeyHandler implements KeyListener{
 
 		switch (keycode) {
 			case KeyEvent.VK_1:
-				if (craftSP.iwindow.isChangedFilter){
-					craftSP.iwindow.type = ItemSet.TYPE_MELEE_WEAPON_SWORD;
+				if (craftSP.cWindow.isChangedFilter){
+					craftSP.cWindow.type = ItemSet.TYPE_MELEE_WEAPON_SWORD;
 					craftSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_2:
-				if (craftSP.iwindow.isChangedFilter){
-					craftSP.iwindow.type = ItemSet.TYPE_ARMOR;
+				if (craftSP.cWindow.isChangedFilter){
+					craftSP.cWindow.type = ItemSet.TYPE_ARMOR;
 					craftSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_3:
-				if (craftSP.iwindow.isChangedFilter){
-					craftSP.iwindow.type = ItemSet.TYPE_POTION;
+				if (craftSP.cWindow.isChangedFilter){
+					craftSP.cWindow.type = ItemSet.TYPE_POTION;
 					craftSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_4:
-				if (craftSP.iwindow.isChangedFilter){
-					craftSP.iwindow.type = ItemSet.TYPE_SCROLL;
+				if (craftSP.cWindow.isChangedFilter){
+					craftSP.cWindow.type = ItemSet.TYPE_SCROLL;
 					craftSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_5:
-				if (craftSP.iwindow.isChangedFilter){
-					craftSP.iwindow.type = ItemSet.TYPE_CONTAINER;
+				if (craftSP.cWindow.isChangedFilter){
+					craftSP.cWindow.type = ItemSet.TYPE_CONTAINER;
 					craftSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_6:
-				if (craftSP.iwindow.isChangedFilter){
-					craftSP.iwindow.type = ItemSet.TYPE_FOOD;
+				if (craftSP.cWindow.isChangedFilter){
+					craftSP.cWindow.type = ItemSet.TYPE_FOOD;
 					craftSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_7:
-				if (craftSP.iwindow.isChangedFilter){
-					craftSP.iwindow.type = ItemSet.TYPE_MISC;
+				if (craftSP.cWindow.isChangedFilter){
+					craftSP.cWindow.type = ItemSet.TYPE_MISC;
 					craftSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_0:
-				if (craftSP.iwindow.isChangedFilter){
-					craftSP.iwindow.type = ItemSet.TYPE_ANY;
+				if (craftSP.cWindow.isChangedFilter){
+					craftSP.cWindow.type = ItemSet.TYPE_ANY;
 					craftSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_ESCAPE:
-				craftSP.iwindow.stop();
+				craftSP.cWindow.stop();
 				break;
 			case KeyEvent.VK_UP:
 				if (craftSP.current > 0){
@@ -88,17 +88,17 @@ public class CraftingSelectKeyHandler implements KeyListener{
 				}
 				break;
 			case KeyEvent.VK_ENTER:
-				itemID = (getItemNumber(craftSP.current, craftSP.iwindow.type));
-				craftSP.iwindow.stop();
+				itemID = (getItemNumber(craftSP.current, craftSP.cWindow.type));
+				craftSP.cWindow.stop();
 				craftSP.repaint();
-				craftSP.iwindow.game.refresh();
+				craftSP.cWindow.game.refresh();
 				break;
 		}
 		craftSP.repaint();
 	}
 
 	public int getItemNumber(int number, int type){
-		LinkedList<Item> x = craftSP.iwindow.list;
+		LinkedList<Item> x = craftSP.cWindow.list;
 		ListIterator<Item> iter = x.listIterator();
 		int cx = -1;
 		int ix = -1;

@@ -1,6 +1,5 @@
 package com.rommax;
 
-import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -206,6 +205,90 @@ public abstract class GameObject extends Entity {
             this.life.setCurrent(this.life.getCurrent() - damage);
         }
     }
+
+    // это методы для крафта. для крафта требуются теже ресурсы,
+    // что и могут выпасть из предмета при разборе, но в двойном кол-ве.
+    public String craftResource(String loot) {
+        String needResource = craftScriptParser(loot);
+        return needResource;
+    }
+
+    private String craftScriptParser(String loot)
+    {
+        String script = "";
+        String param = "";
+        String count = "";
+        String needResource = "";
+
+        int startCell = -1;
+
+        for (int i = 0; i < loot.length(); i++) {
+            char c = loot.charAt(i);
+
+            if (c == '#') {
+                startCell = i + 1;
+            }
+            if (i == startCell) {
+                while (true) {
+                    if ((!Character.isDigit(c)) && (c != '#') && (c != '|')) script = script + c;
+                    if (Character.isDigit(c)) param = param + c;
+                    i++;
+                    c = loot.charAt(i);
+                    if ((c == 'C') && (Character.isDigit(loot.charAt(i + 1)))) {
+                        i++;
+                        c = loot.charAt(i);
+                        while (true) {
+                            if (!Character.isDigit(c)) break;
+                            count = count + c;
+                            i++;
+                            c = loot.charAt(i);
+                        }
+                    }
+                    if (c == '#') {
+                        i--;
+                        needResource = needResource + "\n" + craftNeedResource(script, param, count);
+                        script = "";
+                        param = "";
+                        count = "";
+                        break;
+                    }
+                }
+            }
+        }
+        return needResource;
+    }
+
+    // param не используется, а надо ли?
+    private String craftNeedResource(String script, String param, String count)
+    {
+        int loot = -1;
+        if (count == "") count = "1";
+        int resCount = Integer.parseInt(count);
+        resCount = resCount * 2;
+        String needResource = "";
+        switch (script){
+            case "I_EMPTY_JAR" :
+                needResource = needResource + "Пустая банка     " + resCount + "шт.";
+                loot = 1;
+                break;
+            case "I_LEATHER" :
+                needResource = needResource + "Кожа             " + resCount + "шт.";
+                loot = 1;
+                break;
+            case "I_METALS" :
+                needResource = needResource + "Металл           " + resCount + "шт.";
+                loot = 1;
+                break;
+            case "I_EMPTY_SCROOL" :
+                needResource = needResource + "Пустой свиток    " + resCount + "шт.";
+                loot = 1;
+                break;
+            default: break;
+        }
+        if (loot >= 0) return needResource;
+        else return "ОШИБКА!! craftNeedResource";
+    }
+
 
     public boolean getDestroyable()
     {

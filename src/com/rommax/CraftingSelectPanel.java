@@ -7,7 +7,7 @@ import java.awt.font.*;
 import java.util.*;
 
 class CraftingSelectPanel extends JPanel {
-	public CraftingSelectWindow iwindow;
+	public CraftingSelectWindow cWindow;
 	public CraftingSelectKeyHandler listener;
 	public int min = 0;
 	public int max = 0;
@@ -15,18 +15,18 @@ class CraftingSelectPanel extends JPanel {
 	public int MAX_ITEMS = 0;
 	private Image im;
 
-	CraftingSelectPanel(CraftingSelectWindow iwindow){
+	CraftingSelectPanel(CraftingSelectWindow cWindow){
 		super();
-		this.iwindow = iwindow;
+		this.cWindow = cWindow;
 		listener = new CraftingSelectKeyHandler(this);
 		addKeyListener(listener);
 		setFocusable(true);
-		LinkedList<Item> x = iwindow.list;
+		LinkedList<Item> x = cWindow.list;
 		ListIterator<Item> iter = x.listIterator();
 		Item it = null;
 		while (iter.hasNext()){
 			it = iter.next();
-			if (it.getType()==iwindow.type || iwindow.type == ItemSet.TYPE_ANY)
+			if (it.getType()==cWindow.type || cWindow.type == ItemSet.TYPE_ANY)
 				MAX_ITEMS++;
 		}
 		min = 0;
@@ -36,12 +36,12 @@ class CraftingSelectPanel extends JPanel {
 
 	public void resetState(){
 		MAX_ITEMS = 0;
-		LinkedList<Item> x = iwindow.list;
+		LinkedList<Item> x = cWindow.list;
 		ListIterator<Item> iter = x.listIterator();
 		Item it = null;
 		while (iter.hasNext()){
 			it = iter.next();
-			if (it.getType()==iwindow.type || iwindow.type == ItemSet.TYPE_ANY)
+			if (it.getType()== cWindow.type || cWindow.type == ItemSet.TYPE_ANY)
 				  MAX_ITEMS++;
 		}
 		min = 0;
@@ -77,31 +77,30 @@ class CraftingSelectPanel extends JPanel {
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
-		LinkedList<Item> x = iwindow.list;
+		LinkedList<Item> x = cWindow.list;
 		ListIterator<Item> iter = x.listIterator();
 		int ix = 0;
 		Item item = x.getFirst();
 		iter.next();
 		while(ix<min){
-			if (item.getType()==iwindow.type || iwindow.type == ItemSet.TYPE_ANY)
+			if (item.getType()== cWindow.type || cWindow.type == ItemSet.TYPE_ANY)
 			ix++;
 		    item = iter.next();
 		}
-		g.drawImage(iwindow.game.background, 0, 0, this);
+		g.drawImage(cWindow.game.background, 0, 0, this);
 		for (int i=min; i<=max; i++){
 			if (item!=null){
-				if (item.getType()!=iwindow.type && iwindow.type != ItemSet.TYPE_ANY) i--;
+				if (item.getType()!= cWindow.type && cWindow.type != ItemSet.TYPE_ANY) i--;
 				else {
-					im =  iwindow.game.loader.getImage(ItemSet.getItem(item.getID()).getPath());
+					im =  cWindow.game.loader.getImage(ItemSet.getItem(item.getID()).getPath());
 				    g.drawImage(im, 0 , (i-min)*Tileset.TILE_SIZE + 10, this);
 				    g2.setPaint(Color.WHITE);
 					drawColorString(g, item.getName().toLowerCase(),Tileset.TILE_SIZE + 5, (int)(Tileset.TILE_SIZE * (0.5 + (i - min))) + 10);
-					g.drawString("Вес:" + Integer.toString(item.getMass()), 300, (int)(Tileset.TILE_SIZE * (0.5 + (i - min))) + 10);
-					g.drawString("Размер:" + Integer.toString(item.getMass()), 350, (int)(Tileset.TILE_SIZE * (0.5 + (i - min))) + 10);
 					if (i == current){
 						g2.setPaint(Color.YELLOW);
 						drawColorString(g, item.getName().toLowerCase(),Tileset.TILE_SIZE + 5, (int)(Tileset.TILE_SIZE * (0.5 + (i - min))) + 10);
-						g.drawImage(iwindow.game.cursor, iwindow.WINDOW_WIDTH - Tileset.TILE_SIZE - 5, (i-min)*Tileset.TILE_SIZE + 10 , this);
+						g.drawImage(cWindow.game.cursor, cWindow.WINDOW_WIDTH - Tileset.TILE_SIZE - 5, (i-min)*Tileset.TILE_SIZE + 10 , this);
+						g.drawString(item.craftResource(item.getLoot()), 300, (int)(Tileset.TILE_SIZE * (0.5 + (i - min))) + 10);
 					}
 				}
 			}
@@ -112,7 +111,7 @@ class CraftingSelectPanel extends JPanel {
 		if (min>0)
 		    g.drawString("<...>",5,10);
 		g2.setPaint(Color.WHITE);
-		g.drawString("Текущий режим: " + ItemSet.getNameOfType(iwindow.type).toLowerCase(), 5, Tileset.TILE_SIZE * 10 + 25);
+		g.drawString("Текущий режим: " + ItemSet.getNameOfType(cWindow.type).toLowerCase(), 5, Tileset.TILE_SIZE * 10 + 25);
 		if (max == -1) min = -1;
 		g.drawString("Всего предметов: " + Integer.toString(MAX_ITEMS) + ", показаны предметы с " + (min + 1) + " по " + (max + 1) + ".", 5, Tileset.TILE_SIZE * 10 + 35);
 		if (min == -1) min = 0;
