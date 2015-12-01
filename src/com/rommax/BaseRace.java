@@ -1,35 +1,16 @@
 package com.rommax;
 
-public class BaseRace extends Entity{
+public class BaseRace extends BaseHero{
 
-	private String descr1, descr2, descr3;
-	private int STR;
-	private int AGI;
-	private int END;
-	private int LUCK;
 	private int skill; // Расовый скилл
 
 	public BaseRace(int id, String name, String folder_name, String descr1, 
 	String descr2, String descr3, int STR, int AGI, int END, int LUCK, 
 	int skill){
-		super(id, name, folder_name);
-		this.descr1 = descr1;
-		this.descr2 = descr2;
-		this.descr3 = descr3;
-		this.STR = STR;
-		this.AGI = AGI;
-		this.END = END;
-		this.LUCK = LUCK;
+		super(id, name, folder_name, descr1, descr2, descr3, STR, AGI, END, LUCK);
 		this.skill = skill;
 	}
 	
-	public String getDescr1(){return descr1;}
-	public String getDescr2(){return descr2;}
-	public String getDescr3(){return descr3;}
-	public int getSTR(){return STR;}
-	public int getAGI(){return AGI;}
-	public int getEND(){return END;}
-	public int getLUCK(){return LUCK;}
 	public int getSkill(){return skill;}
 
 }
