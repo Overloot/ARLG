@@ -15,6 +15,15 @@ public class Player extends Monster{
 		super(player, y, x, map, game);
 	}
 	
+	// Имя игрока, информация о расе, специализации и титуле
+	public String getInfo(){
+		String str = "";
+		str += " "  + RaceSet.getRace(RaceSet.getCurrentRaceID).getName();
+		str += " " + ClassSet.getClass(ClassSet.getCurrentClassID).getName();
+		str += " " + getLevel() + " уровня";
+		return str.toUpperCase();
+	}
+	
     // метод описывает как надо пить =) quaff - пить залпом
     public void quaffItem(LinkedList<Item> list, int number) {
         if (number == -1) return;

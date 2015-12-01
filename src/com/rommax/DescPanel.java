@@ -152,7 +152,14 @@ class DescPanel extends JPanel{
 		int leftX = 10;
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setPaint(Color.YELLOW);
-		g.drawString(dwindow.monster.getName(),leftX, 50);
+		// Имя, уровень и другая информация
+		String n = "";
+		if (dwindow.monster == dwindow.game.player){
+			n = dwindow.game.player.getInfo();
+		} else {
+			n = dwindow.monster.getName() + " " + dwindow.monster.getLevel() + " уровня";
+		}
+		g.drawString(n.toUpperCase(),leftX, 50);
 		g2.setPaint(Color.WHITE);
 		String str = "#2#ЖИЗНЬ#^# : " + Integer.toString(dwindow.monster.getHP().getCurrent()) + "/" + Integer.toString(dwindow.monster.getHP().getMax());
 		drawColorString(g,str,leftX, 100);
@@ -198,16 +205,6 @@ class DescPanel extends JPanel{
 			str = "#8#ОТРАВЛЕН! #^# : #3#  " + dwindow.monster.getPoisonCount();
 			drawColorString(g,str,leftX, 420);
 		}
-		str = "#1#УРОВЕНЬ#^# : #8#  " + dwindow.monster.getLevel() + "#^#";
-		drawColorString(g,str,leftX, 435);
-		if (dwindow.monster == dwindow.game.player){
-		str = "ОПЫТА: " + dwindow.monster.getExp() + "/" + dwindow.game.player.maxExperience;
-			drawColorString(g,str,leftX, 450);
-
-		}
-
-
-
 	}
 
 	public void paintComponent(Graphics g){

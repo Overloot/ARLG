@@ -17,7 +17,7 @@ public class SkillSet{
 	public static final int SKILL_THIEF_2 = 9;
 	public static final int SKILL_THIEF_3 = 10;
 
-	// Навыки асассина
+	// Навыки ассасина
 	public static final int SKILL_ASSASSIN_1 = 11;
 	public static final int SKILL_ASSASSIN_2 = 12;
 	public static final int SKILL_ASSASSIN_3 = 13;
@@ -51,7 +51,7 @@ public class SkillSet{
 		SKILLSET[SKILL_THIEF_1] = new BaseSkill(SKILL_THIEF_1, "Свидание с Тенью", "Вор скрывается в тень", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
 		SKILLSET[SKILL_THIEF_2] = new BaseSkill(SKILL_THIEF_2, "Взломщик", "Мастеру отмычек ключи не нужны", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
 		SKILLSET[SKILL_THIEF_3] = new BaseSkill(SKILL_THIEF_3, "Обнаружение Угроз", "Вор видит скрытые ловушки", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
-		// Навыки асассина
+		// Навыки ассасина
 		SKILLSET[SKILL_ASSASSIN_1] = new BaseSkill(SKILL_ASSASSIN_1, "Удар сзади", "Двойной удар в спину", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
 		SKILLSET[SKILL_ASSASSIN_2] = new BaseSkill(SKILL_ASSASSIN_2, "Ядовитое Облако", "Все цели вокруг убийцы отравлены", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
 		SKILLSET[SKILL_ASSASSIN_3] = new BaseSkill(SKILL_ASSASSIN_3, "Огненная Бомба", "Устанавка огненной ловушки", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);

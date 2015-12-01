@@ -197,10 +197,8 @@ class MainPanel extends JPanel{
 		left = Tileset.TILE_SIZE * SCREEN_TILE_SIZE_X + 10;
 		g2.setPaint(Color.WHITE);
 		top = 20;
-		addLine(g, "#7#" + RaceSet.getRace(RaceSet.getCurrentRaceID).getName() + "#^#");
+		addLine(g, "#7#" + DrawingMap.getGame().player.getInfo() + "#^#");
 		top = 50;
-		// Level
-		addLine(g, "#8#УРОВЕНЬ#^#", DrawingMap.getGame().player.getLevel(), 0);
 		// Life
 		addLine(g, "#2#ЖИЗНЬ#^#", DrawingMap.getGame().player.getHP().getCurrent(), DrawingMap.getGame().player.getHP().getMax());
 		drawBar(DrawingMap.getGame().player.getHP().getCurrent(),
