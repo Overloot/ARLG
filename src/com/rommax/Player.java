@@ -360,5 +360,19 @@ public class Player extends Monster{
         }
     }
 
+    public void craftItem(LinkedList<Item> list, int number)
+    {
+        if (number == -1) return;
+
+        if (!getInventory().get(number).getDestroyable()) {
+            getGame().logMessage(getInventory().get(number).getName() + "#^# - неадекватная ошибка!");
+            return;
+        }
+
+        getGame().logMessage("#8#Скравчено!#^# (" + getInventory().get(number).getName().toLowerCase() + "#^#)");
+        getInventory().get(number).doCraft(getInventory().get(number).getLoot(), getInventory().get(number).getID());
+        return;
+    }
+
 
 }

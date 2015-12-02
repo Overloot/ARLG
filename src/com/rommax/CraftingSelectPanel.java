@@ -97,10 +97,10 @@ class CraftingSelectPanel extends JPanel {
 				    g2.setPaint(Color.WHITE);
 					drawColorString(g, item.getName().toLowerCase(),Tileset.TILE_SIZE + 5, (int)(Tileset.TILE_SIZE * (0.5 + (i - min))) + 10);
 					if (i == current){
-						drawColorString(g, item.getName().toLowerCase(),Tileset.TILE_SIZE + 5, (int)(Tileset.TILE_SIZE * (0.5 + (i - min))) + 10);
-						g2.setPaint(Color.YELLOW);
-						g.drawImage(cWindow.game.cursor, cWindow.WINDOW_WIDTH - Tileset.TILE_SIZE - 5, (i-min)*Tileset.TILE_SIZE + 10 , this);
 						g.drawString(item.craftResource(item.getLoot()), 300, (int)(Tileset.TILE_SIZE * (0.5 + (i - min))) + 10);
+						g2.setPaint(Color.YELLOW);
+						drawColorString(g, item.getName().toLowerCase(),Tileset.TILE_SIZE + 5, (int)(Tileset.TILE_SIZE * (0.5 + (i - min))) + 10);
+						g.drawImage(cWindow.game.cursor, cWindow.WINDOW_WIDTH - Tileset.TILE_SIZE - 5, (i-min)*Tileset.TILE_SIZE + 10 , this);
 					}
 				}
 			}
@@ -118,4 +118,5 @@ class CraftingSelectPanel extends JPanel {
 		g.drawString("Фильтры для меню: 1 - оружие, 2 - броня, 3 - зелья, 4 - свитки, 5 - контейнеры, 6 - еда,", 5, Tileset.TILE_SIZE * 10 + 45);
 		g.drawString("7 - все остальное, 0 - показывать все.", 5, Tileset.TILE_SIZE * 10 + 55);
 	}
+
 }
