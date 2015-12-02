@@ -380,11 +380,7 @@ public class PlayerAction {
 
 	// Открываем инвентарь
 	public boolean showCraftingWindow() {
-		//TODO: надо вынести куда-то
-		LinkedList<Item> itemList = new LinkedList<>();
-		for (int item = 0; item < ItemSet.MAX_ITEMS; item++)
-			itemList.add(new Item(ItemSet.getItem(item)));
-		//TODO: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		LinkedList<Item> itemList = Item.getListOfAllItems();
 			map.getGame().frame1.setFocusable(false);
 			map.getGame().frame1.setFocusableWindowState(false);
 			CraftingSelectWindow frame2 = new CraftingSelectWindow(map.getGame(), ItemSet.TYPE_ANY, itemList);

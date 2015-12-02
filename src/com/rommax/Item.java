@@ -1,5 +1,7 @@
 package com.rommax;
 
+import java.util.LinkedList;
+
 public class Item extends BaseItem{
 	private boolean identify;
 	private String real_name;
@@ -152,5 +154,13 @@ public class Item extends BaseItem{
 		if (Util.dice(chance_to_have_damages_for_weapon,100)) addDamage(item);
 		else if (Util.dice(chance_to_have_stats_for_weapon,100)) addStat(item);
 		else if (Util.dice(chance_to_have_resists_for_weapon,100)) addResist(item);
+	}
+
+	public static LinkedList<Item> getListOfAllItems()
+	{
+		LinkedList<Item> itemList = new LinkedList<>();
+		for (int item = 0; item < ItemSet.MAX_ITEMS; item++)
+			itemList.add(new Item(ItemSet.getItem(item)));
+		return itemList;
 	}
 }

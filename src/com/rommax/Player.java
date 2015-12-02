@@ -323,5 +323,42 @@ public class Player extends Monster{
         return;
     }
 
+    public boolean findItem(int id)
+    {
+        Item item;
+        for (int index = 0; index < getInventory().size(); index++)
+        {
+            item = getInventory().get(index);
+            if (id == item.getID()) return true;
+        }
+        return false;
+    }
+
+    public boolean removeItemForCraft(int needRes, int id)
+    {
+        int haveRes = needRes;
+        Item item;
+        for (int howMuch = 1; howMuch <= needRes; howMuch++)
+            for (int index = 0; index < getInventory().size(); index++)
+            {
+                item = getInventory().get(index);
+                if (id == item.getID()) {
+                    getInventory().remove(index);
+                    haveRes--;
+                }
+            }
+        if (haveRes == 0) return true;
+        else return false;
+    }
+
+    public void addItem(int id)
+    {
+        LinkedList<Item> itemList = Item.getListOfAllItems();
+        for (int index = 0; index < itemList.size(); index++)
+        {
+            if (id == itemList.get(index).getID()) getInventory().add(itemList.get(index));
+        }
+    }
+
 
 }

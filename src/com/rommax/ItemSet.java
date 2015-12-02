@@ -111,20 +111,20 @@ ITEMSET[43] = new BaseItem(10,43,1,SLOT_ANY,TYPE_POTION,"Зелье удачи",
 ITEMSET[44] = new BaseItem(10,44,1,SLOT_ANY,TYPE_POTION,"Зелье сопротивления","res/items/potion1.png",5,5,"#RFIRE 20|10#RCOLD 20|10#RPOISON 20|10#RELEC 20|10#", true, 100, "#I_EMPTY_JAR|100#");
 ITEMSET[45] = new BaseItem(15,45,1,SLOT_ANY,TYPE_POTION,"Зелье каменной кожи","res/items/potion2.png",5,5,"#RNORMAL 20|15#", true, 100, "#I_EMPTY_JAR|100#");
 ITEMSET[46] = new BaseItem(90,46,1,SLOT_BACKPACK,TYPE_CONTAINER,"Рюкзак","res/items/backpack1.png",50,20,"#SW_UP 100#", true, 100, "#I_LEATHER|100#");
-ITEMSET[47] = new BaseItem(20,47,1,SLOT_ANY,TYPE_FOOD,"Черный гриб","res/items/mushroom1.png",3,2,"#PARALYZECOUNT 5#", false, 100, null);
-ITEMSET[48] = new BaseItem(20,48,1,SLOT_ANY,TYPE_FOOD,"Меховая шляпка","res/items/mushroom2.png",3,2,"#HEALTIME 1|10#", false, 100, null);
-ITEMSET[49] = new BaseItem(20,49,1,SLOT_ANY,TYPE_FOOD,"Солнечник","res/items/mushroom3.png",3,2,"#HEALSELF 5=10#", false, 100, null);
-ITEMSET[50] = new BaseItem(20,50,1,SLOT_ANY,TYPE_FOOD,"Орочий гриб","res/items/mushroom4.png",3,2,"#FOVRAD -100|10#", false, 100, null);
-ITEMSET[51] = new BaseItem(20,51,1,SLOT_ANY,TYPE_FOOD,"Кровавый гриб","res/items/mushroom5.png",3,2,"#POISONCOUNT 10=15#", false, 100, null);
-ITEMSET[52] = new BaseItem(25,52,1,SLOT_ANY,TYPE_FOOD,"Эльфийская крапива","res/items/plant1.png",3,3,"#HEALTIME 1|15#", false, 100, null);
+ITEMSET[47] = new BaseItem(20,47,1,SLOT_ANY,TYPE_FOOD,"Черный гриб","res/items/mushroom1.png",3,2,"#PARALYZECOUNT 5#", false, 100, "");
+ITEMSET[48] = new BaseItem(20,48,1,SLOT_ANY,TYPE_FOOD,"Меховая шляпка","res/items/mushroom2.png",3,2,"#HEALTIME 1|10#", false, 100, "");
+ITEMSET[49] = new BaseItem(20,49,1,SLOT_ANY,TYPE_FOOD,"Солнечник","res/items/mushroom3.png",3,2,"#HEALSELF 5=10#", false, 100, "");
+ITEMSET[50] = new BaseItem(20,50,1,SLOT_ANY,TYPE_FOOD,"Орочий гриб","res/items/mushroom4.png",3,2,"#FOVRAD -100|10#", false, 100, "");
+ITEMSET[51] = new BaseItem(20,51,1,SLOT_ANY,TYPE_FOOD,"Кровавый гриб","res/items/mushroom5.png",3,2,"#POISONCOUNT 10=15#", false, 100, "");
+ITEMSET[52] = new BaseItem(25,52,1,SLOT_ANY,TYPE_FOOD,"Эльфийская крапива","res/items/plant1.png",3,3,"#HEALTIME 1|15#", false, 100, "");
 ITEMSET[59] = new BaseItem(90,59,1,SLOT_LEFT_ARM, TYPE_MELEE_WEAPON_AXE,"Изношенный топор","res/items/axe.png",20,10,"#DNORMAL 3_5#", true, 100, "#I_METALS|100#I_WOOD|100#");
 
 // Ресурсы
-ITEMSET[EMPTY_JAR] = new BaseItem(0,EMPTY_JAR,1,SLOT_ANY, TYPE_RESOURCE,"Пустая баночка","res/items/res_empty_jar.png",5,1,"", false, 100, null);
-ITEMSET[METALS] = new BaseItem(0,METALS,1,SLOT_ANY, TYPE_RESOURCE,"Металлы","res/items/res_metal.png",5,20,"", false, 100, null);
-ITEMSET[WOOD] = new BaseItem(0,WOOD,1,SLOT_ANY, TYPE_RESOURCE,"Древесина","res/items/res_wood.png",5,20,"", false, 100, null);
-ITEMSET[LEATHER] = new BaseItem(0,LEATHER,1,SLOT_ANY, TYPE_RESOURCE,"Кожа","res/items/res_leather.png",5,5,"", false, 100, null);
-ITEMSET[EMPTY_SCROOL] = new BaseItem(0,EMPTY_SCROOL,1,SLOT_ANY, TYPE_RESOURCE,"Пустой свиток","res/items/scroll1.png",2,1,"", false, 100, null);
+ITEMSET[EMPTY_JAR] = new BaseItem(0,EMPTY_JAR,1,SLOT_ANY, TYPE_RESOURCE,"Пустая баночка","res/items/res_empty_jar.png",5,1,"", false, 100, "");
+ITEMSET[METALS] = new BaseItem(0,METALS,1,SLOT_ANY, TYPE_RESOURCE,"Металлы","res/items/res_metal.png",5,20,"", false, 100, "");
+ITEMSET[WOOD] = new BaseItem(0,WOOD,1,SLOT_ANY, TYPE_RESOURCE,"Древесина","res/items/res_wood.png",5,20,"", false, 100, "");
+ITEMSET[LEATHER] = new BaseItem(0,LEATHER,1,SLOT_ANY, TYPE_RESOURCE,"Кожа","res/items/res_leather.png",5,5,"", false, 100, "");
+ITEMSET[EMPTY_SCROOL] = new BaseItem(0,EMPTY_SCROOL,1,SLOT_ANY, TYPE_RESOURCE,"Пустой свиток","res/items/scroll1.png",2,1,"", false, 100, "");
 
 // 
 ITEMSET[58] = new BaseItem(20,58,1,SLOT_ANY,TYPE_ANY,"Ключ","res/items/key.png",1,1,"", false, 1, null);

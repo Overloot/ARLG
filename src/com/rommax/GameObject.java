@@ -1,5 +1,6 @@
 package com.rommax;
 
+import java.util.LinkedList;
 import java.util.Random;
 
 /**
@@ -206,8 +207,8 @@ public abstract class GameObject extends Entity {
         }
     }
 
-    // это методы для крафта. для крафта требуются теже ресурсы,
-    // что и могут выпасть из предмета при разборе, но в двойном кол-ве.
+    // это методы для вывода информации о требуемых для крафта ресурсов
+    // для крафта требуются теже ресурсы, что и могут выпасть из предмета при разборе, но в двойном кол-ве.
     public String craftResource(String loot) {
         String needResource = craftScriptParser(loot);
         return needResource;
@@ -288,6 +289,83 @@ public abstract class GameObject extends Entity {
         }
         if (loot >= 0) return needResource;
         else return "ОШИБКА!! craftNeedResource";
+    }
+
+    // эти методы подсчитывают сколько и каких ресурсов должно быть у игрока
+    // чтоб можно было скрафтить выбранный предмет
+    public void doCraft(String loot, int id) {
+        getGame().logMessage(loot);
+        doCraftScriptParser(loot, id);
+    }
+
+    private void doCraftScriptParser(String loot, int id)
+    {
+        String script = "";
+        String param = "";
+        String count = "";
+
+        int startCell = -1;
+
+        for (int i = 0; i < loot.length(); i++) {
+            char c = loot.charAt(i);
+
+            if (c == '#') {
+                startCell = i + 1;
+            }
+            if (i == startCell) {
+                while (true) {
+                    if ((!Character.isDigit(c)) && (c != '#') && (c != '|')) script = script + c;
+                    if (Character.isDigit(c)) param = param + c;
+                    i++;
+                    c = loot.charAt(i);
+                    if ((c == 'C') && (Character.isDigit(loot.charAt(i + 1)))) {
+                        i++;
+                        c = loot.charAt(i);
+                        while (true) {
+                            if (!Character.isDigit(c)) break;
+                            count = count + c;
+                            i++;
+                            c = loot.charAt(i);
+                        }
+                    }
+                    if (c == '#') {
+                        i--;
+                        doCraftNeedResource(script, param, count, id);
+                        script = "";
+                        param = "";
+                        count = "";
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    // param не используется, а надо ли?
+    private void doCraftNeedResource(String script, String param, String count, int id)
+    {
+        int loot = -1;
+        if (count == "") count = "1";
+        int needRes = Integer.parseInt(count);
+        needRes = needRes * 2;
+        Item item;
+        switch (script){
+            case "I_EMPTY_JAR" :
+                if (getGame().player.removeItemForCraft(needRes, ItemSet.EMPTY_JAR)) loot = 1;
+                break;
+            case "I_LEATHER" :
+                if (getGame().player.removeItemForCraft(needRes, ItemSet.LEATHER)) loot = 1;
+                break;
+            case "I_METALS" :
+                if (getGame().player.removeItemForCraft(needRes, ItemSet.METALS)) loot = 1;
+                break;
+            case "I_EMPTY_SCROOL" :
+                if (getGame().player.removeItemForCraft(needRes, ItemSet.EMPTY_SCROOL)) loot = 1;
+                break;
+            default: break;
+        }
+        if (loot > 0) getGame().player.addItem(id);
+
     }
 
 

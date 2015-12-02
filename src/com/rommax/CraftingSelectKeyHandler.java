@@ -89,6 +89,8 @@ public class CraftingSelectKeyHandler implements KeyListener{
 				break;
 			case KeyEvent.VK_ENTER:
 				itemID = (getItemNumber(craftSP.current, craftSP.cWindow.type));
+				Item item = getItem(itemID);
+				item.doCraft(item.getLoot(), itemID);
 				craftSP.cWindow.stop();
 				craftSP.repaint();
 				craftSP.cWindow.game.refresh();
@@ -110,6 +112,16 @@ public class CraftingSelectKeyHandler implements KeyListener{
 			cx++;
 		}
 		return cx;
+	}
+
+	private Item getItem(int itemID)
+	{
+		LinkedList<Item> itemList = new LinkedList<>();
+		for (int item = 0; item < ItemSet.MAX_ITEMS; item++)
+			itemList.add(new Item(ItemSet.getItem(item)));
+		//Item item = new Item(new BaseItem(itemList.get(itemID).getChance(), itemID, itemList.get(itemID).getLevel(), itemList.get(itemID).getSlot(), itemList.get(itemID).getType(), itemList.get(itemID).getName(), itemList.get(itemID).getPath(), itemList.get(itemID).getSize(), itemList.get(itemID).getMass(), itemList.get(itemID).getScript(), itemList.get(itemID).getDestroyable(), itemList.get(itemID).getLife(), itemList.get(itemID).getLoot()));
+		Item item = itemList.get(itemID);
+		return item;
 	}
 
 	public void keyReleased(KeyEvent event){}
