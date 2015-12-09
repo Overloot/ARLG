@@ -35,6 +35,7 @@ class ClassPanel extends JPanel
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		z = 0;
+		int STR, AGI, END, LUCK;
 		g.drawImage(window.game.background, 0, 0, this);
 		Graphics2D g2 = (Graphics2D)g;
 		FontRenderContext context = g2.getFontRenderContext();
@@ -50,28 +51,39 @@ class ClassPanel extends JPanel
 			g2.setFont(f1);
 			g.drawString(ClassSet.getClass(i).getName(), (Tileset.TILE_SIZE * 2) + 5, y + 24);
 			if (i == select - 1) {
-				//g2.setFont(f2);
-				//g.drawString(ClassSet.getClass(i).getDescr1(), Tileset.TILE_SIZE + 5, Tileset.TILE_SIZE * ClassSet.MAX_CLASSES + 25);
-				//g.drawString(ClassSet.getClass(i).getDescr2(), Tileset.TILE_SIZE + 5, Tileset.TILE_SIZE * ClassSet.MAX_CLASSES + 37);
-				//g.drawString(ClassSet.getClass(i).getDescr3(), Tileset.TILE_SIZE + 5, Tileset.TILE_SIZE * ClassSet.MAX_CLASSES + 49);
-				//g2.setFont(f3);
+				g2.setFont(f2);
+				g.drawString(ClassSet.getClass(i).getDescr1(), Tileset.TILE_SIZE + 5, Tileset.TILE_SIZE * ClassSet.MAX_CLASSES + 25);
+				g.drawString(ClassSet.getClass(i).getDescr2(), Tileset.TILE_SIZE + 5, Tileset.TILE_SIZE * ClassSet.MAX_CLASSES + 37);
+				g.drawString(ClassSet.getClass(i).getDescr3(), Tileset.TILE_SIZE + 5, Tileset.TILE_SIZE * ClassSet.MAX_CLASSES + 49);
+				g2.setFont(f3);
 				
-				//addLine(g, "res/icons/str_icon.png", "Сила: " + ClassSet.getClass(i).getSTR(), 0, 1);
-				//addLine(g, "res/icons/agi_icon.png", "Ловкость: " + ClassSet.getClass(i).getAGI(), 0, 2);
-				//addLine(g, "res/icons/end_icon.png", "Выносливость: " + ClassSet.getClass(i).getEND(), 0, 3);
-				//addLine(g, "res/icons/icon_luck.png", "Удача: " + ClassSet.getClass(i).getLUCK(), 0, 4);
+				STR  = RaceSet.getRace(RaceSet.getCurrentRaceID).getSTR()  + ClassSet.getClass(i).getSTR();
+				AGI  = RaceSet.getRace(RaceSet.getCurrentRaceID).getAGI()  + ClassSet.getClass(i).getAGI();
+				END  = RaceSet.getRace(RaceSet.getCurrentRaceID).getEND()  + ClassSet.getClass(i).getEND();
+				LUCK = RaceSet.getRace(RaceSet.getCurrentRaceID).getLUCK() + ClassSet.getClass(i).getLUCK();
+
+				addLine(g, "res/icons/str_icon.png", "Сила: " + STR, 0, 1);
+				addLine(g, "res/icons/agi_icon.png", "Ловкость: " + AGI, 0, 2);
+				addLine(g, "res/icons/end_icon.png", "Выносливость: " + END, 0, 3);
+				addLine(g, "res/icons/icon_luck.png", "Удача: " + LUCK, 0, 4);
+								
+				y = window.game.calcHP(STR, END);
+				addLine(g, "res/icons/icon_life.png", "Жизнь: " + y + "/" + y, 7, 1);
+				addLine(g, "res/items/backpack1.png", "Нагрузка: " + window.game.calcCarrying(STR), 7, 2);
 				
-				//y = window.game.calcHP(ClassSet.getClass(i).getSTR(), ClassSet.getClass(i).getEND());
-				//addLine(g, "res/icons/icon_life.png", "Жизнь: " + y + "/" + y, 7, 1);
-				//addLine(g, "res/items/backpack1.png", "Нагрузка: " + window.game.calcCarrying(ClassSet.getClass(i).getSTR()), 7, 2);
-				
-				// Расовый навык
-				//addLine(g, "Расовый навык:", 6, 3); z = -10;
-				/*window.game.renderIcon(g, this, Tileset.TILE_SIZE * (ClassSet.MAX_CLASSES + 5) + 15,
-					260, 7, SkillSet.getSkill(ClassSet.getClass(i).getSkill()).getPath(),
-					SkillSet.getSkill(ClassSet.getClass(i).getSkill()).getName(),
-					SkillSet.getSkill(ClassSet.getClass(i).getSkill()).getDescr(),
-					SkillSet.getSkill(ClassSet.getClass(i).getSkill()).getLevel());*/
+				// Навыки
+				addLine(g, "Навыки:", 6, 3); z = -10;
+				int col, row, add;
+				for(int s=1;s<=3;s++){
+					col=(s==2)?32:260;
+					row=(s==1)?5:6;
+					add=(s==1)?0:8;
+					window.game.renderIcon(g, this, Tileset.TILE_SIZE * (ClassSet.MAX_CLASSES + row) + add + 15,
+						col, 7, SkillSet.getSkill(ClassSet.getClass(i).getSkill(s)).getPath(),
+						SkillSet.getSkill(ClassSet.getClass(i).getSkill(s)).getName(),
+						SkillSet.getSkill(ClassSet.getClass(i).getSkill(s)).getDescr(),
+						SkillSet.getSkill(ClassSet.getClass(i).getSkill(s)).getLevel());
+				}
 			}
 		}
 		y = ((select - 1) * Tileset.TILE_SIZE);

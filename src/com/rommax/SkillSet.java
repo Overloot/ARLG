@@ -2,6 +2,8 @@ package com.rommax;
 
 public class SkillSet{
 
+	public static final int SKILL_NONE  = -1;
+
 	// Расовые навыки
 	public static final int SKILL_HEAL  = 0;
 	public static final int SKILL_INFRA  = 1;
@@ -23,16 +25,21 @@ public class SkillSet{
 	public static final int SKILL_ASSASSIN_3 = 13;
 	
 	// Навыки воина
-	public static final int SKILL_WARRIOR_1 = 14;
-	public static final int SKILL_WARRIOR_2 = 15;
-	public static final int SKILL_WARRIOR_3 = 16;
+	public static final int SKILL_FIGHTER_1 = 14;
+	public static final int SKILL_FIGHTER_2 = 15;
+	public static final int SKILL_FIGHTER_3 = 16;
 	
 	// Навыки паладина
 	public static final int SKILL_PALADIN_1 = 17;
 	public static final int SKILL_PALADIN_2 = 18;
 	public static final int SKILL_PALADIN_3 = 19;
 	
-	public static final int MAX_SKILLS = 20;
+	// Навыки рейнжера
+	public static final int SKILL_RANGER_1 = 20;
+	public static final int SKILL_RANGER_2 = 21;
+	public static final int SKILL_RANGER_3 = 22;
+	
+	public static final int MAX_SKILLS = 23;
 
 	private static BaseSkill[] SKILLSET;
 	
@@ -56,13 +63,17 @@ public class SkillSet{
 		SKILLSET[SKILL_ASSASSIN_2] = new BaseSkill(SKILL_ASSASSIN_2, "Ядовитое Облако", "Все цели вокруг убийцы отравлены", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
 		SKILLSET[SKILL_ASSASSIN_3] = new BaseSkill(SKILL_ASSASSIN_3, "Огненная Бомба", "Устанавка огненной ловушки", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
 		// Навыки воина
-		SKILLSET[SKILL_WARRIOR_1] = new BaseSkill(SKILL_WARRIOR_1, "Неистовство", "Враги не успевают отвечать на удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
-		SKILLSET[SKILL_WARRIOR_2] = new BaseSkill(SKILL_WARRIOR_2, "Неистовство", "Враги не успевают отвечать на удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
-		SKILLSET[SKILL_WARRIOR_3] = new BaseSkill(SKILL_WARRIOR_3, "Неистовство", "Враги не успевают отвечать на удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
+		SKILLSET[SKILL_FIGHTER_1] = new BaseSkill(SKILL_FIGHTER_1, "Неистовство", "Враги не успевают отвечать на удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
+		SKILLSET[SKILL_FIGHTER_2] = new BaseSkill(SKILL_FIGHTER_2, "Неистовство", "Враги не успевают отвечать на удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
+		SKILLSET[SKILL_FIGHTER_3] = new BaseSkill(SKILL_FIGHTER_3, "Неистовство", "Враги не успевают отвечать на удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
 		// Навыки паладина
 		SKILLSET[SKILL_PALADIN_1] = new BaseSkill(SKILL_PALADIN_1, "Святой Луч", "Аура света отражает удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
 		SKILLSET[SKILL_PALADIN_2] = new BaseSkill(SKILL_PALADIN_2, "Святой Луч", "Аура света отражает удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
 		SKILLSET[SKILL_PALADIN_3] = new BaseSkill(SKILL_PALADIN_3, "Святой Луч", "Аура света отражает удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
+		// Навыки рейнжера
+		SKILLSET[SKILL_RANGER_1] = new BaseSkill(SKILL_RANGER_1, "Святой Луч", "Аура света отражает удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
+		SKILLSET[SKILL_RANGER_2] = new BaseSkill(SKILL_RANGER_2, "Святой Луч", "Аура света отражает удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
+		SKILLSET[SKILL_RANGER_3] = new BaseSkill(SKILL_RANGER_3, "Святой Луч", "Аура света отражает удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
 	}
 
 	public static BaseSkill getSkill(int id){

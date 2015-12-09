@@ -13,9 +13,9 @@ public class ClassSet {
     static{
 		
 		CLASSSET = new BaseClass[MAX_CLASSES];
-        CLASSSET[CLASS_FIGHTER] = new BaseClass(CLASS_FIGHTER, "Боец", "fighter");
-        CLASSSET[CLASS_RANGER] = new BaseClass(CLASS_RANGER, "Рейнжер", "ranger");
-        CLASSSET[CLASS_THIEF] = new BaseClass(CLASS_THIEF, "Вор", "thief");
+        CLASSSET[CLASS_FIGHTER] = new BaseClass(CLASS_FIGHTER, "Боец", "fighter", "1", "2", "3", 2, 0, 2, 0, SkillSet.SKILL_FIGHTER_1, SkillSet.SKILL_FIGHTER_2, SkillSet.SKILL_FIGHTER_3);
+        CLASSSET[CLASS_RANGER] = new BaseClass(CLASS_RANGER, "Рейнжер", "ranger", "1", "2", "3", 1, 3, 0, 0, SkillSet.SKILL_RANGER_1, SkillSet.SKILL_RANGER_2, SkillSet.SKILL_RANGER_3);
+        CLASSSET[CLASS_THIEF] = new BaseClass(CLASS_THIEF, "Вор", "thief", "1", "2", "3", 0, 3, -1, 6, SkillSet.SKILL_THIEF_1, SkillSet.SKILL_THIEF_2, SkillSet.SKILL_THIEF_3);
 		
     }
     

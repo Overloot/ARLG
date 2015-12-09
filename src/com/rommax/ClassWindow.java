@@ -11,7 +11,7 @@ public class ClassWindow extends JFrame{
     public Game game;
 
 	static{
-		WINDOW_HEIGHT = (ClassSet.MAX_CLASSES + 8) * Tileset.TILE_SIZE;
+		WINDOW_HEIGHT = (ClassSet.MAX_CLASSES + 9) * Tileset.TILE_SIZE;
 	}
 
 	public void stop(){
