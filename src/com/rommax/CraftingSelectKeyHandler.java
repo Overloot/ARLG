@@ -92,7 +92,7 @@ public class CraftingSelectKeyHandler implements KeyListener{
 					craftingSP.cWindow.message.number = (getItemNumber(craftingSP.current, craftingSP.cWindow.type));
 				else craftingSP.cWindow.message.number = craftingSP.current;
 				switch (craftingSP.cWindow.message.command) {
-					case 'K': // пусть будет так
+					case 'K': // РїСѓСЃС‚СЊ Р±СѓРґРµС‚ С‚Р°Рє
 						int x = craftingSP.cWindow.game.player.getX();
 						int y = craftingSP.cWindow.game.player.getY();
 						int id = craftingSP.cWindow.message.number;
