@@ -13,6 +13,7 @@ class CraftingSelectPanel extends JPanel {
 	public int max = 0;
 	public int current = 0;
 	public int MAX_ITEMS = 0;
+	public int icurrent = 0;
 	private Image im;
 
 	CraftingSelectPanel(CraftingSelectWindow cWindow){
@@ -31,7 +32,7 @@ class CraftingSelectPanel extends JPanel {
 		}
 		min = 0;
 		if (MAX_ITEMS<10) max = MAX_ITEMS-1;
-			else max = 9;
+		else max = 9;
 	}
 
 	public void resetState(){
@@ -41,12 +42,12 @@ class CraftingSelectPanel extends JPanel {
 		Item it = null;
 		while (iter.hasNext()){
 			it = iter.next();
-			if (it.getType()== cWindow.type || cWindow.type == ItemSet.TYPE_ANY)
-				  MAX_ITEMS++;
+			if (it.getType() == cWindow.type || cWindow.type == ItemSet.TYPE_ANY)
+				MAX_ITEMS++;
 		}
 		min = 0;
 		if (MAX_ITEMS<10) max = MAX_ITEMS-1;
-			else max = 9;
+		else max = 9;
 		current = 0;
 	}
 
@@ -84,8 +85,8 @@ class CraftingSelectPanel extends JPanel {
 		iter.next();
 		while(ix<min){
 			if (item.getType()== cWindow.type || cWindow.type == ItemSet.TYPE_ANY)
-			ix++;
-		    item = iter.next();
+				ix++;
+			item = iter.next();
 		}
 		g.drawImage(cWindow.game.background, 0, 0, this);
 		for (int i=min; i<=max; i++){
@@ -93,12 +94,12 @@ class CraftingSelectPanel extends JPanel {
 				if (item.getType()!= cWindow.type && cWindow.type != ItemSet.TYPE_ANY) i--;
 				else {
 					im =  cWindow.game.loader.getImage(ItemSet.getItem(item.getID()).getPath());
-				    g.drawImage(im, 0 , (i-min)*Tileset.TILE_SIZE + 10, this);
-				    g2.setPaint(Color.WHITE);
-					drawColorString(g, item.getName().toLowerCase(),Tileset.TILE_SIZE + 5, (int)(Tileset.TILE_SIZE * (0.5 + (i - min))) + 10);
+					g.drawImage(im, 0, (i - min) * Tileset.TILE_SIZE + 10, this);
+					g2.setPaint(Color.WHITE);
+					drawColorString(g, item.getName().toLowerCase(), Tileset.TILE_SIZE + 5, (int) (Tileset.TILE_SIZE * (0.5 + (i - min))) + 10);
 					if (i == current){
-						g.drawString(item.craftResource(item.getLoot()), 300, (int)(Tileset.TILE_SIZE * (0.5 + (i - min))) + 10);
 						g2.setPaint(Color.YELLOW);
+						g.drawString(item.craftResource(item.getLoot()), 300, (int)(Tileset.TILE_SIZE * (0.5 + (i - min))) + 10);
 						drawColorString(g, item.getName().toLowerCase(),Tileset.TILE_SIZE + 5, (int)(Tileset.TILE_SIZE * (0.5 + (i - min))) + 10);
 						g.drawImage(cWindow.game.cursor, cWindow.WINDOW_WIDTH - Tileset.TILE_SIZE - 5, (i-min)*Tileset.TILE_SIZE + 10 , this);
 					}
@@ -109,7 +110,7 @@ class CraftingSelectPanel extends JPanel {
 		if (max< MAX_ITEMS-1)
 			g.drawString("<...>",5, Tileset.TILE_SIZE * 10 + 15);
 		if (min>0)
-		    g.drawString("<...>",5,10);
+			g.drawString("<...>",5,10);
 		g2.setPaint(Color.WHITE);
 		g.drawString("Текущий режим: " + ItemSet.getNameOfType(cWindow.type).toLowerCase(), 5, Tileset.TILE_SIZE * 10 + 25);
 		if (max == -1) min = -1;
@@ -118,5 +119,5 @@ class CraftingSelectPanel extends JPanel {
 		g.drawString("Фильтры для меню: 1 - оружие, 2 - броня, 3 - зелья, 4 - свитки, 5 - контейнеры, 6 - еда,", 5, Tileset.TILE_SIZE * 10 + 45);
 		g.drawString("7 - все остальное, 0 - показывать все.", 5, Tileset.TILE_SIZE * 10 + 55);
 	}
-
 }
+

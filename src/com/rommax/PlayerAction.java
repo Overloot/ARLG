@@ -1,6 +1,5 @@
 package com.rommax;
 
-import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 
@@ -8,7 +7,8 @@ public class PlayerAction {
 	
 	private Map map;
 	private MainPanel mp;
-	private ItemSelectMessage message;
+	private ItemSelectMessage itemSelectMessage;
+	private CraftingSelectMessage craftingSelectMessage;
 	
 	public PlayerAction(Map map, MainPanel mp) {
 		this.map = map;
@@ -167,9 +167,9 @@ public class PlayerAction {
 	public boolean identifyIt() {
 		map.getGame().frame1.setFocusable(false);
 		map.getGame().frame1.setFocusableWindowState(false);
-		message = new ItemSelectMessage();
-		message.command = 'b';
-		ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.getGame().player.getInventory(), message);
+		itemSelectMessage = new ItemSelectMessage();
+		itemSelectMessage.command = 'b';
+		ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.getGame().player.getInventory(), itemSelectMessage);
 		frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame2.setTitle("Что вы хотите идентифицировать?");
 		frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
@@ -191,18 +191,18 @@ public class PlayerAction {
 			return false;
 		}
 		if (map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList().size() == 1){
-			message = new ItemSelectMessage();
+			itemSelectMessage = new ItemSelectMessage();
 			map.getGame().keyHandler.keyPressed(null);
 			map.getGame().player.pickupItem(map.field[map.getGame().player.getY()]
-				[map.getGame().player.getX()].getItemList(), message.number);
+				[map.getGame().player.getX()].getItemList(), itemSelectMessage.number);
 			return true;
 		} else {
 			map.getGame().frame1.setFocusable(false);
 			map.getGame().frame1.setFocusableWindowState(false);
-			message = new ItemSelectMessage();
-			message.command = 't';
+			itemSelectMessage = new ItemSelectMessage();
+			itemSelectMessage.command = 't';
 			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY,
-				map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), message);
+				map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList(), itemSelectMessage);
 			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			frame2.setTitle("Что вы хотите поднять?");
 			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2,
@@ -222,9 +222,9 @@ public class PlayerAction {
 		} else {
 			map.getGame().frame1.setFocusable(false);
 			map.getGame().frame1.setFocusableWindowState(false);
-			message = new ItemSelectMessage();
-			message.command = 'd';
-			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.getGame().player.getInventory(), message);
+			itemSelectMessage = new ItemSelectMessage();
+			itemSelectMessage.command = 'd';
+			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.getGame().player.getInventory(), itemSelectMessage);
 			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			frame2.setTitle("Что вы хотите бросить?");
 			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
@@ -268,9 +268,9 @@ public class PlayerAction {
 		} else {
 			map.getGame().frame1.setFocusable(false);
 			map.getGame().frame1.setFocusableWindowState(false);
-			message = new ItemSelectMessage();
-			message.command = 'q';
-			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_POTION, map.getGame().player.getInventory(), message);
+			itemSelectMessage = new ItemSelectMessage();
+			itemSelectMessage.command = 'q';
+			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_POTION, map.getGame().player.getInventory(), itemSelectMessage);
 			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			frame2.setTitle("Что вы хотите выпить?");
 			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
@@ -289,9 +289,9 @@ public class PlayerAction {
 		} else {
 			map.getGame().frame1.setFocusable(false);
 			map.getGame().frame1.setFocusableWindowState(false);
-			message = new ItemSelectMessage();
-			message.command = 'r';
-			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_SCROLL, map.getGame().player.getInventory(), message);
+			itemSelectMessage = new ItemSelectMessage();
+			itemSelectMessage.command = 'r';
+			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_SCROLL, map.getGame().player.getInventory(), itemSelectMessage);
 			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			frame2.setTitle("Что вы хотите прочитать?");
 			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
@@ -310,9 +310,9 @@ public class PlayerAction {
 		} else {
 			map.getGame().frame1.setFocusable(false);
 			map.getGame().frame1.setFocusableWindowState(false);
-			message = new ItemSelectMessage();
-			message.command = 'e';
-			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_FOOD, map.getGame().player.getInventory(), message);
+			itemSelectMessage = new ItemSelectMessage();
+			itemSelectMessage.command = 'e';
+			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_FOOD, map.getGame().player.getInventory(), itemSelectMessage);
 			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			frame2.setTitle("Что вы хотите съесть?");
 			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
@@ -331,11 +331,11 @@ public class PlayerAction {
 		} else {
 			map.getGame().frame1.setFocusable(false);
 			map.getGame().frame1.setFocusableWindowState(false);
-			message = new ItemSelectMessage();
-			message.command = 'w';
-			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.getGame().player.getInventory(), message);
+			itemSelectMessage = new ItemSelectMessage();
+			itemSelectMessage.command = 'w';
+			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.getGame().player.getInventory(), itemSelectMessage);
 			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-			frame2.setTitle("Что вы хотите надеть?" + message.command);
+			frame2.setTitle("Что вы хотите надеть?" + itemSelectMessage.command);
 			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
 			frame2.toFront();
 			frame2.setVisible(true);
@@ -366,9 +366,9 @@ public class PlayerAction {
 		} else {
 			map.getGame().frame1.setFocusable(false);
 			map.getGame().frame1.setFocusableWindowState(false);
-			message = new ItemSelectMessage();
-			message.command = 'i';
-			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.getGame().player.getInventory(), message);
+			itemSelectMessage = new ItemSelectMessage();
+			itemSelectMessage.command = 'i';
+			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.getGame().player.getInventory(), itemSelectMessage);
 			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			frame2.setTitle("Что вы хотите осмотреть?");
 			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
@@ -383,7 +383,9 @@ public class PlayerAction {
 		LinkedList<Item> itemList = Item.getListOfAllItems();
 			map.getGame().frame1.setFocusable(false);
 			map.getGame().frame1.setFocusableWindowState(false);
-			CraftingSelectWindow frame2 = new CraftingSelectWindow(map.getGame(), ItemSet.TYPE_ANY, itemList);
+			craftingSelectMessage = new CraftingSelectMessage();
+			craftingSelectMessage.command = 'K';
+			CraftingSelectWindow frame2 = new CraftingSelectWindow(map.getGame(), ItemSet.TYPE_ANY, itemList, craftingSelectMessage);
 			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			frame2.setTitle("Что вы хотите крафтить?");
 			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
@@ -401,9 +403,9 @@ public class PlayerAction {
 		} else {
 			map.getGame().frame1.setFocusable(false);
 			map.getGame().frame1.setFocusableWindowState(false);
-			message = new ItemSelectMessage();
-			message.command = 'g';
-			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.getGame().player.getInventory(), message);
+			itemSelectMessage = new ItemSelectMessage();
+			itemSelectMessage.command = 'g';
+			ItemSelectWindow frame2 = new ItemSelectWindow(map.getGame(), ItemSet.TYPE_ANY, map.getGame().player.getInventory(), itemSelectMessage);
 			frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			frame2.setTitle("Что вы хотите разобрать?");
 			frame2.setLocation(map.getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2, map.getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);

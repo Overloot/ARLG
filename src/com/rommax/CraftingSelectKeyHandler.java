@@ -6,12 +6,11 @@ import java.util.*;
 
 public class CraftingSelectKeyHandler implements KeyListener{
 
-	CraftingSelectPanel craftSP;
-	int itemID;
+	CraftingSelectPanel craftingSP;
 
 	public CraftingSelectKeyHandler(CraftingSelectPanel craftingSelectPanel){
 		super();
-		this.craftSP = craftingSelectPanel;
+		this.craftingSP = craftingSelectPanel;
 	}
 
 	public synchronized void keyPressed(KeyEvent event){
@@ -19,86 +18,98 @@ public class CraftingSelectKeyHandler implements KeyListener{
 
 		switch (keycode) {
 			case KeyEvent.VK_1:
-				if (craftSP.cWindow.isChangedFilter){
-					craftSP.cWindow.type = ItemSet.TYPE_MELEE_WEAPON_SWORD;
-					craftSP.resetState();
+				if (craftingSP.cWindow.isChangedFilter){
+					craftingSP.cWindow.type = ItemSet.TYPE_MELEE_WEAPON_SWORD;
+					craftingSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_2:
-				if (craftSP.cWindow.isChangedFilter){
-					craftSP.cWindow.type = ItemSet.TYPE_ARMOR;
-					craftSP.resetState();
+				if (craftingSP.cWindow.isChangedFilter){
+					craftingSP.cWindow.type = ItemSet.TYPE_ARMOR;
+					craftingSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_3:
-				if (craftSP.cWindow.isChangedFilter){
-					craftSP.cWindow.type = ItemSet.TYPE_POTION;
-					craftSP.resetState();
+				if (craftingSP.cWindow.isChangedFilter){
+					craftingSP.cWindow.type = ItemSet.TYPE_POTION;
+					craftingSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_4:
-				if (craftSP.cWindow.isChangedFilter){
-					craftSP.cWindow.type = ItemSet.TYPE_SCROLL;
-					craftSP.resetState();
+				if (craftingSP.cWindow.isChangedFilter){
+					craftingSP.cWindow.type = ItemSet.TYPE_SCROLL;
+					craftingSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_5:
-				if (craftSP.cWindow.isChangedFilter){
-					craftSP.cWindow.type = ItemSet.TYPE_CONTAINER;
-					craftSP.resetState();
+				if (craftingSP.cWindow.isChangedFilter){
+					craftingSP.cWindow.type = ItemSet.TYPE_CONTAINER;
+					craftingSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_6:
-				if (craftSP.cWindow.isChangedFilter){
-					craftSP.cWindow.type = ItemSet.TYPE_FOOD;
-					craftSP.resetState();
+				if (craftingSP.cWindow.isChangedFilter){
+					craftingSP.cWindow.type = ItemSet.TYPE_FOOD;
+					craftingSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_7:
-				if (craftSP.cWindow.isChangedFilter){
-					craftSP.cWindow.type = ItemSet.TYPE_MISC;
-					craftSP.resetState();
+				if (craftingSP.cWindow.isChangedFilter){
+					craftingSP.cWindow.type = ItemSet.TYPE_MISC;
+					craftingSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_0:
-				if (craftSP.cWindow.isChangedFilter){
-					craftSP.cWindow.type = ItemSet.TYPE_ANY;
-					craftSP.resetState();
+				if (craftingSP.cWindow.isChangedFilter){
+					craftingSP.cWindow.type = ItemSet.TYPE_ANY;
+					craftingSP.resetState();
 				}
 				break;
 			case KeyEvent.VK_ESCAPE:
-				craftSP.cWindow.stop();
+				craftingSP.cWindow.message.command = '/';
+				craftingSP.cWindow.stop();
 				break;
 			case KeyEvent.VK_UP:
-				if (craftSP.current > 0){
-					craftSP.current--;
-					if (craftSP.current < craftSP.min){
-						craftSP.min--;
-						craftSP.max--;
+				if (craftingSP.current > 0){
+					craftingSP.current--;
+					if (craftingSP.current < craftingSP.min){
+						craftingSP.min--;
+						craftingSP.max--;
 					}
 				}
 				break;
 			case KeyEvent.VK_DOWN:
-				if (craftSP.current < craftSP.MAX_ITEMS - 1){
-					craftSP.current++;
-					if (craftSP.current > craftSP.max){
-						craftSP.min++;
-						craftSP.max++;
+				if (craftingSP.current < craftingSP.MAX_ITEMS - 1){
+					craftingSP.current++;
+					if (craftingSP.current > craftingSP.max){
+						craftingSP.min++;
+						craftingSP.max++;
 					}
 				}
 				break;
 			case KeyEvent.VK_ENTER:
-				//TODO
-				craftSP.cWindow.stop();
-				craftSP.repaint();
-				craftSP.cWindow.game.refresh();
+				if (craftingSP.cWindow.type != ItemSet.TYPE_ANY)
+					craftingSP.cWindow.message.number = (getItemNumber(craftingSP.current, craftingSP.cWindow.type));
+				else craftingSP.cWindow.message.number = craftingSP.current;
+				switch (craftingSP.cWindow.message.command) {
+					case 'K': // пусть будет так
+						int x = craftingSP.cWindow.game.player.getX();
+						int y = craftingSP.cWindow.game.player.getY();
+						int id = craftingSP.cWindow.message.number;
+						craftingSP.cWindow.game.addItem(y, x, id, craftingSP.cWindow.game.player.getMap());
+						craftingSP.cWindow.stop();
+						break;
+					default:
+						craftingSP.cWindow.stop();
+						break;
+				}
 				break;
 		}
-		craftSP.repaint();
+		craftingSP.repaint();
 	}
 
 	public int getItemNumber(int number, int type){
-		LinkedList<Item> x = craftSP.cWindow.list;
+		LinkedList<Item> x = craftingSP.cWindow.list;
 		ListIterator<Item> iter = x.listIterator();
 		int cx = -1;
 		int ix = -1;
