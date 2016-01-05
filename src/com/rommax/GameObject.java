@@ -1,6 +1,5 @@
 package com.rommax;
 
-import java.util.LinkedList;
 import java.util.Random;
 
 /**
@@ -142,8 +141,12 @@ public abstract class GameObject extends Entity {
             default: break;
         }
         if (loot >= 0) {
-            for (int howMuchItems = 0; howMuchItems < Integer.valueOf(count); howMuchItems++)
-                map.getGame().addItem(map.getGame().player.getY(), map.getGame().player.getX(), loot, map);
+            for (int howMuchItems = 0; howMuchItems < Integer.valueOf(count); howMuchItems++) {
+                if (this instanceof Monster)
+                    map.getGame().addItem(this.getY(), this.getX(), loot, map); // так будет падать на позицию объекта, но не дерева, т.к. оно еще не объект
+                else
+                    map.getGame().addItem(map.getGame().player.getY(), map.getGame().player.getX(), loot, map); // так будет падать на позицию игрока
+            }
         }
 
     }
@@ -380,7 +383,7 @@ public abstract class GameObject extends Entity {
                 break;
             default: break;
         }
-        if (loot == 1) getGame().player.addItem(id);
+        if (loot == 1) getGame().player.addItemOnCurrentPlayerPosition(id);
     }
 
 

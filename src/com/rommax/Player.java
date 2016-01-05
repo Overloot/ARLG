@@ -360,7 +360,7 @@ public class Player extends Monster{
     }
 
     // добавлят итем на текущую позицию игрока
-    public void addItem(int id)
+    public void addItemOnCurrentPlayerPosition(int id)
     {
         getGame().addItem(getY(), getX(), id, getMap());
     }
