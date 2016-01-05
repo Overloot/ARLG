@@ -296,10 +296,14 @@ public abstract class GameObject extends Entity {
                 needResource = needResource + "Пустой свиток (" + resCount + ")";
                 loot = 1;
                 break;
+            case "I_WOOD" :
+                needResource = needResource + "Древесина (" + resCount + ")";
+                loot = 1;
+                break;
             default: break;
         }
         if (loot >= 0) return needResource;
-        else return "ОШИБКА!! craftNeedResource";
+        else return "ОШИБКА!! Неправильно указан требуемый ресурс GameObject.craftNeedResource";
     }
 
     // вызывает обработчик скрипта выясняющий какие ресурсы требуются для крафта

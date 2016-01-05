@@ -127,7 +127,7 @@ ITEMSET[LEATHER] = new BaseItem(0,LEATHER,1,SLOT_ANY, TYPE_RESOURCE,"Кожа","
 ITEMSET[EMPTY_SCROOL] = new BaseItem(0,EMPTY_SCROOL,1,SLOT_ANY, TYPE_RESOURCE,"Пустой свиток","res/items/scroll1.png",2,1,"", false, 100, "");
 
 // 
-ITEMSET[58] = new BaseItem(20,58,1,SLOT_ANY,TYPE_ANY,"Ключ","res/items/key.png",1,1,"", false, 1, null);
+ITEMSET[58] = new BaseItem(20,58,1,SLOT_ANY,TYPE_ANY,"Ключ","res/items/key.png",1,1,"", false, 1, "");
 //!!!
 
 		TypeName = new String[MAX_TYPES];
