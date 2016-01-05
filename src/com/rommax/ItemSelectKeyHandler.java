@@ -144,7 +144,7 @@ public class ItemSelectKeyHandler implements KeyListener{
 						itemSP.repaint();
 						break;
 					case 'g': // разбираем предмет
-						itemSP.iwindow.game.player.disassembledItem(itemSP.iwindow.game.player.getInventory(), itemSP.iwindow.message.number);
+						itemSP.iwindow.game.player.disassembledItem(itemSP.iwindow.message.number);
 						itemSP.iwindow.stop();
 						itemSP.repaint();
 						itemSP.iwindow.game.refresh();

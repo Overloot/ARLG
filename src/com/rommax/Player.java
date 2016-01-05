@@ -305,7 +305,7 @@ public class Player extends Monster{
         frame2.setVisible(true);
     }
 
-    public void disassembledItem(LinkedList<Item> list, int number)
+    public void disassembledItem(int number)
     {
         if (number == -1) return;
 
@@ -317,62 +317,52 @@ public class Player extends Monster{
         getGame().logMessage("#8#Разобрано!#^# (" + getInventory().get(number).getName().toLowerCase() + "#^#)");
         getCurrentWeight().setCurrent(getCurrentWeight().getCurrent() - getInventory().get(number).getMass());
         getCurrentSize().setCurrent(getCurrentSize().getCurrent() - getInventory().get(number).getSize());
-        getInventory().get(number).makeLoot(getMap(), getInventory().get(number).getLoot());
-        //TODO: добавлять лут сразу в инвентарь
-        getInventory().remove(number);
+        getInventory().get(number).makeLoot(getMap(), getInventory().get(number).getLoot()); // вызов метода высчитывающего какой лут упадет
+        getInventory().remove(number); // удаляем разобранный предмет
         return;
     }
 
-    public boolean findItem(int id)
+    // метод считает сколько итемов с идентификатором id есть в инвентаре игрока
+    public int howMuchItemPlayerHave(int id)
     {
+        int haveRes = 0;
         Item item;
-        for (int index = 0; index < getInventory().size(); index++)
-        {
-            item = getInventory().get(index);
-            if (id == item.getID()) return true;
-        }
-        return false;
+            for (int index = 0; index < getInventory().size(); index++)
+            {
+                item = getInventory().get(index);
+                if (id == item.getID()) {
+                    haveRes++;
+                }
+            }
+        return haveRes;
     }
 
+    // метод убирает необходимое кол-во итемов из инвентаря игрока
     public boolean removeItemForCraft(int needRes, int id)
     {
-        int haveRes = needRes;
+        if (howMuchItemPlayerHave(id) < needRes) { // у игрока меньше итемов, чем недо
+            getGame().logMessage("Недостаточно ресурсов.");
+            return false;
+        }
         Item item;
-        for (int howMuch = 1; howMuch <= needRes; howMuch++)
             for (int index = 0; index < getInventory().size(); index++)
             {
                 item = getInventory().get(index);
                 if (id == item.getID()) {
                     getInventory().remove(index);
-                    haveRes--;
+                    needRes--;
+                    if (index != 0) index--;
                 }
+                if (needRes == 0) break;
             }
-        if (haveRes == 0) return true;
-        else return false;
+        getGame().logMessage("Крафт успешно завершен.");
+        return true;
     }
 
+    // добавлят итем на текущую позицию игрока
     public void addItem(int id)
     {
-        LinkedList<Item> itemList = Item.getListOfAllItems();
-        for (int index = 0; index < itemList.size(); index++)
-        {
-            if (id == itemList.get(index).getID()) getInventory().add(itemList.get(index));
-        }
+        getGame().addItem(getY(), getX(), id, getMap());
     }
-
-    public void craftItem(LinkedList<Item> list, int number)
-    {
-        if (number == -1) return;
-
-        if (!getInventory().get(number).getDestroyable()) {
-            getGame().logMessage(getInventory().get(number).getName() + "#^# - неадекватная ошибка!");
-            return;
-        }
-
-        getGame().logMessage("#8#Скравчено!#^# (" + getInventory().get(number).getName().toLowerCase() + "#^#)");
-        getInventory().get(number).doCraft(getInventory().get(number).getLoot(), getInventory().get(number).getID());
-        return;
-    }
-
 
 }

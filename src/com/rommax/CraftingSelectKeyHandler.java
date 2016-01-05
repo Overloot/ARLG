@@ -96,7 +96,8 @@ public class CraftingSelectKeyHandler implements KeyListener{
 						int x = craftingSP.cWindow.game.player.getX();
 						int y = craftingSP.cWindow.game.player.getY();
 						int id = craftingSP.cWindow.message.number;
-						craftingSP.cWindow.game.addItem(y, x, id, craftingSP.cWindow.game.player.getMap());
+                        String loot = craftingSP.cWindow.list.get(id).getLoot();
+                        craftingSP.cWindow.game.player.doCraft(loot, id);
 						craftingSP.cWindow.stop();
 						break;
 					default:

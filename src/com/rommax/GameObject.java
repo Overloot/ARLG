@@ -50,6 +50,7 @@ public abstract class GameObject extends Entity {
         this.weaknessFor = weaknessFor;
     }
 
+    // добыча ресурсов с объектов на карте
     public boolean gathering(Map map, int ny, int nx)
     {
         map.getGame().logMessage("Добываем ресурс");
@@ -63,11 +64,14 @@ public abstract class GameObject extends Entity {
         return false;
     }
 
+    // запускает обработчик лута
     public void makeLoot(Map map, String loot)
     {
         lootScriptParser(map, loot);
     }
 
+    // метод выясняет какой лут может выбросить объект
+    // в параметры String loot содержится скрипт указывающий на возможный лут
     private void lootScriptParser(Map map, String loot)
     {
         String script = "";
@@ -111,6 +115,7 @@ public abstract class GameObject extends Entity {
         }
     }
 
+    // метод "дает" лут
     private void dropLoot(Map map, String script, String param, String count)
     {
         int loot = -1;
@@ -143,11 +148,14 @@ public abstract class GameObject extends Entity {
 
     }
 
+    // вызывает метод обработки скрипта уязвимостей объекта к определенному типу урона
     public void makeDamage(Map map, String weaknessFor)
     {
         weaknessScriptParser(map, weaknessFor);
     }
 
+    // метод обрабатывает скрипт уязвимостей объекта к определенному типу уровна
+    // скрипт в weaknessFor
     private void weaknessScriptParser(Map map, String weaknessFor)
     {
         String script = "";
@@ -179,6 +187,7 @@ public abstract class GameObject extends Entity {
         }
     }
 
+    // метод наносит повреждение текущему атакуемому объекту согласну его скрипту уязвимостей
     private void doDamage(Map map, String script, String param)
     {
         int damage;
@@ -207,13 +216,15 @@ public abstract class GameObject extends Entity {
         }
     }
 
-    // это методы для вывода информации о требуемых для крафта ресурсов
-    // для крафта требуются теже ресурсы, что и могут выпасть из предмета при разборе, но в двойном кол-ве.
+    // запускает обработчик скрипта, который выясняет кол-во необходимых для крафта ресурсов
+    // полученное значение в формате строки возвращается обратно
     public String craftResource(String loot) {
         String needResource = craftScriptParser(loot);
         return needResource;
     }
 
+    // обработчик скрипта, который выясняет кол-во необходимых для крафта ресурсов
+    // полученное значение в формате строки возвращается обратно
     private String craftScriptParser(String loot)
     {
         String script = "";
@@ -260,7 +271,7 @@ public abstract class GameObject extends Entity {
         return needResource;
     }
 
-    // param не используется, а надо ли?
+    // метод возвращает строку с кол-вом необходимых ресурсов назад по цепочке
     private String craftNeedResource(String script, String param, String count)
     {
         int loot = -1;
@@ -291,13 +302,13 @@ public abstract class GameObject extends Entity {
         else return "ОШИБКА!! craftNeedResource";
     }
 
-    // эти методы подсчитывают сколько и каких ресурсов должно быть у игрока
-    // чтоб можно было скрафтить выбранный предмет
+    // вызывает обработчик скрипта выясняющий какие ресурсы требуются для крафта
     public void doCraft(String loot, int id) {
-        getGame().logMessage(loot);
         doCraftScriptParser(loot, id);
     }
 
+    // расшифровывает скрипт и передает данные в doCraftNeedResource
+    // высчитывающий необходимые ресурсы
     private void doCraftScriptParser(String loot, int id)
     {
         String script = "";
@@ -342,12 +353,13 @@ public abstract class GameObject extends Entity {
     }
 
     // param не используется, а надо ли?
+    // вычитает необходимое кол-во ресурсов для крафта из инвентаря игрока
     private void doCraftNeedResource(String script, String param, String count, int id)
     {
         int loot = -1;
         if (count == "") count = "1";
         int needRes = Integer.parseInt(count);
-        needRes = needRes * 2;
+        needRes = needRes * 2; // для крафта требуется в два раза больше ресурсов, чем может выпасть из крафтуемого предмета
         Item item;
         switch (script){
             case "I_EMPTY_JAR" :
@@ -364,8 +376,7 @@ public abstract class GameObject extends Entity {
                 break;
             default: break;
         }
-        if (loot > 0) getGame().player.addItem(id);
-
+        if (loot == 1) getGame().player.addItem(id);
     }
 
 

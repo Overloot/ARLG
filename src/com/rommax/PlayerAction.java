@@ -378,7 +378,7 @@ public class PlayerAction {
 		}
 	}
 
-	// Открываем инвентарь
+	// Открываем окно крафта
 	public boolean showCraftingWindow() {
 		LinkedList<Item> itemList = Item.getListOfAllItems();
 			map.getGame().frame1.setFocusable(false);
