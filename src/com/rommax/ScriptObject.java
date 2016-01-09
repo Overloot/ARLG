@@ -21,6 +21,9 @@ public class ScriptObject {
     public boolean BLINK;
     public boolean IDENTIFY;
     public boolean TELEPORT;
+	public boolean SHOWALLTRAPS;
+	public boolean OPENSKEY;
+	public Stat SHADOWCOUNT = new Stat(0, 0);
     public Stat FOVRAD = new Stat(0, 0);
     public Stat POISONCOUNT = new Stat(0, 0);
     public Stat PARALYZECOUNT = new Stat(0, 0);

@@ -43,7 +43,7 @@ public class SkillSet{
 
 	private static BaseSkill[] SKILLSET;
 	
-	static{
+	static {
 		SKILLSET = new BaseSkill[MAX_SKILLS];
 		// Расовые навыки
 		SKILLSET[SKILL_HEAL] = new BaseSkill(SKILL_HEAL, "Благословление Силанны", "+++", "res/skills/heal.png", 35, "#HEALTIME 2|10#", true);
@@ -55,9 +55,9 @@ public class SkillSet{
 		SKILLSET[SKILL_RPOISON] = new BaseSkill(SKILL_RPOISON, "Сопротивление Яду", "+++", "res/skills/respoison.png", 60, "#RPOISON 25|15#", true);
 		SKILLSET[SKILL_RNORMAL] = new BaseSkill(SKILL_RNORMAL, "Сопротивление", "+++", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
 		// Навыки вора
-		SKILLSET[SKILL_THIEF_1] = new BaseSkill(SKILL_THIEF_1, "Свидание с Тенью", "Вор скрывается в тень", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
-		SKILLSET[SKILL_THIEF_2] = new BaseSkill(SKILL_THIEF_2, "Взломщик", "Мастеру отмычек ключи не нужны", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
-		SKILLSET[SKILL_THIEF_3] = new BaseSkill(SKILL_THIEF_3, "Обнаружение Угроз", "Вор видит скрытые ловушки", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
+		SKILLSET[SKILL_THIEF_1] = new BaseSkill(SKILL_THIEF_1, "Свидание с Тенью", "Вор скрывается в тень", "res/skills/resnormal.png", 120, "#SHADOWCOUNT 45#", true);
+		SKILLSET[SKILL_THIEF_2] = new BaseSkill(SKILL_THIEF_2, "Взломщик", "Мастеру отмычек ключи не нужны", "res/skills/resnormal.png", 25, "#OPENSKEY#", true);
+		SKILLSET[SKILL_THIEF_3] = new BaseSkill(SKILL_THIEF_3, "Обнаружение Угроз", "Вор видит скрытые ловушки", "res/skills/resnormal.png", 75, "#SHOWALLTRAPS#", true);
 		// Навыки ассасина
 		SKILLSET[SKILL_ASSASSIN_1] = new BaseSkill(SKILL_ASSASSIN_1, "Удар сзади", "Двойной удар в спину", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
 		SKILLSET[SKILL_ASSASSIN_2] = new BaseSkill(SKILL_ASSASSIN_2, "Ядовитое Облако", "Все цели вокруг убийцы отравлены", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);

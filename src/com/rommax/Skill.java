@@ -9,13 +9,16 @@ public class Skill{
 
 	public static int[] skill;
 	private static int[] cooldown;
+	private static int[] timer;
 
 	static {
 		skill = new int[MAX_SKILLS];
 		cooldown = new int[MAX_SKILLS];
+		timer = new int[MAX_SKILLS];
 		for(int i = 0; i <= MAX_SKILLS - 1; i++){
 			skill[i] = -1;
 			cooldown[i] = 0;
+			timer[i] = 0;
 		}
 	}
 	
@@ -25,6 +28,7 @@ public class Skill{
 		if (count >= MAX_SKILLS) return;
 		skill[count] = id;
 		cooldown[count] = 0;
+		timer[count] = 0;
 		count++;
 	}
 
@@ -33,6 +37,8 @@ public class Skill{
 		for(int i = 0; i < count; i++){
 			if (cooldown[i] > 0)
 				cooldown[i]--;
+			if (timer[i] > 0)
+				timer[i]--;
 		}		
 	}
 	
@@ -61,6 +67,25 @@ public class Skill{
 		cooldown[n] = value;
 	}
 	
-	public static int getAmount(){return count;}
+	// Таймер у скилла игрока под номером n
+	public static int getTimer(int n){
+		int ret = timer[n];
+		if (ret < 0) ret = 0;
+		return ret;
+	}
+	
+	public static void setTimer(int n, int value){
+		timer[n] = value;
+	}
+	
+	public static int getAmount(){
+		return count;
+	}
+	
+	//
+	public static boolean isShadowSkill(int y, int x, Map map){
+		return (map.field[y][x].getMonster() == map.getGame().player) &&
+			(timer[1] > 0) && (skill[1] == SkillSet.SKILL_THIEF_1);
+	}
 	
 }

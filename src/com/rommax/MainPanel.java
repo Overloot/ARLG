@@ -255,6 +255,7 @@ class MainPanel extends JPanel{
 		g2.fill(canvas);
 		g2.draw(canvas);
 		if (hasNewGame) return; // Чтобы не прорисовывалась панель, пока игрок в меню
+		Image fog = window.game.loader.getImage("res/icons/transparent.png");
 		for (int i=0; i<SCREEN_TILE_SIZE_Y; i++)
 		for (int j=0; j<SCREEN_TILE_SIZE_X; j++){
 			int xx = j + DrawingMap.getX();
@@ -327,6 +328,8 @@ class MainPanel extends JPanel{
 								Rectangle2D rect = new Rectangle2D.Double(leftX, topY, width, height);
 								Rectangle2D br = new Rectangle2D.Double(leftX, topY, 31D, height);
 								g.drawImage(image, y, x, this);
+								// Если вор уходит в тень, спрайт делаем более темным
+								if (Skill.isShadowSkill(yy, xx, DrawingMap)) g.drawImage(fog, y, x, this);
 								g2.setPaint(Color.BLACK);
 								g2.fill(br);
 								g2.draw(br);

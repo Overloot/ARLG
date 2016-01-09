@@ -37,7 +37,7 @@ public class KeyHandler implements KeyListener{
 		if (Timer == 0) System.exit(0);
 		if (map.getGame().player.getHP().getCurrent() <=0) {
 			Timer = 0;
-			map.getGame().logMessage("Вы умерли!... Нажмите любую клавишу");
+			map.getGame().logMessage("Вы умерли!.. Нажмите любую клавишу");
 			mp.repaint();
 			return;
 		}

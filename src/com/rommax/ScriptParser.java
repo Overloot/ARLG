@@ -130,6 +130,15 @@ public class ScriptParser {
                 case "IDENTIFY":
                     so.IDENTIFY = true;
                     break;
+                case "SHOWALLTRAPS":
+                    so.SHOWALLTRAPS = true;
+                    break;
+                case "OPENSKEY":
+                    so.OPENSKEY = true;
+                    break;					
+                case "SHADOWCOUNT":
+                    setStatAs(so.SHADOWCOUNT, number);
+                    break;					
                 case "FOVRAD":
                     setStatAs(so.FOVRAD, number);
                     break;

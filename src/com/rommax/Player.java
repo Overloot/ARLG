@@ -10,6 +10,7 @@ public class Player extends Monster{
     public static final int MAX_PLAYER_LEVEL = 30;
     public static int maxExperience = 200;
     public int statsFree = 0;
+	public int shadowSkill = 0;
 
 	Player(BaseMonster player, int y, int x, Map map, Game game){
 		super(player, y, x, map, game);

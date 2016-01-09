@@ -300,15 +300,50 @@ public class Monster extends BaseMonster{
 			getGame().getMap().setX(getX() - ((GameWindow.getScreenTileSizeX() * Tileset.TILE_SIZE)/ (Tileset.TILE_SIZE * 2)));
 			getGame().getMap().setY(getY() - ((GameWindow.getScreenTileSizeY() * Tileset.TILE_SIZE)/ (Tileset.TILE_SIZE * 2)));
 		}
+		
+		if (so.SHOWALLTRAPS) {
+			getGame().logMessage("#8#Вам видно все ловушки вокруг!#^#");
+            for (int i = 0; i < getGame().getMap().getHeight(); i++)
+                for (int j = 0; j < getGame().getMap().getWidth(); j++)
+                    if ((getGame().getMap().field[i][j].getVisible()) && (getGame().getMap().field[i][j].getTrap() > Tile.NONE) 
+					&& (getGame().getMap().field[i][j].getTraped() == false)) {
+						getGame().getMap().field[i][j].setTraped(true);
+					}
+		}
+		
+		if (so.OPENSKEY) {
+			int c = 0;
+            for (int i = -1; i <= 1; i++)
+                for (int j = -1; j <= 1; j++) {
+					int y = getGame().player.getY();
+					int x = getGame().player.getX();
+					if ((getGame().getMap().field[y + i][x + j].getLock())) {
+						getGame().getMap().field[y + i][x + j].setLock(false);
+						c++;
+					}
+				}
+			String str = "";
+			if (c > 1) str = "(" + c + "x)";
+			if (c > 0)
+				getGame().logMessage("#8#Взломано!#^# " + str);
+					else getGame().logMessage("#2#Здесь нечего взламывать!#^# " + str); 
+		}
+		
+		if (so.SHADOWCOUNT.getCurrent() > 0) {
+			getGame().logMessage("#8#Вы скрываетесь в тень!#^#");
+			Skill.setTimer(1, so.SHADOWCOUNT.getCurrent());
+		}
 
 		if (so.HEALPOISON.getCurrent() > 0)
 			setPoisonCount(getPoisonCount() - so.HEALPOISON.getCurrent());
+		
 		if (so.POISONCOUNT.getCurrent() != 0)
 			setPoisonCount(getPoisonCount() + so.POISONCOUNT.getCurrent() + 1);
+		
 		if (so.PARALYZECOUNT.getCurrent() != 0)
-
 			setParalyzeCount(getParalyzeCount() + so.PARALYZECOUNT.getCurrent() + 1);
-		if (getPoisonCount()<0) setPoisonCount(0);
+		
+		if (getPoisonCount() < 0) setPoisonCount(0);
 	}
 
 	public void deleteEffectFrom(ScriptObject so, boolean b){

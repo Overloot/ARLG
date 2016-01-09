@@ -130,6 +130,8 @@ public class Game {
     // AI для мостра
     public void monstersAI() {
         turn++;
+		boolean fmov;
+		boolean flag = Skill.isShadowSkill(player.getY(), player.getX(), getMap());
         // пробегаемся по всем монстрам
         for (int index = 1; index < monstersQuantity; index++) {
             Random random = new Random();
@@ -140,19 +142,18 @@ public class Game {
                 continue;
             }
             monsterList[index].getHP().setCurrent(Util.clamp(monsterList[index].getHP().getCurrent(), 0, monsterList[index].getHP().getMax()));
-            if (monsterList[index].getParalyzeCount() > 0) {
-                continue;
-            }
-            // если у монстра хватает ActionPoints то он двигается
+            if (monsterList[index].getParalyzeCount() > 0) continue;
+
+            // если у монстра хватает ActionPoints, то он двигается
             while (monsterList[index].getAP().getCurrent() > 0) {
                 // если цель (игрок) находится в зоне видимости монстра, но монстр идет к нему
-                if (Util.checkDistance(player.getY(), player.getX(), monsterList[index].getY(), monsterList[index].getX()) <= monsterList[index].getFOVRAD().getCurrent()) {
-                    monsterList[index].move(Util.defineDirection(player.getY() - monsterList[index].getY()), Util.defineDirection(player.getX() - monsterList[index].getX()));
+                fmov = Util.checkDistance(player.getY(), player.getX(), monsterList[index].getY(), monsterList[index].getX()) <= monsterList[index].getFOVRAD().getCurrent();
+				if (flag) fmov = false;
+				if (fmov)
+					monsterList[index].move(Util.defineDirection(player.getY() - monsterList[index].getY()), Util.defineDirection(player.getX() - monsterList[index].getX()));
                     // иначе монстр просто бродит
-                } else {
-                    monsterList[index].move(dy, dx);
-                }
-                monsterList[index].getAP().setCurrent(monsterList[index].getAP().getCurrent() - MOVE_COST_ActionPoints);
+						else monsterList[index].move(dy, dx);
+				monsterList[index].getAP().setCurrent(monsterList[index].getAP().getCurrent() - MOVE_COST_ActionPoints);
             }
 
             // если у монстра нет AP или они меньше 0, то к нему прибавляется дефолтное значение.
@@ -177,7 +178,7 @@ public class Game {
         }
         checkTimeEffects(); // метод проверят не пора ли поднять уровень игроку, наносит урон ядом и т.д.
         getTime().update();
-    }
+    }		
 
     // Диалог закрытия игры
     void checkQuit() {
