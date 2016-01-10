@@ -333,7 +333,17 @@ public class Monster extends BaseMonster{
 			getGame().logMessage("#8#Вы скрываетесь в тень!#^#");
 			Skill.setTimer(1, so.SHADOWCOUNT.getCurrent());
 		}
-
+		
+		if (so.WARHIT.getCurrent() > 0) {
+			getGame().logMessage("#8#Вы впадаете в неистовство!#^#");
+			Skill.setTimer(1, so.WARHIT.getCurrent());
+		}
+		
+		if (so.BESTAGI.getCurrent() > 0) {
+			getGame().logMessage("#8#Вы становитесь очень ловким!#^#");
+			Skill.setTimer(2, so.BESTAGI.getCurrent());
+		}
+		
 		if (so.HEALPOISON.getCurrent() > 0)
 			setPoisonCount(getPoisonCount() - so.HEALPOISON.getCurrent());
 		
@@ -456,12 +466,48 @@ public class Monster extends BaseMonster{
 		if (getPoisonCount() < 0) setPoisonCount(0);
 	}
 
+	private void miss() {
+		switch(Util.rand(1, 7)){
+			case 1:
+			getGame().logMessage(this.getName() + " #8#промахивается по вам!#^#/#");
+			break;
+			case 2:
+			getGame().logMessage(this.getName() + " #8#промахивается!#^#/#");
+			break;
+			case 3:
+			getGame().logMessage(this.getName() + " #8#атакует... пустоту!#^#/#");
+			break;
+			case 4:
+			getGame().logMessage(this.getName() + " #8#атакует мимо вас!#^#/#");
+			break;
+			case 5:
+			getGame().logMessage(this.getName() + " #8#бьет мимо!#^#/#");
+			break;
+			case 6:
+			getGame().logMessage(this.getName() + " #8#атакует, но вы уклоняетесь от удара!#^#/#");
+			break;
+			case 7:
+			getGame().logMessage(this.getName() + " #8#атакует, но вы ловко увертываетесь!#^#/#");
+			break;
+		}
+	}
+	
 	private void AttackMonster(Monster enemy){
 		if (this == enemy) return;
 		if (this != getGame().player && enemy != getGame().player) return;
 		if (this.getHP().getCurrent() <= 0) return; // Мертвый не может атаковать
+		
+		// Навык воина "Неистовство"
+		if (Skill.isWarHitSkill() && this != getGame().player) return;
+		
 		Random rand = new Random();
 
+		// Навык воина "Грация Ягуара"
+		if (Skill.isBestAGISkill() && enemy == getGame().player){
+			miss();
+			return;
+		}
+		
 		int ndamage = ((100 - enemy.getRNormal().getCurrent()) * (Util.rand(getDNormal().getCurrent(), getDNormal().getMax()) + Util.rand(getSTR().getCurrent())) / 100 ) ;
 		int fdamage = ((100 - enemy.getRFire().getCurrent()) * Util.rand(getDFire().getCurrent(), getDFire().getMax()) / 100) ;
 		int cdamage = ((100 - enemy.getRCold().getCurrent()) * Util.rand(getDCold().getCurrent(), getDCold().getMax()) / 100 );
@@ -589,9 +635,9 @@ public class Monster extends BaseMonster{
 					}
 		}
 		else
-			if (this==getGame().player) getGame().logMessage("Вы промахнулись! #/#");
+			if (this==getGame().player) getGame().logMessage("#8#Вы промахнулись!#^#/#");
 			else
-				if (enemy == getGame().player) getGame().logMessage(this.getName() + " #8#промахивается по вам!#^#/#");
+				if (enemy == getGame().player) miss();
 
 		// Жизнь монстра может быть в диапазоне от 0 до max
 		enemy.getHP().setCurrent(Util.clamp(enemy.getHP().getCurrent(), 0, enemy.getHP().getMax()));

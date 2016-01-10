@@ -63,9 +63,9 @@ public class SkillSet{
 		SKILLSET[SKILL_ASSASSIN_2] = new BaseSkill(SKILL_ASSASSIN_2, "Ядовитое Облако", "Все цели вокруг убийцы отравлены", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
 		SKILLSET[SKILL_ASSASSIN_3] = new BaseSkill(SKILL_ASSASSIN_3, "Огненная Бомба", "Устанавка огненной ловушки", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
 		// Навыки воина
-		SKILLSET[SKILL_FIGHTER_1] = new BaseSkill(SKILL_FIGHTER_1, "Неистовство", "Враги не успевают отвечать на удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
-		SKILLSET[SKILL_FIGHTER_2] = new BaseSkill(SKILL_FIGHTER_2, "Неистовство", "Враги не успевают отвечать на удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
-		SKILLSET[SKILL_FIGHTER_3] = new BaseSkill(SKILL_FIGHTER_3, "Неистовство", "Враги не успевают отвечать на удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
+		SKILLSET[SKILL_FIGHTER_1] = new BaseSkill(SKILL_FIGHTER_1, "Неистовство", "Враги не успевают отвечать на удары", "res/skills/resnormal.png", 60, "#WARHIT 25#", true);
+		SKILLSET[SKILL_FIGHTER_2] = new BaseSkill(SKILL_FIGHTER_2, "Грация Ягуара", "Воин становится очень ловким", "res/skills/resnormal.png", 60, "#BESTAGI 15#", true);
+		SKILLSET[SKILL_FIGHTER_3] = new BaseSkill(SKILL_FIGHTER_3, "", "", "res/skills/resnormal.png", 60, "# 5#", true);
 		// Навыки паладина
 		SKILLSET[SKILL_PALADIN_1] = new BaseSkill(SKILL_PALADIN_1, "Святой Луч", "Аура света отражает удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
 		SKILLSET[SKILL_PALADIN_2] = new BaseSkill(SKILL_PALADIN_2, "Святой Луч", "Аура света отражает удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);

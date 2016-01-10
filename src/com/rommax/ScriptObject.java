@@ -24,6 +24,8 @@ public class ScriptObject {
 	public boolean SHOWALLTRAPS;
 	public boolean OPENSKEY;
 	public Stat SHADOWCOUNT = new Stat(0, 0);
+	public Stat WARHIT = new Stat(0, 0);
+	public Stat BESTAGI = new Stat(0, 0);
     public Stat FOVRAD = new Stat(0, 0);
     public Stat POISONCOUNT = new Stat(0, 0);
     public Stat PARALYZECOUNT = new Stat(0, 0);

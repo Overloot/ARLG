@@ -139,6 +139,12 @@ public class ScriptParser {
                 case "SHADOWCOUNT":
                     setStatAs(so.SHADOWCOUNT, number);
                     break;					
+                case "WARHIT":
+                    setStatAs(so.WARHIT, number);
+                    break;					
+                case "BESTAGI":
+                    setStatAs(so.BESTAGI, number);
+                    break;					
                 case "FOVRAD":
                     setStatAs(so.FOVRAD, number);
                     break;

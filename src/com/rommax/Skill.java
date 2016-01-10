@@ -82,10 +82,20 @@ public class Skill{
 		return count;
 	}
 	
-	//
+	// Навык вора "Свидание с Тенью"
 	public static boolean isShadowSkill(int y, int x, Map map){
 		return (map.field[y][x].getMonster() == map.getGame().player) &&
 			(timer[1] > 0) && (skill[1] == SkillSet.SKILL_THIEF_1);
+	}
+	
+	// Навык воина "Неистовство"
+	public static boolean isWarHitSkill(){
+		return (timer[1] > 0) && (skill[1] == SkillSet.SKILL_FIGHTER_1);
+	}
+	
+	// Навык воина "Грация Ягуара"
+	public static boolean isBestAGISkill(){
+		return (timer[2] > 0) && (skill[2] == SkillSet.SKILL_FIGHTER_2);
 	}
 	
 }
