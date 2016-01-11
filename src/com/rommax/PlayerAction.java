@@ -25,10 +25,10 @@ public class PlayerAction {
 				map.getGame().logMessage("У вас #2#нет сил#^# использовать навык #8#" + 
 					SkillSet.getSkill(Skill.skill[n]).getName() + "#^#!");
 				return false;
-			}else{
+			} else {
 				// Используем навык героя
-				map.getGame().logMessage("Вы #4#использовали#^# навык #8#" + 
-					SkillSet.getSkill(Skill.skill[n]).getName() + ".#^#");
+				map.getGame().logMessage("Вы #9#использовали#^# навык #8#" + 
+					SkillSet.getSkill(Skill.skill[n]).getName().toUpperCase() + "#^#!");
 				Skill.setCooldown(n, SkillSet.getSkill(Skill.skill[n]).getCooldown());
 				map.getGame().player.setEffectFrom(ScriptParser.parseString(SkillSet.getSkill(Skill.skill[n]).getScript()), true);
 			}

@@ -26,6 +26,10 @@ public class ScriptObject {
 	public Stat SHADOWCOUNT = new Stat(0, 0);
 	public Stat WARHIT = new Stat(0, 0);
 	public Stat BESTAGI = new Stat(0, 0);
+	public boolean RHIT;
+	public boolean BESTHITS;
+	public boolean FURY;
+	public boolean TWHITS;
     public Stat FOVRAD = new Stat(0, 0);
     public Stat POISONCOUNT = new Stat(0, 0);
     public Stat PARALYZECOUNT = new Stat(0, 0);

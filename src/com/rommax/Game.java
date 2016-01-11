@@ -634,7 +634,7 @@ public class Game {
 
     public String getPlayerPath(int raceID, int classID) {
         String path = "res/heroes/" + RaceSet.getRace(raceID).getPath() + "/" + ClassSet.getClass(classID).getPath() + ".png";
-        if (new File(path).exists()) {
+        if (new File(path).exists()) { // .jar?
             return path;
         } else {
             return "res/heroes/unknown.png";

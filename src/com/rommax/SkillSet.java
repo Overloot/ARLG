@@ -59,21 +59,21 @@ public class SkillSet{
 		SKILLSET[SKILL_THIEF_2] = new BaseSkill(SKILL_THIEF_2, "Взломщик", "Мастеру отмычек ключи не нужны", "res/skills/resnormal.png", 25, "#OPENSKEY#", true);
 		SKILLSET[SKILL_THIEF_3] = new BaseSkill(SKILL_THIEF_3, "Обнаружение Угроз", "Вор видит скрытые ловушки", "res/skills/resnormal.png", 75, "#SHOWALLTRAPS#", true);
 		// Навыки ассасина
-		SKILLSET[SKILL_ASSASSIN_1] = new BaseSkill(SKILL_ASSASSIN_1, "Удар сзади", "Двойной удар в спину", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
-		SKILLSET[SKILL_ASSASSIN_2] = new BaseSkill(SKILL_ASSASSIN_2, "Ядовитое Облако", "Все цели вокруг убийцы отравлены", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
-		SKILLSET[SKILL_ASSASSIN_3] = new BaseSkill(SKILL_ASSASSIN_3, "Огненная Бомба", "Устанавка огненной ловушки", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
+		SKILLSET[SKILL_ASSASSIN_1] = new BaseSkill(SKILL_ASSASSIN_1, "Удар сзади", "Двойной удар в спину", "res/skills/resnormal.png", 60, "##", true);
+		SKILLSET[SKILL_ASSASSIN_2] = new BaseSkill(SKILL_ASSASSIN_2, "Ядовитое Облако", "Все цели вокруг убийцы отравлены", "res/skills/resnormal.png", 60, "##", true);
+		SKILLSET[SKILL_ASSASSIN_3] = new BaseSkill(SKILL_ASSASSIN_3, "Огненная Бомба", "Устанавка огненной ловушки", "res/skills/resnormal.png", 60, "##", true);
 		// Навыки воина
-		SKILLSET[SKILL_FIGHTER_1] = new BaseSkill(SKILL_FIGHTER_1, "Неистовство", "Враги не успевают отвечать на удары", "res/skills/resnormal.png", 60, "#WARHIT 25#", true);
-		SKILLSET[SKILL_FIGHTER_2] = new BaseSkill(SKILL_FIGHTER_2, "Грация Ягуара", "Воин становится очень ловким", "res/skills/resnormal.png", 60, "#BESTAGI 15#", true);
-		SKILLSET[SKILL_FIGHTER_3] = new BaseSkill(SKILL_FIGHTER_3, "", "", "res/skills/resnormal.png", 60, "# 5#", true);
+		SKILLSET[SKILL_FIGHTER_1] = new BaseSkill(SKILL_FIGHTER_1, "Ярость", "Ошеломляющая бездумная атака", "res/skills/resnormal.png", 30, "#FURY#RNORMAL -20|25#", true);
+		SKILLSET[SKILL_FIGHTER_2] = new BaseSkill(SKILL_FIGHTER_2, "Рывок", "Проведение двух быстрых атак", "res/skills/resnormal.png", 4, "#TWHITS#", true);
+		SKILLSET[SKILL_FIGHTER_3] = new BaseSkill(SKILL_FIGHTER_3, "Неистовство", "Враги не успевают отвечать на удары", "res/skills/resnormal.png", 50, "#WARHIT 25#", true);
 		// Навыки паладина
-		SKILLSET[SKILL_PALADIN_1] = new BaseSkill(SKILL_PALADIN_1, "Святой Луч", "Аура света отражает удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
-		SKILLSET[SKILL_PALADIN_2] = new BaseSkill(SKILL_PALADIN_2, "Святой Луч", "Аура света отражает удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
-		SKILLSET[SKILL_PALADIN_3] = new BaseSkill(SKILL_PALADIN_3, "Святой Луч", "Аура света отражает удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
+		SKILLSET[SKILL_PALADIN_1] = new BaseSkill(SKILL_PALADIN_1, "Святой Луч", "Аура света отражает удары", "res/skills/resnormal.png", 60, "##", true);
+		SKILLSET[SKILL_PALADIN_2] = new BaseSkill(SKILL_PALADIN_2, "Святой Луч", "Аура света отражает удары", "res/skills/resnormal.png", 60, "##", true);
+		SKILLSET[SKILL_PALADIN_3] = new BaseSkill(SKILL_PALADIN_3, "Святой Луч", "Аура света отражает удары", "res/skills/resnormal.png", 60, "##", true);
 		// Навыки рейнжера
-		SKILLSET[SKILL_RANGER_1] = new BaseSkill(SKILL_RANGER_1, "Святой Луч", "Аура света отражает удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
-		SKILLSET[SKILL_RANGER_2] = new BaseSkill(SKILL_RANGER_2, "Святой Луч", "Аура света отражает удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
-		SKILLSET[SKILL_RANGER_3] = new BaseSkill(SKILL_RANGER_3, "Святой Луч", "Аура света отражает удары", "res/skills/resnormal.png", 60, "#RNORMAL 25|15#", true);
+		SKILLSET[SKILL_RANGER_1] = new BaseSkill(SKILL_RANGER_1, "Концентрация", "Серия критических ударов", "res/skills/resnormal.png", 12, "#BESTHITS#", true);
+		SKILLSET[SKILL_RANGER_2] = new BaseSkill(SKILL_RANGER_2, "Грация Ягуара", "Bременное повышение ловкости", "res/skills/resnormal.png", 18, "#BESTAGI 15#", true);
+		SKILLSET[SKILL_RANGER_3] = new BaseSkill(SKILL_RANGER_3, "Танец Ветра", "Атака по всем целям вокруг", "res/skills/resnormal.png", 22, "#RHIT#", true);
 	}
 
 	public static BaseSkill getSkill(int id){

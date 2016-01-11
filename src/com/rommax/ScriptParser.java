@@ -145,6 +145,18 @@ public class ScriptParser {
                 case "BESTAGI":
                     setStatAs(so.BESTAGI, number);
                     break;					
+                case "RHIT":
+                    so.RHIT = true;
+                    break;					
+                case "BESTHITS":
+                    so.BESTHITS = true;
+                    break;					
+                case "FURY":
+                    so.FURY = true;
+                    break;					
+                case "TWHITS":
+                    so.TWHITS = true;
+                    break;					
                 case "FOVRAD":
                     setStatAs(so.FOVRAD, number);
                     break;

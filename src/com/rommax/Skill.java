@@ -82,20 +82,39 @@ public class Skill{
 		return count;
 	}
 	
-	// Навык вора "Свидание с Тенью"
+	// Активирован ли скилл под номером charNumber
+	public static boolean check(int charNumber, int skillID){
+		return (timer[charNumber] > 0) && (skill[charNumber] == skillID);
+	}
+	
+	// Навык "Свидание с Тенью"
 	public static boolean isShadowSkill(int y, int x, Map map){
-		return (map.field[y][x].getMonster() == map.getGame().player) &&
-			(timer[1] > 0) && (skill[1] == SkillSet.SKILL_THIEF_1);
+		return (map.field[y][x].getMonster() == map.getGame().player) && check(1, SkillSet.SKILL_THIEF_1);
 	}
 	
-	// Навык воина "Неистовство"
+	// Навык "Неистовство"
 	public static boolean isWarHitSkill(){
-		return (timer[1] > 0) && (skill[1] == SkillSet.SKILL_FIGHTER_1);
+		return check(3, SkillSet.SKILL_FIGHTER_3);
 	}
 	
-	// Навык воина "Грация Ягуара"
+	// Навык "Грация Ягуара"
 	public static boolean isBestAGISkill(){
-		return (timer[2] > 0) && (skill[2] == SkillSet.SKILL_FIGHTER_2);
+		return check(2, SkillSet.SKILL_RANGER_2);
+	}
+	
+	// Навык "Концентрация"
+	public static boolean isBestHitsSkill(){
+		return check(1, SkillSet.SKILL_RANGER_1);
+	}
+	
+	// Навык "Ярость"
+	public static boolean isFurySkill(){
+		return check(1, SkillSet.SKILL_FIGHTER_1);
+	}
+	
+	// Навык "Рывок"
+	public static boolean isTwHitsSkill(){
+		return check(2, SkillSet.SKILL_FIGHTER_2);
 	}
 	
 }
