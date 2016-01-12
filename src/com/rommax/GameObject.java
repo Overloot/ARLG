@@ -367,7 +367,6 @@ public abstract class GameObject extends Entity {
         if (count == "") count = "1";
         int needRes = Integer.parseInt(count);
         needRes = needRes * 2; // для крафта требуется в два раза больше ресурсов, чем может выпасть из крафтуемого предмета
-        Item item;
         switch (script){
             case "I_EMPTY_JAR" :
                 if (getGame().player.removeItemForCraft(needRes, ItemSet.EMPTY_JAR)) loot = 1;
@@ -383,7 +382,6 @@ public abstract class GameObject extends Entity {
                 break;
             default: break;
         }
-        //if (loot == 1) getGame().player.addItemOnCurrentPlayerPosition(id);
         if (loot == 1) getGame().player.addItemToInventory(id, 1);
     }
 

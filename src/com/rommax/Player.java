@@ -325,22 +325,11 @@ public class Player extends Monster{
 
 	// добавить предмет в инвентарь
 	public void addItemToInventory(int id, int amount){
-		//addItemOnCurrentPlayerPosition(id); // временно, просто брасаем на пол
-        for(int i = 0; i < amount; i++){
-            getGame().addItem(getY(), getX(), id,getMap());
+        BaseItem baseItem = ItemSet.getItem(id);
+        for(int i = 0; i < amount; i++) {
+            getGame().itemList[getGame().itemsQuantity] = new Item(baseItem, getMap(), getGame()); // этот конструктор сразу размещает созданный предмет в инвенторе игрока
+            getGame().itemsQuantity++;
         }
-        getMap().getGame().frame1.setFocusable(false);
-        getMap().getGame().frame1.setFocusableWindowState(false);
-        ItemSelectMessage itemSelectMessage = new ItemSelectMessage();
-        itemSelectMessage.command = 't';
-        ItemSelectWindow frame2 = new ItemSelectWindow(getMap().getGame(), ItemSet.TYPE_ANY,
-                getMap().field[getMap().getGame().player.getY()][getMap().getGame().player.getX()].getItemList(), itemSelectMessage);
-        frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frame2.setTitle("Вы получили следующие предметы: ");
-        frame2.setLocation(getMap().getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2,
-                getMap().getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
-        frame2.toFront();
-        frame2.setVisible(true);
 	}
 	
 	// удалить предмет из инвентаря

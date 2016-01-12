@@ -19,6 +19,7 @@ public class Item extends BaseItem{
 	public void setIdentify(boolean b){identify = b;};
 	public String getRealName(){return real_name;}
 
+	// этот конструктор создает объект item и распологает его по заданным координатам на карте уровня
 	public Item(BaseItem bm, int y, int x, Map map, Game game){
 		super(bm.getChance(), bm.getID(), bm.getLevel(), bm.getSlot(), bm.getType(),
 			bm.getName(), bm.getPath(), bm.getSize(), bm.getMass(), bm.getScript(), bm.getDestroyable(), bm.getLife(), bm.getLoot());
@@ -26,6 +27,42 @@ public class Item extends BaseItem{
 		this.setMap(map);
 		this.setGame(game);
 		this.getMap().placeItemAt(y, x, this);
+		this.identify = true;
+		this.real_name = getName();
+		switch (getType()){
+			case ItemSet.TYPE_ARMOR:
+				generateArmor(this);
+				break;
+			case ItemSet.TYPE_MELEE_WEAPON_SWORD:
+				generateWeapon(this);
+				break;
+			case ItemSet.TYPE_POTION:
+				generateConsumable("Непонятное зелье");
+				break;
+			case ItemSet.TYPE_SCROLL:
+				generateConsumable("Непонятный свиток");
+				break;
+			case ItemSet.TYPE_FOOD:
+				if(bm.getID() >= ItemSet.MIN_MUSH && bm.getID() <= ItemSet.MAX_MUSH){
+					generateConsumable("Непонятный гриб");
+					return;
+				}
+				if(bm.getID() >= ItemSet.MIN_PLANT && bm.getID() <= ItemSet.MAX_PLANT){
+					generateConsumable("Непонятное растение");
+					return;
+				}
+				break;
+		}
+	}
+
+	// этот конструктор создает объект item и размещает его в инвентаре игрока
+	public Item(BaseItem bm, Map map, Game game){
+		super(bm.getChance(), bm.getID(), bm.getLevel(), bm.getSlot(), bm.getType(),
+				bm.getName(), bm.getPath(), bm.getSize(), bm.getMass(), bm.getScript(), bm.getDestroyable(), bm.getLife(), bm.getLoot());
+		this.setPosition(0, 0);
+		this.setMap(map);
+		this.setGame(game);
+		this.getMap().getGame().player.getInventory().add(0, this);
 		this.identify = true;
 		this.real_name = getName();
 		switch (getType()){
