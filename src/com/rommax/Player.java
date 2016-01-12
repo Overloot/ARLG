@@ -325,14 +325,31 @@ public class Player extends Monster{
 
 	// добавить предмет в инвентарь
 	public void addItemToInventory(int id, int amount){
-		addItemOnCurrentPlayerPosition(id); // временно, просто брасаем на пол
+		//addItemOnCurrentPlayerPosition(id); // временно, просто брасаем на пол
+        for(int i = 0; i < amount; i++){
+            getInventory().add(0,  );
+        }
 	}
 	
 	// удалить предмет из инвентаря
-	public void removeFromInventory(int id, int amount){
-		for(int i = 0; i < amount; i++){
-			
-		}
+	public boolean removeFromInventory(int id, int amount){
+        if (howMuchItemPlayerHave(id) < amount) { // у игрока меньше итемов, чем недо
+            getGame().logMessage("Недостаточно ресурсов.");
+            return false;
+        }
+        Item item = null;
+        for (int index = 0; index < getInventory().size(); index++)
+        {
+            item = getInventory().get(index);
+            if (id == item.getID()) {
+                getInventory().remove(index);
+                amount--;
+                if (index != 0) index--;
+            }
+            if (amount == 0) break;
+        }
+        getGame().logMessage("Предмет" + item.getRealName() + " удален");
+        return true;
 	}
 	
     // метод считает сколько итемов с идентификатором id есть в инвентаре игрока
