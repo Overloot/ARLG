@@ -221,14 +221,14 @@ public abstract class GameObject extends Entity {
 
     // запускает обработчик скрипта, который выясняет кол-во необходимых для крафта ресурсов
     // полученное значение в формате строки возвращается обратно
-    public String craftResource(String loot) {
-        String needResource = craftScriptParser(loot);
+    public String craftResource(Map map, String loot) {
+        String needResource = craftScriptParser(map, loot);
         return needResource;
     }
 
     // обработчик скрипта, который выясняет кол-во необходимых для крафта ресурсов
     // полученное значение в формате строки возвращается обратно
-    private String craftScriptParser(String loot)
+    private String craftScriptParser(Map map, String loot)
     {
         String script = "";
         String param = "";
@@ -262,7 +262,7 @@ public abstract class GameObject extends Entity {
                     if (c == '#') {
                         i--;
                         if (needResource != "") needResource = needResource + " & ";
-                        needResource = needResource + craftNeedResource(script, param, count);
+                        needResource = needResource + craftNeedResource(map, script, param, count);
                         script = "";
                         param = "";
                         count = "";
@@ -275,7 +275,7 @@ public abstract class GameObject extends Entity {
     }
 
     // метод возвращает строку с кол-вом необходимых ресурсов назад по цепочке
-    private String craftNeedResource(String script, String param, String count)
+    private String craftNeedResource(Map map, String script, String param, String count)
     {
         int loot = -1;
         if (count == "") count = "1";
@@ -284,23 +284,23 @@ public abstract class GameObject extends Entity {
         String needResource = "";
         switch (script){
             case "I_EMPTY_JAR" :
-                needResource = needResource + "Пустая банка (" + resCount + ")";
+                needResource = needResource + "Пустая банка (" + map.getGame().player.howMuchItemPlayerHave(ItemSet.EMPTY_JAR) + "/" + resCount + ")";
                 loot = 1;
                 break;
             case "I_LEATHER" :
-                needResource = needResource + "Кожа (" + resCount + ")";
+                needResource = needResource + "Кожа (" + map.getGame().player.howMuchItemPlayerHave(ItemSet.LEATHER) + "/" + resCount + ")";
                 loot = 1;
                 break;
             case "I_METALS" :
-                needResource = needResource + "Металл (" + resCount + ")";
+                needResource = needResource + "Металл (" + map.getGame().player.howMuchItemPlayerHave(ItemSet.METALS) + "/" + resCount + ")";
                 loot = 1;
                 break;
             case "I_EMPTY_SCROOL" :
-                needResource = needResource + "Пустой свиток (" + resCount + ")";
+                needResource = needResource + "Пустой свиток (" + map.getGame().player.howMuchItemPlayerHave(ItemSet.EMPTY_SCROOL) + "/" + resCount + ")";
                 loot = 1;
                 break;
             case "I_WOOD" :
-                needResource = needResource + "Древесина (" + resCount + ")";
+                needResource = needResource + "Древесина (" + map.getGame().player.howMuchItemPlayerHave(ItemSet.WOOD) + "/" + resCount + ")";
                 loot = 1;
                 break;
             default: break;
