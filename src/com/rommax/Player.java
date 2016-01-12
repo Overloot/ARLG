@@ -327,8 +327,20 @@ public class Player extends Monster{
 	public void addItemToInventory(int id, int amount){
 		//addItemOnCurrentPlayerPosition(id); // временно, просто брасаем на пол
         for(int i = 0; i < amount; i++){
-            getInventory().add(0,  );
+            getGame().addItem(getY(), getX(), id,getMap());
         }
+        getMap().getGame().frame1.setFocusable(false);
+        getMap().getGame().frame1.setFocusableWindowState(false);
+        ItemSelectMessage itemSelectMessage = new ItemSelectMessage();
+        itemSelectMessage.command = 't';
+        ItemSelectWindow frame2 = new ItemSelectWindow(getMap().getGame(), ItemSet.TYPE_ANY,
+                getMap().field[getMap().getGame().player.getY()][getMap().getGame().player.getX()].getItemList(), itemSelectMessage);
+        frame2.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame2.setTitle("Вы получили следующие предметы: ");
+        frame2.setLocation(getMap().getGame().frame1.WINDOW_WIDTH/2 - frame2.WINDOW_WIDTH/2,
+                getMap().getGame().frame1.WINDOW_HEIGHT/2 - frame2.WINDOW_HEIGHT/2);
+        frame2.toFront();
+        frame2.setVisible(true);
 	}
 	
 	// удалить предмет из инвентаря

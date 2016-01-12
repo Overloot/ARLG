@@ -383,7 +383,8 @@ public abstract class GameObject extends Entity {
                 break;
             default: break;
         }
-        if (loot == 1) getGame().player.addItemOnCurrentPlayerPosition(id);
+        //if (loot == 1) getGame().player.addItemOnCurrentPlayerPosition(id);
+        if (loot == 1) getGame().player.addItemToInventory(id, 1);
     }
 
 
