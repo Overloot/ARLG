@@ -323,6 +323,18 @@ public class Player extends Monster{
         return;
     }
 
+	// добавить предмет в инвентарь
+	public void addItemToInventory(int id, int amount){
+		addItemOnCurrentPlayerPosition(id); // временно, просто брасаем на пол
+	}
+	
+	// удалить предмет из инвентаря
+	public void removeFromInventory(int id, int amount){
+		for(int i = 0; i < amount; i++){
+			
+		}
+	}
+	
     // метод считает сколько итемов с идентификатором id есть в инвентаре игрока
     public int howMuchItemPlayerHave(int id)
     {

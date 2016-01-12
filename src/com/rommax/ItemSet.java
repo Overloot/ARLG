@@ -34,6 +34,7 @@ public class ItemSet {
 
 	// ID экипировки
 	public static final int CRUDE_SWORD = 20;
+	
 	// ID Грибов
 	public static final int MIN_MUSH = 47;
 	public static final int MAX_MUSH = 51;
@@ -49,6 +50,8 @@ public class ItemSet {
 	public static final int LEATHER = 56; // кожа
 	public static final int EMPTY_SCROOL = 57; // пустой свиток
 
+	// ID ключа
+	public static final int KEY = 58;
 	
 	public static String getNameOfType(int id){
 		return TypeName[id];
@@ -127,7 +130,7 @@ ITEMSET[LEATHER] = new BaseItem(0,LEATHER,1,SLOT_ANY, TYPE_RESOURCE,"Кожа","
 ITEMSET[EMPTY_SCROOL] = new BaseItem(0,EMPTY_SCROOL,1,SLOT_ANY, TYPE_RESOURCE,"Пустой свиток","res/items/scroll1.png",2,1,"", false, 100, "");
 
 // 
-ITEMSET[58] = new BaseItem(20,58,1,SLOT_ANY,TYPE_ANY,"Ключ","res/items/key.png",1,1,"", false, 1, "");
+ITEMSET[KEY] = new BaseItem(20,KEY,1,SLOT_ANY,TYPE_ANY,"Ключ","res/items/key.png",1,1,"", false, 1, "");
 //!!!
 
 		TypeName = new String[MAX_TYPES];

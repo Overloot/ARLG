@@ -89,8 +89,14 @@ public class Game {
             return;
         }
         if (mode && map.field[ny][nx].getLock()) {
-            this.logMessage("#2#Это не возможно открыть без ключа! #^#");
-            return;
+			if (player.howMuchItemPlayerHave(ItemSet.KEY) > 0) {
+				map.field[ny][nx].setLock(false);
+				logMessage("Вы открыли замок ключoм.#/#");
+				player.removeFromInventory(ItemSet.KEY, 1);
+			} else {
+				this.logMessage("#2#Это не возможно открыть без ключа! #^#");
+				return;
+			}
         }
         if (map.field[ny][nx].getChest() > Tile.NONE) {
             map.field[ny][nx].setOpened(mode);
@@ -660,7 +666,7 @@ public class Game {
         // Название
         g.drawString(name.toUpperCase(), x + 38, y + 10);
         // Краткое описание
-        g.drawString(descr, x + 38, y + 30);
+        g.drawString(descr, x + 38, y + 25);
         // Уровень
         if (level > 0) {
             Image lev = loader.getImage("res/icons/level" + level + ".png");
