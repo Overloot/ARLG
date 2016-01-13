@@ -59,15 +59,18 @@ class RacePanel extends JPanel
 				addLine(g, "res/icons/str_icon.png", "Сила: " + RaceSet.getRace(i).getSTR(), 0, 1);
 				addLine(g, "res/icons/agi_icon.png", "Ловкость: " + RaceSet.getRace(i).getAGI(), 0, 2);
 				addLine(g, "res/icons/end_icon.png", "Выносливость: " + RaceSet.getRace(i).getEND(), 0, 3);
-				addLine(g, "res/icons/icon_luck.png", "Удача: " + RaceSet.getRace(i).getLUCK(), 0, 4);
+				addLine(g, "res/icons/magic.png", "Магия: " + RaceSet.getRace(i).getEND(), 0, 4);
+				addLine(g, "res/icons/icon_luck.png", "Удача: " + RaceSet.getRace(i).getLUCK(), 0, 5);
 				
 				y = window.game.calcHP(RaceSet.getRace(i).getSTR(), RaceSet.getRace(i).getEND());
 				addLine(g, "res/icons/icon_life.png", "Жизнь: " + y + "/" + y, 7, 1);
-				addLine(g, "res/icons/backpack.png", "Нагрузка: " + window.game.calcCarrying(RaceSet.getRace(i).getSTR()), 7, 2);
+				y = window.game.calcHP(RaceSet.getRace(i).getSTR(), RaceSet.getRace(i).getEND());
+				addLine(g, "res/icons/mana.png", "Мана: " + y + "/" + y, 7, 2);
+				addLine(g, "res/icons/backpack.png", "Нагрузка: " + window.game.calcCarrying(RaceSet.getRace(i).getSTR()), 7, 3);
 				
-				// Расовый навык
-				addLine(g, "Расовый навык:", 6, 3); z = -10;
-				window.game.renderIcon(g, this, Tileset.TILE_SIZE * (RaceSet.MAX_RACES + 5) + 15,
+				// Навыки
+				addLine(g, "Расовый навык:", 6, 4); z = -10;
+				window.game.renderIcon(g, this, Tileset.TILE_SIZE * (RaceSet.MAX_RACES + 6) + 15,
 					260, 7, SkillSet.getSkill(RaceSet.getRace(i).getSkill()).getPath(),
 					SkillSet.getSkill(RaceSet.getRace(i).getSkill()).getName(),
 					SkillSet.getSkill(RaceSet.getRace(i).getSkill()).getDescr(),
@@ -75,7 +78,7 @@ class RacePanel extends JPanel
 			}
 		}
 		y = ((select - 1) * Tileset.TILE_SIZE);
-		x = (window.WINDOW_WIDTH - Tileset.TILE_SIZE - 5);
+		x = window.WINDOW_WIDTH - (Tileset.TILE_SIZE * 2);
 		g.drawImage(window.game.cursor, x, y, this);
 	}
 }

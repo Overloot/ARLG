@@ -64,7 +64,7 @@ public class Game {
         loader = new Loader();
         time = new Time(this);
         background = loader.getImage("res/icons/texture_menu.png");
-        cursor = loader.getImage("res/icons/icon_plus.png");
+        cursor = loader.getImage("res/icons/check.png");
     }
 
     // Попытка открыть или закрыть что-то, вызывается из класса KeyHandler

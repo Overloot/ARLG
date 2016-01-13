@@ -11,7 +11,7 @@ public class RaceWindow extends JFrame{
     public Game game;
 
 	static{
-		WINDOW_HEIGHT = (RaceSet.MAX_RACES + 8) * Tileset.TILE_SIZE;
+		WINDOW_HEIGHT = (RaceSet.MAX_RACES + 9) * Tileset.TILE_SIZE;
 	}
 
 	public void stop(){

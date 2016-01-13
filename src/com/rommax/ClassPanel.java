@@ -65,18 +65,21 @@ class ClassPanel extends JPanel
 				addLine(g, "res/icons/str_icon.png", "Сила: " + STR, 0, 1);
 				addLine(g, "res/icons/agi_icon.png", "Ловкость: " + AGI, 0, 2);
 				addLine(g, "res/icons/end_icon.png", "Выносливость: " + END, 0, 3);
-				addLine(g, "res/icons/icon_luck.png", "Удача: " + LUCK, 0, 4);
+				addLine(g, "res/icons/magic.png", "Магия: " + END, 0, 4);
+				addLine(g, "res/icons/icon_luck.png", "Удача: " + LUCK, 0, 5);
 								
 				y = window.game.calcHP(STR, END);
 				addLine(g, "res/icons/icon_life.png", "Жизнь: " + y + "/" + y, 7, 1);
-				addLine(g, "res/icons/backpack.png", "Нагрузка: " + window.game.calcCarrying(STR), 7, 2);
+				y = window.game.calcHP(STR, END);
+				addLine(g, "res/icons/mana.png", "Мана: " + y + "/" + y, 7, 2);
+				addLine(g, "res/icons/backpack.png", "Нагрузка: " + window.game.calcCarrying(STR), 7, 3);
 				
 				// Навыки
-				addLine(g, "Навыки:", 6, 3); z = -10;
+				addLine(g, "Навыки:", 6, 4); z = -10;
 				int col, row, add;
 				for(int s=1;s<=3;s++){
 					col=(s==2)?32:260;
-					row=(s==1)?5:6;
+					row=(s==1)?6:7;
 					add=(s==1)?0:8;
 					window.game.renderIcon(g, this, Tileset.TILE_SIZE * (ClassSet.MAX_CLASSES + row) + add + 15,
 						col, 7, SkillSet.getSkill(ClassSet.getClass(i).getSkill(s)).getPath(),
@@ -87,7 +90,7 @@ class ClassPanel extends JPanel
 			}
 		}
 		y = ((select - 1) * Tileset.TILE_SIZE);
-		x = (window.WINDOW_WIDTH - Tileset.TILE_SIZE - 5);
+		x = window.WINDOW_WIDTH - (Tileset.TILE_SIZE * 2);
 		g.drawImage(window.game.cursor, x, y, this);
 	}
 }
