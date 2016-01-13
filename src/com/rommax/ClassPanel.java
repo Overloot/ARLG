@@ -69,7 +69,7 @@ class ClassPanel extends JPanel
 								
 				y = window.game.calcHP(STR, END);
 				addLine(g, "res/icons/icon_life.png", "Жизнь: " + y + "/" + y, 7, 1);
-				addLine(g, "res/items/backpack1.png", "Нагрузка: " + window.game.calcCarrying(STR), 7, 2);
+				addLine(g, "res/icons/backpack.png", "Нагрузка: " + window.game.calcCarrying(STR), 7, 2);
 				
 				// Навыки
 				addLine(g, "Навыки:", 6, 3); z = -10;

@@ -63,7 +63,7 @@ class RacePanel extends JPanel
 				
 				y = window.game.calcHP(RaceSet.getRace(i).getSTR(), RaceSet.getRace(i).getEND());
 				addLine(g, "res/icons/icon_life.png", "Жизнь: " + y + "/" + y, 7, 1);
-				addLine(g, "res/items/backpack1.png", "Нагрузка: " + window.game.calcCarrying(RaceSet.getRace(i).getSTR()), 7, 2);
+				addLine(g, "res/icons/backpack.png", "Нагрузка: " + window.game.calcCarrying(RaceSet.getRace(i).getSTR()), 7, 2);
 				
 				// Расовый навык
 				addLine(g, "Расовый навык:", 6, 3); z = -10;
