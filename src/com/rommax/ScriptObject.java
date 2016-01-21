@@ -5,6 +5,7 @@ public class ScriptObject {
     public Stat STR_UP = new Stat(0, 0);
     public Stat AGI_UP = new Stat(0, 0);
     public Stat END_UP = new Stat(0, 0);
+    public Stat INT_UP = new Stat(0, 0);
     public Stat LUCK_UP = new Stat(0, 0);
     public Stat DFIRE = new Stat(0, 0);
     public Stat DCOLD = new Stat(0, 0);

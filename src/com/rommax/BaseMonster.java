@@ -5,6 +5,7 @@ public class BaseMonster extends GameObject{
 	private Stat STR;
 	private Stat AGI;
 	private Stat END;
+	private Stat INT;
 	private Stat LUCK;
 
 	private Stat RFire;
@@ -20,12 +21,13 @@ public class BaseMonster extends GameObject{
 	private Stat DNormal;
 
 	private Stat life;
+	private Stat mana;
 	private Stat rad;
 	private Stat AP;
 	private int exp;
 
-	public BaseMonster(int level, int id, String name, String path, int maxHP,
-			int STR, int AGI, int END, int LUCK,
+	public BaseMonster(int level, int id, String name, String path, int maxHP, int maxMP,
+			int STR, int AGI, int END, int INT, int LUCK,
 	        int DNormal1, int DNormal2, int RNormal,
 	        int DFire1, int DFire2, int RFire,
 	        int DCold1, int DCold2, int RCold,
@@ -39,6 +41,7 @@ public class BaseMonster extends GameObject{
 		this.STR = new Stat(STR, STR);
 		this.AGI = new Stat(AGI, AGI);
 		this.END = new Stat(END, END);
+		this.INT = new Stat(INT, INT);
 		this.LUCK = new Stat(LUCK, LUCK);
 		//резисты
 		this.RFire = new Stat(RFire, RFire);
@@ -54,6 +57,7 @@ public class BaseMonster extends GameObject{
 		this.DNormal = new Stat(DNormal1, DNormal2);
 
 		this.life = new Stat(maxHP, maxHP);
+		this.mana = new Stat(maxMP, maxMP);
 		this.rad = new Stat(rad, rad);
 		this.AP = new Stat(AP, AP);
 		this.exp = 0;
@@ -61,6 +65,8 @@ public class BaseMonster extends GameObject{
 
 	public Stat getHP(){return life;}
 	public void setHP(int cur, int max){life = new Stat(cur, max);}
+	public Stat getMP(){return mana;}
+	public void setMP(int cur, int max){mana = new Stat(cur, max);}
 	public Stat getFOVRAD(){return rad;}
 	public void setFOVRAD(int cur, int max){rad = new Stat(cur, max);}
 	public Stat getAP(){return AP;};
@@ -74,6 +80,8 @@ public class BaseMonster extends GameObject{
 	public void setAGI(int cur, int max){AGI = new Stat(cur, max);}
 	public Stat getEND(){return END;};
 	public void setEND(int cur, int max){END = new Stat(cur, max);}
+	public Stat getINT(){return INT;};
+	public void setINT(int cur, int max){INT = new Stat(cur, max);}
 	public Stat getLUCK(){return LUCK;};
 	public void setLUCK(int cur, int max){LUCK = new Stat(cur, max);}
 

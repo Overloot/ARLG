@@ -396,4 +396,65 @@ public class Player extends Monster{
         getGame().addItem(getY(), getX(), id, getMap());
     }
 
+    // Здоровье зависит от силы и выносливости
+    public int calcHP(int STR, int END) {
+        return (END * getGame().HIT_POINTS_PER_ENDURANCE) + (STR * getGame().HIT_POINTS_PER_STRENGTH);
+    }
+
+    // Мана зависит от интеллекта
+    public int calcMP(int INT) {
+        return INT * getGame().MANA_PER_INTELLECT;
+    }
+
+    // Нагрузка зависит от силы
+    public int calcCarrying(int STR) {
+        return STR * getGame().CARRYING_PER_STRENGTH;
+    }
+
+    // Пересчитываем статы
+	public void calcStats(){
+        getHP().setMax(calcHP(getSTR().getCurrent(), getEND().getCurrent()));
+        getHP().setCurrent(calcHP(getSTR().getCurrent(), getEND().getCurrent()));
+        getMP().setMax(calcMP(getINT().getCurrent()));
+        getMP().setCurrent(calcMP(getINT().getCurrent()));
+        getCurrentWeight().setMax(calcCarrying(getSTR().getCurrent()));
+	}
+	
+    // Даем игроку расу, которую он выбрал
+    public void setRace(int id) {
+        setSTR(RaceSet.getRace(id).getSTR(), RaceSet.getRace(id).getSTR());
+        setAGI(RaceSet.getRace(id).getAGI(), RaceSet.getRace(id).getAGI());
+        setEND(RaceSet.getRace(id).getEND(), RaceSet.getRace(id).getEND());
+        setINT(RaceSet.getRace(id).getINT(), RaceSet.getRace(id).getINT());
+        setLUCK(RaceSet.getRace(id).getLUCK(), RaceSet.getRace(id).getLUCK());
+		calcStats();
+        Skill.add(RaceSet.getRace(id).getSkill());
+    }
+
+    // Теперь игрок будет этой специализации
+    public void setClass(int id) {
+		int STR  = RaceSet.getRace(RaceSet.getCurrentRaceID).getSTR()  + ClassSet.getClass(id).getSTR();
+		int AGI  = RaceSet.getRace(RaceSet.getCurrentRaceID).getAGI()  + ClassSet.getClass(id).getAGI();
+		int END  = RaceSet.getRace(RaceSet.getCurrentRaceID).getEND()  + ClassSet.getClass(id).getEND();
+		int INT  = RaceSet.getRace(RaceSet.getCurrentRaceID).getINT()  + ClassSet.getClass(id).getINT();
+		int LUCK = RaceSet.getRace(RaceSet.getCurrentRaceID).getLUCK() + ClassSet.getClass(id).getLUCK();
+        setSTR(STR, STR);
+        setAGI(AGI, AGI);
+        setEND(END, END);
+        setINT(INT, INT);
+        setLUCK(LUCK, LUCK);
+		calcStats();
+		for(int s=1;s<=3;s++)
+			Skill.add(ClassSet.getClass(id).getSkill(s));
+    }
+
+	public String getPath(int raceID, int classID){
+        String path = "res/heroes/" + RaceSet.getRace(raceID).getPath() + "/" + ClassSet.getClass(classID).getPath() + ".png";
+        if (new File(path).exists()) { // .jar?
+            return path;
+        } else {
+            return "res/heroes/unknown.png";
+        }
+	}
+	
 }

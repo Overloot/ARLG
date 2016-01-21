@@ -35,7 +35,7 @@ class ClassPanel extends JPanel
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		z = 0;
-		int STR, AGI, END, LUCK;
+		int STR, AGI, END, INT, LUCK;
 		g.drawImage(window.game.background, 0, 0, this);
 		Graphics2D g2 = (Graphics2D)g;
 		FontRenderContext context = g2.getFontRenderContext();
@@ -44,7 +44,7 @@ class ClassPanel extends JPanel
 		Font f3 = new Font("Serif", Font.PLAIN, 16);
 		Image image;
 		for(int i = 0; i < ClassSet.MAX_CLASSES; i++) {
-			image = window.game.loader.getImage(window.game.getPlayerPath(RaceSet.getCurrentRaceID, i));
+			image = window.game.loader.getImage(window.game.player.getPath(RaceSet.getCurrentRaceID, i));
 			y = i * Tileset.TILE_SIZE;
 			g.drawImage(image, Tileset.TILE_SIZE, y, this);
 			if (i == select - 1) g2.setPaint(Color.YELLOW); else g2.setPaint(Color.WHITE);
@@ -60,19 +60,20 @@ class ClassPanel extends JPanel
 				STR  = RaceSet.getRace(RaceSet.getCurrentRaceID).getSTR()  + ClassSet.getClass(i).getSTR();
 				AGI  = RaceSet.getRace(RaceSet.getCurrentRaceID).getAGI()  + ClassSet.getClass(i).getAGI();
 				END  = RaceSet.getRace(RaceSet.getCurrentRaceID).getEND()  + ClassSet.getClass(i).getEND();
+				INT  = RaceSet.getRace(RaceSet.getCurrentRaceID).getINT()  + ClassSet.getClass(i).getINT();
 				LUCK = RaceSet.getRace(RaceSet.getCurrentRaceID).getLUCK() + ClassSet.getClass(i).getLUCK();
 
 				addLine(g, "res/icons/str_icon.png", "Сила: " + STR, 0, 1);
 				addLine(g, "res/icons/agi_icon.png", "Ловкость: " + AGI, 0, 2);
 				addLine(g, "res/icons/end_icon.png", "Выносливость: " + END, 0, 3);
-				addLine(g, "res/icons/magic.png", "Магия: " + END, 0, 4);
+				addLine(g, "res/icons/magic.png", "Интеллект: " + INT, 0, 4);
 				addLine(g, "res/icons/icon_luck.png", "Удача: " + LUCK, 0, 5);
 								
-				y = window.game.calcHP(STR, END);
+				y = window.game.player.calcHP(STR, END);
 				addLine(g, "res/icons/icon_life.png", "Жизнь: " + y + "/" + y, 7, 1);
-				y = window.game.calcHP(STR, END);
+				y = window.game.player.calcMP(INT);
 				addLine(g, "res/icons/mana.png", "Мана: " + y + "/" + y, 7, 2);
-				addLine(g, "res/icons/backpack.png", "Нагрузка: " + window.game.calcCarrying(STR), 7, 3);
+				addLine(g, "res/icons/backpack.png", "Нагрузка: " + window.game.player.calcCarrying(STR), 7, 3);
 				
 				// Навыки
 				addLine(g, "Навыки:", 6, 4); z = -10;

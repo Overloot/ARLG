@@ -203,6 +203,10 @@ class MainPanel extends JPanel{
 		addLine(g, "#2#ЖИЗНЬ#^#", DrawingMap.getGame().player.getHP().getCurrent(), DrawingMap.getGame().player.getHP().getMax());
 		drawBar(DrawingMap.getGame().player.getHP().getCurrent(),
 			DrawingMap.getGame().player.getHP().getMax(), "res/icons/lifebar.png", g);	
+		// Mana
+		addLine(g, "#2#МАНА#^#", DrawingMap.getGame().player.getMP().getCurrent(), DrawingMap.getGame().player.getMP().getMax());
+		drawBar(DrawingMap.getGame().player.getMP().getCurrent(),
+			DrawingMap.getGame().player.getMP().getMax(), "res/icons/manabar.png", g);	
 		// Experience
 		addLine(g, "#3#ОПЫТ#^#", DrawingMap.getGame().player.getExp(), DrawingMap.getGame().player.maxExperience);
 		drawBar(DrawingMap.getGame().player.getExp(),
@@ -211,6 +215,7 @@ class MainPanel extends JPanel{
 		addLine(g, "#8#СИЛА#^#", DrawingMap.getGame().player.getSTR().getCurrent(), 0);
 		addLine(g, "#8#ЛОВКОСТЬ#^#", DrawingMap.getGame().player.getAGI().getCurrent(), 0);
 		addLine(g, "#8#ВЫНОСЛИВОСТЬ#^#", DrawingMap.getGame().player.getEND().getCurrent(), 0);
+		addLine(g, "#8#ИНТЕЛЛЕКТ#^#", DrawingMap.getGame().player.getINT().getCurrent(), 0);
 		addLine(g, "#8#УДАЧА#^#", DrawingMap.getGame().player.getLUCK().getCurrent(), 0);
 		addLine(g, "#2#Debug: items: " + DrawingMap.getGame().itemsQuantity + "/" + DrawingMap.getGame().MAX_ITEMS + ", monsters: " + DrawingMap.getGame().monstersQuantity + "/" + DrawingMap.getGame().MAX_MONSTERS + ", day: " + DrawingMap.getGame().getTime().getDay() + "#^#");
 		// Effects
@@ -313,7 +318,7 @@ class MainPanel extends JPanel{
 							// Рисуем монстров
 							if (DrawingMap.field[yy][xx].getMonster()!=null){
 								if (DrawingMap.field[yy][xx].getMonster() == DrawingMap.getGame().player) {
-									image = window.game.loader.getImage(window.game.getPlayerPath(RaceSet.getCurrentRaceID, ClassSet.getCurrentClassID));
+									image = window.game.loader.getImage(window.game.player.getPath(RaceSet.getCurrentRaceID, ClassSet.getCurrentClassID));
 								} else image = window.game.loader.getImage(MonsterSet.getMonster(DrawingMap.field[yy][xx].getMonster().getID()).getPath());
 								int px = DrawingMap.field[yy][xx].getMonster().getX();
 								int py = DrawingMap.field[yy][xx].getMonster().getY();

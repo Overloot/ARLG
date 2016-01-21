@@ -82,6 +82,9 @@ public class ScriptParser {
                 case "END_UP":
                     setStatAs(so.END_UP, number);
                     break;
+                case "INT_UP":
+                    setStatAs(so.INT_UP, number);
+                    break;
                 case "LUCK_UP":
                     setStatAs(so.LUCK_UP, number);
                     break;

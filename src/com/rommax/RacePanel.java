@@ -43,7 +43,7 @@ class RacePanel extends JPanel
 		Font f3 = new Font("Serif", Font.PLAIN, 16);
 		Image image;
 		for(int i = 0; i < RaceSet.MAX_RACES; i++) {
-			image = window.game.loader.getImage(window.game.getPlayerPath(i, ClassSet.getCurrentClassID));
+			image = window.game.loader.getImage(window.game.player.getPath(i, ClassSet.getCurrentClassID));
 			y = i * Tileset.TILE_SIZE;
 			g.drawImage(image, Tileset.TILE_SIZE, y, this);
 			if (i == select - 1) g2.setPaint(Color.YELLOW); else g2.setPaint(Color.WHITE);
@@ -59,14 +59,14 @@ class RacePanel extends JPanel
 				addLine(g, "res/icons/str_icon.png", "Сила: " + RaceSet.getRace(i).getSTR(), 0, 1);
 				addLine(g, "res/icons/agi_icon.png", "Ловкость: " + RaceSet.getRace(i).getAGI(), 0, 2);
 				addLine(g, "res/icons/end_icon.png", "Выносливость: " + RaceSet.getRace(i).getEND(), 0, 3);
-				addLine(g, "res/icons/magic.png", "Магия: " + RaceSet.getRace(i).getEND(), 0, 4);
+				addLine(g, "res/icons/magic.png", "Интеллект: " + RaceSet.getRace(i).getINT(), 0, 4);
 				addLine(g, "res/icons/icon_luck.png", "Удача: " + RaceSet.getRace(i).getLUCK(), 0, 5);
 				
-				y = window.game.calcHP(RaceSet.getRace(i).getSTR(), RaceSet.getRace(i).getEND());
+				y = window.game.player.calcHP(RaceSet.getRace(i).getSTR(), RaceSet.getRace(i).getEND());
 				addLine(g, "res/icons/icon_life.png", "Жизнь: " + y + "/" + y, 7, 1);
-				y = window.game.calcHP(RaceSet.getRace(i).getSTR(), RaceSet.getRace(i).getEND());
+				y = window.game.player.calcMP(RaceSet.getRace(i).getINT());
 				addLine(g, "res/icons/mana.png", "Мана: " + y + "/" + y, 7, 2);
-				addLine(g, "res/icons/backpack.png", "Нагрузка: " + window.game.calcCarrying(RaceSet.getRace(i).getSTR()), 7, 3);
+				addLine(g, "res/icons/backpack.png", "Нагрузка: " + window.game.player.calcCarrying(RaceSet.getRace(i).getSTR()), 7, 3);
 				
 				// Навыки
 				addLine(g, "Расовый навык:", 6, 4); z = -10;

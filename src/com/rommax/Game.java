@@ -22,6 +22,7 @@ public class Game {
     public int currentMapNumber = 0;
     public int turn = 0;
     public int hitPointsRegeneration = 0;                   //later reghp
+    public int manaPointsRegeneration = 0;
     public Loader loader;
     public Image background;
     public Image cursor;
@@ -42,6 +43,7 @@ public class Game {
     public final int MIN_SIZE = 100;
     public final int MAX_LOOT = 3;
     public final int HIT_POINTS_PER_ENDURANCE = 9;
+	public final int MANA_PER_INTELLECT = 14;
     public final int MAX_MONSTERS = MAX_FLOORS * MAX_MONSTER_PER_LEVEL + 1;
     public final int MAX_ITEMS = MAX_FLOORS * MAX_ITEM_PER_LEVEL + (MAX_CHEST_PER_LEVEL * MAX_LOOT) + 1 + (MAX_MONSTERS * MAX_LOOT);
 
@@ -248,13 +250,12 @@ public class Game {
         checkStatChanges(m.getRPoison(), "Вы снова стали #3#сильнее#^# сопротивляться #3#яду!#^#", "Вы снова стали #2#слабее#^# сопротивляться #3#яду!#^#");
         checkStatChanges(m.getFOVRAD(), "Вы снова стали #3#лучше#^# видеть!#^#", "Вы снова стали #2#хуже#^# видеть!#^#");
         checkStatChanges(m.getAddHP(), "Вы #3#исцеляетесь#^#!#^#", "Вы #2#теряете здоровье#^#!#^#");
+        checkStatChanges(m.getAddMP(), "Вы #3#пополняете запас маны#^#!#^#", "Вы #2#теряете ману#^#!#^#");
 
         // Медленное исцеление
-        if (m.getAddHP().getCurrent() != 0) {
-            m.getHP().setCurrent(m.getHP().getCurrent() + (m.getAddHP().getCurrent() * m.getLevel()));
-        }
+        if (m.getAddHP().getCurrent() != 0) m.getHP().setCurrent(m.getHP().getCurrent() + (m.getAddHP().getCurrent() * m.getLevel()));
         // Медленное вост. маны
-        //if (m.getAddMP().getCurrent() != 0) m.getMP().setCurrent(m.getMP().getCurrent() + (m.getAddMP().getCurrent() * m.getLevel()));
+        if (m.getAddMP().getCurrent() != 0) m.getMP().setCurrent(m.getMP().getCurrent() + (m.getAddMP().getCurrent() * m.getLevel()));
 
     }
 
@@ -315,9 +316,7 @@ public class Game {
             }
         }
         hitPointsRegeneration += Util.rand(5, 10);
-        if (hitPointsRegeneration > 100) {
-            hitPointsRegeneration = 0;
-        }
+        if (hitPointsRegeneration > 100) hitPointsRegeneration = 0;
     }
 
     // смена карты/переход на другой этаж, метод вызывается из класса KeyHandler
@@ -381,6 +380,7 @@ public class Game {
         // mapList нужен только для хранения карт
         currentMapNumber = 0;                                               // номер текущей карты в массиве
         if (!map.generate()) {
+			logMessage("Карта сгенерирована с ошибкой!");
             return;
         }
         mapsQuantity++;
@@ -594,57 +594,6 @@ public class Game {
         logMessage("Вы получаете " + Integer.toString(Exp) + " опыта! ");
         // Удаляем монстра
         monsterList[index] = null;
-    }
-
-    // Здоровье зависит от силы и выносливости
-    public int calcHP(int STR, int END) {
-        return (END * HIT_POINTS_PER_ENDURANCE) + (STR * HIT_POINTS_PER_STRENGTH);
-    }
-
-    // Нагрузка зависит от силы
-    public int calcCarrying(int STR) {
-        return STR * CARRYING_PER_STRENGTH;
-    }
-
-    // Пересчитываем статы
-	public void calcStats(){
-        player.getHP().setMax(calcHP(player.getSTR().getCurrent(), player.getEND().getCurrent()));
-        player.getHP().setCurrent(calcHP(player.getSTR().getCurrent(), player.getEND().getCurrent()));
-        player.getCurrentWeight().setMax(calcCarrying(player.getSTR().getCurrent()));
-	}
-	
-    // Даем игроку расу, которую он выбрал
-    public void setRace(int id) {
-        player.setSTR(RaceSet.getRace(id).getSTR(), RaceSet.getRace(id).getSTR());
-        player.setAGI(RaceSet.getRace(id).getAGI(), RaceSet.getRace(id).getAGI());
-        player.setEND(RaceSet.getRace(id).getEND(), RaceSet.getRace(id).getEND());
-        player.setLUCK(RaceSet.getRace(id).getLUCK(), RaceSet.getRace(id).getLUCK());
-		calcStats();
-        Skill.add(RaceSet.getRace(id).getSkill());
-    }
-
-    // Теперь игрок будет этой специализации
-    public void setClass(int id) {
-		int STR  = RaceSet.getRace(RaceSet.getCurrentRaceID).getSTR()  + ClassSet.getClass(id).getSTR();
-		int AGI  = RaceSet.getRace(RaceSet.getCurrentRaceID).getAGI()  + ClassSet.getClass(id).getAGI();
-		int END  = RaceSet.getRace(RaceSet.getCurrentRaceID).getEND()  + ClassSet.getClass(id).getEND();
-		int LUCK = RaceSet.getRace(RaceSet.getCurrentRaceID).getLUCK() + ClassSet.getClass(id).getLUCK();
-        player.setSTR(STR, STR);
-        player.setAGI(AGI, AGI);
-        player.setEND(END, END);
-        player.setLUCK(LUCK, LUCK);
-		calcStats();
-		for(int s=1;s<=3;s++)
-			Skill.add(ClassSet.getClass(id).getSkill(s));
-    }
-
-    public String getPlayerPath(int raceID, int classID) {
-        String path = "res/heroes/" + RaceSet.getRace(raceID).getPath() + "/" + ClassSet.getClass(classID).getPath() + ".png";
-        if (new File(path).exists()) { // .jar?
-            return path;
-        } else {
-            return "res/heroes/unknown.png";
-        }
     }
 
     // выводит различные сообщения в верхний-левый угол

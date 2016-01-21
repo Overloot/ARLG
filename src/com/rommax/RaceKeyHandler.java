@@ -32,7 +32,7 @@ public class RaceKeyHandler implements KeyListener {
             case KeyEvent.VK_ENTER:
                 curRace = panel.select - 1;
                 RaceSet.getCurrentRaceID = curRace;
-                panel.window.game.setRace(curRace);
+                panel.window.game.player.setRace(curRace);
                 panel.window.stop();
                 panel.window.game.selectClass();
                 break;

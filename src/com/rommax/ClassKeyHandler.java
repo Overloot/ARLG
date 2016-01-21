@@ -29,7 +29,7 @@ public class ClassKeyHandler implements KeyListener{
 			case KeyEvent.VK_ENTER:
 				curClass = panel.select - 1;
 				ClassSet.getCurrentClassID = curClass;
-				panel.window.game.setClass(curClass);
+				panel.window.game.player.setClass(curClass);
 				MainPanel.hasNewGame = false;					
 				panel.window.stop();
 				panel.window.game.help();

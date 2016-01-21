@@ -23,9 +23,9 @@ public class MapSet {
 	static{
 		MAPSET = new BaseMap[MAX_MAPS];
 		
-		add(ID_FOREST_1,	3, "Старый Лес!!!!", 1, Tileset.TILE_GRASS, "#SNAKE|100|C2#BEAR|100|C3#WOLF|100|C5#");
+		add(ID_FOREST_1,	3, "Старый Лес", 1, Tileset.TILE_GRASS, "#SNAKE|100|C2#BEAR|100|C3#WOLF|100|C5#");
 		add(ID_FOREST_1, 	3, "Лес Энтов", 2, Tileset.TILE_GRASS, null);
-		add(ID_MAZE_1, 		7, "Канализация", 2, Tileset.TILE_DUNGEON_FLOOR, null);
+		add(ID_FOREST_2, 	7, "Лес Древних", 2, Tileset.TILE_GRASS, null);
 		
 	}
 

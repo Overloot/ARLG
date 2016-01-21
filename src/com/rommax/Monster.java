@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Monster extends BaseMonster{
 	private Stat addHP;
+	private Stat addMP;
 
 	private LinkedList<Item> Inventory;
 	public Item[] Equipment;
@@ -22,6 +23,8 @@ public class Monster extends BaseMonster{
 
 	public void setAddHP(int HP){this.addHP = new Stat(HP, HP);}
 	public Stat getAddHP(){return addHP;}
+	public void setAddMP(int MP){this.addMP = new Stat(MP, MP);}
+	public Stat getAddMP(){return addMP;}
 
 	public int getPoisonCount(){return poisonCount;}
 	public void setPoisonCount(int pc){poisonCount = pc;}
@@ -31,8 +34,8 @@ public class Monster extends BaseMonster{
 	public void setElecCount(int ec){elecCount = ec;}
 
 	public Monster(BaseMonster bm, int y, int x, Map map, Game game){
-		super(bm.getLevel(), bm.getID(), bm.getName(), bm.getPath(), bm.getHP().getMax(),
-				bm.getSTR().getMax(), bm.getAGI().getMax(), bm.getEND().getMax(), bm.getLUCK().getMax(),
+		super(bm.getLevel(), bm.getID(), bm.getName(), bm.getPath(), bm.getHP().getMax(), bm.getMP().getMax(),
+				bm.getSTR().getMax(), bm.getAGI().getMax(), bm.getEND().getMax(), bm.getINT().getMax(), bm.getLUCK().getMax(),
 				bm.getDNormal().getCurrent(), bm.getDNormal().getMax(), bm.getRNormal().getMax(), 
 				bm.getDFire().getCurrent(), bm.getDFire().getMax(), bm.getRFire().getMax(), 
 				bm.getDCold().getCurrent(), bm.getDCold().getMax(), bm.getRCold().getMax(), 
@@ -45,12 +48,15 @@ public class Monster extends BaseMonster{
 		this.getMap().placeMonsterAt(y, x, this);
 
 		this.setHP(bm.getHP().getCurrent(), bm.getHP().getMax());
+		this.setMP(bm.getMP().getCurrent(), bm.getMP().getMax());
+		
 		this.setFOVRAD(bm.getFOVRAD().getCurrent(), bm.getFOVRAD().getMax());
 		this.setAP(bm.getAP().getCurrent(), bm.getAP().getMax());
 
 		this.setSTR(bm.getSTR().getCurrent(), bm.getSTR().getMax());
 		this.setAGI(bm.getAGI().getCurrent(), bm.getAGI().getMax());
 		this.setEND(bm.getEND().getCurrent(), bm.getEND().getMax());
+		this.setINT(bm.getINT().getCurrent(), bm.getINT().getMax());
 		this.setLUCK(bm.getLUCK().getCurrent(), bm.getLUCK().getMax());
 
 		this.setRFire(bm.getRFire().getCurrent(), bm.getRFire().getMax());
@@ -72,6 +78,7 @@ public class Monster extends BaseMonster{
 		Inventory = new LinkedList<Item>();
 
 		this.addHP = new Stat(0, 0);
+		this.addMP = new Stat(0, 0);
 	}
 
 	// Движение
