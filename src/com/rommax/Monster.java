@@ -41,7 +41,8 @@ public class Monster extends BaseMonster{
 				bm.getDCold().getCurrent(), bm.getDCold().getMax(), bm.getRCold().getMax(), 
 				bm.getDElec().getCurrent(), bm.getDElec().getMax(), bm.getRElec().getMax(), 
 				bm.getDPoison().getCurrent(), bm.getDPoison().getMax(), bm.getRPoison().getMax(), 
-				bm.getAP().getMax(), bm.getFOVRAD().getMax(), bm.getLoot(), bm.getDestroyable(), bm.getWeaknessFor());
+				bm.getAP().getMax(), bm.getFOVRAD().getMax(), bm.getLoot(), bm.getDestroyable(), bm.getWeaknessFor(), 
+				bm.getTeam());
 		this.setPosition(y, x);
 		this.setMap(map);
 		this.setGame(game);
@@ -101,7 +102,7 @@ public class Monster extends BaseMonster{
 		if (getMap().hasTileAt(ny, nx)){
 			// AI обходит препятствия (монстр иногда мечется, это нужно исправить)
 			if ((this != getGame().player)
-					&& ((getMap().field[ny][nx].getMonster() != null && getMap().field[ny][nx].getMonster()!=getGame().player))){
+					&& ((getMap().field[ny][nx].getMonster() != null && getMap().field[ny][nx].getMonster() != getGame().player))){
 				if (y > 0 || y < 0) x = new Random().nextInt(3) - 1;
 				if (x > 0 || x < 0) y = new Random().nextInt(3) - 1;
 				ny = (getY() + y);
@@ -172,7 +173,7 @@ public class Monster extends BaseMonster{
 	private void checkChanges(boolean b, Stat stat, String s1, String s2) {
 		if (b)
 			if (stat.getCurrent() < 0) getGame().logMessage(s1);
-			else if (stat.getCurrent() > 0) getGame().logMessage(s2);
+				else if (stat.getCurrent() > 0) getGame().logMessage(s2);
 	}
 
 	public void setEffectFrom(ScriptObject so, boolean b){
@@ -195,10 +196,6 @@ public class Monster extends BaseMonster{
 
 		checkChanges(b, so.LUCK_UP, "Вы почувствовали себя #3#удачливее!#^#", "Вы почувствовали себя #2#менее удачливее!#^#");
 		getLUCK().add(so.LUCK_UP);
-
-
-
-
 
 		if (b)
 			if (so.DFIRE.getCurrent()>0) getGame().logMessage("Вы почувствовали силу #2#огня!#^#");
@@ -530,6 +527,14 @@ public class Monster extends BaseMonster{
 		if (this != getGame().player && enemy != getGame().player) return;
 		if (this.getHP().getCurrent() <= 0) return; // Мертвый не может атаковать
 		
+		// Дружественный юнит
+		if (this.getTeam() == enemy.getTeam()) {
+			if (this == getGame().player) {
+				getGame().logMessage("Диалог с NPC");
+			}
+			return;
+		}
+
 		// Навык "Неистовство"
 		if (Skill.isWarHitSkill() && this != getGame().player) return;
 		

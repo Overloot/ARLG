@@ -156,7 +156,7 @@ public class Game {
             while (monsterList[index].getAP().getCurrent() > 0) {
                 // если цель (игрок) находится в зоне видимости монстра, но монстр идет к нему
                 fmov = Util.checkDistance(player.getY(), player.getX(), monsterList[index].getY(), monsterList[index].getX()) <= monsterList[index].getFOVRAD().getCurrent();
-				if (flag) fmov = false;
+				if (flag || monsterList[index].getTeam() == MonsterSet.PLAYER_TEAM) fmov = false;
 				if (fmov)
 					monsterList[index].move(Util.defineDirection(player.getY() - monsterList[index].getY()), Util.defineDirection(player.getX() - monsterList[index].getX()));
                     // иначе монстр просто бродит
@@ -394,9 +394,9 @@ public class Game {
         map.updatePlayer();
 
         fillLevelByChests();
-        fillLevelByMonsters();      // добавляет столько монстров, сколько положено на уровень ( MAX_MONSTER_PER_LEVEL )
-        fillLevelByItems();         // добавляет столько итемов, сколько положено на уровень ( MAX_ITEM_PER_LEVEL )
-        fillLevelByTraps(); // Доб. ловушки
+        fillLevelByMonsters();      // Добавляет столько монстров, сколько положено на уровень ( MAX_MONSTER_PER_LEVEL )
+        fillLevelByItems();         // Добавляет столько итемов, сколько положено на уровень ( MAX_ITEM_PER_LEVEL )
+        fillLevelByTraps(); 		// Доб. ловушки
         frame1.mainpanel.repaint();
         this.selectRace();
     }
@@ -405,28 +405,25 @@ public class Game {
         Random random = new Random();
         int newID;
 
-        //определяет можно ли данному монстру появится на свет
+        // Определяет можно ли данному монстру появится на свет
         while (true) {
             newID = random.nextInt(MonsterSet.MAX_MONSTERS);
-            // отставить разможение личности!
-            if (newID == MonsterSet.MONSTER_PLAYER) {
-                continue;
-            }
-            // чтоб не плодить слишком сильных для игрока монстров
-            if (MonsterSet.getMonster(newID).getLevel() < currentMapNumber - 4 || MonsterSet.getMonster(newID).getLevel() > currentMapNumber + 4) {
-                continue;
-            }
-            int chance = 90 - Math.abs(MonsterSet.getMonster(newID).getLevel() - currentMapNumber) * 20;                    // Math.abs возвращает модуль числа
+            // Отставить разможение личности!
+            if (newID == MonsterSet.MONSTER_PLAYER) continue;
+            // Чтоб не плодить слишком сильных для игрока монстров
+            if (MonsterSet.getMonster(newID).getLevel() < currentMapNumber - 4 || MonsterSet.getMonster(newID).getLevel() > currentMapNumber + 4) continue;
+			// Это может быть только враг
+			if (MonsterSet.getMonster(newID).getTeam() == MonsterSet.PLAYER_TEAM) continue;
+			// Math.abs возвращает модуль числа
+            int chance = 90 - Math.abs(MonsterSet.getMonster(newID).getLevel() - currentMapNumber) * 20;
             // не судьба
-            if (!Util.dice(chance, 100)) {
-                continue; // см.ниже
-            }
+            if (!Util.dice(chance, 100)) continue;
             break;
         }
         BaseMonster baseMonster = MonsterSet.getMonster(newID);
         int y = 0;
         int x = 0;
-        // ищем подходящее место для высадки монстра
+        // Ищем подходящее место для высадки монстра
         while (map.field[y][x].getPassable() == false || map.field[y][x].getMonster() != null) {
             y = random.nextInt(map.getHeight());
             x = random.nextInt(map.getWidth());
@@ -464,9 +461,8 @@ public class Game {
             map.makeFauna(map, map.getFauna());
         } else {
             logMessage("СЛУЧАЙНЫЕ МОБЫ");
-            for (int i = 0; i < MAX_MONSTER_PER_LEVEL; i++) {
+            for (int i = 0; i < MAX_MONSTER_PER_LEVEL; i++)
                 addRandomMonster();
-            }
         }
     }
 

@@ -25,6 +25,8 @@ public class BaseMonster extends GameObject{
 	private Stat rad;
 	private Stat AP;
 	private int exp;
+	
+	private int team;
 
 	public BaseMonster(int level, int id, String name, String path, int maxHP, int maxMP,
 			int STR, int AGI, int END, int INT, int LUCK,
@@ -33,7 +35,7 @@ public class BaseMonster extends GameObject{
 	        int DCold1, int DCold2, int RCold,
 	        int DElec1, int DElec2, int RElec,
 	        int DPoison1, int DPoison2, int RPoison,
-	        int AP, int rad, String loot, boolean destroyable, String weaknessFor)
+	        int AP, int rad, String loot, boolean destroyable, String weaknessFor, int team)
 	{
 		super(id, name, path, level, loot, destroyable, weaknessFor);
 		
@@ -61,6 +63,8 @@ public class BaseMonster extends GameObject{
 		this.rad = new Stat(rad, rad);
 		this.AP = new Stat(AP, AP);
 		this.exp = 0;
+
+		this.team = team;
 	}
 
 	public Stat getHP(){return life;}
@@ -106,4 +110,8 @@ public class BaseMonster extends GameObject{
 	public void setDElec(int cur, int max){DElec = new Stat(cur, max);}
 	public Stat getDNormal(){return DNormal;};
 	public void setDNormal(int cur, int max){DNormal = new Stat(cur, max);}
+
+	public void setTeam(int value){team = value;}
+	public int getTeam(){return team;}
+
 }
