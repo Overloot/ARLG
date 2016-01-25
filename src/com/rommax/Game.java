@@ -227,8 +227,7 @@ public class Game {
 
     // временные эффекты.
     void checkTimers(Monster m) {
-        checkStatChanges(m.getSTR(), "Вы снова стали #3#сильнее!#^#", "Вы снова стали #2#слабее!#^#");
-
+		/* Есть подозрение, что что-то с этим кодом не то!
         if (m.getEND().getTimer() == 1) {
             m.getHP().setMax(m.getHP().getMax() + HIT_POINTS_PER_ENDURANCE * (m.getEND().getMax() - m.getEND().getCurrent()));
             m.getHP().setCurrent(m.getHP().getCurrent() + HIT_POINTS_PER_ENDURANCE * (m.getEND().getMax() - m.getEND().getCurrent()));
@@ -238,10 +237,12 @@ public class Game {
             m.getHP().setMax(m.getHP().getMax() + HIT_POINTS_PER_STRENGTH * (m.getSTR().getMax() - m.getSTR().getCurrent()));
             m.getHP().setCurrent(m.getHP().getCurrent() + HIT_POINTS_PER_STRENGTH * (m.getSTR().getMax() - m.getSTR().getCurrent()));
             m.getCurrentWeight().setMax(m.getCurrentWeight().getMax() + CARRYING_PER_STRENGTH * (m.getSTR().getMax() - m.getSTR().getCurrent()));
-        }
+        }*/
 
+        checkStatChanges(m.getSTR(), "Вы снова стали #3#сильнее!#^#", "Вы снова стали #2#слабее!#^#");
         checkStatChanges(m.getAGI(), "Вы снова стали более #3#ловким!#^#", "Вы снова стали менее #2#ловким!#^#");
         checkStatChanges(m.getEND(), "Вы снова стали #3#выносливее!#^#", "Вы снова стали менее #2#выносливее!#^#");
+        checkStatChanges(m.getINT(), "Вы снова стали #3#лучше разбираться в магии!#^#", "Вы снова стали хуже #2#разбираться в магии!#^#");
         checkStatChanges(m.getLUCK(), "Вы снова стали #3#удачливее!#^#", "Вы снова стали менее #2#удачливее!#^#");
         checkStatChanges(m.getRFire(), "Вы снова стали #3#сильнее#^# сопротивляться #2#огню!#^#", "Вы снова стали #2#слабее#^# сопротивляться #2#огню!#^#");
         checkStatChanges(m.getRCold(), "Вы снова стали #3#сильнее#^# сопротивляться #4#холоду!#^#", "Вы снова стали #2#слабее#^# сопротивляться #4#холоду!#^#");

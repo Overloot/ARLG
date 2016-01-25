@@ -82,6 +82,22 @@ public class Monster extends BaseMonster{
 		this.addMP = new Stat(0, 0);
 	}
 
+	private void calcAddEffects(ScriptObject so){
+		getHP().setMax(getHP().getMax() + getGame().HIT_POINTS_PER_ENDURANCE * so.END_UP.getCurrent());
+		getHP().setCurrent(getHP().getCurrent() + getGame().HIT_POINTS_PER_ENDURANCE * so.END_UP.getCurrent());
+		getHP().setMax(getHP().getMax() + getGame().HIT_POINTS_PER_STRENGTH * so.STR_UP.getCurrent());
+		getHP().setCurrent(getHP().getCurrent() + getGame().HIT_POINTS_PER_STRENGTH * so.STR_UP.getCurrent());
+		getCurrentWeight().setMax(getCurrentWeight().getMax() + getGame().CARRYING_PER_STRENGTH * so.STR_UP.getCurrent());
+	}
+	
+	private void calcDelEffects(ScriptObject so){
+		getHP().setMax(getHP().getMax() - getGame().HIT_POINTS_PER_ENDURANCE * so.END_UP.getCurrent());
+		getHP().setCurrent(getHP().getCurrent() - getGame().HIT_POINTS_PER_ENDURANCE * so.END_UP.getCurrent());
+		getHP().setMax(getHP().getMax() - getGame().HIT_POINTS_PER_STRENGTH * so.STR_UP.getCurrent());
+		getHP().setCurrent(getHP().getCurrent() - getGame().HIT_POINTS_PER_STRENGTH * so.STR_UP.getCurrent());
+		getCurrentWeight().setMax(getCurrentWeight().getMax() - getGame().CARRYING_PER_STRENGTH * so.STR_UP.getCurrent());
+	}
+	
 	// Движение
 	public boolean move(int y, int x){
 		if (currentWeight.getCurrent() > currentWeight.getMax()){
@@ -177,11 +193,7 @@ public class Monster extends BaseMonster{
 	}
 
 	public void setEffectFrom(ScriptObject so, boolean b){
-		getHP().setMax(getHP().getMax() + getGame().HIT_POINTS_PER_ENDURANCE * so.END_UP.getCurrent());
-		getHP().setCurrent(getHP().getCurrent() + getGame().HIT_POINTS_PER_ENDURANCE * so.END_UP.getCurrent());
-		getHP().setMax(getHP().getMax() + getGame().HIT_POINTS_PER_STRENGTH * so.STR_UP.getCurrent());
-		getHP().setCurrent(getHP().getCurrent() + getGame().HIT_POINTS_PER_STRENGTH * so.STR_UP.getCurrent());
-		getCurrentWeight().setMax(getCurrentWeight().getMax() + getGame().CARRYING_PER_STRENGTH * so.STR_UP.getCurrent());
+		calcAddEffects(so)
 
 		if (so.IDENTIFY) getGame().frame1.mainpanel.listener.ID_MODE = true;
 
@@ -193,6 +205,9 @@ public class Monster extends BaseMonster{
 
 		checkChanges(b, so.END_UP, "Вы почувствовали, что стали #3#более выносливым!#^#", "Вы почувствовали, что стали #2#менее выносливым!#^#");
 		getEND().add(so.END_UP);
+
+		checkChanges(b, so.INT_UP, "Вы почувствовали, что стали #3#более умным!#^#", "Вы почувствовали, что стали #2#менее умным!#^#");
+		getINT().add(so.INT_UP);
 
 		checkChanges(b, so.LUCK_UP, "Вы почувствовали себя #3#удачливее!#^#", "Вы почувствовали себя #2#менее удачливее!#^#");
 		getLUCK().add(so.LUCK_UP);
@@ -381,11 +396,7 @@ public class Monster extends BaseMonster{
 	}
 
 	public void deleteEffectFrom(ScriptObject so, boolean b){
-		getHP().setMax(getHP().getMax() - getGame().HIT_POINTS_PER_ENDURANCE * so.END_UP.getCurrent());
-		getHP().setCurrent(getHP().getCurrent() - getGame().HIT_POINTS_PER_ENDURANCE * so.END_UP.getCurrent());
-		getHP().setMax(getHP().getMax() - getGame().HIT_POINTS_PER_STRENGTH * so.STR_UP.getCurrent());
-		getHP().setCurrent(getHP().getCurrent() - getGame().HIT_POINTS_PER_STRENGTH * so.STR_UP.getCurrent());
-		getCurrentWeight().setMax(getCurrentWeight().getMax() - getGame().CARRYING_PER_STRENGTH * so.STR_UP.getCurrent());
+		calcDelEffects(so);
 
 		checkChanges(b, so.STR_UP, "Вы почувствовали себя #3#сильнее!#^#", "Вы почувствовали себя #2#слабее!#^#");
 		getSTR().sub(so.STR_UP);
@@ -395,6 +406,9 @@ public class Monster extends BaseMonster{
 
 		checkChanges(b, so.END_UP, "Вы почувствовали, что стали #3#более выносливым!#^#", "Вы почувствовали, что стали #2#менее выносливым!#^#");
 		getEND().sub(so.END_UP);
+
+		checkChanges(b, so.INT_UP, "Вы почувствовали, что стали #3#более умным!#^#", "Вы почувствовали, что стали #2#менее умным!#^#");
+		getINT().sub(so.INT_UP);
 
 		checkChanges(b, so.LUCK_UP, "Вы почувствовали себя #3#удачливее!#^#", "Вы почувствовали себя #2#менее удачливее!#^#");
 		getLUCK().sub(so.LUCK_UP);
