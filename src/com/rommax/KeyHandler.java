@@ -118,7 +118,7 @@ public class KeyHandler implements KeyListener{
 		//
 		else if (keycode == KeyEvent.VK_F12){
 			map.getGame().player.getHP().setCurrent(map.getGame().player.getHP().getMax());
-			map.getGame().player.addItemToInventory(ItemSet.KEY, 1);
+			map.getGame().player.addItemToInventory(ItemSet.getKeyID(), 1);
 		}
 		// добываем ресурсы на местности
 		else if ((keycode == KeyEvent.VK_G) && !event.isShiftDown()) flag = playerAction.gatheringIt();

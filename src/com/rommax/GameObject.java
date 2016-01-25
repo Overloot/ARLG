@@ -121,22 +121,22 @@ public abstract class GameObject extends Entity {
         if (count == "") count = "1";
         switch (script){
             case "I_EMPTY_JAR" :
-                if (Integer.valueOf(param) > new Random().nextInt(100)) { loot = ItemSet.EMPTY_JAR; }
+                if (Integer.valueOf(param) > new Random().nextInt(100)) { loot = ItemSet.getEmptyJarID(); }
                 break;
             case "I_LEATHER" :
-                if (Integer.valueOf(param) > new Random().nextInt(100)) { loot = ItemSet.LEATHER; }
+                if (Integer.valueOf(param) > new Random().nextInt(100)) { loot = ItemSet.getLeatherMaterialID(); }
                 break;
             case "I_METALS" :
-                if (Integer.valueOf(param) > new Random().nextInt(100)) { loot = ItemSet.METALS; }
+                if (Integer.valueOf(param) > new Random().nextInt(100)) { loot = ItemSet.getMetalMaterialID(); }
                 break;
             case "I_EMPTY_SCROOL" :
-                if (Integer.valueOf(param) > new Random().nextInt(100)) { loot = ItemSet.EMPTY_SCROOL; }
+                if (Integer.valueOf(param) > new Random().nextInt(100)) { loot = ItemSet.getEmptyScrollID(); }
                 break;
             case "I_WOOD" :
-                if (Integer.valueOf(param) > new Random().nextInt(100)) { loot = ItemSet.WOOD; }
+                if (Integer.valueOf(param) > new Random().nextInt(100)) { loot = ItemSet.getWoodMaterialID(); }
                 break;
             case "I_CRUDE_SWORD" :
-                if (Integer.valueOf(param) > new Random().nextInt(100)) { loot = ItemSet.CRUDE_SWORD; }
+                if (Integer.valueOf(param) > new Random().nextInt(100)) { loot = ItemSet.getCrudeSwordID(); }
                 break;
             default: break;
         }
@@ -284,23 +284,23 @@ public abstract class GameObject extends Entity {
         String needResource = "";
         switch (script){
             case "I_EMPTY_JAR" :
-                needResource = needResource + "Пустая банка (" + map.getGame().player.howMuchItemPlayerHave(ItemSet.EMPTY_JAR) + "/" + resCount + ")";
+                needResource = needResource + "Пустая банка (" + map.getGame().player.howMuchItemPlayerHave(ItemSet.getEmptyJarID()) + "/" + resCount + ")";
                 loot = 1;
                 break;
             case "I_LEATHER" :
-                needResource = needResource + "Кожа (" + map.getGame().player.howMuchItemPlayerHave(ItemSet.LEATHER) + "/" + resCount + ")";
+                needResource = needResource + "Кожа (" + map.getGame().player.howMuchItemPlayerHave(ItemSet.getLeatherMaterialID()) + "/" + resCount + ")";
                 loot = 1;
                 break;
             case "I_METALS" :
-                needResource = needResource + "Металл (" + map.getGame().player.howMuchItemPlayerHave(ItemSet.METALS) + "/" + resCount + ")";
+                needResource = needResource + "Металл (" + map.getGame().player.howMuchItemPlayerHave(ItemSet.getMetalMaterialID()) + "/" + resCount + ")";
                 loot = 1;
                 break;
             case "I_EMPTY_SCROOL" :
-                needResource = needResource + "Пустой свиток (" + map.getGame().player.howMuchItemPlayerHave(ItemSet.EMPTY_SCROOL) + "/" + resCount + ")";
+                needResource = needResource + "Пустой свиток (" + map.getGame().player.howMuchItemPlayerHave(ItemSet.getEmptyScrollID()) + "/" + resCount + ")";
                 loot = 1;
                 break;
             case "I_WOOD" :
-                needResource = needResource + "Древесина (" + map.getGame().player.howMuchItemPlayerHave(ItemSet.WOOD) + "/" + resCount + ")";
+                needResource = needResource + "Древесина (" + map.getGame().player.howMuchItemPlayerHave(ItemSet.getWoodMaterialID()) + "/" + resCount + ")";
                 loot = 1;
                 break;
             default: break;
@@ -369,40 +369,27 @@ public abstract class GameObject extends Entity {
         needRes = needRes * 2; // для крафта требуется в два раза больше ресурсов, чем может выпасть из крафтуемого предмета
         switch (script){
             case "I_EMPTY_JAR" :
-                if (getGame().player.removeItemForCraft(needRes, ItemSet.EMPTY_JAR)) loot = 1;
+                if (getGame().player.removeItemForCraft(needRes, ItemSet.getEmptyJarID())) loot = 1;
                 break;
             case "I_LEATHER" :
-                if (getGame().player.removeItemForCraft(needRes, ItemSet.LEATHER)) loot = 1;
+                if (getGame().player.removeItemForCraft(needRes, ItemSet.getLeatherMaterialID())) loot = 1;
+                break;
+            case "I_WOOD" :
+                if (getGame().player.removeItemForCraft(needRes, ItemSet.getWoodMaterialID())) loot = 1;
                 break;
             case "I_METALS" :
-                if (getGame().player.removeItemForCraft(needRes, ItemSet.METALS)) loot = 1;
+                if (getGame().player.removeItemForCraft(needRes, ItemSet.getMetalMaterialID())) loot = 1;
                 break;
             case "I_EMPTY_SCROOL" :
-                if (getGame().player.removeItemForCraft(needRes, ItemSet.EMPTY_SCROOL)) loot = 1;
+                if (getGame().player.removeItemForCraft(needRes, ItemSet.getEmptyScrollID())) loot = 1;
                 break;
             default: break;
         }
         if (loot == 1) getGame().player.addItemToInventory(id, 1);
     }
 
-
-    public boolean getDestroyable()
-    {
-        return this.destroyable;
-    }
-
-    public int getLife()
-    {
-        return this.life.getMax();
-    }
-
-    public String getLoot()
-    {
-        return this.loot;
-    }
-
-    public String getWeaknessFor()
-    {
-        return this.weaknessFor;
-    }
+    public boolean getDestroyable(){return this.destroyable;}
+    public int getLife(){return this.life.getMax();}
+    public String getLoot(){return this.loot;}
+    public String getWeaknessFor(){return this.weaknessFor;}
 }

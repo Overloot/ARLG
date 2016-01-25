@@ -21,7 +21,7 @@ public class Game {
     public int mapsQuantity;
     public int currentMapNumber = 0;
     public int turn = 0;
-    public int hitPointsRegeneration = 0;                   //later reghp
+    public int lifePointsRegeneration = 0;
     public int manaPointsRegeneration = 0;
     public Loader loader;
     public Image background;
@@ -91,10 +91,10 @@ public class Game {
             return;
         }
         if (mode && map.field[ny][nx].getLock()) {
-			if (player.howMuchItemPlayerHave(ItemSet.KEY) > 0) {
+			if (player.howMuchItemPlayerHave(ItemSet.getKeyID()) > 0) {
 				map.field[ny][nx].setLock(false);
 				logMessage("Вы открыли замок ключoм.#/#");
-				player.removeFromInventory(ItemSet.KEY, 1);
+				player.removeFromInventory(ItemSet.getKeyID(), 1);
 			} else {
 				this.logMessage("#2#Это не возможно открыть без ключа! #^#");
 				return;
@@ -249,7 +249,8 @@ public class Game {
         checkStatChanges(m.getRNormal(), "Вы снова стали #3#сильнее#^# сопротивляться #8#ударам!#^#", "Вы снова стали #2#слабее#^# сопротивляться #8#ударам!#^#");
         checkStatChanges(m.getRPoison(), "Вы снова стали #3#сильнее#^# сопротивляться #3#яду!#^#", "Вы снова стали #2#слабее#^# сопротивляться #3#яду!#^#");
         checkStatChanges(m.getFOVRAD(), "Вы снова стали #3#лучше#^# видеть!#^#", "Вы снова стали #2#хуже#^# видеть!#^#");
-        checkStatChanges(m.getAddHP(), "Вы #3#исцеляетесь#^#!#^#", "Вы #2#теряете здоровье#^#!#^#");
+        checkStatChanges(m.getAddHP(), Monster.addLifeMsg(), Monster.subLifeMsg());
+        checkStatChanges(m.getAddMP(), Monster.addManaMsg(), Monster.subManaMsg());
         checkStatChanges(m.getAddMP(), "Вы #3#пополняете запас маны#^#!#^#", "Вы #2#теряете ману#^#!#^#");
 
         // Медленное исцеление
@@ -276,24 +277,23 @@ public class Game {
             frame1.setLocation(this.frame1.WINDOW_WIDTH / 2 - frame1.WINDOW_WIDTH / 2, this.frame1.WINDOW_HEIGHT / 2 - frame1.WINDOW_HEIGHT / 2);
             frame1.toFront();
             frame1.setVisible(true);
-
         }
 
         // пробегаемся по всем монстрам....
         for (int i = 0; i < monstersQuantity; i++) {
             if (monsterList[i] != null) {
                 checkTimers(monsterList[i]); // проверка нет ли на нем каких эффектов
-            }
-            //восстанавливаем HitPoints
-            if (monsterList[i] != null) {
-                if (hitPointsRegeneration < monsterList[i].getEND().getCurrent()) {
+				// Восстанавливаем жизнь
+                if (lifePointsRegeneration < monsterList[i].getEND().getCurrent())
                     monsterList[i].getHP().setCurrent(monsterList[i].getHP().getCurrent() + 1);
-                }
-            }
-            // если HitPoints больше положенного - к ногтю
-            if (monsterList[i] != null && monsterList[i].getHP().getCurrent() > monsterList[i].getHP().getMax()) {
-                monsterList[i].getHP().setCurrent(monsterList[i].getHP().getMax());
-            }
+				// Восстанавливаем ману
+                if (manaPointsRegeneration < monsterList[i].getINT().getCurrent())
+                    monsterList[i].getMP().setCurrent(monsterList[i].getMP().getCurrent() + 1);
+				//
+				monsterList[i].getHP().setCurrent(Util.clamp(monsterList[i].getHP().getCurrent(), 0, monsterList[i].getHP().getMax()));
+				monsterList[i].getMP().setCurrent(Util.clamp(monsterList[i].getMP().getCurrent(), 0, monsterList[i].getMP().getMax()));				
+			}
+			
             // есди есть отравление - наносим урон и снимаем единицу отравления
             if (monsterList[i] != null && monsterList[i].getPoisonCount() > 0) {
                 if (i == 0) {
@@ -315,8 +315,10 @@ public class Game {
                 monsterList[i].setParalyzeCount(monsterList[i].getParalyzeCount() - 1);
             }
         }
-        hitPointsRegeneration += Util.rand(5, 10);
-        if (hitPointsRegeneration > 100) hitPointsRegeneration = 0;
+        lifePointsRegeneration += Util.rand(5, 10);
+        if (lifePointsRegeneration > 100) lifePointsRegeneration = 0;
+        manaPointsRegeneration += Util.rand(10, 25);
+        if (manaPointsRegeneration > 100) manaPointsRegeneration = 0;
     }
 
     // смена карты/переход на другой этаж, метод вызывается из класса KeyHandler
@@ -519,21 +521,15 @@ public class Game {
         int newID = 0;
         while (true) {
             newID = random.nextInt(ItemSet.MAX_ITEMS);
+            // выпавший итем должен существовать в базе
+            if (ItemSet.getItem(newID) == null) continue;
             // выпавший итем не должен быть уровнем выше чем
-            if (ItemSet.getItem(newID).getLevel() > currentMapNumber + 4) {
-                continue;
-            }
+            if (ItemSet.getItem(newID).getLevel() > currentMapNumber + 4) continue;
             // шанс выпадения выбранного итема на текущем уровне карты
             int chance = 90 - Math.abs(ItemSet.getItem(newID).getLevel() - currentMapNumber) * 20;
-            if (chance > 100) {
-                chance = 80;
-            }
-            if (!Util.dice(chance, 100)) {
-                continue;
-            }
-            if (!Util.dice(ItemSet.getItem(newID).getChance(), 100)) {
-                continue;
-            }
+            if (chance > 100) chance = 80;
+            if (!Util.dice(chance, 100)) continue;
+            if (!Util.dice(ItemSet.getItem(newID).getChance(), 100)) continue;
             break;
         }
         addItem(y, x, newID, map);

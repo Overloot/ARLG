@@ -124,6 +124,12 @@ public class ScriptParser {
                 case "HEALTIME":
                     setStatAs(so.HEALTIME, number);
                     break;
+                case "MANASELF":
+                    setStatAs(so.MANASELF, number);
+                    break;
+                case "MANATIME":
+                    setStatAs(so.MANATIME, number);
+                    break;
                 case "BLINK":
                     so.BLINK = true;
                     break;

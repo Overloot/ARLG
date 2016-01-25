@@ -30,10 +30,10 @@ public class Time {
 		if (map.field[y][x].getPassable()&&map.field[y][x].getBloodable())
 			switch(Util.rand(2)){
 				case 1: // Гриб
-					getGame().addItem(y, x, Util.rand(ItemSet.MIN_MUSH, ItemSet.MAX_MUSH), map);
+					getGame().addItem(y, x, Util.rand(ItemSet.getMinMushroomID(), ItemSet.getMaxMushroomID()), map);
 					break;
 				case 2: // Растение
-					getGame().addItem(y, x, Util.rand(ItemSet.MIN_PLANT, ItemSet.MAX_PLANT), map);
+					getGame().addItem(y, x, Util.rand(ItemSet.getMinPlantID(), ItemSet.getMaxPlantID()), map);
 					break;
 			}
 	}

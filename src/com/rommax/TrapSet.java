@@ -16,12 +16,12 @@ public class TrapSet{
 	static{
 		TRAPSET = new BaseTrap[MAX_TRAPS];
 		
-		TRAPSET[TRAP_POISON] = new BaseTrap(TRAP_POISON, "Яма с ядовитой тиной", "#POISONCOUNT 5=25#");
-		TRAPSET[TRAP_PIT] = new BaseTrap(TRAP_PIT, "Волчья яма", "#PARALYZECOUNT " + Game.MAX_PARALYZE_COUNT + "#");
-		TRAPSET[TRAP_ICE] = new BaseTrap(TRAP_ICE, "Ледяная Ловушка", "#PARALYZECOUNT " + Game.MAX_PARALYZE_COUNT + "#");
-		TRAPSET[TRAP_FIRE] = new BaseTrap(TRAP_FIRE, "Огненная Ловушка", "#PARALYZECOUNT " + Game.MAX_PARALYZE_COUNT + "#");
-		TRAPSET[TRAP_MAGIC] = new BaseTrap(TRAP_MAGIC, "Магическая ловушка", "#PARALYZECOUNT " + Game.MAX_PARALYZE_COUNT + "#");
-		TRAPSET[TRAP_PHYS] = new BaseTrap(TRAP_PHYS, "Яма с кольями", "#PARALYZECOUNT " + Game.MAX_PARALYZE_COUNT + "#");
+		TRAPSET[TRAP_POISON] 	= new BaseTrap(TRAP_POISON, "Яма с ядовитой тиной", "#POISONCOUNT 5=25#");
+		TRAPSET[TRAP_PIT] 		= new BaseTrap(TRAP_PIT, 	"Волчья яма", 			"#PARALYZECOUNT " + Game.MAX_PARALYZE_COUNT + "#");
+		TRAPSET[TRAP_ICE] 		= new BaseTrap(TRAP_ICE, 	"Ледяная Ловушка", 		"##");
+		TRAPSET[TRAP_FIRE] 		= new BaseTrap(TRAP_FIRE, 	"Огненная Ловушка", 	"##");
+		TRAPSET[TRAP_MAGIC] 	= new BaseTrap(TRAP_MAGIC, 	"Магическая ловушка", 	"#MANATIME -999|1#");
+		TRAPSET[TRAP_PHYS] 		= new BaseTrap(TRAP_PHYS, 	"Яма с кольями", 		"#HEALTIME -10|7#PARALYZECOUNT 7#");
 	}
 	
 	public static BaseTrap getTrap(int id){

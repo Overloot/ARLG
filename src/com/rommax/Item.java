@@ -43,11 +43,11 @@ public class Item extends BaseItem{
 				generateConsumable("Непонятный свиток");
 				break;
 			case ItemSet.TYPE_FOOD:
-				if(bm.getID() >= ItemSet.MIN_MUSH && bm.getID() <= ItemSet.MAX_MUSH){
+				if(bm.getID() >= ItemSet.getMinMushroomID() && bm.getID() <= ItemSet.getMaxMushroomID()){
 					generateConsumable("Непонятный гриб");
 					return;
 				}
-				if(bm.getID() >= ItemSet.MIN_PLANT && bm.getID() <= ItemSet.MAX_PLANT){
+				if(bm.getID() >= ItemSet.getMinPlantID() && bm.getID() <= ItemSet.getMaxPlantID()){
 					generateConsumable("Непонятное растение");
 					return;
 				}
@@ -79,11 +79,11 @@ public class Item extends BaseItem{
 				generateConsumable("Непонятный свиток");
 				break;
 			case ItemSet.TYPE_FOOD:
-				if(bm.getID() >= ItemSet.MIN_MUSH && bm.getID() <= ItemSet.MAX_MUSH){
+				if(bm.getID() >= ItemSet.getMinMushroomID() && bm.getID() <= ItemSet.getMaxMushroomID()){
 					generateConsumable("Непонятный гриб");
 					return;
 				}
-				if(bm.getID() >= ItemSet.MIN_PLANT && bm.getID() <= ItemSet.MAX_PLANT){
+				if(bm.getID() >= ItemSet.getMinPlantID() && bm.getID() <= ItemSet.getMaxPlantID()){
 					generateConsumable("Непонятное растение");
 					return;
 				}

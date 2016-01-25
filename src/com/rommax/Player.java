@@ -119,11 +119,11 @@ public class Player extends Monster{
 			case ItemSet.TYPE_FOOD:
 				int id = list.get(number).getID();
 				// Грибы
-				if(id >= ItemSet.MIN_MUSH && id <= ItemSet.MAX_MUSH){
+				if(id >= ItemSet.getMinMushroomID() && id <= ItemSet.getMaxMushroomID()){
 					Achievement.check(getGame(), AchievementSet.TYPE_FIND_MUSH, 1);
 				}
 				// Растения
-				if(id >= ItemSet.MIN_PLANT && id <= ItemSet.MAX_PLANT){
+				if(id >= ItemSet.getMinPlantID() && id <= ItemSet.getMaxPlantID()){
 					Achievement.check(getGame(), AchievementSet.TYPE_FIND_PLANT, 1);
 				}
 				break;

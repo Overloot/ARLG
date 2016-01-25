@@ -201,7 +201,6 @@ public class Monster extends BaseMonster{
 			if (so.DFIRE.getCurrent()>0) getGame().logMessage("Вы почувствовали силу #2#огня!#^#");
 			else
 				if (so.DFIRE.getCurrent()<0) getGame().logMessage("Вы стали хуже чувствовать силу #2#огня!#^#");
-
 		getDFire().setCurrent(getDFire().getCurrent() + so.DFIRE.getCurrent());
 		getDFire().setMax(getDFire().getMax() + so.DFIRE.getMax());
 
@@ -209,7 +208,6 @@ public class Monster extends BaseMonster{
 			if (so.DCOLD.getCurrent()>0) getGame().logMessage("Вы почувствовали силу #4#холода!#^#");
 			else
 				if (so.DCOLD.getCurrent()<0) getGame().logMessage("Вы стали хуже чувствовать силу #4#холода!#^#");
-
 		getDCold().setCurrent(getDCold().getCurrent() + so.DCOLD.getCurrent());
 		getDCold().setMax(getDCold().getMax() + so.DCOLD.getMax());
 
@@ -217,7 +215,6 @@ public class Monster extends BaseMonster{
 			if (so.DPOISON.getCurrent()>0) getGame().logMessage("Вы почувствовали силу #3#яда!#^#");
 			else
 				if (so.DPOISON.getCurrent()<0) getGame().logMessage("Вы стали хуже чувствовать силу #3#яда!#^#");
-
 		getDPoison().setCurrent(getDPoison().getCurrent() + so.DPOISON.getCurrent());
 		getDPoison().setMax(getDPoison().getMax() + so.DPOISON.getMax());
 
@@ -225,7 +222,6 @@ public class Monster extends BaseMonster{
 			if (so.DELEC.getCurrent()>0) getGame().logMessage("Вы почувствовали силу #5#электричества!#^#");
 			else
 				if (so.DELEC.getCurrent()<0) getGame().logMessage("Вы стали хуже чувствовать силу #5#электричества!#^#");
-
 		getDElec().setCurrent(getDElec().getCurrent() + so.DELEC.getCurrent());
 		getDElec().setMax(getDElec().getMax() + so.DELEC.getMax());
 
@@ -236,60 +232,59 @@ public class Monster extends BaseMonster{
 			if (so.RFIRE.getCurrent()>0) getGame().logMessage("Вы стали #8#менее#^# восприимчивы к #2#огню!#^#");
 			else
 				if (so.RFIRE.getCurrent()<0) getGame().logMessage("Вы стали #2#более#^# восприимчивы к #2#огню!#^#");
-
 		getRFire().add(so.RFIRE);
 
 		if (b)
 			if (so.RCOLD.getCurrent()>0) getGame().logMessage("Вы стали #8#менее#^# восприимчивы к #4#холоду!#^#");
 			else
 				if (so.RCOLD.getCurrent()<0) getGame().logMessage("Вы стали #2#более#^# восприимчивы к #4#холоду!#^#");
-
 		getRCold().add(so.RCOLD);
 
 		if (b)
 			if (so.RPOISON.getCurrent()>0) getGame().logMessage("Вы стали #8#менее#^# восприимчивы к #3#яду!#^#");
 			else
 				if (so.RPOISON.getCurrent()<0) getGame().logMessage("Вы стали #2#более#^# восприимчивы к #3#яду!#^#");
-
 		getRPoison().add(so.RPOISON);
 
 		if (b)
 			if (so.RNORMAL.getCurrent()>0) getGame().logMessage("Вы стали #8#менее#^# восприимчивы к #8#ударам!#^#");
 			else
 				if (so.RNORMAL.getCurrent()<0) getGame().logMessage("Вы стали #2#более#^# восприимчивы к #8#ударам!#^#");
-
 		getRNormal().add(so.RNORMAL);
 
 		if (b)
 			if (so.RELEC.getCurrent()>0) getGame().logMessage("Вы стали #8#менее#^# восприимчивы к #5#электричеству!#^#");
 			else
 				if (so.RELEC.getCurrent()<0) getGame().logMessage("Вы стали #2#более#^# восприимчивы к #5#электричеству!#^#");
-
 		getRElec().add(so.RELEC);
 
-		// Медленное исцеление
-		if (b) if (so.HEALTIME.getCurrent()>0) getGame().logMessage("Вы #3#исцеляетесь!#^#");
-		else if (so.HEALTIME.getCurrent()<0) getGame().logMessage("Вы #2#корчитесь от боли!#^#");
+		// Медленное повышение маны
+		if (b) if (so.MANATIME.getCurrent()>0) getGame().logMessage(addManaMsg());
+			else if (so.MANATIME.getCurrent()<0) getGame().logMessage(subManaMsg());
+		addMP.add(so.MANATIME);
 
+		// Молниеносное повышение маны
+		if (b) if (so.MANASELF.getCurrent()>0) getGame().logMessage(addManaMsg());
+			else if (so.MANASELF.getCurrent()<0) getGame().logMessage(subManaMsg());
+		getMP().setCurrent(getMP().getCurrent() + so.MANASELF.getCurrent());
+
+		// Медленное исцеление
+		if (b) if (so.HEALTIME.getCurrent()>0) getGame().logMessage(addLifeMsg());
+			else if (so.HEALTIME.getCurrent()<0) getGame().logMessage(subLifeMsg());
 		addHP.add(so.HEALTIME);
 
 		// Молниеносное исцеление
-		if (b) if (so.HEALSELF.getCurrent()>0) getGame().logMessage("Вы #3#исцеляетесь!#^#");
-		else if (so.HEALSELF.getCurrent()<0) getGame().logMessage("Вы #2#корчитесь от боли!#^#");
-
+		if (b) if (so.HEALSELF.getCurrent()>0) getGame().logMessage(addLifeMsg());
+			else if (so.HEALSELF.getCurrent()<0) getGame().logMessage(subLifeMsg());
 		getHP().setCurrent(getHP().getCurrent() + so.HEALSELF.getCurrent());
 
 		// Радиус обзора
 		if (b) if (so.FOVRAD.getCurrent()>0) getGame().logMessage("Вы стали #8#лучше#^# видеть!");
-		else if (so.FOVRAD.getCurrent()<0) getGame().logMessage("Вы стали #2#хуже#^# видеть!");
-
+			else if (so.FOVRAD.getCurrent()<0) getGame().logMessage("Вы стали #2#хуже#^# видеть!");
 		getFOVRAD().add(so.FOVRAD);
 
-		if (b)
-			if (so.SW_UP.getCurrent()>0) getGame().logMessage("Теперь вы можете нести #3#больше#^# вещей!");
-			else
-				if (so.SW_UP.getCurrent()<0) getGame().logMessage("Теперь вы можете нести #2#меньше#^# вещей!");
-
+		if (b) if (so.SW_UP.getCurrent()>0) getGame().logMessage("Теперь вы можете нести #3#больше#^# вещей!");
+			else if (so.SW_UP.getCurrent()<0) getGame().logMessage("Теперь вы можете нести #2#меньше#^# вещей!");
 		currentSize.setMax(currentSize.getMax() + so.SW_UP.getCurrent());
 
 		if (b)
@@ -412,7 +407,6 @@ public class Monster extends BaseMonster{
 			if (so.DCOLD.getCurrent()<0) getGame().logMessage("Вы почувствовали силу #4#холода!#^#");
 			else
 				if (so.DCOLD.getCurrent()>0) getGame().logMessage("Вы стали хуже чувствовать силу #4#холода!#^#");
-
 		getDCold().setCurrent(getDCold().getCurrent() - so.DCOLD.getCurrent());
 		getDCold().setMax(getDCold().getMax() - so.DCOLD.getMax());
 
@@ -420,7 +414,6 @@ public class Monster extends BaseMonster{
 			if (so.DCOLD.getCurrent()<0) getGame().logMessage("Вы почувствовали силу #3#яда!#^#");
 			else
 				if (so.DCOLD.getCurrent()>0) getGame().logMessage("Вы стали хуже чувствовать силу #3#яда!#^#");
-
 		getDPoison().setCurrent(getDPoison().getCurrent() - so.DPOISON.getCurrent());
 		getDPoison().setMax(getDPoison().getMax() - so.DPOISON.getMax());
 
@@ -428,7 +421,6 @@ public class Monster extends BaseMonster{
 			if (so.DELEC.getCurrent()<0) getGame().logMessage("Вы почувствовали силу #5#электричества!#^#");
 			else
 				if (so.DELEC.getCurrent()>0) getGame().logMessage("Вы стали хуже чувствовать силу #5#электричества!#^#");
-
 		getDElec().setCurrent(getDElec().getCurrent() - so.DELEC.getCurrent());
 		getDElec().setMax(getDElec().getMax() - so.DELEC.getMax());
 
@@ -439,62 +431,81 @@ public class Monster extends BaseMonster{
 			if (so.RFIRE.getCurrent()<0) getGame().logMessage("Вы стали #8#менее#^# восприимчивы к #2#огню!#^#");
 			else
 				if (so.RFIRE.getCurrent()>0) getGame().logMessage("Вы стали #2#более#^# восприимчивы к #2#огню!#^#");
-
 		getRFire().sub(so.RFIRE);
 
 		if (b)
 			if (so.RCOLD.getCurrent()<0) getGame().logMessage("Вы стали #8#менее#^# восприимчивы к #4#холоду!#^#");
 			else
 				if (so.RCOLD.getCurrent()>0) getGame().logMessage("Вы стали #2#более#^# восприимчивы к #4#холоду!#^#");
-
 		getRCold().sub(so.RCOLD);
 
 		if (b)
 			if (so.RPOISON.getCurrent()<0) getGame().logMessage("Вы стали #8#менее#^# восприимчивы к #3#яду!#^#");
 			else
 				if (so.RPOISON.getCurrent()>0) getGame().logMessage("Вы стали #2#более#^# восприимчивы к #3#яду!#^#");
-
 		getRPoison().sub(so.RPOISON);
 
 		if (b)
 			if (so.RNORMAL.getCurrent()<0) getGame().logMessage("Вы стали #8#менее#^# восприимчивы к #8#ударам!#^#");
 			else
 				if (so.RNORMAL.getCurrent()>0) getGame().logMessage("Вы стали #2#более#^# восприимчивы к #8#ударам!#^#");
-
 		getRNormal().sub(so.RNORMAL);
 
 		if (b)
 			if (so.RELEC.getCurrent()<0) getGame().logMessage("Вы стали #8#менее#^# восприимчивы к #5#электричеству!#^#");
 			else
 				if (so.RELEC.getCurrent()>0) getGame().logMessage("Вы стали #2#более#^# восприимчивы к #5#электричеству!#^#");
-
 		getRElec().sub(so.RELEC);
 
-		if (b) if (so.HEALTIME.getCurrent()>0) getGame().logMessage("Вы #3#исцеляетесь!#^#");
-		else if (so.HEALTIME.getCurrent()<0) getGame().logMessage("Вы #2#корчитесь от боли!#^#");
-
+		// Исцеление
+		if (b) if (so.HEALTIME.getCurrent()>0) getGame().logMessage(addLifeMsg());
+			else if (so.HEALTIME.getCurrent()<0) getGame().logMessage(subLifeMsg());
 		addHP.sub(so.HEALTIME);
 
-		if (b) if (so.HEALSELF.getCurrent()<0) getGame().logMessage("Вы #3#исцеляетесь!#^#");
-		else if (so.HEALSELF.getCurrent()>0) getGame().logMessage("Вы #2#корчитесь от боли!#^#");
-
+		// Исцеление
+		if (b) if (so.HEALSELF.getCurrent()<0) getGame().logMessage(addLifeMsg());
+			else if (so.HEALSELF.getCurrent()>0) getGame().logMessage(subLifeMsg());
 		getHP().setCurrent(getHP().getCurrent() - so.HEALSELF.getCurrent());
 
+		// Запас маны
+		if (b) if (so.MANATIME.getCurrent()>0) getGame().logMessage(addManaMsg());
+			else if (so.MANATIME.getCurrent()<0) getGame().logMessage(subManaMsg());
+		addMP.sub(so.MANATIME);
+
+		// Запас маны
+		if (b) if (so.MANASELF.getCurrent()<0) getGame().logMessage(addManaMsg());
+			else if (so.MANASELF.getCurrent()>0) getGame().logMessage(subManaMsg());
+		getMP().setCurrent(getMP().getCurrent() - so.MANASELF.getCurrent());
+
+		// Радиус обзора
 		if (b) if (so.FOVRAD.getCurrent()<0) getGame().logMessage("Вы стали #8#лучше#^# видеть!");
 		else if (so.FOVRAD.getCurrent()>0) getGame().logMessage("Вы стали #2#хуже#^# видеть!");
-
 		getFOVRAD().sub(so.FOVRAD);
 
 		if (b)
 			if (so.SW_UP.getCurrent()<0) getGame().logMessage("Теперь вы можете нести #3#больше#^# вещей!");
-			else
-				if (so.SW_UP.getCurrent()>0) getGame().logMessage("Теперь вы можете нести #2#меньше#^# вещей!");
-
+				else if (so.SW_UP.getCurrent()>0) getGame().logMessage("Теперь вы можете нести #2#меньше#^# вещей!");
 		currentSize.setMax(currentSize.getMax() - so.SW_UP.getCurrent());
 
 		if (getPoisonCount() < 0) setPoisonCount(0);
 	}
 
+	public static String subLifeMsg(){
+		return "Вы #2#корчитесь от боли!#^#";
+	}
+
+	public static String addLifeMsg(){
+		return "Вы #3#исцеляетесь!#^#";
+	}
+
+	public static String subManaMsg(){
+		return "Вы #2#теряете ману!#^#";
+	}
+
+	public static String addManaMsg(){
+		return "Ваш запас маны #3#повышается!#^#";
+	}
+	
 	private void miss() {
 		switch(Util.rand(1, 7)){
 			case 1:

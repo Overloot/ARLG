@@ -19,6 +19,8 @@ public class ScriptObject {
     public Stat RNORMAL = new Stat(0, 0);
     public Stat HEALSELF = new Stat(0, 0);
     public Stat HEALTIME = new Stat(0, 0);
+    public Stat MANASELF = new Stat(0, 0);
+    public Stat MANATIME = new Stat(0, 0);
     public boolean BLINK;
     public boolean IDENTIFY;
     public boolean TELEPORT;
