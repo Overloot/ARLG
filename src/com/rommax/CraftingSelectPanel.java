@@ -27,7 +27,8 @@ class CraftingSelectPanel extends JPanel {
 		Item it = null;
 		while (iter.hasNext()){
 			it = iter.next();
-			if (it.getType()==cWindow.type || cWindow.type == ItemSet.TYPE_ANY)
+			if (it.getType() == ItemSet.TYPE_RESOURCE) continue; // ресурсы нельзя крафтить и их не должно быть в списке
+			if (it.getType() == cWindow.type || cWindow.type == ItemSet.TYPE_ANY)
 				MAX_ITEMS++;
 		}
 		min = 0;
@@ -84,14 +85,14 @@ class CraftingSelectPanel extends JPanel {
 		Item item = x.getFirst();
 		iter.next();
 		while(ix<min){
-			if (item.getType()== cWindow.type || cWindow.type == ItemSet.TYPE_ANY)
-				ix++;
+			if (item.getType() == cWindow.type || cWindow.type == ItemSet.TYPE_ANY)
+					ix++;
 			item = iter.next();
 		}
 		g.drawImage(cWindow.game.background, 0, 0, this);
-		for (int i=min; i<=max; i++){
-			if (item!=null){
-				if (item.getType()!= cWindow.type && cWindow.type != ItemSet.TYPE_ANY) i--;
+		for (int i = min; i <= max; i++){
+			if (item != null){
+				if (item.getType() != cWindow.type && cWindow.type != ItemSet.TYPE_ANY) i--;
 				else {
 					im =  cWindow.game.loader.getImage(ItemSet.getItem(item.getID()).getPath());
 					g.drawImage(im, 0, (i - min) * Tileset.TILE_SIZE + 10, this);

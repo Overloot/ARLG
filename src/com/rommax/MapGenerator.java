@@ -23,6 +23,7 @@ public class MapGenerator {
                 LakesCreate(1);
                 break;
             case MapSet.ID_FOREST_3:
+                fill(Tileset.TILE_GRASS2);
                 ForestCreate(5, Tileset.TILE_GRASS2, Tileset.TILE_TREE2);
                 break;
             case MapSet.ID_MAZE_1:
