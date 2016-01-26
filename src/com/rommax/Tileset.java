@@ -91,7 +91,6 @@ public class Tileset{
 		TILESET[TILE_WINTER_FOREST_TREE2] = new BaseTile(TILE_WINTER_FOREST_TREE2, "Елка в снегу", "res/dungeons/winter_forest_tree2.png", false, false, false, false, true, 100, "#I_WOOD|100#", "#W_SWORD|20#W_AXE|100#");
 		TILESET[TILE_OLD_CASTLE_UNDERGROUND_FLOOR] = new BaseTile(TILE_OLD_CASTLE_UNDERGROUND_FLOOR, "Пол подземелья старого замка", "res/dungeons/old_castle_underground_floor.png", true, true, false, true, false, 100, null, null);
 		TILESET[TILE_OLD_CASTLE_UNDERGROUND_WALL] = new BaseTile(TILE_OLD_CASTLE_UNDERGROUND_WALL, "Стена стена старого замка", "res/dungeons/old_castle_underground_wall.png", false, false, false, false, false, 100, null, null);
-
 	}
 
 	public static String getTileName(int id){
