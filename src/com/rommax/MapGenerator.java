@@ -17,13 +17,16 @@ public class MapGenerator {
         //ID = 10; // для теста
         switch (ID) {
             case MapSet.ID_FOREST_1:
-                ForestCreate();
-                break;
-            case MapSet.ID_MAZE_1:
-                MazeCreate();
+                ForestCreate(10, Tileset.TILE_GRASS, Tileset.TILE_TREE);
                 break;
             case MapSet.ID_FOREST_2:
                 LakesCreate(1);
+                break;
+            case MapSet.ID_FOREST_3:
+                ForestCreate(5, Tileset.TILE_GRASS2, Tileset.TILE_TREE2);
+                break;
+            case MapSet.ID_MAZE_1:
+                MazeCreate();
                 break;
             case MapSet.ID_MAZE_2:
                 RiftCreate();
@@ -53,6 +56,12 @@ public class MapGenerator {
         }
     }
 
+    private void ForestCreate(int coef, int grass, int tree) {
+        for (int i = 0; i < (map.getHeight() * map.getWidth() / coef); i++)
+            PartDraw(new Random().nextInt(map.getHeight()),
+                new Random().nextInt(map.getWidth()), grass, tree);
+    }
+
     private void RiftCreate() {
         map.setName("#2#Пещеры ужаса#^#");
         for (int i = 0; i < (map.getHeight() * map.getWidth() / 10); i++)
@@ -64,6 +73,45 @@ public class MapGenerator {
                     map.setTileAt(i, j, Tileset.TILE_DUNGEON_WALL);
                 else
                     map.setTileAt(i, j, Tileset.TILE_DUNGEON_FLOOR);
+    }
+
+   // tile - тайл, на который будет заменен preTile
+    private void PartDraw(int x1, int y1, int preTile, int tile) {
+        int i, j, e, s, w, n;
+        Random random = new Random();
+        i = x1;
+        j = y1;
+        for (int k = 1; k <= 20; k++) {
+            n = random.nextInt(6);
+            e = random.nextInt(6);
+            s = random.nextInt(6);
+            w = random.nextInt(6);
+            if (!map.hasTileAt(i, j)) return;
+            if (n == 1) {
+                i = i - 1;
+                if (!map.hasTileAt(i, j)) return;
+                if (map.field[i][j].getID() != preTile) return;
+                map.setTileAt(i, j, tile);
+            }
+            if (n == 1) {
+                i = i + 1;
+                if (!map.hasTileAt(i, j)) return;
+                if (map.field[i][j].getID() != preTile) return;
+                map.setTileAt(i, j, tile);
+            }
+            if (n == 1) {
+                j = j - 1;
+                if (!map.hasTileAt(i, j)) return;
+                if (map.field[i][j].getID() != preTile) return;
+                map.setTileAt(i, j, tile);
+            }
+            if (n == 1) {
+                j = j + 1;
+                if (!map.hasTileAt(i, j)) return;
+                if (map.field[i][j].getID() != preTile) return;
+                map.setTileAt(i, j, tile);
+            }
+        }
     }
 
     //TODO: суть метода соответствует методу addModOnMap, возможно следует объединить в один?
@@ -343,46 +391,6 @@ public class MapGenerator {
 
     }
 
-    // tile - тайл, на который будет заменен preTile
-    private void PartDraw(int x1, int y1, int preTile, int tile) {
-        int i, j, e, s, w, n;
-        Random random = new Random();
-        i = x1;
-        j = y1;
-        for (int k = 1; k <= 20; k++) {
-            n = random.nextInt(6);
-            e = random.nextInt(6);
-            s = random.nextInt(6);
-            w = random.nextInt(6);
-            if (!map.hasTileAt(i, j)) return;
-            if (n == 1) {
-                i = i - 1;
-                if (!map.hasTileAt(i, j)) return;
-                if (map.field[i][j].getID() != preTile) return;
-                map.setTileAt(i, j, tile);
-            }
-            if (n == 1) {
-                i = i + 1;
-                if (!map.hasTileAt(i, j)) return;
-                if (map.field[i][j].getID() != preTile) return;
-                map.setTileAt(i, j, tile);
-            }
-            if (n == 1) {
-                j = j - 1;
-                if (!map.hasTileAt(i, j)) return;
-                if (map.field[i][j].getID() != preTile) return;
-                map.setTileAt(i, j, tile);
-            }
-            if (n == 1) {
-                j = j + 1;
-                if (!map.hasTileAt(i, j)) return;
-                if (map.field[i][j].getID() != preTile) return;
-                map.setTileAt(i, j, tile);
-            }
-        }
-    }
-
-
     private int countnearby(int x, int y, int id) {
         int res = 0;
         if (map.hasTileAt(x - 1, y) && map.field[x - 1][y].getID() == id) res++;
@@ -441,14 +449,6 @@ public class MapGenerator {
             py = new Random().nextInt(map.getWidth());
             StartWave(px, py);
         }
-    }
-
-    private void ForestCreate() {
-        map.setName("#3#Лес Древних #^#");
-        for (int i = 0; i < (map.getHeight() * map.getWidth() / 10); i++)
-            PartDraw(new Random().nextInt(map.getHeight()),
-                    new Random().nextInt(map.getWidth()),
-                    Tileset.TILE_GRASS, Tileset.TILE_TREE);
     }
 
     // Заполняет всю карту указанным тайлом

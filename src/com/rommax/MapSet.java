@@ -13,6 +13,7 @@ public class MapSet {
     public static final int ID_CAVE_BLACK_ABYSS = 8;
     public static final int ID_SIBERIA = 9;
     public static final int ID_OLD_CASTLE_UNDERGROUND = 10;
+    public static final int ID_FOREST_3 = 11;
 
 	/*>>>*/public static final int MAX_MAPS =11;
 	
@@ -23,7 +24,7 @@ public class MapSet {
 	static{
 		MAPSET = new BaseMap[MAX_MAPS];
 		
-		add(ID_FOREST_1,	3, "Старый Лес", 1, Tileset.TILE_GRASS, "#SNAKE|100|C2#BEAR|100|C3#WOLF|100|C5#");
+		add(ID_FOREST_3,	3, "Старый Лес", 1, Tileset.TILE_GRASS, "#SNAKE|100|C2#BEAR|100|C3#WOLF|100|C5#");
 		add(ID_FOREST_1, 	3, "Лес Энтов", 2, Tileset.TILE_GRASS, null);
 		add(ID_FOREST_2, 	7, "Лес Древних", 2, Tileset.TILE_GRASS, null);
 		

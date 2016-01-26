@@ -193,7 +193,7 @@ public class Monster extends BaseMonster{
 	}
 
 	public void setEffectFrom(ScriptObject so, boolean b){
-		calcAddEffects(so)
+		calcAddEffects(so);
 
 		if (so.IDENTIFY) getGame().frame1.mainpanel.listener.ID_MODE = true;
 
