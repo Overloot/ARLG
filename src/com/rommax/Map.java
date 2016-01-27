@@ -23,17 +23,22 @@ public class Map extends BaseMap {
     }
 
 	public void placeBloodAt(int y, int x){
-		if (field[y][x].getBlood() == 0 && field[y][x].getBloodable())
+		if (field[y][x].getBlood() == 0 && field[y][x].getPlaceable())
 			field[y][x].setBlood(new Random().nextInt(Tile.BLOOD_AMOUNT) + 1);
 	}
 	
+	public void placeCorpseAt(int y, int x, int id){
+		if (field[y][x].getCorpse() == 0 && field[y][x].getPlaceable())
+			field[y][x].setCorpse(id);
+	}
+	
 	public void placeTrapAt(int y, int x){
-		if (field[y][x].getBloodable())
+		if (field[y][x].getPlaceable())
 			field[y][x].setTrap(new Random().nextInt(TrapSet.MAX_TRAPS));
 	}
 	
 	public void placeChestAt(int y, int x){
-		if (field[y][x].getBloodable()){
+		if (field[y][x].getPlaceable()){
 			field[y][x].setChest(0);
 			field[y][x].setOpenable(true);
 			field[y][x].setLock(true);
@@ -58,7 +63,7 @@ public class Map extends BaseMap {
         tile.setPassable(btile.getPassable());
         tile.setTransparent(btile.getTransparent());
         tile.setOpenable(btile.getOpenable());
-        tile.setBloodable(btile.getBloodable());
+        tile.setPlaceable(btile.getPlaceable());
         if (btile.getID() == Tileset.TILE_OPENED_DOOR)
             tile.setOpened(true);
         else

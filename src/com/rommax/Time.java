@@ -27,7 +27,7 @@ public class Time {
 			//for (int j = 0; j < getGame().getMap().getWidth(); j++)
         int y = new Random().nextInt(map.getHeight());
         int x = new Random().nextInt(map.getWidth());
-		if (map.field[y][x].getPassable()&&map.field[y][x].getBloodable())
+		if (map.field[y][x].getPassable()&&map.field[y][x].getPlaceable())
 			switch(Util.rand(2)){
 				case 1: // Гриб
 					getGame().addItem(y, x, Util.rand(ItemSet.getMinMushroomID(), ItemSet.getMaxMushroomID()), map);

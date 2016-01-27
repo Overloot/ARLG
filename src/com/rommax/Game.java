@@ -568,6 +568,8 @@ public class Game {
         Map map = monsterList[index].getMap();
         // Cтавим кровь на месте смерти монстра
         map.placeBloodAt(monsterList[index].getY(), monsterList[index].getX());
+		// Оставляем труп, если это возможно
+		map.placeCorpseAt(monsterList[index].getY(), monsterList[index].getX(), monsterList[index].getCorpse());
         // Кидаем лут на землю
         monsterList[index].makeLoot(player.getMap(), monsterList[index].getLoot());
         // Yбираем монстра с карты

@@ -289,6 +289,12 @@ class MainPanel extends JPanel{
 					image = window.game.loader.getImage("res/icons/bloods.png");
 					drawSpriteFrame(image, g2, y, x, 10, bloodID);
 				}
+				// Труп на тайле
+				int corpseID = DrawingMap.field[yy][xx].getCorpse();
+				if (corpseID > 0) {
+					image = window.game.loader.getImage("res/icons/corpses.png");
+					drawSpriteFrame(image, g2, y, x, 10, corpseID);
+				}
 
 				if (DrawingMap.hasTileAt(yy, xx)){
 					if (DrawingMap.field[yy][xx].getItemsQty()!=0){
