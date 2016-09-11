@@ -24,13 +24,4 @@ public class ColorSet{
 	public static final int COLOR_ORANGE = 7;
 	public static final int COLOR_YELLOW = 8;
 	public static final int COLOR_PINK = 9;
-
-
-
-
-
-
-
-
-
 }

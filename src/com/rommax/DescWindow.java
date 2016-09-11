@@ -9,7 +9,7 @@ public class DescWindow extends JFrame{
 	public static int WINDOW_WIDTH;
 	public Item item;
 	public Monster monster = null;
-    public DescPanel dpanel = null;
+    public DescPanel panel = null;
     public Game game;
 
 	static{
@@ -19,10 +19,10 @@ public class DescWindow extends JFrame{
 	public void stop(){
 		game.frame1.setFocusable(true);
 		game.frame1.setFocusableWindowState(true);
-		dpanel.listener = null;
-		dpanel = null;
-		game.frame1.mainpanel.listener.keyPressed(null);
-    	game.frame1.mainpanel.repaint();
+		panel.listener = null;
+		panel = null;
+		game.frame1.panel.listener.keyPressed(null);
+    	game.frame1.panel.repaint();
 		this.dispose();
 	}
 
@@ -34,9 +34,9 @@ public class DescWindow extends JFrame{
 		WINDOW_WIDTH = 500;
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		setResizable(false);
-		dpanel = new DescPanel(this);
+		panel = new DescPanel(this);
 		Container contentPane = getContentPane();
-		contentPane.add(dpanel);
+		contentPane.add(panel);
 	}
 
 	public DescWindow(Game game, Monster monster){
@@ -45,9 +45,9 @@ public class DescWindow extends JFrame{
 		WINDOW_WIDTH = 500;
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		setResizable(false);
-		dpanel = new DescPanel(this);
+		panel = new DescPanel(this);
 		Container contentPane = getContentPane();
-		contentPane.add(dpanel);
+		contentPane.add(panel);
 	}
 
 }

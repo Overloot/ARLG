@@ -7,7 +7,7 @@ public class GameWindow extends JFrame{
 
 	public static int WINDOW_HEIGHT;
 	public static int WINDOW_WIDTH;
-    public MainPanel mainpanel;
+    public MainPanel panel;
 	public Game game;
 
 	static{
@@ -18,7 +18,7 @@ public class GameWindow extends JFrame{
 	}
 
 	public void SwitchMap(Map map){
-		mainpanel.setMap(map);
+		panel.setMap(map);
 	}
 
 	public static int getScreenTileSizeX(){
@@ -30,13 +30,13 @@ public class GameWindow extends JFrame{
 	}
 
 	public GameWindow(Map map, Game game){
-		setTitle("PROJECT1");
+		setTitle("ARoguelike");
 		this.game = game;
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		setResizable(false);
-		mainpanel = new MainPanel(this, map, getScreenTileSizeX(), getScreenTileSizeY());
+		panel = new MainPanel(this, map, getScreenTileSizeX(), getScreenTileSizeY());
 		Container contentPane = getContentPane();
-		contentPane.add(mainpanel);
+		contentPane.add(panel);
 	}
 
 }

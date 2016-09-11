@@ -8,12 +8,12 @@ import java.util.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-class MainPanel extends JPanel{
+class GamePanel extends JPanel{
 	private static int SCREEN_TILE_SIZE_X;
 	private static int SCREEN_TILE_SIZE_Y;
 	private Map DrawingMap;
 	private GameWindow window;
-	public KeyHandler listener;
+	public GameKeyHandler listener;
 	private String LogString;
 	private String LastString;
 	private int countrepeat;
@@ -31,7 +31,7 @@ class MainPanel extends JPanel{
 		return (y>=DrawingMap.getY() && y<SCREEN_TILE_SIZE_Y+DrawingMap.getY() && x>=DrawingMap.getX() && x<SCREEN_TILE_SIZE_X+DrawingMap.getX());
 	}
 
-	MainPanel(GameWindow window, Map DrawingMap, int stsx, int stsy){
+	GamePanel(GameWindow window, Map DrawingMap, int stsx, int stsy){
 		super();
 		this.window = window;
 		LogString = "";
@@ -39,7 +39,7 @@ class MainPanel extends JPanel{
 		this.DrawingMap = DrawingMap;
 		this.SCREEN_TILE_SIZE_X = stsx;
 		this.SCREEN_TILE_SIZE_Y = stsy;
-	    listener = new KeyHandler(DrawingMap, this);
+	    listener = new GameKeyHandler(DrawingMap, this);
 		addKeyListener(listener);
 		setFocusable(true);
 		lastX = 15;

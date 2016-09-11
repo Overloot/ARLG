@@ -11,7 +11,7 @@ public class Game {
     public Player player;
     private Time time;
     private Map map;
-    public KeyHandler keyHandler;
+    public GameKeyHandler keyHandler;
     public Monster[] monsterList;                           // игрок по индексу [0]
     public Item[] itemList;
     public Map[] mapList;
@@ -400,7 +400,7 @@ public class Game {
         fillLevelByMonsters();      // Добавляет столько монстров, сколько положено на уровень ( MAX_MONSTER_PER_LEVEL )
         fillLevelByItems();         // Добавляет столько итемов, сколько положено на уровень ( MAX_ITEM_PER_LEVEL )
         fillLevelByTraps(); 		// Доб. ловушки
-        frame1.mainpanel.repaint();
+        frame1.panel.repaint();
         this.selectRace();
     }
 
@@ -555,7 +555,7 @@ public class Game {
     // Обновление экрана
     public void refresh() {
         keyHandler.map.FOV(player.getY(), player.getX(), player.getFOVRAD().getCurrent());
-        keyHandler.mp.repaint();
+        keyHandler.panel.repaint();
         keyHandler.keyPressed(null);
     }
 
@@ -593,7 +593,7 @@ public class Game {
 
     // выводит различные сообщения в верхний-левый угол
     public void logMessage(String s) {
-        frame1.mainpanel.LogMessage(s);
+        frame1.panel.LogMessage(s);
     }
 
     // Рисует иконку навыка или ачивки с названием и кратким описанием

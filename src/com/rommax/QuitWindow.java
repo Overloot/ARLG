@@ -7,7 +7,7 @@ public class QuitWindow extends JFrame{
 
 	public static int WINDOW_HEIGHT;
 	public static int WINDOW_WIDTH;
-    public QuitPanel qp;
+    public QuitPanel panel;
     public Game game;
 
 	static{
@@ -17,9 +17,9 @@ public class QuitWindow extends JFrame{
 	public void stop(){
 		game.frame1.setFocusable(true);
 		game.frame1.setFocusableWindowState(true);
-		qp.listener = null;
-		qp = null;
-		game.frame1.mainpanel.repaint();
+		panel.listener = null;
+		panel = null;
+		game.frame1.panel.repaint();
 		this.dispose();
 	}
 	
@@ -29,9 +29,9 @@ public class QuitWindow extends JFrame{
 		WINDOW_WIDTH = 400;
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		setResizable(false);
-		qp = new QuitPanel(this);
+		panel = new QuitPanel(this);
 		Container contentPane = getContentPane();
-		contentPane.add(qp);
+		contentPane.add(panel);
 	}
 
 

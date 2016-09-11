@@ -150,7 +150,7 @@ public class Monster extends BaseMonster{
 						// Если видимая ловушка, AI ее видит
 						int trapID = getMap().field[ny][nx].getTrap();
 						if (trapID > Tile.NONE && getMap().field[ny][nx].getTraped() && this != getGame().player){
-							getGame().frame1.mainpanel.repaint();
+							getGame().frame1.panel.repaint();
 							return false;
 						}else{
 							// Идем в этот тайл
@@ -179,7 +179,7 @@ public class Monster extends BaseMonster{
 								}
 							}
 						}
-						getGame().frame1.mainpanel.repaint();
+						getGame().frame1.panel.repaint();
 						return true;
 					}
 		}
@@ -195,7 +195,7 @@ public class Monster extends BaseMonster{
 	public void setEffectFrom(ScriptObject so, boolean b){
 		calcAddEffects(so);
 
-		if (so.IDENTIFY) getGame().frame1.mainpanel.listener.ID_MODE = true;
+		if (so.IDENTIFY) getGame().frame1.panel.listener.ID_MODE = true;
 
 		checkChanges(b, so.STR_UP, "Вы почувствовали себя #3#сильнее!#^#", "Вы почувствовали себя #2#слабее!#^#");
 		getSTR().add(so.STR_UP);

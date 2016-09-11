@@ -6,13 +6,13 @@ import javax.swing.*;
 public class PlayerAction {
 	
 	private Map map;
-	private MainPanel mp;
+	private GamePanel panel;
 	private ItemSelectMessage itemSelectMessage;
 	private CraftingSelectMessage craftingSelectMessage;
 	
-	public PlayerAction(Map map, MainPanel mp) {
+	public PlayerAction(Map map, GamePanel panel) {
 		this.map = map;
-		this.mp = mp;
+		this.panel = panel;
 	}
 	
 	// Используем скилл
@@ -39,7 +39,7 @@ public class PlayerAction {
 	// Осмотр тайла
 	public void lookTo(int dx, int dy) {
 		if (!map.hasTileAt(KeyHandler.ly + dy, KeyHandler.lx + dx)) return;
-		if (!mp.HasTileAtScreen(KeyHandler.ly + dy, KeyHandler.lx + dx)) return;
+		if (!panel.HasTileAtScreen(KeyHandler.ly + dy, KeyHandler.lx + dx)) return;
 		boolean flag = true;
 		map.field[KeyHandler.ly][KeyHandler.lx].setCursor(false);
 		KeyHandler.ly += dy;
@@ -65,10 +65,10 @@ public class PlayerAction {
 			textLine += "#^# Здесь лежит много вещей. ";
 				else textLine += "#^#" + ilist.getFirst().getName() + " лежит здесь. ";
 		}
-		mp.descStr = textLine;
+		panel.descStr = textLine;
 		}
 		else
-		mp.descStr = "#^#Вы #2#не видите#^# этого! ";
+		panel.descStr = "#^#Вы #2#не видите#^# этого! ";
 		
 	}
 	
@@ -187,7 +187,7 @@ public class PlayerAction {
 		}
 		if (map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList().size() == 0) {
 			map.getGame().logMessage("#2#Здесь пусто, нечего взять!#^#");
-			mp.repaint();
+			panel.repaint();
 			return false;
 		}
 		if (map.field[map.getGame().player.getY()][map.getGame().player.getX()].getItemList().size() == 1){
@@ -217,7 +217,7 @@ public class PlayerAction {
 	public boolean dropIt() {
 		if (map.getGame().player.getInventory().size() == 0) {
 			map.getGame().logMessage("У вас пусто в инвентаре, нечего бросить!");
-			mp.repaint();
+			panel.repaint();
 			return false;
 		} else {
 			map.getGame().frame1.setFocusable(false);
@@ -263,7 +263,7 @@ public class PlayerAction {
 	public boolean quaffIt() {
 		if (map.getGame().player.getInventory().size() == 0) {
 			map.getGame().logMessage("У вас пусто в инвентаре, нечего выпить!");
-			mp.repaint();
+			panel.repaint();
 			return false;
 		} else {
 			map.getGame().frame1.setFocusable(false);
@@ -284,7 +284,7 @@ public class PlayerAction {
 	public boolean readIt() {
 		if (map.getGame().player.getInventory().size() == 0) {
 			map.getGame().logMessage("У вас пусто в инвентаре, нечего прочитать!");
-			mp.repaint();
+			panel.repaint();
 			return false;
 		} else {
 			map.getGame().frame1.setFocusable(false);
@@ -305,7 +305,7 @@ public class PlayerAction {
 	public boolean eatIt() {
 		if (map.getGame().player.getInventory().size() == 0) {
 			map.getGame().logMessage("У вас пусто в инвентаре, нечего скушать!");
-			mp.repaint();
+			panel.repaint();
 			return false;
 		} else {
 			map.getGame().frame1.setFocusable(false);
@@ -326,7 +326,7 @@ public class PlayerAction {
 	public boolean wearIt() {
 		if (map.getGame().player.getInventory().size() == 0) {
 			map.getGame().logMessage("У вас пусто в инвентаре, нечего надеть!");
-			mp.repaint();
+			panel.repaint();
 			return false;
 		} else {
 			map.getGame().frame1.setFocusable(false);
@@ -361,7 +361,7 @@ public class PlayerAction {
 	public boolean inventory() {
 		if (map.getGame().player.getInventory().size() == 0) {
 			map.getGame().logMessage("У вас пусто в инвентаре, нечего осмотреть!");
-			mp.repaint();
+			panel.repaint();
 			return false;
 		} else {
 			map.getGame().frame1.setFocusable(false);
@@ -398,7 +398,7 @@ public class PlayerAction {
 	public boolean disassembledItem() {
 		if (map.getGame().player.getInventory().size() == 0) {
 			map.getGame().logMessage("У вас пусто в инвентаре, нечего разобрать!");
-			mp.repaint();
+			panel.repaint();
 			return false;
 		} else {
 			map.getGame().frame1.setFocusable(false);

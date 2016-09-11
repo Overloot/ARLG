@@ -24,8 +24,8 @@ public class CraftingSelectWindow extends JFrame{
 		game.frame1.setFocusableWindowState(true);
 		cPanel.listener = null;
 		cPanel = null;
-		game.frame1.mainpanel.listener.keyPressed(null);
-		game.frame1.mainpanel.repaint();
+		game.frame1.panel.listener.keyPressed(null);
+		game.frame1.panel.repaint();
 		this.dispose();
 	}
 

@@ -8,7 +8,7 @@ public class ItemSelectWindow extends JFrame{
 
 	public static int WINDOW_HEIGHT;
 	public static int WINDOW_WIDTH;
-    public ItemSelectPanel ipanel;
+    public ItemSelectPanel panel;
     public ItemSelectMessage message;
     public LinkedList<Item> list;
     public Game game;
@@ -22,10 +22,10 @@ public class ItemSelectWindow extends JFrame{
 	public void stop(){
 		game.frame1.setFocusable(true);
 		game.frame1.setFocusableWindowState(true);
-		ipanel.listener = null;
-		ipanel = null;
-		game.frame1.mainpanel.listener.keyPressed(null);
-		game.frame1.mainpanel.repaint();
+		panel.listener = null;
+		panel = null;
+		game.frame1.panel.listener.keyPressed(null);
+		game.frame1.panel.repaint();
 		this.dispose();
 	}
 
@@ -42,10 +42,9 @@ public class ItemSelectWindow extends JFrame{
 		WINDOW_WIDTH = 500;
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		setResizable(false);
-		ipanel = new ItemSelectPanel(this);
+		panel = new ItemSelectPanel(this);
 		Container contentPane = getContentPane();
-		contentPane.add(ipanel);
+		contentPane.add(panel);
 	}
-
 
 }

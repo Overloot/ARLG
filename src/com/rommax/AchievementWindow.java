@@ -20,7 +20,7 @@ public class AchievementWindow extends JFrame{
 		game.frame1.setFocusableWindowState(true);
 		panel.listener = null;
 		panel = null;
-		game.frame1.mainpanel.repaint();
+		game.frame1.panel.repaint();
 		this.dispose();
 	}
 	

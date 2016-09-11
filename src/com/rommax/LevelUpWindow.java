@@ -19,7 +19,7 @@ public class LevelUpWindow extends JFrame{
 		game.frame1.setFocusableWindowState(true);
 		lpanel.listener = null;
 		lpanel = null;
-		game.frame1.mainpanel.repaint();
+		game.frame1.panel.repaint();
 		this.dispose();
 
 

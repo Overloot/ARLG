@@ -7,7 +7,7 @@ public class EqWindow extends JFrame{
 
 	public static int WINDOW_HEIGHT;
 	public static int WINDOW_WIDTH;
-	public EqPanel epanel = null;
+	public EqPanel panel = null;
     public Game game;
     public Monster monster;
 
@@ -18,10 +18,10 @@ public class EqWindow extends JFrame{
 	public void stop(){
 		game.frame1.setFocusable(true);
 		game.frame1.setFocusableWindowState(true);
-		epanel.listener = null;
-		epanel = null;
-		game.frame1.mainpanel.listener.keyPressed(null);
-    	game.frame1.mainpanel.repaint();
+		panel.listener = null;
+		panel = null;
+		game.frame1.panel.listener.keyPressed(null);
+    	game.frame1.panel.repaint();
 		this.dispose();
 	}
 
@@ -32,9 +32,9 @@ public class EqWindow extends JFrame{
 		WINDOW_WIDTH = 500;
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		setResizable(false);
-		epanel = new EqPanel(this);
+		panel = new EqPanel(this);
 		Container contentPane = getContentPane();
-		contentPane.add(epanel);
+		contentPane.add(panel);
 	}
 
 

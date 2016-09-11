@@ -3,10 +3,10 @@ package com.rommax;
 import java.awt.event.*;
 
 
-public class KeyHandler implements KeyListener{
+public class GameKeyHandler implements KeyListener{
 
 	Map map;
-	MainPanel mp;
+	GamePanel panel;
 	boolean OPEN_MODE = false;
 	boolean CLOSE_MODE = false;
 	boolean GATHERING_MODE = false;
@@ -16,10 +16,10 @@ public class KeyHandler implements KeyListener{
 	int Timer = -1;
 	public ItemSelectMessage message = null;
 
-	public KeyHandler(Map map, MainPanel mp){
+	public GameKeyHandler(Map map, GamePanel panel){
 		super();
 		this.map = map;
-		this.mp = mp;
+		this.panel = panel;
 		map.getGame().keyHandler = this;
 		re = false;
 	}
@@ -32,13 +32,13 @@ public class KeyHandler implements KeyListener{
 		int keycode = 0;
 
 		// Действия игрока
-		PlayerAction playerAction = new PlayerAction(map, mp); 
+		PlayerAction playerAction = new PlayerAction(map, panel); 
 
 		if (Timer == 0) System.exit(0);
 		if (map.getGame().player.getHP().getCurrent() <=0) {
 			Timer = 0;
 			map.getGame().logMessage("Вы умерли!.. Нажмите любую клавишу");
-			mp.repaint();
+			panel.repaint();
 			return;
 		}
 		
@@ -128,7 +128,7 @@ public class KeyHandler implements KeyListener{
 		else if (keycode == KeyEvent.VK_K && !event.isShiftDown()) flag = playerAction.showCraftingWindow();
 		else flag = false;
 
-		mp.repaint();
+		panel.repaint();
 		
 		// Игрок идентифицирует что-то (прочитав свиток идентификации)
 		if (ID_MODE) {
@@ -141,14 +141,14 @@ public class KeyHandler implements KeyListener{
 		if (flag) {
 			map.getGame().monstersAI();
 			map.updatePlayer();
-			mp.repaint();
+			panel.repaint();
 		}
 	}
 
 	// Look mode
 	private boolean lookMode(KeyEvent event, int keycode) {
 		boolean flag = false;
-		PlayerAction playerAction = new PlayerAction(map, mp);
+		PlayerAction playerAction = new PlayerAction(map, panel);
 		if (isRightKey(event, keycode)) playerAction.lookTo(+1, 0);
 		else if (isLeftKey(event, keycode)) playerAction.lookTo(-1, 0);
 		else if (isUpKey(event, keycode)) playerAction.lookTo(0, -1);
@@ -164,7 +164,7 @@ public class KeyHandler implements KeyListener{
 		else if (keycode == KeyEvent.VK_ESCAPE) {
 			map.field[ly][lx].setCursor(false);
 			LOOK_MODE = false;
-			mp.descStr = "";
+			panel.descStr = "";
 		}
 		flag = false;
 		return flag;
@@ -173,7 +173,7 @@ public class KeyHandler implements KeyListener{
 	// Open and Close modes
 	private boolean openMode(KeyEvent event, int keycode, boolean isOpen) {
 		boolean flag = false;
-		PlayerAction playerAction = new PlayerAction(map, mp);
+		PlayerAction playerAction = new PlayerAction(map, panel);
 		if (isRightKey(event, keycode)) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 0, map.getGame().player.getX() + 1, isOpen);
 		else if (isLeftKey(event, keycode)) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 0, map.getGame().player.getX() - 1, isOpen);
 		else if (isUpKey(event, keycode)) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() - 1, map.getGame().player.getX() + 0, isOpen);

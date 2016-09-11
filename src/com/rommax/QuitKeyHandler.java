@@ -17,7 +17,7 @@ public class QuitKeyHandler implements KeyListener{
 		int keycode = event.getKeyCode();
 		switch (keycode) {
 			case KeyEvent.VK_ESCAPE:
-				panel.qw.stop();
+				panel.window.stop();
 				break;
 			case KeyEvent.VK_UP:
 				panel.select--;
@@ -30,7 +30,7 @@ public class QuitKeyHandler implements KeyListener{
 			case KeyEvent.VK_ENTER:
 				switch (panel.select) {
 					case 1:
-						panel.qw.stop();
+						panel.window.stop();
 						break;
 					case 2:
 						System.exit(0);
