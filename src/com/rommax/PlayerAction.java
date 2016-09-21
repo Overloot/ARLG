@@ -7,12 +7,14 @@ public class PlayerAction {
 	
 	private Map map;
 	private GamePanel panel;
+	private GameKeyHandler keyHandler;
 	private ItemSelectMessage itemSelectMessage;
 	private CraftingSelectMessage craftingSelectMessage;
 	
-	public PlayerAction(Map map, GamePanel panel) {
+	public PlayerAction(Map map, GamePanel panel, GameKeyHandler keyHandler) {
 		this.map = map;
 		this.panel = panel;
+		this.keyHandler = keyHandler;
 	}
 	
 	// Используем скилл
@@ -38,26 +40,26 @@ public class PlayerAction {
 	
 	// Осмотр тайла
 	public void lookTo(int dx, int dy) {
-		if (!map.hasTileAt(KeyHandler.ly + dy, KeyHandler.lx + dx)) return;
-		if (!panel.HasTileAtScreen(KeyHandler.ly + dy, KeyHandler.lx + dx)) return;
+		if (!map.hasTileAt(keyHandler.ly + dy, keyHandler.lx + dx)) return;
+		if (!panel.HasTileAtScreen(keyHandler.ly + dy, keyHandler.lx + dx)) return;
 		boolean flag = true;
-		map.field[KeyHandler.ly][KeyHandler.lx].setCursor(false);
-		KeyHandler.ly += dy;
-		KeyHandler.lx += dx;
+		map.field[keyHandler.ly][keyHandler.lx].setCursor(false);
+		keyHandler.ly += dy;
+		keyHandler.lx += dx;
 		String textLine;
-		map.field[KeyHandler.ly][KeyHandler.lx].setCursor(true);
-		if (map.field[KeyHandler.ly][KeyHandler.lx].getVisible())
+		map.field[keyHandler.ly][keyHandler.lx].setCursor(true);
+		if (map.field[keyHandler.ly][keyHandler.lx].getVisible())
 		{
-		textLine = "Здесь находится " + Tileset.getTileName(map.field[KeyHandler.ly][KeyHandler.lx].getID()).toLowerCase() + ". ";
-		if (map.field[KeyHandler.ly][KeyHandler.lx].getMonster() != null)
-		textLine += "#^#Здесь стоит " + map.field[KeyHandler.ly][KeyHandler.lx].getMonster().getName().toLowerCase() + ".";
-		LinkedList<Item> ilist = map.field[KeyHandler.ly][KeyHandler.lx].getItemList();
-		if (map.field[KeyHandler.ly][KeyHandler.lx].getChest() > Tile.NONE && !map.field[KeyHandler.ly][KeyHandler.lx].getOpened()) {
+		textLine = "Здесь находится " + Tileset.getTileName(map.field[keyHandler.ly][keyHandler.lx].getID()).toLowerCase() + ". ";
+		if (map.field[keyHandler.ly][keyHandler.lx].getMonster() != null)
+		textLine += "#^#Здесь стоит " + map.field[keyHandler.ly][keyHandler.lx].getMonster().getName().toLowerCase() + ".";
+		LinkedList<Item> ilist = map.field[keyHandler.ly][keyHandler.lx].getItemList();
+		if (map.field[keyHandler.ly][keyHandler.lx].getChest() > Tile.NONE && !map.field[keyHandler.ly][keyHandler.lx].getOpened()) {
 			textLine += "#^# Сундук. ";
 			flag = false;
 		}
-		if (map.field[KeyHandler.ly][KeyHandler.lx].getTrap() > Tile.NONE && map.field[KeyHandler.ly][KeyHandler.lx].getTraped()) {
-			textLine += "#^# " + TrapSet.getTrap(map.field[KeyHandler.ly][KeyHandler.lx].getTrap()).getName() + ". ";
+		if (map.field[keyHandler.ly][keyHandler.lx].getTrap() > Tile.NONE && map.field[keyHandler.ly][keyHandler.lx].getTraped()) {
+			textLine += "#^# " + TrapSet.getTrap(map.field[keyHandler.ly][keyHandler.lx].getTrap()).getName() + ". ";
 			flag = false;
 		}
 		if (ilist.size() != 0 && flag){
@@ -74,10 +76,10 @@ public class PlayerAction {
 	
 	// Включить режим осмотра местности
 	public boolean startLookMode() {
-		KeyHandler.ly = map.getGame().player.getY();
-		KeyHandler.lx = map.getGame().player.getX();
-		map.field[KeyHandler.ly][KeyHandler.lx].setCursor(true);
-		KeyHandler.LOOK_MODE = true;
+		keyHandler.ly = map.getGame().player.getY();
+		keyHandler.lx = map.getGame().player.getX();
+		map.field[keyHandler.ly][keyHandler.lx].setCursor(true);
+		keyHandler.LOOK_MODE = true;
 		this.lookTo(0, 0);
 		return false;
 	}

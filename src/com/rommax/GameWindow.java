@@ -7,7 +7,7 @@ public class GameWindow extends JFrame{
 
 	public static int WINDOW_HEIGHT;
 	public static int WINDOW_WIDTH;
-    public MainPanel panel;
+    public GamePanel panel;
 	public Game game;
 
 	static{
@@ -34,7 +34,7 @@ public class GameWindow extends JFrame{
 		this.game = game;
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		setResizable(false);
-		panel = new MainPanel(this, map, getScreenTileSizeX(), getScreenTileSizeY());
+		panel = new GamePanel(this, map, getScreenTileSizeX(), getScreenTileSizeY());
 		Container contentPane = getContentPane();
 		contentPane.add(panel);
 	}

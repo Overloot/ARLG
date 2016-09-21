@@ -27,12 +27,12 @@ public class GameKeyHandler implements KeyListener{
 	public synchronized void keyPressed(KeyEvent event){
 		
 		// Пока идет создание персонажа, отключаем все клавиши
-		if (MainPanel.hasNewGame) return;
+		if (GamePanel.hasNewGame) return;
 		
 		int keycode = 0;
 
 		// Действия игрока
-		PlayerAction playerAction = new PlayerAction(map, panel); 
+		PlayerAction playerAction = new PlayerAction(map, panel, this); 
 
 		if (Timer == 0) System.exit(0);
 		if (map.getGame().player.getHP().getCurrent() <=0) {
@@ -148,7 +148,7 @@ public class GameKeyHandler implements KeyListener{
 	// Look mode
 	private boolean lookMode(KeyEvent event, int keycode) {
 		boolean flag = false;
-		PlayerAction playerAction = new PlayerAction(map, panel);
+		PlayerAction playerAction = new PlayerAction(map, panel, this);
 		if (isRightKey(event, keycode)) playerAction.lookTo(+1, 0);
 		else if (isLeftKey(event, keycode)) playerAction.lookTo(-1, 0);
 		else if (isUpKey(event, keycode)) playerAction.lookTo(0, -1);
@@ -173,7 +173,7 @@ public class GameKeyHandler implements KeyListener{
 	// Open and Close modes
 	private boolean openMode(KeyEvent event, int keycode, boolean isOpen) {
 		boolean flag = false;
-		PlayerAction playerAction = new PlayerAction(map, panel);
+		PlayerAction playerAction = new PlayerAction(map, panel, this);
 		if (isRightKey(event, keycode)) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 0, map.getGame().player.getX() + 1, isOpen);
 		else if (isLeftKey(event, keycode)) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() + 0, map.getGame().player.getX() - 1, isOpen);
 		else if (isUpKey(event, keycode)) map.getGame().tryToOpenSomething(true, map.getGame().player.getY() - 1, map.getGame().player.getX() + 0, isOpen);

@@ -30,7 +30,7 @@ public class ClassKeyHandler implements KeyListener{
 				curClass = panel.select - 1;
 				ClassSet.getCurrentClassID = curClass;
 				panel.window.game.player.setClass(curClass);
-				MainPanel.hasNewGame = false;					
+				GamePanel.hasNewGame = false;					
 				panel.window.stop();
 				panel.window.game.help();
 				break;
