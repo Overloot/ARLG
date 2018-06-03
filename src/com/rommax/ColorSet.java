@@ -8,11 +8,16 @@ import java.util.*;
 
 public class ColorSet{
 	public static final Color[] COLORSET = {
-	Color.BLACK, Color.WHITE,
-	Color.RED, Color.GREEN,
-	Color.BLUE, Color.CYAN,
-	Color.GRAY, Color.ORANGE,
-	Color.YELLOW, Color.PINK};
+	Color.BLACK,
+	Color.WHITE,
+	Color.RED,
+	Color.GREEN,
+	Color.BLUE,
+	Color.CYAN,
+	Color.GRAY,
+	Color.ORANGE,
+	Color.YELLOW,
+	Color.PINK};
 
 	public static final int COLOR_BLACK = 0;
 	public static final int COLOR_WHITE = 1;
